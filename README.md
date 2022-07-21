@@ -120,8 +120,6 @@
   - [Mattermost API](https://api.mattermost.com/)
   
   - Kakaotalk API
-  
-  -
 
 # 구현 기능 정리
 
