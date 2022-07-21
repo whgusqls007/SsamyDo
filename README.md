@@ -58,7 +58,7 @@
   
   - Git 2.37
 
-- 뮤니케이션
+- 커뮤니케이션
   
   - Mattermost
   
@@ -93,6 +93,10 @@
   - React Native 
     
     - expo 5.5.1
+      
+      - Redux
+      
+      - Navigation
   
   - Android Studio 2021.2.1 Patch 1
     
