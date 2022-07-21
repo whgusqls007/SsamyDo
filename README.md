@@ -6,8 +6,6 @@
 
 ## 목차
 
-
-
 ## 프로젝트 개요
 
 1. 주제 및 기간
@@ -30,7 +28,7 @@
 
 #### 1. 주제 및 기간
 
-- 주제 :
+- 주제 : 
 
 - 기간 : 2022년 7월 5일 ~ 22년 8월 19일
 
@@ -90,7 +88,7 @@
   
   - HTML5, CSS3
   
-  - React Native
+  - React Native 
 
 - Back-End
   
@@ -221,8 +219,6 @@
 
 ![Untitled_5](/uploads/429c0bbd60b99a3a0d63fff0220c7a0d/Untitled_5.png)
 
-
-
 # 샘플 API
 
 ### MatterMost
@@ -237,20 +233,19 @@
   
   - ```java
     @GetMapping(value = "/createToDoList")
-    	public ResponseEntity<ArrayList<ToDo>> createToDoList() {
-    		MattermostClient client;
-    		client = MattermostClient.builder().url("https://meeting.ssafy.com").logLevel(Level.INFO)
-    				.ignoreUnknownProperties().build();
-    		//client 로그인
-    		client.login(mmEmail, mmPassword);
-    		
-    		long since = System.currentTimeMillis() - 3600000;
-    		list = client.getPostsSince("qhmimsx573fnugb3yrjtkpokao", since);
-    		// postList 탐색하면서 todolist에 넣을 것만 뽑아내기
-    		ArrayList<ToDo> rst = service.createToDoList(list.readEntity());
-    		return new ResponseEntity<>(rst, HttpStatus.OK);
-    	}
+        public ResponseEntity<ArrayList<ToDo>> createToDoList() {
+            MattermostClient client;
+            client = MattermostClient.builder().url("https://meeting.ssafy.com").logLevel(Level.INFO)
+                    .ignoreUnknownProperties().build();
+            //client 로그인
+            client.login(mmEmail, mmPassword);
     
+            long since = System.currentTimeMillis() - 3600000;
+            list = client.getPostsSince("qhmimsx573fnugb3yrjtkpokao", since);
+            // postList 탐색하면서 todolist에 넣을 것만 뽑아내기
+            ArrayList<ToDo> rst = service.createToDoList(list.readEntity());
+            return new ResponseEntity<>(rst, HttpStatus.OK);
+        }
     ```
   
   - ![](README.assets/2022-07-20-17-37-40-Untitled.png)
@@ -260,17 +255,17 @@
   - 어플에서 todolist에 넣을 공지 생성
   - ```java
     @PostMapping(value = "/createNotice")
-    	public ResponseEntity<String> createNotice(ToDo todo) {
-    		System.out.println(todo);
-    		login();
-    		String notice = service.createNotice(todo);
-    		System.out.println("notice : " + notice);
+        public ResponseEntity<String> createNotice(ToDo todo) {
+            System.out.println(todo);
+            login();
+            String notice = service.createNotice(todo);
+            System.out.println("notice : " + notice);
     // 테스트 채널 ID를 가지는 테스트 post 생성
-    		Post post = new Post("qhmimsx573fnugb3yrjtkpokao", notice);
+            Post post = new Post("qhmimsx573fnugb3yrjtkpokao", notice);
     // 테스트 채널에 포스트 생성
-    		client.createPost(post);
-    		return new ResponseEntity<>("success", HttpStatus.OK);
-    	}
+            client.createPost(post);
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
     ```
   - ![](README.assets/2022-07-20-17-38-43-Untitled%20(1).png)
 
@@ -409,3 +404,13 @@
 - 주간 일정
   
   - ![](README.assets/2022-07-20-17-40-27-Untitled%20(3).png)
+
+
+
+---
+
+### 설문조사 분석
+
+
+
+<img src="assets/c9410f78dc8d6d49e727923ea3be30e7f4957840.jpg" title="" alt="be82a5b10e653646.jpg" width="750">
