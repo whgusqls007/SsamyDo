@@ -54,11 +54,11 @@
 
 - 개발 도구
   
-  - Visual Studio Code
+  - Visual Studio Code 1.69.2
   
-  - Git
+  - Git 2.37
 
-- 커뮤니케이션
+- 뮤니케이션
   
   - Mattermost
   
@@ -88,7 +88,17 @@
   
   - HTML5, CSS3
   
+  - Node.js 16.16.0
+  
   - React Native 
+    
+    - expo 5.5.1
+  
+  - Android Studio 2021.2.1 Patch 1
+    
+    - Android Vertual Device Emulator
+      
+      - Pixel 2 + API level 30(Android 11.0)
 
 - Back-End
   
@@ -99,7 +109,6 @@
     - Lombok
     - JPA, Security, Https, My-batis
       IDE :
-    - Visual Studio Code 1.69.1
     - Spring Tool Suite 4 4.15.1.1.RELEASE
 
 - API
@@ -405,12 +414,8 @@
   
   - ![](README.assets/2022-07-20-17-40-27-Untitled%20(3).png)
 
-
-
 ---
 
 ### 설문조사 분석
-
-
 
 <img src="assets/c9410f78dc8d6d49e727923ea3be30e7f4957840.jpg" title="" alt="be82a5b10e653646.jpg" width="750">
