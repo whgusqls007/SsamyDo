@@ -8,10 +8,11 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name="user_track")
+@Table(name = "user_track")
 public class Track {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "track_id")
     private Long id;
 
