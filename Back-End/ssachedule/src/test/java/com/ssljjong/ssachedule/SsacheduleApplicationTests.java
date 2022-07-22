@@ -1,4 +1,4 @@
-package com.seuljjong.ssachedule;
+package com.ssljjong.ssachedule;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
