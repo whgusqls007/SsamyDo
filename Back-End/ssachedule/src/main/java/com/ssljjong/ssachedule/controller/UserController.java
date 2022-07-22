@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssljjong.ssachedule.dto.UserDto;
+import com.ssljjong.ssachedule.domain.UserDomain;
 import com.ssljjong.ssachedule.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,19 +26,39 @@ public class UserController {
      *         when email, pw is correct otherwise
      *         ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED)
      */
-    @PostMapping("/getuser")
-    public ResponseEntity<Boolean> getUser(@RequestBody Map<String, Object> map) {
-        UserDto userDto = new UserDto();
-        String email = (String) map.get("email");
-        String pw = (String) map.get("pw");
+    @PostMapping("/checkuser")
+    public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String> map) {
+        UserDomain userDomain = new UserDomain();
+        String email = map.get("email");
+        String pw = map.get("pw");
 
-        userDto.setUserEmail(email);
-        userDto.setUserPw(pw);
-        userDto.setTrackId(1);
-        if (userService.getUser(userDto)) {
+        userDomain.setUserEmail(email);
+        userDomain.setUserPw(pw);
+
+        if (userService.checkUser(userDomain)) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
         return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping("/setusereduinfo")
+    public ResponseEntity<Boolean> setUserEduInfo(@RequestBody Map<String, String> map) {
+        String userEmail = map.get("userEmail");
+        String eduEmail = map.get("eduEmail");
+        String eduPw = map.get("eduPw");
+
+        UserDomain userDomain = new UserDomain();
+        userDomain.setUserEmail(userEmail);
+        userDomain.setEduEmail(eduEmail);
+        userDomain.setEduPw(eduPw);
+
+        Boolean result = userService.setUserEduInfo(userDomain);
+
+        if (!result) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 }
