@@ -18,10 +18,10 @@ public class Track {
     private String name;
     private int gisu;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<UserDomain> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Track", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<Monthlyplan> monthlyplans = new ArrayList<>();
 
 
