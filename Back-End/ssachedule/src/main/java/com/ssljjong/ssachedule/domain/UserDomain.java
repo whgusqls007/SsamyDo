@@ -15,7 +15,6 @@ public class UserDomain {
     @Column(name = "user_pw")
     private String userPw;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
 
