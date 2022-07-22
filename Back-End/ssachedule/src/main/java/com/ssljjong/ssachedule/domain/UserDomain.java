@@ -2,10 +2,7 @@ package com.ssljjong.ssachedule.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,8 +15,9 @@ public class UserDomain {
     @Column(name = "user_pw")
     private String userPw;
 
-    @Column(name = "track_id")
-    private int trackId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Track track;
 
     @Column(name = "edu_email")
     private String eduEmail;
