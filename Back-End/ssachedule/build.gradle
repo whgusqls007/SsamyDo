@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.glassfish.jersey.core:jersey-client:2.35'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 	runtimeOnly 'com.h2database:h2'
+	
 }
 
 tasks.named('test') {
