@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
     /**
      * * get userDomain by email
      * 
-     * @param email userEmail
+     * @param String userEmail
      * @return UserDomain
      */
     @Override
@@ -35,6 +35,11 @@ public class UserRepositoryImpl implements UserRepository {
         return entityManager.find(UserDomain.class, email);
     }
 
+    /**
+     * * update userDomain
+     * 
+     * @param UserDomain userDomain
+     */
     @Override
     public void updateOne(UserDomain userDomain) {
         entityManager.merge(userDomain);

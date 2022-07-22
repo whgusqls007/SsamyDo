@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    /**
+     * @param UserDomain
+     * @return Boolean, true when updated successfully, otherwise false
+     */
     @Override
     public Boolean setUserEduInfo(UserDomain userDomainParam) {
         UserDomain userDomain = getUser(userDomainParam.getUserEmail());
