@@ -42,6 +42,13 @@ public class UserController {
         return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * 
+     * @param map json
+     * @return ResponseEntity<Boolean>(true, HttpStatus.OK)
+     *         when update result is true
+     *         otherwise ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST)
+     */
     @PostMapping("/setusereduinfo")
     public ResponseEntity<Boolean> setUserEduInfo(@RequestBody Map<String, String> map) {
         String userEmail = map.get("userEmail");
