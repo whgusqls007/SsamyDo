@@ -1,19 +1,11 @@
 package com.ssljjong.ssachedule.repository;
 
-import com.ssljjong.ssachedule.dto.UserDto;
-import javax.persistence.EntityManager;
+import com.ssljjong.ssachedule.domain.UserDomain;
 
-import org.springframework.stereotype.Repository;
+public interface UserRepository {
+    public void save(UserDomain userDomain);
 
-import lombok.RequiredArgsConstructor;
+    public UserDomain findOne(String email);
 
-@Repository
-@RequiredArgsConstructor
-public class UserRepository {
-
-    private final EntityManager entityManager;
-
-    public void save(UserDto userDto) {
-        entityManager.persist(userDto);
-    }
+    public void updateOne(UserDomain userDomain);
 }
