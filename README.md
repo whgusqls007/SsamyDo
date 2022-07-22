@@ -20,7 +20,11 @@
 
 6. ERD
 
-7.
+   ![image-20220722125927173](README.assets/image-20220722125927173.png)
+
+​		링크 > https://www.erdcloud.com/d/LyNuWixQvXC7drnZA
+
+7. 
 
 8. 주제 :
 
