@@ -1,10 +1,13 @@
 package com.ssljjong.ssachedule.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 // import com.ssljjong.ssachedule.dao.UserDao;
 
@@ -12,27 +15,17 @@ import net.bis5.mattermost.client4.MattermostClient;
 import net.bis5.mattermost.model.User;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    UserDto userDto;
 
-    @Autowired
-    UserRepository userRepository;
-    // @Autowired
-    // UserDao UserDao;
+    private final UserRepository userRepository;
 
-    MattermostClient client;
-
-    /**
-     * * Build MattermostClient
-     */
-    public UserService() {
-        client = MattermostClient.builder()
-                .url("https://meeting.ssafy.com")
-                // .logLevel(Level.INFO)
-                .ignoreUnknownProperties()
-                .build();
-    }
+    MattermostClient client = MattermostClient.builder()
+            .url("https://meeting.ssafy.com")
+            // .logLevel(Level.INFO)
+            .ignoreUnknownProperties()
+            .build();
 
     /**
      * * Login into MattermostClient using Email, Password
@@ -43,7 +36,7 @@ public class UserService {
      *         return false
      */
     public Boolean getUser(UserDto userDto) {
-        User user = client.login(userDto.getMm_email(), userDto.getMm_pw());
+        User user = client.login(userDto.getUserEmail(), userDto.getUserPw());
 
         if (user.getEmail() == null) {
             return false;
