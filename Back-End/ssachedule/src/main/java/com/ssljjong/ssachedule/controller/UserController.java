@@ -2,7 +2,6 @@ package com.ssljjong.ssachedule.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.service.UserService;
 
-@RestController
-public class UserController {
-    @Autowired
-    UserService userService;
+import lombok.RequiredArgsConstructor;
 
-    @Autowired
-    UserDto userDto;
+@RestController
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
 
     /**
      * 
@@ -33,9 +32,9 @@ public class UserController {
         String email = (String) map.get("email");
         String pw = (String) map.get("pw");
 
-        userDto.setUser_email(email);
-        userDto.setMm_email(email);
-        userDto.setMm_pw(pw);
+        userDto.setUserEmail(email);
+        userDto.setUserPw(pw);
+        userDto.setTrackId(1);
         if (userService.getUser(userDto)) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
