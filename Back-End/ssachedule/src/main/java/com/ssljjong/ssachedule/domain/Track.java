@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "user_track")
 public class Track {
 
     @Id
@@ -19,7 +20,7 @@ public class Track {
     private int gisu;
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
-    private List<UserDomain> users = new ArrayList<>();
+    private List<UserTrack> userTrack = new ArrayList<>();
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<Monthlyplan> monthlyplans = new ArrayList<>();
