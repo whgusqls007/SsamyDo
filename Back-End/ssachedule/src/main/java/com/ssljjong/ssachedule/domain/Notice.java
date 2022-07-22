@@ -1,7 +1,6 @@
 package com.ssljjong.ssachedule.domain;
 
 import lombok.Getter;
-import org.apache.ibatis.annotations.One;
 
 import javax.persistence.*;
 import java.util.Date;

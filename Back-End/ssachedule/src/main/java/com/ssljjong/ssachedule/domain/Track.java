@@ -10,19 +10,18 @@ import java.util.List;
 @Getter
 public class Track {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "track_id")
     private Long id;
-
 
     private String name;
     private int gisu;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<UserDomain> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Track", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<Monthlyplan> monthlyplans = new ArrayList<>();
-
 
 }
