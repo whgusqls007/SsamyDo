@@ -1,15 +1,21 @@
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 public class GetWeekScheduleTask extends ChromeDriverController implements Runnable {
+    OutputStream outputStream;
 
-    public GetWeekScheduleTask(String email, String pw) {
+    public GetWeekScheduleTask(String email, String pw, OutputStream fileOutputStream) {
         super(email, pw);
+        this.outputStream = fileOutputStream;
     }
 
     @Override
     public void run() {
+        System.out.println("\n\nThread2 시작\n\n");
+        openDriver();
         loginIntoEdussafy();
         List<WeekBox> weekBoxes = new ArrayList<>();
         while (true) {
@@ -53,7 +59,17 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
         }
 
         for (int i = 0; i < weekBoxes.size(); i++) {
-            System.out.println(weekBoxes.get(i).toString());
+            try {
+                outputStream.write((weekBoxes.get(i).toString() + "\n").getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            outputStream.write("\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         closeDriver();
