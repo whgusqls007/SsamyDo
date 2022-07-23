@@ -1,13 +1,21 @@
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GetUserCodeTask extends ChromeDriverController implements Runnable {
-    public GetUserCodeTask(String email, String pw) {
+    OutputStream outputStream;
+
+    public GetUserCodeTask(String email, String pw, OutputStream fileOutputStream) {
         super(email, pw);
+        this.outputStream = fileOutputStream;
     }
 
     @Override
     public void run() {
+        System.out.println("\n\nThread1 시작\n\n");
+        openDriver();
         loginIntoEdussafy();
 
         WebElement elem = null;
@@ -39,7 +47,17 @@ public class GetUserCodeTask extends ChromeDriverController implements Runnable 
             break;
         }
 
-        System.out.println(elem.getText());
+        try {
+            outputStream.write((elem.getText() + "\n").getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            outputStream.write("\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         closeDriver();
 
