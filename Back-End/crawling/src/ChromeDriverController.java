@@ -171,8 +171,6 @@ public class ChromeDriverController {
         chromeOptions.addArguments("headless");
         chromeOptions.addArguments("--start-maximized");
 
-        chromeDriver = new ChromeDriver(chromeOptions);
-
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -217,7 +215,7 @@ public class ChromeDriverController {
     }
 
     protected void closeDriver() {
-        chromeDriver.close();
+        chromeDriver.quit();
 
         return;
     }

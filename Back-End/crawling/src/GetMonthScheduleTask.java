@@ -1,15 +1,21 @@
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 public class GetMonthScheduleTask extends ChromeDriverController implements Runnable {
+    OutputStream outputStream;
 
-    public GetMonthScheduleTask(String email, String pw) {
+    public GetMonthScheduleTask(String email, String pw, OutputStream fileOutputStream) {
         super(email, pw);
+        this.outputStream = fileOutputStream;
     }
 
     @Override
     public void run() {
+        System.out.println("\n\nThread3 시작\n\n");
+        openDriver();
         loginIntoEdussafy();
         ArrayList<ArrayList<Box>> boxes = new ArrayList<>();
 
@@ -60,8 +66,18 @@ public class GetMonthScheduleTask extends ChromeDriverController implements Runn
 
         for (int i = 0; i < boxes.size(); i++) {
             for (int j = 0; j < boxes.get(i).size(); j++) {
-                System.out.println(boxes.get(i).get(j).toString());
+                try {
+                    outputStream.write((boxes.get(i).get(j).toString() + "\n").getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        }
+
+        try {
+            outputStream.write("\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         closeDriver();

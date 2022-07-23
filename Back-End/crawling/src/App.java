@@ -1,6 +1,13 @@
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class App {
     static ChromeOptions chromeOptions;
     static ChromeDriver chromeDriver;
@@ -8,30 +15,21 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         JDBCDrivcr jdbcDrivcr = new JDBCDrivcr();
+        OutputStream outputStream = new FileOutputStream(new File("./output.txt"));
         jdbcDrivcr.connect();
-        User user = jdbcDrivcr.runQuery("SELECT * FROM user");
+        List<User> userList = jdbcDrivcr.runQuery("SELECT * FROM user");
+        System.out.println(userList.toString());
+        ExecutorService service = Executors.newFixedThreadPool(3);
 
-        String email = user.getEduEmail();
-        String pw = user.getEduPw();
+        for (int i = 0; i < userList.size(); i++) {
+            String email = userList.get(i).getEduEmail();
+            String pw = userList.get(i).getEduPw();
 
-        Runnable getWeekScheduleTask = new GetWeekScheduleTask(email, pw);
-        Thread getWeekScheduleThread = new Thread(getWeekScheduleTask);
-
-        Runnable getMonthScheduleTask = new GetMonthScheduleTask(email, pw);
-        Thread getMonthSchduleThread = new Thread(getMonthScheduleTask);
-
-        Runnable getUserCodeTask = new GetUserCodeTask(email, pw);
-        Thread getUserCodeThread = new Thread(getUserCodeTask);
-
-        getWeekScheduleThread.start();
-        System.out.println("\n\nThread2 시작\n\n");
-
-        getUserCodeThread.start();
-        System.out.println("\n\nThread1 시작\n\n");
-
-        getMonthSchduleThread.start();
-        System.out.println("\n\nThread3 시작\n\n");
-
+            service.execute(new GetMonthScheduleTask(email, pw, outputStream));
+            service.execute(new GetUserCodeTask(email, pw, outputStream));
+            service.execute(new GetWeekScheduleTask(email, pw, outputStream));
+        }
+        service.shutdown();
         return;
     }
 }
