@@ -1,6 +1,8 @@
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -13,7 +15,7 @@ public class App {
     static ChromeDriver chromeDriver;
 
     public static void main(String[] args) throws Exception {
-
+        WebDriverManager.chromedriver().setup();
         JDBCDrivcr jdbcDrivcr = new JDBCDrivcr();
         OutputStream outputStream = new FileOutputStream(new File("./output.txt"));
         jdbcDrivcr.connect();
