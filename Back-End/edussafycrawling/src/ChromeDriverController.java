@@ -4,8 +4,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 import java.util.*;
 
 public class ChromeDriverController {
@@ -165,7 +163,6 @@ public class ChromeDriverController {
     }
 
     protected void initDriver() {
-        WebDriverManager.chromedriver().setup();
 
         chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("headless");
