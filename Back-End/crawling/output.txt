@@ -1,0 +1,68 @@
+0752363 (7기 - 부울경 2반)
+
+{ date='2022.07.18(월)', tasks='[{ time='09:00~14:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Sub-PJT Ⅰ: clone coding 평가', name='담당강사', classRoom='부울경 122'}, { time='14:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.19(화)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] SpringBoot JPA', name='박종철', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='Webex,Mattermost'}]'}
+{ date='2022.07.20(수)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] React로 Front-End 개발 시작해보기', name='박세영', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.21(목)', tasks='[{ time='09:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.22(금)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] Project DB 설계', name='최호근', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='Webex,Mattermost'}]'}
+
+{ date='2022-06-27', list='[]', rowSpan='0'}
+{ date='2022-06-28', list='[]', rowSpan='0'}
+{ date='2022-06-29', list='[]', rowSpan='0'}
+{ date='2022-06-30', list='[]', rowSpan='0'}
+{ date='2022-07-01', list='[]', rowSpan='0'}
+{ date='2022-07-04', list='[]', rowSpan='0'}
+{ date='2022-07-05', list='[[Live] 공통 부트캠프 OT, [Live] 슬기로운 싸피생활: 박용미, 박현정 프로, [Webex] 팀별 공통PJT 명세서 확인, [Live] Project Followership: 윤석호 강사, [Live] Project Management: 윤건상 강사]', rowSpan='0'}
+{ date='2022-07-06', list='[[Webex] 아이디어 해커톤]', rowSpan='0'}
+{ date='2022-07-07', list='[[Live] PJT 기획 시 유의점과 우수 PJT 소개, [Live] Jira 및 JQL 활용: SDS 문경찬 프로, [Webex] 컨설턴트 1st 반미팅, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] IT 기술 트랜드: SSAFY Lab 홍종화 프로, [Webex] 실습코치 소개]', rowSpan='0'}
+{ date='2022-07-08', list='[[Live] 삼성 임직원 멘토링 소개: 박용미 프로, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] 도커와 쿠버네틱스 실전 활용하기: 김충섭 강사, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] 싸피레이스 결선]', rowSpan='1'}
+{ date='2022-07-11', list='[오리엔테이션 및 과정 준비, [Live] 안전교육: 서울,대전,구미 캠퍼스, clone coding: 팀별 PJT 진행, [Live] 전자 특강, clone coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-12', list='[clone coding: 팀별 PJT 진행, 팀워크 프로그램: 나, 우리, 지금 여기에]', rowSpan='3'}
+{ date='2022-07-13', list='[[Live] 웹? 앱? 어떤 플랫폼으로 개발할까?, clone coding: 팀별 PJT 진행]', rowSpan='3'}
+{ date='2022-07-14', list='[[Live] 시스템 인프라 소개, clone coding: 팀별 PJT 진행]', rowSpan='3'}
+{ date='2022-07-15', list='[clone coding: 팀별 PJT 진행, [Live] Vue로 Front-End 개발 시작해보기 및 평가안내]', rowSpan='3'}
+{ date='2022-07-18', list='[Sub-PJT Ⅰ: clone coding 평가, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-19', list='[[Live] SpringBoot JPA, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-20', list='[[Live] React로 Front-End 개발 시작해보기, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-21', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-22', list='[[Live] Project DB 설계, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-25', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-26', list='[[Live] 개발자와 UX 및 공통 PJT 3추자 News, Funtion coding: 팀별 PJT 진행, 취업특강: JobSSAFY를 확인해주세요]', rowSpan='0'}
+{ date='2022-07-27', list='[[Live] 파이어베이스 소개, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-28', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-29', list='[[Live] 데이터 크롤링의 세계, Funtion coding: 팀별 PJT 진행, SSAFY Day]', rowSpan='0'}
+
+{ date='2022-06-27', list='[]', rowSpan='0'}
+{ date='2022-06-28', list='[]', rowSpan='0'}
+{ date='2022-06-29', list='[]', rowSpan='0'}
+{ date='2022-06-30', list='[]', rowSpan='0'}
+{ date='2022-07-01', list='[]', rowSpan='0'}
+{ date='2022-07-04', list='[]', rowSpan='0'}
+{ date='2022-07-05', list='[[Live] 공통 부트캠프 OT, [Live] 슬기로운 싸피생활: 박용미, 박현정 프로, [Webex] 팀별 공통PJT 명세서 확인, [Live] Project Followership: 윤석호 강사, [Live] Project Management: 윤건상 강사]', rowSpan='0'}
+{ date='2022-07-06', list='[[Webex] 아이디어 해커톤]', rowSpan='0'}
+{ date='2022-07-07', list='[[Live] PJT 기획 시 유의점과 우수 PJT 소개, [Live] Jira 및 JQL 활용: SDS 문경찬 프로, [Webex] 컨설턴트 1st 반미팅, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] IT 기술 트랜드: SSAFY Lab 홍종화 프로, [Webex] 실습코치 소개]', rowSpan='0'}
+{ date='2022-07-08', list='[[Live] 삼성 임직원 멘토링 소개: 박용미 프로, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] 도커와 쿠버네틱스 실전 활용하기: 김충섭 강사, [Webex] 팀별 명세서 학습 및 프로젝트 기획, [Live] 싸피레이스 결선]', rowSpan='1'}
+{ date='2022-07-11', list='[오리엔테이션 및 과정 준비, [Live] 안전교육: 서울,대전,구미 캠퍼스, clone coding: 팀별 PJT 진행, [Live] 전자 특강, clone coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-12', list='[clone coding: 팀별 PJT 진행, 팀워크 프로그램: 나, 우리, 지금 여기에]', rowSpan='3'}
+{ date='2022-07-13', list='[[Live] 웹? 앱? 어떤 플랫폼으로 개발할까?, clone coding: 팀별 PJT 진행]', rowSpan='3'}
+{ date='2022-07-14', list='[[Live] 시스템 인프라 소개, clone coding: 팀별 PJT 진행]', rowSpan='3'}
+{ date='2022-07-15', list='[clone coding: 팀별 PJT 진행, [Live] Vue로 Front-End 개발 시작해보기 및 평가안내]', rowSpan='3'}
+{ date='2022-07-18', list='[Sub-PJT Ⅰ: clone coding 평가, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-19', list='[[Live] SpringBoot JPA, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-20', list='[[Live] React로 Front-End 개발 시작해보기, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-21', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-22', list='[[Live] Project DB 설계, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-25', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-26', list='[[Live] 개발자와 UX 및 공통 PJT 3추자 News, Funtion coding: 팀별 PJT 진행, 취업특강: JobSSAFY를 확인해주세요]', rowSpan='0'}
+{ date='2022-07-27', list='[[Live] 파이어베이스 소개, Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-28', list='[Funtion coding: 팀별 PJT 진행]', rowSpan='0'}
+{ date='2022-07-29', list='[[Live] 데이터 크롤링의 세계, Funtion coding: 팀별 PJT 진행, SSAFY Day]', rowSpan='0'}
+
+{ date='2022.07.18(월)', tasks='[{ time='09:00~14:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Sub-PJT Ⅰ: clone coding 평가', name='담당강사', classRoom='부울경 122'}, { time='14:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.19(화)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] SpringBoot JPA', name='박종철', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='Webex,Mattermost'}]'}
+{ date='2022.07.20(수)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] React로 Front-End 개발 시작해보기', name='박세영', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.21(목)', tasks='[{ time='09:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='부울경 122'}]'}
+{ date='2022.07.22(금)', tasks='[{ time='09:00~10:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='[Live] Project DB 설계', name='최호근', classRoom='Youtube Live'}, { time='10:00~18:00', mainSubject='프로젝트', courseName='공통 프로젝트', subject='Funtion coding: 팀별 PJT 진행', name='담당강사', classRoom='Webex,Mattermost'}]'}
+
+0753443 (7기 - 부울경 2반)
+

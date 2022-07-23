@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.*;
+
 public class JDBCDrivcr {
     private String url;
     private String hostname;
@@ -24,19 +26,17 @@ public class JDBCDrivcr {
         }
     }
 
-    public User runQuery(String query) {
-        User user = new User();
+    public List<User> runQuery(String query) {
+        List<User> userList = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultset = preparedStatement.executeQuery();
-            if (resultset.next()) {
-                user.setUserEmail(resultset.getString(1));
-                user.setUserPw(resultset.getString(2));
-                user.setEduEmail(resultset.getString(3));
-                user.setEduPw(resultset.getString(4));
+            while (resultset.next()) {
+                userList.add(new User(resultset.getString(1), resultset.getString(2), resultset.getString(3),
+                        resultset.getString(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return userList;
     }
 }
