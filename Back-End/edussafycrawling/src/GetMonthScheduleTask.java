@@ -1,20 +1,29 @@
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.*;
 
 public class GetMonthScheduleTask extends ChromeDriverController implements Runnable {
-    OutputStream outputStream;
+    JDBCDriver jdbcDriver;
 
-    public GetMonthScheduleTask(String email, String pw, OutputStream fileOutputStream) {
+    public GetMonthScheduleTask(String email, String pw, JDBCDriver jdbcDriver) {
         super(email, pw);
-        this.outputStream = fileOutputStream;
+        this.jdbcDriver = jdbcDriver;
     }
 
     @Override
     public void run() {
-        System.out.println("\n\nThread3 시작\n\n");
+        List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
+        for (int i = 0; i < userList.size(); i++) {
+            String email = userList.get(i).getEduEmail();
+            String pw = userList.get(i).getEduPw();
+            this.Email = email;
+            this.PW = pw;
+            startCrawling();
+        }
+    }
+
+    @Override
+    protected void startCrawling() {
         openDriver();
         loginIntoEdussafy();
         ArrayList<ArrayList<Box>> boxes = new ArrayList<>();
@@ -66,22 +75,10 @@ public class GetMonthScheduleTask extends ChromeDriverController implements Runn
 
         for (int i = 0; i < boxes.size(); i++) {
             for (int j = 0; j < boxes.get(i).size(); j++) {
-                try {
-                    outputStream.write((boxes.get(i).get(j).toString() + "\n").getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                System.out.println(boxes.get(i).get(j).toString());
             }
         }
 
-        try {
-            outputStream.write("\n".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         closeDriver();
-        System.out.println("\n\nThread3 종료\n\n");
-        return;
     }
 }

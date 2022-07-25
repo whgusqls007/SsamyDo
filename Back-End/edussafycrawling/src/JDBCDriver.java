@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 import java.util.*;
 
-public class JDBCDrivcr {
+public class JDBCDriver {
     private String url;
     private String hostname;
     private String password;
     private Connection connection;
 
-    public JDBCDrivcr() {
+    public JDBCDriver() {
         this.url = "jdbc:mysql://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S07P12E204?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8";
         this.hostname = "S07P12E204@stg-yswa-kr-practice-db-master";
         this.password = "F7MCkOqbj8";
