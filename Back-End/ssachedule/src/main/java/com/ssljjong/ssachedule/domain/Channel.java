@@ -23,6 +23,8 @@ public class Channel {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    private boolean critical;
+
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
     private List<Todo> todoList = new ArrayList<>();
 
