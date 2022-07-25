@@ -1,11 +1,13 @@
 package com.ssljjong.ssachedule.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 public class UserTrack {
 
     @Id @GeneratedValue
@@ -18,5 +20,8 @@ public class UserTrack {
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="track_id")
     private Track track;
+
+
+    // 연관 메서드 //
 
 }
