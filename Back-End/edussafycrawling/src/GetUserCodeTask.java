@@ -1,20 +1,33 @@
-import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GetUserCodeTask extends ChromeDriverController implements Runnable {
     OutputStream outputStream;
+    JDBCDriver jdbcDriver;
 
-    public GetUserCodeTask(String email, String pw, OutputStream fileOutputStream) {
+    public GetUserCodeTask(String email, String pw, OutputStream fileOutputStream, JDBCDriver jdbcDriver) {
         super(email, pw);
         this.outputStream = fileOutputStream;
+        this.jdbcDriver = jdbcDriver;
     }
 
     @Override
     public void run() {
-        System.out.println("\n\nThread1 시작\n\n");
+        List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
+        for (int i = 0; i < userList.size(); i++) {
+            String email = userList.get(i).getEduEmail();
+            String pw = userList.get(i).getEduPw();
+            this.Email = email;
+            this.PW = pw;
+            startCrawling();
+        }
+    }
+
+    @Override
+    protected void startCrawling() {
         openDriver();
         loginIntoEdussafy();
 
@@ -47,21 +60,8 @@ public class GetUserCodeTask extends ChromeDriverController implements Runnable 
             break;
         }
 
-        try {
-            outputStream.write((elem.getText() + "\n").getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            outputStream.write("\n".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(elem.getText());
 
         closeDriver();
-
-        System.out.println("\n\nThread1 종료\n\n");
-        return;
     }
 }

@@ -1,20 +1,30 @@
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.*;
 
 public class GetWeekScheduleTask extends ChromeDriverController implements Runnable {
-    OutputStream outputStream;
 
-    public GetWeekScheduleTask(String email, String pw, OutputStream fileOutputStream) {
+    JDBCDriver jdbcDriver;
+
+    public GetWeekScheduleTask(String email, String pw, JDBCDriver jdbcDriver) {
         super(email, pw);
-        this.outputStream = fileOutputStream;
+        this.jdbcDriver = jdbcDriver;
     }
 
     @Override
     public void run() {
-        System.out.println("\n\nThread2 시작\n\n");
+        List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
+        for (int i = 0; i < userList.size(); i++) {
+            String email = userList.get(i).getEduEmail();
+            String pw = userList.get(i).getEduPw();
+            this.Email = email;
+            this.PW = pw;
+            startCrawling();
+        }
+    }
+
+    @Override
+    protected void startCrawling() {
         openDriver();
         loginIntoEdussafy();
         List<WeekBox> weekBoxes = new ArrayList<>();
@@ -59,21 +69,9 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
         }
 
         for (int i = 0; i < weekBoxes.size(); i++) {
-            try {
-                outputStream.write((weekBoxes.get(i).toString() + "\n").getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            outputStream.write("\n".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(weekBoxes.get(i).toString());
         }
 
         closeDriver();
-        System.out.println("\n\nThread2 종료\n\n");
-        return;
     }
 }
