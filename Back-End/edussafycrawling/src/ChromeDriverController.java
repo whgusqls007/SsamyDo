@@ -235,4 +235,8 @@ public class ChromeDriverController {
 
         return;
     }
+
+    protected void startCrawling() {
+        return;
+    };
 }
