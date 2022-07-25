@@ -1,18 +1,13 @@
 package com.ssljjong.ssachedule.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "User")
 public class UserDomain {
     @Id
@@ -22,8 +17,9 @@ public class UserDomain {
     @Column(name = "user_pw")
     private String userPw;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Track track;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
+    private UserTrack userTrack;
 
     @Column(name = "edu_email")
     private String eduEmail;
@@ -31,4 +27,9 @@ public class UserDomain {
     @Column(name = "edu_pw")
     private String eduPw;
 
+    // 연관 메서드 //
+
+    public void setTrack(Track track) {
+        this.userTrack.setTrack(track);
+    }
 }
