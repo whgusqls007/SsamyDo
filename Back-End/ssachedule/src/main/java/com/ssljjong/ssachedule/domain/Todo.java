@@ -1,12 +1,13 @@
 package com.ssljjong.ssachedule.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "todo")
 public class Todo {
 
@@ -22,6 +23,22 @@ public class Todo {
     private String description;
     private TodoType type;
     private Date    duedate;
-    private TodoStatus status;
+
+    // 연관 메서드
+    public void changeDuedate(Date date) {
+        this.duedate = date;
+    }
+
+    // 생성 메서드
+    public static Todo createTodo(Channel channel, String title, String description, TodoType type, Date dueDate) {
+        Todo todo = new Todo();
+        todo.setChannel(channel);
+        todo.setTitle(title);
+        todo.setDescription(description);
+        todo.setType(type);
+        todo.setDuedate(dueDate);
+        return todo;
+    }
+
 
 }
