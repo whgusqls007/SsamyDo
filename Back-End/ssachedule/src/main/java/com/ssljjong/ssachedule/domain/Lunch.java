@@ -1,20 +1,22 @@
 package com.ssljjong.ssachedule.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter
+@Table(name = "lunch")
 public class Lunch {
 
-    @Id @GeneratedValue
+    @Id
     @Column(name="lunch_id")
     private Long id;
 
     private String main;
     private String detail;
+    private String img;
+    private String store;
     private Date date;
-    private Store store;
 }
