@@ -20,7 +20,7 @@ public class Channel {
 
     @Id @GeneratedValue
     @Column(name="channel_id")
-    private int id;
+    private Long id;
 
     private String name;
 

@@ -16,8 +16,7 @@ import java.util.List;
 @Table(name = "track")
 public class Track {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "track_id")
     private Long id;
 
