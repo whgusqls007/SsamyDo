@@ -1,13 +1,12 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.entity.Lunch;
+import com.ssljjong.ssachedule.dto.LunchDto;
 import com.ssljjong.ssachedule.repository.LunchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,13 +20,11 @@ public class LunchServiceImpl implements LunchService{
      * * Find lunch menu data for a certain period of time
      *
      * @return return List<Lunch> for today
-     *
      */
 
     @Override
-    public List<Lunch> getTodayLunch() {
-        LocalDate now = LocalDate.now();
-        Date today = java.sql.Date.valueOf(now);
+    public List<LunchDto> getTodayLunch() {
+        LocalDate today = LocalDate.now();
         return lunchRepository.findByDate(today);
     }
 
@@ -36,15 +33,12 @@ public class LunchServiceImpl implements LunchService{
      *
      * @param date date to find
      * @return List<Lunch> for date given by param
-     *
      */
 
     @Override
-    public List<Lunch> getLunchForDate(Date date) {
+    public List<LunchDto> getLunchForDate(LocalDate date) {
         return lunchRepository.findByDate(date);
     }
-
-
 
     /**
      * * Find lunch menu data for a certain period of time
@@ -52,13 +46,11 @@ public class LunchServiceImpl implements LunchService{
      * @param start start date to find
      * @param end   end date to find
      * @return return List<Lunch> in Period start ~ end
-     *
      */
 
     @Override
-    public List<Lunch> getLunchesForPeriod(Date start, Date end) {
+    public List<LunchDto> getLunchesForPeriod(LocalDate start, LocalDate end) {
         return lunchRepository.findByPeriod(start, end);
     }
-
 
 }
