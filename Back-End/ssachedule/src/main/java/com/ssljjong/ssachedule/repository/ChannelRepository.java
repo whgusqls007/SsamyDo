@@ -11,6 +11,7 @@ public interface ChannelRepository {
     public void save(Channel channel);
     public Channel findOne(Long id);
     public List<Channel> findAll();
+    public List<Channel> findByUser(UserDomain user);
     public List<Channel> findByTeam(Team team);
-    public List<Channel> find   
+    public List<Channel> findCriticalTeam();
 }
