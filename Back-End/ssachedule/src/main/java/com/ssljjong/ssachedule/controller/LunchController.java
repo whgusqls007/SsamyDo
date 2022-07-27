@@ -1,6 +1,6 @@
 package com.ssljjong.ssachedule.controller;
 
-import com.ssljjong.ssachedule.domain.Lunch;
+import com.ssljjong.ssachedule.entity.Lunch;
 import com.ssljjong.ssachedule.repository.LunchRepository;
 import com.ssljjong.ssachedule.service.LunchService;
 import lombok.RequiredArgsConstructor;

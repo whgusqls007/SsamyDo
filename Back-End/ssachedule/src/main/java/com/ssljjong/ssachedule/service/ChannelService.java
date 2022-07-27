@@ -1,6 +1,6 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.domain.Channel;
+import com.ssljjong.ssachedule.entity.Channel;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.ssljjong.ssachedule.domain.UserDomain;
+import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

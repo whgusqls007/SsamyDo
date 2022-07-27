@@ -1,14 +1,15 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Getter @Setter
-@Table(name = "todo")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "title", "description", "type", "dueDate"})
 public class Todo {
 
     @Id @GeneratedValue
@@ -22,21 +23,21 @@ public class Todo {
     private String title;
     private String description;
     private TodoType type;
-    private Date    duedate;
+    private LocalDate dueDate;
 
     // 연관 메서드
-    public void changeDuedate(Date date) {
-        this.duedate = date;
+    public void changeDuedate(LocalDate date) {
+        this.dueDate = date;
     }
 
     // 생성 메서드
-    public static Todo createTodo(Channel channel, String title, String description, TodoType type, Date dueDate) {
+    public static Todo createTodo(Channel channel, String title, String description, TodoType type, LocalDate dueDate) {
         Todo todo = new Todo();
         todo.setChannel(channel);
         todo.setTitle(title);
         todo.setDescription(description);
         todo.setType(type);
-        todo.setDuedate(dueDate);
+        todo.setDueDate(dueDate);
         return todo;
     }
 

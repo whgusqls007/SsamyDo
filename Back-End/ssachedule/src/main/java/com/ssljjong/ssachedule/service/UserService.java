@@ -1,6 +1,6 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.domain.UserDomain;
+import com.ssljjong.ssachedule.entity.UserDomain;
 
 public interface UserService {
     public Boolean checkUser(UserDomain userDomain);

@@ -1,6 +1,6 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.domain.Lunch;
+import com.ssljjong.ssachedule.entity.Lunch;
 
 import java.util.Date;
 import java.util.List;

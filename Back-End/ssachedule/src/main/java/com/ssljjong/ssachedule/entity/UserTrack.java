@@ -1,20 +1,20 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id"})
 public class UserTrack {
 
     @Id @GeneratedValue
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_email")
+    @JoinColumn(name = "user_id")
     private UserDomain user;
 
     @ManyToOne(fetch= FetchType.LAZY)
