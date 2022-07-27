@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssljjong.ssachedule.domain.UserDomain;
+import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.service.UserService;
 
 import lombok.RequiredArgsConstructor;
