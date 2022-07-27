@@ -10,5 +10,6 @@ public interface LunchRepository {
 
     public void save(Lunch lunch);
     public List<Lunch> findByDate(Date date);
+    public List<Lunch> findByPeriod(Date start, Date end);
 
 }

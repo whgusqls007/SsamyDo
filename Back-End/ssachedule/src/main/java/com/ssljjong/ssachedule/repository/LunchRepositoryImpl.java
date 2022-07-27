@@ -23,4 +23,11 @@ public class LunchRepositoryImpl implements LunchRepository{
     public List<Lunch> findByDate(Date date) {
         return em.createQuery("select l from Lunch l where l.date = :date").getResultList();
     }
+
+    @Override
+    public List<Lunch> findByPeriod(Date start, Date end) {
+        return em.createQuery("select l from Lunch l where :start <= l.date and l.date<= :end").getResultList();
+    }
+
+
 }

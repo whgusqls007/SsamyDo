@@ -19,25 +19,31 @@ public class TodoRepositoryImpl implements TodoRepository {
         em.persist(todo);
     }
 
+
     @Override
     public Todo findOne(Long id) {
         return em.find(Todo.class, id);
     }
 
+    /**
+     * * get all todos in Database
+     *
+     * @return List<Todo>
+     */
     @Override
     public List<Todo> findAll() {
         return em.createQuery("select t from Todo t", Todo.class).getResultList();
     }
 
-    /*
-     * * get TodoList by date
+    /**
+     * * get todos by duedate
      *
-     * @param Date duedate
+     * @param Date dueDate
      * @return List<Todo>
      */
     @Override
     public List<Todo> findByDue(Date dueDate) {
-        return em.createQuery("select t from Todo t where t.duedate <= :dueDate").getResultList();
+        return em.createQuery("select t from Todo t where t.duedate >= :dueDate").getResultList();
     }
 
 }
