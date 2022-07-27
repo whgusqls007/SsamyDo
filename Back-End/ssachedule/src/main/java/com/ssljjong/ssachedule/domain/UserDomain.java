@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "User")
 public class UserDomain {
     @Id
