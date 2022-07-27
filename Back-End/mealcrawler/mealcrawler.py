@@ -102,7 +102,6 @@ if __name__ == "__main__":
     flag = False
     driver = Driver()
     driver.initOptions()
-    driver.open()
 
     while True:
         hour = datetime.now().hour
@@ -116,7 +115,7 @@ if __name__ == "__main__":
         ):
 
             flag = True
-            
+            driver.open()
             driver.move("http://welplus.welstory.com/#/login")
 
             x = driver.find(By.CLASS_NAME, "close")
