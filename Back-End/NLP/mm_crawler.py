@@ -5,8 +5,8 @@ from requests import post
 
 foo = Driver({
         "url" : "meeting.ssafy.com",
-        "login_id" : "username",
-        "password": "password",
+        "login_id" : "jayl2cu@gmail.com",
+        "password": "Jaylee15@@",
         "port" : 443,
     })
 
@@ -32,7 +32,7 @@ for user_team in user_teams:
                 channel_id = channel['id']
                 dictionary = foo.posts.get_posts_for_channel(channel_id, {"since":1640962800})
                 for post in dictionary['posts'].values():
-                    if '팀에 가입' not in post['message'] and '채널에 추가' not in post['message'] and '채널에 들어' not in post['message']:
+                    if '팀에 가입' not in post['message'] and '채널에 추가' not in post['message'] and '채널에 들어' not in post['message'] and '채널을 떠났' not in post['message'] and len(post['message']) > 30:
                         messages.append(post['message'])
                 
             except:
