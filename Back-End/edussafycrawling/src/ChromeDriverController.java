@@ -7,14 +7,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.*;
 
 public class ChromeDriverController {
-    protected ChromeDriver chromeDriver;
+    public ChromeDriver chromeDriver;
     protected ChromeOptions chromeOptions;
     protected String Email = "";
     protected String PW = "";
 
-    protected ChromeDriverController(String Email, String PW) {
-        this.Email = Email;
-        this.PW = PW;
+    protected ChromeDriverController() {
         initDriver();
     }
 
@@ -165,7 +163,7 @@ public class ChromeDriverController {
     protected void initDriver() {
 
         chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("headless");
+        // chromeOptions.addArguments("headless");
         chromeOptions.addArguments("--start-maximized");
 
         try {
