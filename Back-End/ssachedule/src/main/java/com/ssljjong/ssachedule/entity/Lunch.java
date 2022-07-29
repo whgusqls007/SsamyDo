@@ -25,4 +25,12 @@ public class Lunch {
     private String img;
     private String store;
     private LocalDate date;
+
+    public Lunch(String main, String detail, String img, String store, LocalDate date) {
+        this.main = main;
+        this.detail = detail;
+        this.img = img;
+        this.store = store;
+        this.date = date;
+    }
 }

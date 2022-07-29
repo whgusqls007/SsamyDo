@@ -7,16 +7,16 @@ import java.util.List;
 @Data
 public class TeamDto {
 
-    private Long id;
+    private String id;
     private String name;
-    private List<ChannelNameDto> channels;
+    private List<ChannelDto> channels;
 
-    public TeamDto(Long id, String name) {
+    public TeamDto(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public TeamDto(Long id, String name, List<ChannelNameDto> channels) {
+    public TeamDto(String id, String name, List<ChannelDto> channels) {
         this.id = id;
         this.name = name;
         this.channels = channels;
