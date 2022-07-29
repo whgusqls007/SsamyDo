@@ -1,14 +1,16 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Getter
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "title", "type", "date"})
 @Table(name = "monthlyplan")
-public class Monthlyplan {
+public class MonthlyPlan {
 
     @Id @GeneratedValue
     @Column(name = "mp_id")
@@ -19,6 +21,6 @@ public class Monthlyplan {
 
     private String title;
     private String type;
-    private Date date;
+    private LocalDate date;
 
 }

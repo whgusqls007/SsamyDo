@@ -1,4 +1,4 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
 public enum TodoType {
     Submit, Survey
