@@ -1,11 +1,16 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id"})
 public class TeamUser {
 
     @Id
@@ -18,6 +23,6 @@ public class TeamUser {
     private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_email")
+    @JoinColumn(name = "user_id")
     private UserDomain user;
 }

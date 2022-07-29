@@ -1,16 +1,21 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Table(name = "User")
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"userEmail"})
+@Table(name = "user")
 public class UserDomain {
-    @Id
+
+    @Id @GeneratedValue
+    @Column(name = "user_id")
+    private Long id;
+
     @Column(name = "user_email")
     private String userEmail;
 

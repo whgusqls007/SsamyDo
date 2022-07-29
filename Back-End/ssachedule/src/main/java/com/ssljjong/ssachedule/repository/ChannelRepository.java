@@ -1,16 +1,13 @@
 package com.ssljjong.ssachedule.repository;
 
-import com.ssljjong.ssachedule.domain.Channel;
-import com.ssljjong.ssachedule.domain.Team;
-import com.ssljjong.ssachedule.domain.UserDomain;
+import com.ssljjong.ssachedule.dto.ChannelDto;
+import com.ssljjong.ssachedule.entity.Channel;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ChannelRepository {
+public interface ChannelRepository extends JpaRepository<Channel, Long> {
 
-    public void save(Channel channel);
-    public Channel findOne(Long id);
-    public List<Channel> findAll();
-    public List<Channel> findByTeam(Team team);
-    public List<Channel> find   
+
 }
