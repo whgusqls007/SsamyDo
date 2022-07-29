@@ -13,6 +13,8 @@ import javax.persistence.*;
 @ToString(of = {"id"})
 public class TeamUser {
 
+    // Attributes
+
     @Id
     @GeneratedValue
     @Column(name = "order_item_id")
@@ -25,4 +27,20 @@ public class TeamUser {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserDomain user;
+
+    // Constructors
+    public TeamUser(UserDomain user) {
+        this.user = user;
+    }
+
+    public TeamUser(Team team, UserDomain user) {
+        this.team = team;
+        this.user = user;
+    }
+
+    // Relationship Methods
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
