@@ -1,8 +1,7 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.domain.Todo;
-import com.ssljjong.ssachedule.domain.UserDomain;
-import com.ssljjong.ssachedule.repository.TodoRepository;
+import com.ssljjong.ssachedule.entity.Todo;
+import com.ssljjong.ssachedule.entity.UserDomain;
 
 import java.util.Date;
 import java.util.List;
