@@ -3,11 +3,10 @@ import org.openqa.selenium.WebElement;
 import java.util.*;
 
 public class GetWeekScheduleTask extends ChromeDriverController implements Runnable {
-
     JDBCDriver jdbcDriver;
 
-    public GetWeekScheduleTask(String email, String pw, JDBCDriver jdbcDriver) {
-        super(email, pw);
+    public GetWeekScheduleTask(JDBCDriver jdbcDriver) {
+        super();
         this.jdbcDriver = jdbcDriver;
     }
 

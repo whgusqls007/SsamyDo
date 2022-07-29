@@ -1,16 +1,13 @@
-import java.io.OutputStream;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GetUserCodeTask extends ChromeDriverController implements Runnable {
-    OutputStream outputStream;
     JDBCDriver jdbcDriver;
 
-    public GetUserCodeTask(String email, String pw, OutputStream fileOutputStream, JDBCDriver jdbcDriver) {
-        super(email, pw);
-        this.outputStream = fileOutputStream;
+    public GetUserCodeTask(JDBCDriver jdbcDriver) {
+        super();
         this.jdbcDriver = jdbcDriver;
     }
 

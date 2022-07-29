@@ -5,8 +5,8 @@ import java.util.*;
 public class GetMonthScheduleTask extends ChromeDriverController implements Runnable {
     JDBCDriver jdbcDriver;
 
-    public GetMonthScheduleTask(String email, String pw, JDBCDriver jdbcDriver) {
-        super(email, pw);
+    public GetMonthScheduleTask(JDBCDriver jdbcDriver) {
+        super();
         this.jdbcDriver = jdbcDriver;
     }
 
