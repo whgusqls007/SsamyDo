@@ -1,0 +1,42 @@
+.back {
+  flex: 1;
+  background-Color: #E5F3F6;
+  align-Items: center;
+  justify-Content: center;
+}
+.ssamydo {
+  /* font-Family: 'Pacifico_400Regular'; */
+  font-Style: normal;
+  font-Size: 50px;
+  line-Height: 88px;
+  display: flex;
+  align-Items: center;
+  text-Align: center;
+  justify-Content: center;
+  color: #6986A8;
+}
+
+.border {
+  border-Width: 5px;
+}
+
+.one {
+  border-Width: 1px;
+  background-Color: green;
+}
+
+.two {
+  border-Width: 1px;
+  background-Color: yellow;
+}
+
+.center {
+  flex: 1;
+  justify-Content: center;
+  align-Items: center;
+}
+
+.add {
+  flex: 1;
+  justify-Content: center;
+}
