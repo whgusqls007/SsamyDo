@@ -1,13 +1,14 @@
-package com.ssljjong.ssachedule.domain;
+package com.ssljjong.ssachedule.entity;
 
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Getter
-@Table(name = "notice")
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "title", "description", "date"})
 public class Notice {
 
     @Id @GeneratedValue
@@ -20,6 +21,6 @@ public class Notice {
 
     private String title;
     private String description;
-    private Date date;
+    private LocalDate date;
 
 }
