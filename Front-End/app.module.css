@@ -4,6 +4,11 @@
   align-Items: center;
   justify-Content: center;
 }
+
+.normal {
+  color: #6986A8;
+}
+
 .ssamydo {
   /* font-Family: 'Pacifico_400Regular'; */
   font-Style: normal;
