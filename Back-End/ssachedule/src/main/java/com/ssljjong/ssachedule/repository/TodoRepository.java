@@ -1,14 +1,49 @@
 package com.ssljjong.ssachedule.repository;
 
-import com.ssljjong.ssachedule.domain.Todo;
+import com.ssljjong.ssachedule.dto.TodoListDto;
+import com.ssljjong.ssachedule.entity.Channel;
+import com.ssljjong.ssachedule.entity.Team;
+import com.ssljjong.ssachedule.entity.Todo;
+import com.ssljjong.ssachedule.entity.UserDomain;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
 import java.util.List;
 
-public interface TodoRepository {
-    public  void save(Todo todo);
-    public  Todo findOne(Long id);
-    public List<Todo> findAll();
+public interface TodoRepository extends JpaRepository<Todo, Long>{
 
-    public List<Todo> findByDue(Date dueDate);
+    /**
+     * * find Todos by Channel
+     *
+     * @param Channel Object
+     * @return TodoListDto
+     */
+
+    @Query("select new com.ssljjong.ssachedule.dto.TodoListDto(t.id, t.title, t.type, t.dueDate) from Todo t" +
+            " join t.channel c where c.id = :channelId")
+    List<TodoListDto> findTodoListByChannelId(@Param("channelId") String channelId);
+
+    /**
+     * * find Todos by Team
+     *
+     * @param Team Object
+     * @return TodoListDto
+     */
+
+    @Query("select new com.ssljjong.ssachedule.dto.TodoListDto(t.id, t.title, t.type, t.dueDate) from Todo t join " +
+            " t.channel c join c.team te where te.id = :teamId and c.critical = true")
+    List<TodoListDto> findTodoListByTeam(@Param("teamId") String teamId);
+
+    /**
+     * * find Todos by User
+     *
+     * @param User Object
+     * @return TodoListDto
+     */
+
+    @Query("select new com.ssljjong.ssachedule.dto.TodoListDto(t.id, t.title, t.type, t.dueDate) from Todo t join " +
+            " t.channel c join c.team te join TeamUser tu join UserDomain u where u.id = :user and " +
+            "c.critical = true")
+    List<TodoListDto> findTodoListByUserId(@Param("user") Long id);
 }
