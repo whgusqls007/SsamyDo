@@ -18,7 +18,7 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
      */
 
     @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name)" +
-            " from Channel c join fetch Team t join fetch TeamUser tu join fetch UserDomain u" +
+            " from Channel c join fetch Team t join TeamUser tu join fetch UserDomain u" +
             " where u.id = :userId")
     List<ChannelDto> findChannelsByUser(@Param("userId") Long id);
 
@@ -29,10 +29,14 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
      * @return ChannelDtoList
      */
     @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name)" +
-            " from Channel c join fetch Team t join fetch TeamUser tu join fetch UserDomain u" +
+            " from Channel c join fetch Team t join TeamUser tu join fetch UserDomain u" +
             " where u.id = :userId and c.critical = true")
     List<ChannelDto> findCriticalChannelsByUser(@Param("userId") Long id);
 
+
+    @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name, c.critical) from Channel c" +
+            " join c.team t where t.id = :teamId")
+    List<ChannelDto> findChannelsByTeam(@Param("teamId") String teamId);
 
     Channel findChannelByName(String name);
 }
