@@ -5,10 +5,7 @@ import com.ssljjong.ssachedule.entity.UserDomain;
 
 import java.util.List;
 
-public interface UserService {
-    public Boolean checkUser(UserDomain userDomain);
+public interface TeamService {
 
-    public Boolean setUserEduInfo(UserDomain userDomain);
-
-
+    public List<TeamDto> getTeamsByUser(UserDomain user);
 }
