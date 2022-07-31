@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface UserService {
     public Boolean checkUser(UserDomain userDomain);
-
     public Boolean setUserEduInfo(UserDomain userDomain);
 
 
