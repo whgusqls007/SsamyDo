@@ -107,7 +107,6 @@ export default function MakeSchedule({ navigation }) {
           }}
         />
       </View>
-      <Text>우옹</Text>
     </View>
   );
 }
