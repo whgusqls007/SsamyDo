@@ -34,7 +34,7 @@ function TodoItem({ navigation }) {
           data={DATA}
           renderItem={({ item }) => (
             <View>
-                <Text>{item.original_title}</Text>
+                <Text>{item.title}</Text>
                 <Button onPress={() => navigation.navigate("TodoDetail")} title="hello"/>
             </View>)}
           keyExtractor={item => item.id}
