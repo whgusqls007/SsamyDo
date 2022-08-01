@@ -40,7 +40,7 @@ export default function TodoList({ navigation }) {
         keyExtractor={item => item.id}
       /> */}
       <Text>오늘의 설문</Text>
-      <TodoItem />
+      <TodoItem navigation={navigation} />
     </View>
   );
 }
