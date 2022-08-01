@@ -45,3 +45,8 @@
   flex: 1;
   justify-Content: center;
 }
+
+.todolist { 
+  padding: 1px;
+  background-color: pink;
+}
