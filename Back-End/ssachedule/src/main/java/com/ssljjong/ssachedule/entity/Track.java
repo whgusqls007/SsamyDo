@@ -24,7 +24,7 @@ public class Track {
     private int gi;
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
-    private List<UserTrack> userTrack = new ArrayList<>();
+    private List<UserDomain> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<MonthlyPlan> monthlyPlans = new ArrayList<>();
