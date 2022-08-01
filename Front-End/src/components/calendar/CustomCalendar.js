@@ -1,5 +1,7 @@
-import { Calendar } from "react-native-calendars";
-import { LocaleConfig } from "react-native-calendars";
+import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
+import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
@@ -45,27 +47,44 @@ LocaleConfig.locales["ssamydo"] = {
 LocaleConfig.defaultLocale = "ssamydo";
 
 export default function CustomCalendar() {
+  const TodoList = useSelector((state) => {
+    return state.TodoList;
+  });
+
   return (
-    <Calendar
-      hideExtraDays={true}
-      enableSwipeMonths={true}
-      theme={{
-        "stylesheet.calendar.header": {
-          dayTextAtIndex0: {
-            color: "red",
+    <View>
+      <Calendar
+        hideExtraDays={true}
+        enableSwipeMonths={true}
+        theme={{
+          "stylesheet.calendar.header": {
+            dayTextAtIndex0: {
+              color: "red",
+            },
+            dayTextAtIndex6: {
+              color: "blue",
+            },
           },
-          dayTextAtIndex6: {
-            color: "blue",
-          },
-        },
-      }}
-      // 일정표시 기능
-      markedDates={{
-        "2022-07-16": { selected: true, marked: true, selectedColor: "blue" },
-        "2022-07-17": { marked: true },
-        "2022-07-18": { marked: true, dotColor: "red", activeOpacity: 0 },
-        "2022-07-19": { disabled: true, disableTouchEvent: true },
-      }}
-    />
+        }}
+        // 일정표시 기능
+        markedDates={{
+          "2022-07-16": { selected: true, marked: true, selectedColor: "blue" },
+          "2022-07-17": { marked: true },
+          "2022-07-18": { marked: true, dotColor: "red", activeOpacity: 0 },
+          "2022-07-19": { disabled: true, disableTouchEvent: true },
+        }}
+      />
+      <Agenda
+        items={{
+          "2012-05-22": [{ name: "item 1 - any js object" }],
+          "2012-05-23": [{ name: "item 2 - any js object", height: 80 }],
+          "2012-05-24": [],
+          "2012-05-25": [
+            { name: "item 3 - any js object" },
+            { name: "any js object" },
+          ],
+        }}
+      />
+    </View>
   );
 }
