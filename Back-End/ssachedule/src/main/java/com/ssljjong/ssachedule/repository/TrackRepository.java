@@ -1,13 +1,24 @@
 package com.ssljjong.ssachedule.repository;
 
-import com.ssljjong.ssachedule.domain.Track;
+import com.ssljjong.ssachedule.entity.Track;
+import com.ssljjong.ssachedule.entity.UserDomain;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TrackRepository {
+public interface TrackRepository extends JpaRepository<Track, Long> {
 
-    public void save(Track track);
-    public Track findOne(Long id);
-    public List<Track> findAll();
-    public Track findTrack(int gisu, String trackName);
+    /**
+     * * find Track By Track_Name and Gi
+     *
+     * @param trackName
+     * @param gi
+     * @return Track Object
+     */
+    Track findTrackByNameAndGi(String name, int gi);
+
+
+
+
+
 }
