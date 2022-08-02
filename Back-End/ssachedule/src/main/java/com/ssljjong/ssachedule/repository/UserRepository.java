@@ -31,8 +31,8 @@ public interface UserRepository extends JpaRepository<UserDomain, Integer> {
      * @return UserDomainList
      */
 
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from UserDomain u where u.track = :track")
-    List<UserDomain> findUserDomainListByTrack(@Param("track") Track track);
+    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from UserDomain u where u.track.id = :trackId")
+    List<UserDomain> findUserDomainListByTrack(@Param("trackId") Long trackId);
 
     /**
      * * find Users by Team
@@ -42,10 +42,12 @@ public interface UserRepository extends JpaRepository<UserDomain, Integer> {
      */
 
     @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from UserDomain u join fetch TeamUser tu " +
-            "join fetch Team t where t = :team")
-    List<UserListDto> findUserIdListByTeam(@Param("team") Team team);
+            "join fetch Team t where t.id = :teamId")
+    List<UserListDto> findUserIdListByTeam(@Param("teamId") Long teamId);
 
     @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from UserDomain u join fetch TeamUser tu " +
-            "join fetch Team t join fetch Channel c where c = :channel")
-    List<UserListDto> findUserIdListByChannel(@Param("channel") Channel channel);
+            "join fetch Team t join fetch Channel c where c.id = :channelId")
+    List<UserListDto> findUserIdListByChannel(@Param("channelId") Long channelId);
+
+    Optional<UserDomain> findUserByUserEmail(String userEmail);
 }

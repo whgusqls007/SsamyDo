@@ -12,53 +12,61 @@ import lombok.RequiredArgsConstructor;
 import net.bis5.mattermost.client4.MattermostClient;
 import net.bis5.mattermost.model.User;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Override
-    public Boolean checkUser(UserDomain userDomain) {
-        return null;
-    }
 
+    private final UserRepository userRepository;
+
+    MattermostClient client = MattermostClient.builder()
+            .url("https://meeting.ssafy.com")
+            // .logLevel(Level.INFO)
+            .ignoreUnknownProperties()
+            .build();
+    /**
+     * * Login into MattermostClient using Email, Password
+     *
+     * @param email mattermost email
+     * @param pw    mattermost password
+     * @return true when login success and save info in db successfully otherwise
+     *         return false
+     */
     @Override
-    public Boolean setUserEduInfo(UserDomain userDomain) {
-        return null;
-    }
-//
-//    private final UserRepository userRepository;
-//
-//    MattermostClient client = MattermostClient.builder()
-//            .url("https://meeting.ssafy.com")
-//            // .logLevel(Level.INFO)
-//            .ignoreUnknownProperties()
-//            .build();
-//
-//    /**
-//     * * Login into MattermostClient using Email, Password
-//     *
-//     * @param email mattermost email
-//     * @param pw    mattermost password
-//     * @return true when login success and save info in db successfully otherwise
-//     *         return false
-//     */
-//    @Override
-//    public Boolean checkUser(UserDomain userDomain) {
-//        User user = client.login(userDomain.getUserEmail(), userDomain.getUserPw());
-//
+    public String checkAccount(UserDomain userDomain) {
+        User user = client.login(userDomain.getUserEmail(), userDomain.getUserPw());
+        return "성공";
+
 //        if (user.getEmail() == null) {
 //            return false;
 //        }
+
+    }
+
+    @Override
+    public void addTeam(UserDomain user) {
+
+    }
+
+    @Override
+    public void setTrack(UserDomain user) {
+
+    }
+
+
+    public Optional<UserDomain> getUser(String userEmail){
+        return userRepository.findUserByUserEmail(userEmail);
+    }
+
 //
-//        if (getUser(userDomain.getUserEmail()) == null) {
-//            userRepository.save(userDomain);
-//        }
 //
-//        return true;
-//    }
+
 //
 //    /**
 //     * @param UserDomain
+
 //     * @return Boolean, true when updated successfully, otherwise false
 //     */
 //    @Override
@@ -82,12 +90,5 @@ public class UserServiceImpl implements UserService {
 //     * @param userEmail
 //     * @return Boolean
 //     */
-//    private UserDomain getUser(String userEmail) {
-//        UserDomain userDomain = userRepository.findOne(userEmail);
-//        if (userDomain == null) {
-//            return null;
-//        }
-//
-//        return userDomain;
-//    }
+
 }
