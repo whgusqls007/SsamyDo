@@ -2,6 +2,7 @@ package com.ssljjong.ssachedule.controller;
 
 import java.util.Map;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,8 @@ import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.ws.rs.core.Response;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +29,23 @@ public class UserController {
      *         when email, pw is correct otherwise
      *         ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED)
      */
+
+    @PostMapping("/user/login")
+    public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String> map) {
+        String email = map.get("email");
+        String pw = map.get("pw");
+        String eduPw = map.get("eduPw");
+
+        UserDomain userDomain = new UserDomain(email, pw, eduPw);
+
+        if (userService.getUser(email) == null) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+        } else {
+            userService.checkAccount(userDomain);
+        }
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+    }
 //    @PostMapping("/checkuser")
 //    public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String> map) {
 //        UserDomain userDomain = new UserDomain();
