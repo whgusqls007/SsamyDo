@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "member", uniqueConstraints = {@UniqueConstraint(
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(
         name = "USER-EMAIL_AND_EDU-EMAIL_UNIQUE",
-        columnNames = {"user_email", "edu_email"}
+        columnNames = {"user_email"}
 )})
 public class UserDomain {
 
@@ -20,46 +20,42 @@ public class UserDomain {
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "user_email", nullable = false)
+    @Column(name = "user_email")
     private String userEmail;
 
     @Column(name = "user_pw", nullable = false)
     private String userPw;
 
+    @Column(name = "edu_pw", nullable = false)
+    private String eduPw;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
 
-    @Column(name = "edu_email", nullable = false)
-    private String eduEmail;
-
-    @Column(name = "edu_pw", nullable = false)
-    private String eduPw;
 
     // Constructor
+
+
 
     public UserDomain(Integer id, String userEmail, String userPw, Track track, String eduEmail, String eduPw) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPw = userPw;
-        this.track = track;
-        this.eduEmail = eduEmail;
         this.eduPw = eduPw;
+        this.track = track;
     }
 
     public UserDomain(Integer id, String userEmail, String userPw, String eduEmail, String eduPw) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPw = userPw;
-        this.eduEmail = eduEmail;
         this.eduPw = eduPw;
     }
 
-    public UserDomain(String userEmail, String userPw, String eduEmail, String eduPw) {
+    public UserDomain(String userEmail, String userPw, String eduPw) {
         this.userEmail = userEmail;
         this.userPw = userPw;
-        this.eduEmail = eduEmail;
         this.eduPw = eduPw;
     }
     // 연관 메서드 //

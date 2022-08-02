@@ -139,11 +139,11 @@ below_threshold_len(max_len, X_train)
 X_train = pad_sequences(X_train, maxlen=max_len)
 X_test = pad_sequences(X_test, maxlen=max_len)
 
-dfx = pd.DataFrame(X_train)
-dfx.to_csv("x_train.txt")
+# dfx = pd.DataFrame(X_train)
+# dfx.to_csv("x_train.txt")
 
-dfy = pd.DataFrame(y_train)
-dfy.to_csv("y_train.txt")
+# dfy = pd.DataFrame(y_train)
+# dfy.to_csv("y_train.txt")
 
 # save tokenizer
 with open('tokenizer.pickle', 'wb') as handle:
