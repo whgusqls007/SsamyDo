@@ -18,7 +18,7 @@ export default function Main({ navigation }) {
   });
   return (
     <View style={[styles.border]}>
-      <Text>Main</Text>
+      {/* <Text>Main</Text> */}
       <TodoList navigation={navigation} />
       <TimeLine />
     </View>
