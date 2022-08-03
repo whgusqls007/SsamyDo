@@ -18,7 +18,7 @@ public class UserDomain {
     // Attributes
     @Id @GeneratedValue
     @Column(name = "user_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "user_email")
     private String userEmail;
@@ -38,7 +38,7 @@ public class UserDomain {
 
 
 
-    public UserDomain(Integer id, String userEmail, String userPw, Track track, String eduEmail, String eduPw) {
+    public UserDomain(Long id, String userEmail, String userPw, Track track, String eduEmail, String eduPw) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPw = userPw;
@@ -46,7 +46,7 @@ public class UserDomain {
         this.track = track;
     }
 
-    public UserDomain(Integer id, String userEmail, String userPw, String eduEmail, String eduPw) {
+    public UserDomain(Long id, String userEmail, String userPw, String eduEmail, String eduPw) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPw = userPw;
