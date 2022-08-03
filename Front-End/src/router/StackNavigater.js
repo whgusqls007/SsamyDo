@@ -25,7 +25,6 @@ export default function MyStack() {
       <Stack.Screen name="TodoItem" component={TodoItem} />
       <Stack.Screen name="TodoDetail" component={TodoDetail} />
       <Stack.Screen name="MakeSchedule" component={MakeSchedule} />
-      <Stack.Screen name="ScheduleDetail" component={ScheduleDetail} />
       <Stack.Screen name="example" component={example} />
     </Stack.Navigator>
   );

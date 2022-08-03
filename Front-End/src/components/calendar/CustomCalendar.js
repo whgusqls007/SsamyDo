@@ -1,5 +1,7 @@
-import { Calendar } from "react-native-calendars";
-import { LocaleConfig } from "react-native-calendars";
+import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
+import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
@@ -45,27 +47,32 @@ LocaleConfig.locales["ssamydo"] = {
 LocaleConfig.defaultLocale = "ssamydo";
 
 export default function CustomCalendar() {
+  const dispatch = useDispatch();
+  const markDate = useSelector((state) => {
+    return state.TodoList[5];
+  });
   return (
-    <Calendar
-      hideExtraDays={true}
-      enableSwipeMonths={true}
-      theme={{
-        "stylesheet.calendar.header": {
-          dayTextAtIndex0: {
-            color: "red",
+    <View>
+      <Calendar
+        // onDayPress={(day) => {
+        //   dispatch({ type: "TodoList/filter", select: day.dateString });
+        // }}
+        hideExtraDays={true}
+        enableSwipeMonths={true}
+        theme={{
+          "stylesheet.calendar.header": {
+            dayTextAtIndex0: {
+              color: "red",
+            },
+            dayTextAtIndex6: {
+              color: "blue",
+            },
           },
-          dayTextAtIndex6: {
-            color: "blue",
-          },
-        },
-      }}
-      // 일정표시 기능
-      markedDates={{
-        "2022-07-16": { selected: true, marked: true, selectedColor: "blue" },
-        "2022-07-17": { marked: true },
-        "2022-07-18": { marked: true, dotColor: "red", activeOpacity: 0 },
-        "2022-07-19": { disabled: true, disableTouchEvent: true },
-      }}
-    />
+        }}
+        // 일정표시 기능
+        markingType={"multi-dot"}
+        markedDates={markDate}
+      />
+    </View>
   );
 }
