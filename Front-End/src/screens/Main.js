@@ -10,10 +10,12 @@ export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
     AsyncStorage.getItem("TodoList", (err, result) => {
-      dispatch({
-        type: "TodoList/import",
-        payload: JSON.parse(result),
-      });
+      if (result) {
+        dispatch({
+          type: "TodoList/import",
+          payload: JSON.parse(result),
+        });
+      }
     });
   });
   return (

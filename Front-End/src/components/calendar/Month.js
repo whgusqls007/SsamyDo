@@ -9,12 +9,7 @@ export default function Month() {
   const TodoList = useSelector((state) => {
     return state.TodoList[0];
   });
-  const oneTodoList = useSelector((state) => {
-    return state.TodoList[2];
-  });
-  const twoTodoList = useSelector((state) => {
-    return state.TodoList[3];
-  });
+
   const dispatch = useDispatch();
 
   useEffect(() => {

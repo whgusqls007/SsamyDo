@@ -1,8 +1,8 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import ScheduleItem from "./ScheduleItem";
 import styles from "../../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ScheduleList({ navigation }) {
   const dispatch = useDispatch();
@@ -10,15 +10,19 @@ export default function ScheduleList({ navigation }) {
   //   dispatch({ type: "TodoList/filter", select: "2022-08-03" });
   // });
   const TodoList = useSelector((state) => {
-    return state.TodoList[4];
+    return state.TodoList[0];
   });
+
   return (
-    <View style={styles.one}>
-      <Text>{TodoList}</Text>
+    <View>
       <Text>ScheduleList.js</Text>
-      {/* {TodoList.map((todo) => {
-        <ScheduleItem navigation={navigation} key={todo.id} todo={[todo]} />;
-      })} */}
+      <ScrollView style={{ border: "1 black" }}>
+        {TodoList.map((todo) => {
+          return (
+            <ScheduleItem navigation={navigation} todo={todo} key={todo.id} />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }

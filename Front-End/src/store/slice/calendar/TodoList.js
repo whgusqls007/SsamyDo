@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Month from "../../../components/calendar/Month";
 
 const TodoList = createSlice({
   name: "TodoList",
@@ -10,6 +11,7 @@ const TodoList = createSlice({
   reducers: {
     // local 정보 읽기  + 추가필요(ssafy 공지의 경우 local에 저장하지 않으므로 따로 사용)
     import: (state, action) => {
+      // 입력값들 전체 Todo리스트, LastId, 1번 타입 리스트, 2번 타입 리스트에 입력
       state[0] = action.payload.TodoList;
       state[1] = action.payload.lastId;
       state[0].map((todo) => {
@@ -24,28 +26,30 @@ const TodoList = createSlice({
     save: (state) => {
       AsyncStorage.setItem(
         "TodoList",
-        JSON.stringify({ TodoList: state[0], lastId: state[1] }),
-        () => {}
+        JSON.stringify({ TodoList: state[0], lastId: state[1] })
       );
     },
     // TodoList에 추가
     add: (state, action) => {
+      // 전체 리스트에 추가 후 속성에 맞는 리스트에 추가
       state[0].push(action.payload);
-      console.log(action.payload);
       if (action.payload.type === 1) {
         state[2].push(action.payload);
       } else if (action.payload.type === 2) {
         state[3].push(action.payload);
       }
+      // 마지막 ID 값 +1
       state[1] += 1;
     },
     // 특정 Todo 수정
     update: (state, action) => {
+      // 순회하며 TodoList 내에서 해당 id를 가진 Todo의 인덱스값 찾기
       const index = state[0].map((todo) => {
         if (todo.id === action.payload.id) {
-          state[0].indexOf(todo);
+          return state[0].indexOf(todo);
         }
       });
+      // 해당 인덱스 번호를 가진 Todo를 입력값으로 변경
       state[0][index] = action.payload;
     },
     // 특정 Todo 삭제
@@ -65,7 +69,7 @@ const TodoList = createSlice({
           }
         });
         state[1].splice(index, 1);
-        // 2-1. typ2인 TodoList에서 해당 Todo 삭제
+        // 2-2. typ2인 TodoList에서 해당 Todo 삭제
       } else if (action.payload.type == "2") {
         const index = state[2].map((todo) => {
           if (todo.id === action.payload.id) {
