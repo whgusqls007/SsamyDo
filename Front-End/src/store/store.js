@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import Todo from "./slice/calendar/Todo";
+import Todo from "./slice/calendar/ToDo";
 import TodoList from "./slice/calendar/TodoList";
 
 const store = configureStore({
