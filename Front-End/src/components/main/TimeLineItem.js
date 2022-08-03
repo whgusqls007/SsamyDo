@@ -2,28 +2,29 @@ import React, { Component } from 'react';
  import {
    StyleSheet,
    Text,
-   View
+   View,
+   List
  } from 'react-native';
- import Timeline from 'react-native-timeline-flatlist'
+import Timeline from 'react-native-timeline-flatlist'
  
  export default class TimeLineItem extends Component {
    constructor(){
      super()
      this.data = [
-       {time: '09:00', title: 'Event 1', description: 'Event 1 Description'},
-       {time: '10:45', title: 'Event 2', description: 'Event 2 Description'},
-       {time: '12:00', title: 'Event 3', description: 'Event 3 Description'},
-       {time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
-       {time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
+       {time: '09:00', title: '[LIVE] 웹쩌고 저쩌고'},
+       {time: '10:00', title: '자율 coding 팀별 프로젝트 진행'},
+       {time: '12:20', title: '중식'},
+       {time: '13:30', title: '자율 coding 팀별 프로젝트 진행'},
+       {time: '18:00', title: '퇴실체크'}
      ]
    } 
  
    render() {
      //'rgb(45,156,219)'
      return (
-       <View style={styles.container}>
-        <Text>보이나?</Text>
-         <Timeline 
+       <View>
+        <Text>TimeLineItem</Text>
+         <Text 
            style={styles.list}
            data={this.data}
          />

@@ -10,17 +10,25 @@ export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
     AsyncStorage.getItem("TodoList", (err, result) => {
-      dispatch({
-        type: "TodoList/import",
-        payload: JSON.parse(result),
-      });
+      if (result) {
+        dispatch({
+          type: "TodoList/import",
+          payload: JSON.parse(result),
+        });
+      }
     });
   });
   return (
-    <View style={[styles.border]}>
+    <View style={[styles.border, styles.checkarea]}>
       {/* <Text>Main</Text> */}
-      <TodoList navigation={navigation} />
-      <TimeLine />
+      <View style={styles.todoarea}>
+        <TodoList navigation={navigation}/>
+      </View>
+      <View style={styles.timelinearea}>
+        <Text>Timeline Area</Text>
+        <TimeLine/>
+      </View>
+      
     </View>
   );
 }
