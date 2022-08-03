@@ -4,7 +4,6 @@ import SignIn from "../components/signin/SignIn";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import TodoDetail from "../components/main/TodoDetail";
 import MakeSchedule from "../components/calendar/MakeSchedule";
-import ScheduleDetail from "../components/calendar/ScheduleDetail";
 import MyTabs from ".";
 import example from "../store/example/example";
 
@@ -19,7 +18,6 @@ export default function MyStack() {
       <Stack.Screen name="NoticeDetail" component={NoticeDetail} />
       <Stack.Screen name="TodoDetail" component={TodoDetail} />
       <Stack.Screen name="MakeSchedule" component={MakeSchedule} />
-      <Stack.Screen name="ScheduleDetail" component={ScheduleDetail} />
       <Stack.Screen name="example" component={example} />
     </Stack.Navigator>
   );
