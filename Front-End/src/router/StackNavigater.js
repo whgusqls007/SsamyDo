@@ -4,7 +4,7 @@ import SignIn from "../components/signin/SignIn";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import TodoDetail from "../components/main/TodoDetail";
 import MakeSchedule from "../components/calendar/MakeSchedule";
-import ScheduleDetail from "../components/calendar/ScheduleDetail";
+// import ScheduleDetail from "../components/calendar/ScheduleDetail";
 import TodoItem from "../components/main/TodoItem";
 import MyTabs from ".";
 import example from "../store/example/example";

@@ -81,3 +81,24 @@
   background-color: white;
   width: auto;
 }
+
+.checkarea {
+  flex: 1;
+  background-color: crimson;
+}
+
+.todoarea {
+  flex: 2;
+  background-color: sandybrown;
+  color: #fff;
+}
+
+.timelinearea {
+  flex: 3;
+  background-color: aquamarine;
+}
+
+.timelinelistarea {
+  flex: 1;
+  background-color: fuchsia;
+}
