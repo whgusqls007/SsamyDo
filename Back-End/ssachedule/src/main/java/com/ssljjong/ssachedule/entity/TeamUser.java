@@ -17,7 +17,7 @@ public class TeamUser {
 
     @Id
     @GeneratedValue
-    @Column(name = "order_item_id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

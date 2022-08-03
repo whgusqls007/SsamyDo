@@ -29,7 +29,7 @@ class UserRepositoryTest {
 
     @Test
     public void testUser() {
-        UserDomain user = new UserDomain("test@gmail.com", "test","test@gmail.com", "test");
+        UserDomain user = new UserDomain("test@gmail.com", "test", "test");
         userRepository.save(user);
 
         UserDomain findUser = userRepository.findById(user.getId()).get();
@@ -65,8 +65,8 @@ class UserRepositoryTest {
 
     @Test
     public void testFindUserIdListByTeam() {
-        UserDomain user1 = new UserDomain("test1@gmail.com", "test1", "test1@gmail.com", "test1");
-        UserDomain user2 = new UserDomain("test2@gmail.com", "test2", "test2@gmail.com", "test2");
+        UserDomain user1 = new UserDomain("test1@gmail.com", "test1@gmail.com", "test1");
+        UserDomain user2 = new UserDomain("test2@gmail.com", "test2@gmail.com", "test2");
 
         Team team = new Team("id1", "부울경2반");
 
