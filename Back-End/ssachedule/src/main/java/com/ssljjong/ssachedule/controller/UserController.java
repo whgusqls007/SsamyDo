@@ -11,18 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.service.UserService;
+import javassist.bytecode.DuplicateMemberException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-import javax.ws.rs.core.Response;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/avi/v1/user")
 @RequiredArgsConstructor
 public class UserController {
-
-    private final UserService userService;
+//
+//    private final UserService userService;
 
     /**
      * 
