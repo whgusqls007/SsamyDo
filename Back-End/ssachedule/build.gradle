@@ -22,10 +22,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-    implementation 'junit:junit:4.13.1'
 	implementation 'junit:junit:4.13.1'
 	implementation 'junit:junit:4.13.1'
-    implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13.1'
 	implementation 'junit:junit:4.13.1'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -37,7 +37,8 @@ dependencies {
 	implementation 'org.glassfish.jersey.core:jersey-client:2.35'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 	runtimeOnly 'com.h2database:h2'
-	
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 }
 
 tasks.named('test') {
