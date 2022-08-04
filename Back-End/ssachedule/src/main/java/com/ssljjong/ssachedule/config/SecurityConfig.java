@@ -7,6 +7,7 @@ import com.ssljjong.ssachedule.jwt.JwtSecurityConfig;
 import com.ssljjong.ssachedule.jwt.TokenProvider;
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;

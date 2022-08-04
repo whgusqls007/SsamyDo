@@ -48,8 +48,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "join fetch Team t join fetch Channel c where c.id = :channelId")
     List<UserListDto> findUserIdListByChannel(@Param("channelId") Long channelId);
 
-    @EntityGraph(attributePaths = "authorities") // Eager로 받아오게 해줌
+
     Optional<User> findUserByUsername(String username);
-
-
+    @EntityGraph(attributePaths = "authorities") // Eager로 받아오게 해줌
+    Optional<Object> findOneWithAuthoritiesByUsername(String username);
 }
