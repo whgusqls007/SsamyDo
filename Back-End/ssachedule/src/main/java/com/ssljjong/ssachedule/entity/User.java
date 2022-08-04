@@ -29,7 +29,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "edu_pw", nullable = false)
+    @Column(name = "edu_pw")
     private String eduPw;
 
     @JsonIgnore
