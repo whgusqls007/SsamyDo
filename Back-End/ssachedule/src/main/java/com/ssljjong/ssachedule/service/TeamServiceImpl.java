@@ -1,7 +1,6 @@
 package com.ssljjong.ssachedule.service;
 
 import com.ssljjong.ssachedule.dto.TeamDto;
-import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
