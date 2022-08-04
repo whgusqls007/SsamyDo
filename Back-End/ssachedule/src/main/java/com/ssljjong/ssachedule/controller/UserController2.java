@@ -1,13 +1,10 @@
 package com.ssljjong.ssachedule.controller;
 
-import com.ssljjong.ssachedule.entity.UserDomain;
+import com.ssljjong.ssachedule.entity.User;
 import com.ssljjong.ssachedule.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,8 +13,8 @@ public class UserController2 {
 
     private final UserRepository userRepository;
 
-    public Boolean checkUser(String userEmail) {
-        Optional<UserDomain> user = userRepository.findUserByUserEmail(userEmail);
+    public Boolean checkUser(String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
         try {
             user.get();
             return Boolean.TRUE;

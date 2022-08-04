@@ -4,13 +4,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.ssljjong.ssachedule.entity.UserDomain;
+import com.ssljjong.ssachedule.entity.User;
 import com.ssljjong.ssachedule.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 import net.bis5.mattermost.client4.MattermostClient;
-import net.bis5.mattermost.model.User;
 
 import java.util.Optional;
 
@@ -35,8 +34,8 @@ public class UserServiceImpl implements UserService {
      *         return false
      */
     @Override
-    public String checkAccount(UserDomain userDomain) {
-        User user = client.login(userDomain.getUserEmail(), userDomain.getUserPw());
+    public String checkAccount(User userDomain) {
+        net.bis5.mattermost.model.User user = client.login(userDomain.getUsername(), userDomain.getPassword());
         return "성공";
 
 //        if (user.getEmail() == null) {
@@ -46,18 +45,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addTeam(UserDomain user) {
+    public void addTeam(User user) {
 
     }
 
     @Override
-    public void setTrack(UserDomain user) {
+    public void setTrack(User user) {
 
     }
 
 
-    public Optional<UserDomain> getUser(String userEmail){
-        return userRepository.findUserByUserEmail(userEmail);
+    public Optional<User> getUser(String username){
+        return userRepository.findUserByUsername(username);
     }
 
 //
