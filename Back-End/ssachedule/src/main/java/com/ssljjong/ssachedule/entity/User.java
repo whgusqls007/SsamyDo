@@ -11,15 +11,12 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(
-        name = "USERNAME",
-        columnNames = {"username"}
-)})
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(name = "USERNAME", columnNames = { "username" }) })
 public class User {
 
-
     // Attributes
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "user_id")
     private Long id;
 
@@ -29,26 +26,23 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "edu_pw", nullable = false)
+    @Column(name = "edu_pw")
     private String eduPw;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
 
-//    @Column(name = "activated")
-//    private boolean activated;
+    // @Column(name = "activated")
+    // private boolean activated;
 
     @ManyToMany
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    @JoinTable(name = "user_authority", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
     private Set<Authority> authorities;
 
     // Constructor
-
-
 
     public User(Long id, String username, String userPw, Track track, String eduEmail, String eduPw) {
         this.id = id;
@@ -70,7 +64,7 @@ public class User {
         this.password = userPw;
         this.eduPw = eduPw;
     }
-// 연관 메서드 //
+    // 연관 메서드 //
 
     // 트랙을 바꾸는 메서드
     public void changeTrack(Track track) {

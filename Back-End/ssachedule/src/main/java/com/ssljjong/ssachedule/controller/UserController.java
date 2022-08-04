@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssljjong.ssachedule.entity.UserDomain;
+import com.ssljjong.ssachedule.entity.User;
 import com.ssljjong.ssachedule.service.UserService;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +25,11 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/avi/v1/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-//
-//    private final UserService userService;
+    //
+    private final UserService userService;
 
     /**
      * 
@@ -46,7 +46,7 @@ public class UserController {
         String pw = map.get("pw");
         String eduPw = map.get("eduPw");
 
-        UserDomain userDomain = new UserDomain(email, pw, eduPw);
+        User userDomain = new User(email, pw, eduPw);
 
         if (userService.getUser(email) == null) {
             return new ResponseEntity<Boolean>(false, HttpStatus.OK);
