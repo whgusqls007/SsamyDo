@@ -75,7 +75,7 @@ public class UserService {
         User user = User.builder()
                 .username(userDto.getUsername())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                .eduPw(userDto.getEduPw())
+                .eduPw(passwordEncoder.encode(userDto.getEduPw()))
                 .authorities(Collections.singleton(authority))
                 .build();
 
