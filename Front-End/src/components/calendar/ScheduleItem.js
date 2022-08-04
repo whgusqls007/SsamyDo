@@ -1,14 +1,12 @@
 import { View, Text, Button } from "react-native";
 import styles from "../../../app.module.css";
 
-export default function ScheduleItem({ navigation }) {
+export default function ScheduleItem(props) {
+  const { navigation } = props;
+  const { todo } = props;
   return (
     <View style={[styles.two, { flexDirection: "row" }]}>
-      <Text>ScheduleItem.js</Text>
-      <Button
-        title="Detail"
-        onPress={() => navigation.navigate("ScheduleDetail")}
-      />
+      <Text>{todo.id}</Text>
     </View>
   );
 }
