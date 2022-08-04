@@ -1,20 +1,22 @@
 package com.ssljjong.ssachedule.controller;
 
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ssljjong.ssachedule.entity.User;
+import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.service.UserService;
+import javassist.bytecode.DuplicateMemberException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 //
 //    private final UserService userService;
@@ -85,4 +87,34 @@ public class UserController {
 //
 //        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 //    }
+    private final UserService userService;
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("hello");
+    }
+
+    @PostMapping("/test-redirect")
+    public void testRedirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/api/user");
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<UserDto> signup(
+            @Valid @RequestBody UserDto userDto
+    ) throws Exception {
+        return ResponseEntity.ok(userService.signup(userDto));
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<UserDto> getMyUserInfo(HttpServletRequest request) {
+        return ResponseEntity.ok(userService.getMyUserWithAuthorities());
+    }
+
+    @GetMapping("/user/{username}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserWithAuthorities(username));
+    }
 }

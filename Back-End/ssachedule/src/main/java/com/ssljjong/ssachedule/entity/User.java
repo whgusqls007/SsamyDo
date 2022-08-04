@@ -36,8 +36,8 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
 
-    @Column(name = "activated")
-    private boolean activated;
+//    @Column(name = "activated")
+//    private boolean activated;
 
     @ManyToMany
     @JoinTable(
