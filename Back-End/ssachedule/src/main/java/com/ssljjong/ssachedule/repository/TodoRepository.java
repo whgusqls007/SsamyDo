@@ -1,10 +1,7 @@
 package com.ssljjong.ssachedule.repository;
 
 import com.ssljjong.ssachedule.dto.TodoListDto;
-import com.ssljjong.ssachedule.entity.Channel;
-import com.ssljjong.ssachedule.entity.Team;
 import com.ssljjong.ssachedule.entity.Todo;
-import com.ssljjong.ssachedule.entity.UserDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -44,7 +41,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      */
 
     @Query("select new com.ssljjong.ssachedule.dto.TodoListDto(t.id, t.title, t.type, t.dueDate) from Todo t join" +
-            " t.channel c join c.team te join TeamUser tu join UserDomain u where u.id = :userId and " +
+            " t.channel c join c.team te join TeamUser tu join User u where u.id = :userId and " +
             "c.critical = true")
     List<TodoListDto> findTodoListByUserId(@Param("userId") Long id);
 
@@ -57,6 +54,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @return TodoDto List
      */
     @Query("select new com.ssljjong.ssachedule.dto.TodoListDto(t.id, t.title, t.type, t.dueDate) from Todo t join" +
-            " t.channel c join c.team te join TeamUser tu join UserDomain u where u.id = :userId and t.dueDate >= :date")
+            " t.channel c join c.team te join TeamUser tu join User u where u.id = :userId and t.dueDate >= :date")
     List<TodoListDto> findTodoListFromDateByUserId(@Param("userId") Long userId, @Param("date") LocalDate date);
 }

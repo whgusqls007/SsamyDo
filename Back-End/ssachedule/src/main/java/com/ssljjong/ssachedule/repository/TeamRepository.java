@@ -17,7 +17,7 @@ public interface TeamRepository extends JpaRepository<Team, String> {
      * @return List of Teams given user belongs to
      */
 
-    @Query("select new com.ssljjong.ssachedule.dto.TeamDto(t.id, t.name) from UserDomain u join fetch TeamUser tu" +
+    @Query("select new com.ssljjong.ssachedule.dto.TeamDto(t.id, t.name) from User u join fetch TeamUser tu" +
             " join fetch Team t where u.id = :userId")
     List<TeamDto> findTeamsByUser(@Param("userId") Long userId);
 
