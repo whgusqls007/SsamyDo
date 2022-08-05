@@ -81,3 +81,9 @@
   background-color: white;
   width: auto;
 }
+
+.button {
+  align-items: center;
+  background-color: #DDDDDD;
+  padding: 10px;
+}
