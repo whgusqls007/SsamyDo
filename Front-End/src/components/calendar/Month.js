@@ -16,11 +16,11 @@ export default function Month() {
   const ssafy = useSelector(ssafySelector);
   const typeOne = useSelector(typeOneSelector);
   const typeTwo = useSelector(typeTwoSelector);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: "ScheduleList/mark", select: "all" });
+    dispatch({ type: "Schedule/clear" });
   });
 
   return (
@@ -44,7 +44,10 @@ export default function Month() {
             dispatch({ type: "ScheduleList/mark", select: 0, payload: ssafy });
           }}
         >
-          <Text>싸피</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="ellipse-sharp" size={10} color="blue" />
+            <Text>싸피</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
@@ -57,7 +60,10 @@ export default function Month() {
             });
           }}
         >
-          <Text>스터디</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="ellipse-sharp" size={10} color="red" />
+            <Text>스터디</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
@@ -70,7 +76,10 @@ export default function Month() {
             });
           }}
         >
-          <Text>개인일정</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="ellipse-sharp" size={10} color="green" />
+            <Text>개인 일정</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <CustomCalendar />
