@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import MakeSchedule from "../../../components/calendar/MakeSchedule";
 
-const Todo = createSlice({
-  name: "Todo",
-  // 1. Todo에 등록할 리스트  2. 캘린더에 mark 속성을 담을 obeject
+const Schedule = createSlice({
+  name: "Schedule",
+  // 1. Schedule에 등록할 리스트  2. 캘린더에 mark 속성을 담을 obeject
   initialState: [
     {
       type: 0,
@@ -84,18 +83,18 @@ const Todo = createSlice({
     },
 
     // // 마감 시간 오전/ 오후 선택
-    // timeType(state, action) {
-    //   state[0].time[0] = action.select;
-    // },
+    timeType(state, action) {
+      state[0].time[0] = action.select;
+    },
 
-    // // 마감시간 시간 선택
-    // timeHour(state, action) {
-    //   state[0].time[1] = action.hour;
-    // },
-    // // 마감시간 분 선택
-    // timeMin(state, action) {
-    //   state[0].time[2] = action.min;
-    // },
+    // 마감시간 시간 선택
+    timeHour(state, action) {
+      state[0].time[1] = action.hour;
+    },
+    // 마감시간 분 선택
+    timeMin(state, action) {
+      state[0].time[2] = action.min;
+    },
   },
 });
-export default Todo;
+export default Schedule;
