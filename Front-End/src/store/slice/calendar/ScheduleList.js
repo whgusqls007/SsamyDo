@@ -3,9 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ScheduleList = createSlice({
   name: "ScheduleList",
-  // 0 : 전체 Schedule리스트, 1: LastId, 2: ssafy(0번) 리스트, 3: 1번 타입 리스트, 4: 2번 분류 리스트
-  // 5: 현재 보여줄 리스트[전체, ssafy, type1, type2], 6: 달력에 표시 변수
-  initialState: [[], 0, {}],
+  // 0 : 전체 Schedule리스트, 1: LastId, 2: 달력에 표시 변수, 3: 화면의 Schedule 리스트, 4: 현재 분류타입
+  initialState: [[], 0, {}, [], "all"],
   reducers: {
     // local 정보 읽기  + 추가필요(ssafy 공지의 경우 local에 저장하지 않으므로 따로 사용)
     import: (state, action) => {
@@ -49,23 +48,26 @@ const ScheduleList = createSlice({
       state[0].splice(index, 1);
     },
 
-    // 현재보여줄 Schedule 목록
-    // filter: (state, action) => {
-    //   console.log("filter");
-    //   // 목록 초기화
-    //   state[4] = [];
-    //   // 날짜 필터링
-    //   state[4] = state[0].filter((Schedule) => {
-    //     console.log(Schedule);
-    //     return Schedule.end === action.select;
-    //   });
-    //   console.log(state[4]);
-    // },
+    filter: (state, action) => {
+      // 목록 초기화
+      state[3] = [];
+      // 날짜 필터링
+      if (state[4] === "all") {
+        state[3] = state[0].filter((Schedule) => {
+          return Schedule.end === action.select;
+        });
+      } else {
+        state[3] = action.payload.filter((Schedule) => {
+          return Schedule.end === action.select;
+        });
+      }
+    },
 
     // 버튼을 눌러서 Schedule의 Type 변경시 보여줄 캘린더 속성 제작
     mark: (state, action) => {
-      // 스타일 초기화
-      state[5] = {};
+      // 스타일 초기화 및 분류 저장
+      state[2] = {};
+      state[4] = action.select;
       // zero는 아무 의미 없는 역할
       const zero = {};
       const ssafy = { key: "ssafy", color: "blue" };
@@ -77,14 +79,14 @@ const ScheduleList = createSlice({
           // 1-1. 타입 0(ssafy)인 경우
           if (Schedule.type === 0) {
             // 1-1-1. 이미 해당 일의 일정이 있는 경우
-            if (state[5][`${Schedule.end}`]) {
+            if (state[2][`${Schedule.end}`]) {
               // 해당 속성에 ssafy타입이 없는 경우
-              if (state[5][`${Schedule.end}`].dots[0] === zero) {
-                state[5][`${Schedule.end}`].dots[0] = ssafy;
+              if (state[2][`${Schedule.end}`].dots[0] === zero) {
+                state[2][`${Schedule.end}`].dots[0] = ssafy;
               }
               // 1-1-2. 해당 일의 기존 일정이 없는 경우
             } else {
-              state[5][`${Schedule.end}`] = {
+              state[2][`${Schedule.end}`] = {
                 dots: [ssafy, zero, zero],
               };
             }
@@ -92,13 +94,13 @@ const ScheduleList = createSlice({
           // 1-2. 타입 1인 경우
           else if (Schedule.type === 1) {
             // 1-2-1. 이미 해당 일의 일정이 있는 경우
-            if (state[5][`${Schedule.end}`]) {
+            if (state[2][`${Schedule.end}`]) {
               // 해당 속성에 타입 1이 없는 경우
-              if (state[5][`${Schedule.end}`].dots[1] === zero) {
-                state[5][`${Schedule.end}`].dots[1] = typeOne;
+              if (state[2][`${Schedule.end}`].dots[1] === zero) {
+                state[2][`${Schedule.end}`].dots[1] = typeOne;
               } // 1-2-2. 해당 일의 기존 일정이 없는 경우
             } else {
-              state[5][`${Schedule.end}`] = {
+              state[2][`${Schedule.end}`] = {
                 dots: [zero, typeOne, zero],
               };
             }
@@ -106,13 +108,13 @@ const ScheduleList = createSlice({
           // 1-3. 타입 2인 경우
           else {
             // 1-3-1. 이미 해당 일의 일정이 있는 경우
-            if (state[5][`${Schedule.end}`]) {
+            if (state[2][`${Schedule.end}`]) {
               // 해당 속성에 타입 1이 없는 경우
-              if (state[5][`${Schedule.end}`].dots[2] === zero) {
-                state[5][`${Schedule.end}`].dots[2] = typeTwo;
+              if (state[2][`${Schedule.end}`].dots[2] === zero) {
+                state[2][`${Schedule.end}`].dots[2] = typeTwo;
               } // 1-3-2. 해당 일의 기존 일정이 없는 경우
             } else {
-              state[5][`${Schedule.end}`] = {
+              state[2][`${Schedule.end}`] = {
                 dots: [zero, zero, typeTwo],
               };
             }
@@ -122,8 +124,8 @@ const ScheduleList = createSlice({
       } else if (action.select === 1 && action.payload) {
         action.payload.map((Schedule) => {
           // 2-1.해당일에 기존 일정이 없는 경우 스타일 추가
-          if (!state[5][`${Schedule.end}`]) {
-            state[5][`${Schedule.end}`] = {
+          if (!state[2][`${Schedule.end}`]) {
+            state[2][`${Schedule.end}`] = {
               dots: [typeOne],
             };
           }
@@ -132,8 +134,8 @@ const ScheduleList = createSlice({
       } else if (action.select === 2 && action.payload) {
         action.payload.map((Schedule) => {
           // 3-1. 해당일에 기존 일정이 없는 경우 스타일 추가
-          if (!state[5][`${Schedule.end}`]) {
-            state[5][`${Schedule.end}`] = {
+          if (!state[2][`${Schedule.end}`]) {
+            state[2][`${Schedule.end}`] = {
               dots: [typeTwo],
             };
           }
@@ -143,8 +145,8 @@ const ScheduleList = createSlice({
       else {
         if (action.payload) {
           action.payload.map((Schedule) => {
-            if (!state[5][`${Schedule.end}`]) {
-              state[5][`${Schedule.end}`] = {
+            if (!state[2][`${Schedule.end}`]) {
+              state[2][`${Schedule.end}`] = {
                 dots: [ssafy],
               };
             }
