@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,8 +25,11 @@ public class LunchServiceImpl implements LunchService{
 
     @Override
     public List<LunchDto> getTodayLunch() {
-        LocalDate today = LocalDate.now();
-        return lunchRepository.findByDate(today);
+        String today = String.valueOf(LocalDate.now());
+        List<LunchDto> todayLunch = lunchRepository.findByDate(today).stream()
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .collect(Collectors.toList());
+        return todayLunch;
     }
 
     /**
@@ -36,8 +40,12 @@ public class LunchServiceImpl implements LunchService{
      */
 
     @Override
-    public List<LunchDto> getLunchForDate(LocalDate date) {
-        return lunchRepository.findByDate(date);
+    public List<LunchDto> getLunchForDate(String date) {
+        List<LunchDto> lunches = lunchRepository.findByDate(date).stream()
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .collect(Collectors.toList());
+
+        return lunches;
     }
 
     /**
@@ -49,8 +57,10 @@ public class LunchServiceImpl implements LunchService{
      */
 
     @Override
-    public List<LunchDto> getLunchesForPeriod(LocalDate start, LocalDate end) {
-        return lunchRepository.findByPeriod(start, end);
+    public List<LunchDto> getLunchesForPeriod(String start, String end) {
+        List<LunchDto> lunches = lunchRepository.findByDateBetween(start, end).stream()
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .collect(Collectors.toList());
+        return lunches;
     }
-
 }

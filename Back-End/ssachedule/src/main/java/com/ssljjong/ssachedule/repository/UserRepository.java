@@ -31,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
 
     @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u where u.track.id = :trackId")
-    List<User> findUserDomainListByTrack(@Param("trackId") Long trackId);
+    List<User> findUsersDomainListByTrack(@Param("trackId") Long trackId);
 
     /**
      * * find Users by Team
@@ -40,16 +40,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return UserId List
      */
 
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u join fetch TeamUser tu " +
-            "join fetch Team t where t.id = :teamId")
-    List<UserListDto> findUserIdListByTeam(@Param("teamId") Long teamId);
+    @Query("select u from User u join TeamUser tu join fetch tu.team t" +
+            " where t.id = :teamId")
+    List<User> findUsersListByTeam(@Param("teamId") String teamId);
 
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u join fetch TeamUser tu " +
-            "join fetch Team t join fetch Channel c where c.id = :channelId")
-    List<UserListDto> findUserIdListByChannel(@Param("channelId") Long channelId);
+    @Query("select u from Channel c join fetch c.team t join fetch t.teamUsers tu join User u" +
+            " where c.id = :channeId")
+    List<User> findUsersListByChannel(@Param("channelId") String ChannelId);
 
 
     Optional<User> findUserByUsername(String username);
     @EntityGraph(attributePaths = "authorities") // Eager로 받아오게 해줌
-    Optional<Object> findOneWithAuthoritiesByUsername(String username);
+    Optional<User> findOneWithAuthoritiesByUsername(String username);
 }
