@@ -7,19 +7,23 @@ import { useEffect, useState } from "react";
 export default function ScheduleList({ navigation }) {
   const dispatch = useDispatch();
   // useEffect(() => {
-  //   dispatch({ type: "TodoList/filter", select: "2022-08-03" });
+  //   dispatch({ type: "ScheduleList/filter", select: "2022-08-03" });
   // });
-  const TodoList = useSelector((state) => {
-    return state.TodoList[0];
+  const ScheduleList = useSelector((state) => {
+    return state.ScheduleList[0];
   });
 
   return (
     <View>
       <Text>ScheduleList.js</Text>
-      <ScrollView style={{ border: "1 black" }}>
-        {TodoList.map((todo) => {
+      <ScrollView>
+        {ScheduleList.map((Schedule) => {
           return (
-            <ScheduleItem navigation={navigation} todo={todo} key={todo.id} />
+            <ScheduleItem
+              navigation={navigation}
+              Schedule={Schedule}
+              key={Schedule.id}
+            />
           );
         })}
       </ScrollView>
