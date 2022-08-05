@@ -49,13 +49,13 @@ LocaleConfig.defaultLocale = "ssamydo";
 export default function CustomCalendar() {
   const dispatch = useDispatch();
   const markDate = useSelector((state) => {
-    return state.TodoList[5];
+    return state.ScheduleList[5];
   });
   return (
     <View>
       <Calendar
         // onDayPress={(day) => {
-        //   dispatch({ type: "TodoList/filter", select: day.dateString });
+        //   dispatch({ type: "ScheduleList/filter", select: day.dateString });
         // }}
         hideExtraDays={true}
         enableSwipeMonths={true}
