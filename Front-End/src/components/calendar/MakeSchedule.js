@@ -2,25 +2,27 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import styles from "../../../app.module.css";
 import { Calendar } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import CustomTimePicker from "./TimePicker";
 
 export default function MakeSchedule({ navigation }) {
   // Store 활용을 위한 변수 설정
   const dispatch = useDispatch();
+  // 현재 입력값 표시를 위한 Selector
   const Schedule = useSelector((state) => {
     return state.Schedule[0];
   });
+
+  // 달력 표시를 위한 셀렉터
   const MarkedDate = useSelector((state) => {
     return state.Schedule[1];
   });
-  // const [type, setType] = useState("오전");
+  // id 값 생성을 위한 selector
   const id = useSelector((state) => {
     return state.ScheduleList[1];
   });
 
   return (
     <View>
-      <Text></Text>
       <View style={{ alignItems: "center", width: 400, height: 800 }}>
         <Text>개인 일정 추가: {Schedule.type} </Text>
         <View style={{ flexDirection: "row", margin: 5 }}>
@@ -107,7 +109,6 @@ export default function MakeSchedule({ navigation }) {
             dispatch({ type: "Schedule/content", content: text })
           }
         />
-
         <Text>날짜 선택</Text>
         <Text>시작일: {Schedule.start}</Text>
         <Text>종료일: {Schedule.end}</Text>
@@ -132,27 +133,15 @@ export default function MakeSchedule({ navigation }) {
           markingType={"multi-dot"}
           markedDates={MarkedDate}
         />
-        <View style={{ flexDirection: "row", margin: 5 }}>
-          {/* <TouchableOpacity
-            title={type}
-            onPress={() => {
-              if (Schedule.time[0] == 0) {
-                // dispatch({ type: "Schedule/timeType", select: 1 });
-                setType("오후");
-              } else {
-                // dispatch({ type: "Schedule/timeType", select: 0 });
-                setType("오전");
-              }
-            }}
-          /> */}
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Calendar");
-            }}
-          >
-            <Text>뒤로</Text>
-          </TouchableOpacity>
-        </View>
+        <CustomTimePicker />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("Calendar");
+          }}
+        >
+          <Text>뒤로</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

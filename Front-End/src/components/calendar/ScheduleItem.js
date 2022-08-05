@@ -32,12 +32,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
         <View
           style={{ flexDirection: "row", alignContent: "center", height: 30 }}
         >
-          <Ionicons
-            name="ellipse-sharp"
-            size={10}
-            color={iconColor}
-            onPress={() => {}}
-          />
+          <Ionicons name="ellipse-sharp" size={10} color={iconColor} />
         </View>
         <Text style={{ fontSize: 20 }}>{Schedule.title}</Text>
         <View

@@ -10,13 +10,13 @@ export default function ScheduleList({ navigation }) {
   //   dispatch({ type: "ScheduleList/filter", select: "2022-08-03" });
   // });
   const ScheduleList = useSelector((state) => {
-    return state.ScheduleList[0];
+    return state.ScheduleList[3];
   });
 
   return (
     <View>
-      <Text>ScheduleList.js</Text>
-      <ScrollView>
+      <Text>일정 목록</Text>
+      <ScrollView style={{ maxHeight: 300 }}>
         {ScheduleList.map((Schedule) => {
           return (
             <ScheduleItem

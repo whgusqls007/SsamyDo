@@ -10,7 +10,7 @@ const Schedule = createSlice({
       content: "",
       start: "",
       end: "",
-      time: ["오전", "", ""],
+      time: ["", "", ""],
     },
     {},
   ],
@@ -77,7 +77,7 @@ const Schedule = createSlice({
         content: "",
         start: "",
         end: "",
-        // time: ["0", "", ""],
+        time: ["0", "", ""],
       };
       state[1] = {};
     },
