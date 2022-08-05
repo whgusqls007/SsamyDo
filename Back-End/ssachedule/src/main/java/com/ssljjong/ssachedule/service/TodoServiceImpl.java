@@ -1,16 +1,12 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.dto.TodoDto;
 import com.ssljjong.ssachedule.dto.TodoListDto;
-import com.ssljjong.ssachedule.entity.UserDomain;
 import com.ssljjong.ssachedule.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
