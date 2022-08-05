@@ -3,6 +3,7 @@ package com.ssljjong.ssachedule.service;
 
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.Authority;
+import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.util.SecurityUtil;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -91,6 +92,17 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() {
         return UserDto.from((User) SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername).orElse(null));
+    }
+
+    @Transactional
+    public Boolean changeTrack(Optional<User> user, Track track) {
+        Boolean result = Boolean.FALSE;
+        if (user!=null) {
+            User u = user.get();
+            u.changeTrack(track);
+            result = Boolean.TRUE;
+        }
+        return result;
     }
 
 
