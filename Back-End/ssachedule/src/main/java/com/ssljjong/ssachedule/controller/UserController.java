@@ -44,12 +44,9 @@ public class UserController {
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,@RequestBody int gi){
         Track track = trackService.findTrack(trackName, gi);
-        Optional<User> user = userService.getUser(userDto.getUsername());
+        User user = userService.getUser(userDto.getUsername()).get();
+        userService.changeTrack(user, track);
 
-        if (userService.changeTrack(user, track)) {
-            return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
-        }
-
-        return (ResponseEntity<String>) ResponseEntity.badRequest();
+        return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
     }
 }

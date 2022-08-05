@@ -11,31 +11,27 @@ import java.util.List;
 public interface ChannelRepository extends JpaRepository<Channel, String> {
 
     /**
-     * * find ChannelDtoList by UserId
+     * * find Channel List by UserId
      *
      * @param UserId
      * @return ChannelDtoList (
      */
-
-    @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name)" +
-            " from Channel c join fetch Team t join TeamUser tu join fetch User u" +
-            " where u.id = :userId")
-    List<ChannelDto> findChannelsByUser(@Param("userId") Long id);
+    List<Channel> findChannelsByUser(@Param("userId") Long id);
 
     /**
-     * * find ChannelDtoList by UserId
+     * * find Channel List by UserId
      *
      * @param UserId
      * @return ChannelDtoList
      */
-    @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name)" +
-            " from Channel c join fetch Team t join TeamUser tu join fetch User u" +
-            " where u.id = :userId and c.critical = true")
-    List<ChannelDto> findCriticalChannelsByUser(@Param("userId") Long id);
+    List<Channel> findCriticalChannelsByUser(@Param("userId") Long id);
 
-
-    @Query("select new com.ssljjong.ssachedule.dto.ChannelDto(c.id, c.name, c.critical) from Channel c" +
-            " join c.team t where t.id = :teamId")
+    /**
+     * * find Channel List by UserId
+     *
+     * @param UserId
+     * @return ChannelDtoList
+     */
     List<ChannelDto> findChannelsByTeam(@Param("teamId") String teamId);
 
     Channel findChannelByName(String name);

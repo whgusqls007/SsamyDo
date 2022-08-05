@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,23 +24,35 @@ public class LunchController {
 
     @GetMapping("/lunch/today")
     @PreAuthorize("hasAnyRole('USER')")
-    public List<LunchDto> getLunchForToday() {
+    public ResponseEntity<Map<String, Object>> getLunchForToday() {
         List<LunchDto> menus = lunchService.getTodayLunch();
-        return menus;
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/lunch/date/{date}")
     @PreAuthorize("hasAnyRole('USER')")
-    public List<LunchDto> getLunchForDate(@PathVariable String date) {
-        LocalDate day = LocalDate.parse(date);
-        return lunchService.getLunchForDate(day);
+    public ResponseEntity<Map<String, Object>> getLunchForDate(@PathVariable String date) {
+        List<LunchDto> menus = lunchService.getLunchForDate(date);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return ResponseEntity.ok().body(result);
+
     }
 
     @GetMapping("/lunch/period/{startDate}/{endDate}")
     @PreAuthorize("hasAnyRole('USER')")
-    public List<LunchDto> getLunchForPeriod(@PathVariable String startDate, @PathVariable String endDate) {
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        return lunchService.getLunchesForPeriod(start, end);
+    public ResponseEntity<Map<String, Object>> getLunchForPeriod(@PathVariable String startDate, @PathVariable String endDate) {
+        List<LunchDto> menus = lunchService.getLunchesForPeriod(startDate, endDate);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return ResponseEntity.ok().body(result);
     }
 }
