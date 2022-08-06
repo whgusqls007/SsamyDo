@@ -18,11 +18,6 @@ export default function Month() {
   const typeTwo = useSelector(typeTwoSelector);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({ type: "ScheduleList/mark", select: "all" });
-    dispatch({ type: "Schedule/clear" });
-  });
-
   return (
     <View>
       <View style={[{ flexDirection: "row", margin: 5 }]}>

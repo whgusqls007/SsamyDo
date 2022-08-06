@@ -1,7 +1,7 @@
 import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ssafySelector,
   typeOneSelector,
@@ -52,6 +52,17 @@ LocaleConfig.locales["ssamydo"] = {
 LocaleConfig.defaultLocale = "ssamydo";
 
 export default function CustomCalendar() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const date = new Date();
+    dispatch({
+      type: "ScheduleList/filter",
+      // getMonth는 1월이 0이기 때문에 +1해야함
+      select: `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getDay().toString().padStart(2, "0")}`,
+    });
+  });
   const typeList = [
     useSelector(ssafySelector),
     useSelector(typeOneSelector),
@@ -59,8 +70,7 @@ export default function CustomCalendar() {
   ];
   // const ssafy = useSelector(ssafySelector);
   // const typeOne = useSelector(typeOneSelector);
-  // const typeTwo = useSelector(typeTwoSelector);
-  const dispatch = useDispatch();
+  // const typeTwo = useSelector(typeTwoSelector)
   const markDate = useSelector((state) => {
     return state.ScheduleList[2];
   });
