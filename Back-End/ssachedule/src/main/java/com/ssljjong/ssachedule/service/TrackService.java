@@ -1,7 +1,7 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.entity.Track;
+import com.ssljjong.ssachedule.dto.TrackDto;
 
 public interface TrackService {
-    public Track findTrack(String trackName, int gi);
+    public TrackDto findTrack(String trackName, int gi);
 }
