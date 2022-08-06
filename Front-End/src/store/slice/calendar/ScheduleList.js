@@ -61,6 +61,8 @@ const ScheduleList = createSlice({
           return Schedule.end === action.select;
         });
       }
+      // sort를 통해 시간에 따라 정렬(1차 기준, 2차 기준)
+      state[3].sort((a, b) => a.time[0] - b.time[0] || a.time[1] - b.time[1]);
     },
 
     // 버튼을 눌러서 Schedule의 Type 변경시 보여줄 캘린더 속성 제작
