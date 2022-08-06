@@ -1,12 +1,25 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+} from "react-native";
 import styles from "../../../app.module.css";
 import { Calendar } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
-import CustomTimePicker from "./TimePicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useEffect, useState } from "react";
 
 export default function MakeSchedule({ navigation }) {
   // Store 활용을 위한 변수 설정
   const dispatch = useDispatch();
+  // 한번 실행
+  useEffect(() => {
+    dispatch({ type: "Schdeule/timeHour", hour: new Date().getHours() });
+    dispatch({ type: "Schdeule/timeMin", min: new Date().getMinutes() });
+    dispatch({ type: "Schedule/clear" });
+  }, []);
   // 현재 입력값 표시를 위한 Selector
   const Schedule = useSelector((state) => {
     return state.Schedule[0];
@@ -20,6 +33,38 @@ export default function MakeSchedule({ navigation }) {
   const id = useSelector((state) => {
     return state.ScheduleList[1];
   });
+
+  // TimePicker를 위한 변수
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [time, setTime] = useState(
+    `${new Date().getHours().toString().padStart(2, "0")} : ${new Date()
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`
+  );
+  // TimePicek 값 변경 함수 인자로 event 안 넣으면 꼬임
+  const onChange = async (event, selectedDate) => {
+    let currentDate = selectedDate || date;
+    const timeSet = () => {
+      // Platform이 없으면 계속 실행됨
+      setShow(Platform.OS === "ios");
+      setDate(currentDate);
+    };
+    const dataSet = () => {
+      setTime(
+        `${tempDate.getHours().toString().padStart(2, "0")} : ${tempDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`
+      );
+    };
+    await timeSet();
+    const tempDate = new Date(currentDate);
+    await dataSet();
+    dispatch({ type: "Schedule/timeHour", hour: tempDate.getHours() });
+    dispatch({ type: "Schedule/timeMin", min: tempDate.getMinutes() });
+  };
 
   return (
     <View>
@@ -65,7 +110,7 @@ export default function MakeSchedule({ navigation }) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              if (Schedule.type === 0) {
+              if (Schedule.type === 3) {
                 alert("일정의 분류를 선택해주세요");
               } else if (Schedule.title === "") {
                 alert("일정 이름을 입력해주세요");
@@ -81,12 +126,17 @@ export default function MakeSchedule({ navigation }) {
                     content: Schedule.content,
                     start: Schedule.start,
                     end: Schedule.end,
-                    // time: Schedule.time,
+                    time: Schedule.time,
                   },
                 });
                 dispatch({ type: "Schedule/clear" });
-                navigation.navigate("Calendar");
                 dispatch({ type: "ScheduleList/save" });
+                dispatch({ type: "SchduleList/mark", select: "all" });
+                dispatch({
+                  type: "SchduleList/filter",
+                  select: Schedule.end,
+                });
+                navigation.navigate("Calendar");
               }
             }}
           >
@@ -116,6 +166,7 @@ export default function MakeSchedule({ navigation }) {
           style={{ maxheight: 200 }}
           hideExtraDays={true}
           onDayPress={(day) => {
+            // 종료일 취소(클릭한 날이 종료일과 같다면)
             if (day.dateString === Schedule.end) {
               dispatch({ type: "Schedule/end", end: "" });
             } else if (Schedule.start === "") {
@@ -133,7 +184,28 @@ export default function MakeSchedule({ navigation }) {
           markingType={"multi-dot"}
           markedDates={MarkedDate}
         />
-        <CustomTimePicker />
+        <View>
+          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+            마감 시간: {time}
+          </Text>
+          <TouchableOpacity
+            style={[styles.button, { border: 1 }]}
+            onPress={() => {
+              setShow(true);
+            }}
+          >
+            <Text>마감시간 선택</Text>
+          </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="time"
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
+        </View>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {

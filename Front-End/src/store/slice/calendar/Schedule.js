@@ -10,7 +10,7 @@ const Schedule = createSlice({
       content: "",
       start: "",
       end: "",
-      time: ["", "", ""],
+      time: ["", ""],
     },
     {},
   ],
@@ -59,11 +59,12 @@ const Schedule = createSlice({
           state[1][`${action.end}`] = {
             selected: true,
           };
-          // 1-2. 종료일이 아직 선택되지 않은 경우
-        } else {
+        } // 1-2. 종료일이 아직 선택되지 않은 경우 or 종료일이
+        else {
           // 종료일 속성 추가
           state[1][`${action.end}`] = {
             selected: true,
+            selectedColor: "red",
           };
         }
       }
@@ -77,23 +78,18 @@ const Schedule = createSlice({
         content: "",
         start: "",
         end: "",
-        time: ["0", "", ""],
+        time: ["", ""],
       };
       state[1] = {};
     },
 
-    // // 마감 시간 오전/ 오후 선택
-    timeType(state, action) {
-      state[0].time[0] = action.select;
-    },
-
     // 마감시간 시간 선택
     timeHour(state, action) {
-      state[0].time[1] = action.hour;
+      state[0].time[0] = action.hour;
     },
     // 마감시간 분 선택
     timeMin(state, action) {
-      state[0].time[2] = action.min;
+      state[0].time[1] = action.min;
     },
   },
 });
