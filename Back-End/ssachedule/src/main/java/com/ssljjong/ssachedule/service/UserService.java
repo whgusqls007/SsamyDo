@@ -27,6 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final TeamUserRepository teamUserRepository;
     private final PasswordEncoder passwordEncoder;
+
     MattermostClient client = MattermostClient.builder()
             .url("https://meeting.ssafy.com")
             // .logLevel(Level.INFO)
