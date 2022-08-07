@@ -1,6 +1,7 @@
 package com.ssljjong.ssachedule.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssljjong.ssachedule.dto.TrackDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class User {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private Track track;
+    private TrackDto track;
 
 //    @Column(name = "activated")
 //    private boolean activated;
@@ -50,7 +51,7 @@ public class User {
 
 
 
-    public User(Long id, String username, String userPw, Track track, String eduEmail, String eduPw) {
+    public User(Long id, String username, String userPw, TrackDto track, String eduEmail, String eduPw) {
         this.id = id;
         this.username = username;
         this.password = userPw;

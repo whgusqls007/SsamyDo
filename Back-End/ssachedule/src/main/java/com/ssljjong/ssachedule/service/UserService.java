@@ -1,6 +1,7 @@
 package com.ssljjong.ssachedule.service;
 
 
+import com.ssljjong.ssachedule.dto.TrackDto;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.*;
 import com.ssljjong.ssachedule.repository.TeamUserRepository;
@@ -108,4 +109,8 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
+    public String checkAccount(User userDomain) {
+        net.bis5.mattermost.model.User user = client.login(userDomain.getUsername(), userDomain.getPassword());
+        return "성공";
+    }
 }
