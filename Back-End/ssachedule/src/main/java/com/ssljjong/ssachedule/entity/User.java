@@ -35,7 +35,7 @@ public class User {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private TrackDto track;
+    private Track track;
 
 //    @Column(name = "activated")
 //    private boolean activated;
@@ -51,15 +51,15 @@ public class User {
 
 
 
-    public User(Long id, String username, String userPw, TrackDto track, String eduEmail, String eduPw) {
+    public User(Long id, String username, String password, String eduPw, Track track) {
         this.id = id;
         this.username = username;
-        this.password = userPw;
+        this.password = password;
         this.eduPw = eduPw;
         this.track = track;
     }
 
-    public User(Long id, String username, String userPw, String eduEmail, String eduPw) {
+    public User(Long id, String username, String userPw,  String eduPw) {
         this.id = id;
         this.username = username;
         this.password = userPw;

@@ -2,7 +2,6 @@ package com.ssljjong.ssachedule.controller;
 
 import com.ssljjong.ssachedule.entity.WeeklyPlan;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,4 +17,6 @@ public class ScheduleController {
   public ResponseEntity<WeeklyPlan> getWeekSchedule() {
     return null;
   }
+
+
 }
