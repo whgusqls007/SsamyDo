@@ -36,7 +36,8 @@ public class Channel {
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
     private List<MMNotice> notices = new ArrayList<>();
 
-    public Channel(String name, Team team) {
+    public Channel(String id, String name, Team team) {
+        this.id = id;
         this.name = name;
         this.team = team;
     }
