@@ -18,7 +18,7 @@ const DATA = [
     id: '2',
     title: '공지2',
     duedate : '2022-08-03'
-  }
+  },
 ];
 
 

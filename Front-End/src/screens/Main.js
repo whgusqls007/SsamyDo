@@ -20,12 +20,12 @@ export default function Main({ navigation }) {
   });
   return (
     <View style={[styles.border, styles.checkarea]}>
+      <Text>김싸피님, 반갑습니다!</Text>
       {/* <Text>Main</Text> */}
       <View style={styles.todoarea}>
         <TodoList navigation={navigation}/>
       </View>
       <View style={styles.timelinearea}>
-        <Text>Timeline Area</Text>
         <TimeLine/>
       </View>
       
