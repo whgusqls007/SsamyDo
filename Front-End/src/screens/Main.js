@@ -9,11 +9,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    AsyncStorage.getItem("TodoList", (err, result) => {
-      dispatch({
-        type: "TodoList/import",
-        payload: JSON.parse(result),
-      });
+    AsyncStorage.getItem("ScheduleList", (err, result) => {
+      if (result) {
+        dispatch({
+          type: "ScheduleList/import",
+          payload: JSON.parse(result),
+        });
+      }
     });
   });
   return (
