@@ -9,10 +9,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    AsyncStorage.getItem("TodoList", (err, result) => {
+    AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
         dispatch({
-          type: "TodoList/import",
+          type: "ScheduleList/import",
           payload: JSON.parse(result),
         });
       }
@@ -23,12 +23,11 @@ export default function Main({ navigation }) {
       <Text>김싸피님, 반갑습니다!</Text>
       {/* <Text>Main</Text> */}
       <View style={styles.todoarea}>
-        <TodoList navigation={navigation}/>
+        <TodoList navigation={navigation} />
       </View>
       <View style={styles.timelinearea}>
-        <TimeLine/>
+        <TimeLine />
       </View>
-      
     </View>
   );
 }

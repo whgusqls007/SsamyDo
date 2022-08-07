@@ -17,7 +17,7 @@ public class TeamUser {
 
     @Id
     @GeneratedValue
-    @Column(name = "order_item_id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,14 +26,14 @@ public class TeamUser {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserDomain user;
+    private User user;
 
     // Constructors
-    public TeamUser(UserDomain user) {
+    public TeamUser(User user) {
         this.user = user;
     }
 
-    public TeamUser(Team team, UserDomain user) {
+    public TeamUser(Team team, User user) {
         this.team = team;
         this.user = user;
     }

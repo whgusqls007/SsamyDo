@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class UserListDto {
 
-    private Integer id;
+    private Long id;
 
-    public UserListDto(Integer id) {
+    public UserListDto(Long id) {
         this.id = id;
     }
 }
