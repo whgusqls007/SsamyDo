@@ -8,7 +8,7 @@ import java.util.List;
 public interface LunchService {
 
     public List<LunchDto> getTodayLunch();
-    public List<LunchDto> getLunchForDate(LocalDate date);
-    public List<LunchDto> getLunchesForPeriod(LocalDate start, LocalDate end);
+    public List<LunchDto> getLunchForDate(String date);
+    public List<LunchDto> getLunchesForPeriod(String start, String end);
 
 }

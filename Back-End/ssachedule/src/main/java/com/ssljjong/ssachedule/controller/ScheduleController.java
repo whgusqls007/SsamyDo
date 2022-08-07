@@ -1,6 +1,6 @@
 package com.ssljjong.ssachedule.controller;
 
-import org.h2.util.Task;
+import com.ssljjong.ssachedule.entity.WeeklyPlan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 public class ScheduleController {
 
   @GetMapping("/week")
-  public ResponseEntity<Task> getWeekSchedule() {
+  public ResponseEntity<WeeklyPlan> getWeekSchedule() {
     return null;
   }
+
+
 }
