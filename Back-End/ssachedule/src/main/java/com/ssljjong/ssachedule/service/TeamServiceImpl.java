@@ -18,13 +18,10 @@ import java.util.stream.Collectors;
 public class TeamServiceImpl implements TeamService{
 
     private final TeamRepository teamRepository;
-    private final UserRepository userRepository;
-
 
     @Override
     public List<TeamDto> getTeamsByUser(Long userId) {
-        User user = userRepository.findById(userId).get();
-        List<TeamDto> teams = teamRepository.findTeamsByUser(user)
+        List<TeamDto> teams = teamRepository.findTeamsByUser(userId)
                 .stream().map(t -> new TeamDto(t.getId(), t.getName())).collect(Collectors.toList());
 
         return teams;
