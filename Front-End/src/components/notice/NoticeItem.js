@@ -1,5 +1,6 @@
 import { View, Text, Button } from "react-native";
 import styles from "../../../app.module.css";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NoticeItem({ navigation }) {
   return (

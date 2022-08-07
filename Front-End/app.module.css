@@ -82,6 +82,7 @@
   width: auto;
 }
 
+<<<<<<< HEAD
 .checkarea {
   flex: 1;
   background-color: crimson;
@@ -101,4 +102,10 @@
 .timelinelistarea {
   flex: 1;
   background-color: fuchsia;
+}
+
+.button {
+  align-items: center;
+  background-color: #DDDDDD;
+  padding: 10px;
 }
