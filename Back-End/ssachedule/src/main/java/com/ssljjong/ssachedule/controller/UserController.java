@@ -5,7 +5,6 @@ import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
 import com.ssljjong.ssachedule.repository.TrackRepository;
 import com.ssljjong.ssachedule.service.TrackService;
-
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -25,10 +24,9 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/avi/v1/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
     private final TrackService trackService;
     private final TrackRepository trackRepository;
@@ -40,20 +38,21 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(
-            @Valid @RequestBody UserDto userDto
-    ) throws Exception {
+            @Valid @RequestBody UserDto userDto) throws Exception {
         return ResponseEntity.ok(userService.signup(userDto));
     }
 
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,@RequestBody int gi){
+    public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,
+            @RequestBody int gi) {
         Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
         User user = userService.getUser(userDto.getUsername()).get();
         userService.changeTrack(user, track);
 
         return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
     }
+
     /**
      * 
      * @param map json

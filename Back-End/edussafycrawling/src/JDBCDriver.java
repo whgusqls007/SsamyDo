@@ -31,12 +31,87 @@ public class JDBCDriver {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultset = preparedStatement.executeQuery();
             while (resultset.next()) {
-                userList.add(new User(resultset.getString(1), resultset.getString(2), resultset.getString(3),
-                        resultset.getString(4)));
+                userList.add(new User(resultset.getString(4), resultset.getString(2)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return userList;
+    }
+
+    public int saveWeeklyPlan(String date, Task task) {
+        int result = 0;
+        String query = "INSERT INTO weeklyplan(date, title, time) values (?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, date);
+            preparedStatement.setString(2, task.getSubject());
+            preparedStatement.setString(3, task.getTime());
+            result = preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int saveNotification(Notification notification) {
+        int result = 0;
+        String query = "INSERT INTO notice(source, notice_id, date, title) values (?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "E");
+            preparedStatement.setInt(2, notification.getId());
+            preparedStatement.setString(3, notification.getDate());
+            preparedStatement.setString(4, notification.getTitle());
+            result = preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int saveSurvey(Survey survey) {
+        int result = 0;
+        String query = "INSERT INTO survey(status, title, start_date, due_date, type) values (?, ?, ?, ?, ?)";
+        try {
+            Boolean isExist = this.getSurvey(survey.getTitle());
+            if (isExist) {
+                query = "UPDATE survey SET status = ?, title = ?, start_date = ?, due_date = ?, type = ? WHERE title = ?";
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, survey.getStatus());
+            preparedStatement.setString(2, survey.getTitle());
+            String[] date = survey.getDate().split("~");
+
+            preparedStatement.setString(3, date[0].replaceAll("[^0-9]", ""));
+            preparedStatement.setString(4, date[1].replaceAll("[^0-9]", ""));
+            preparedStatement.setString(5, survey.getType());
+            if (isExist) {
+                preparedStatement.setString(6, survey.getTitle());
+            }
+            result = preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Boolean getSurvey(String title) {
+        Boolean result = false;
+        String query = "SELECT * FROM survey WHERE title = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, title);
+            ResultSet resultset = preparedStatement.executeQuery();
+            if (resultset.next()) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
