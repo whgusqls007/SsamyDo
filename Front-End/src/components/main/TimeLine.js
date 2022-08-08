@@ -1,31 +1,51 @@
-import { View, Text, Button } from "react-native";
-import TimeLineItem from "./TimeLineItem";
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../../../app.module.css";
+import Timeline from "react-native-timeline-flatlist";
+import weeklyData from "../../store/example/weeklyData.json";
 
-function TimeLine({ navigation }) {
+export default function TimeLine() {
+  // 날짜 데이터 받기 위한 변수
+  const [scheduleData, setScheduleData] = useState("");
+  // const [dailyData, setDailyData] = useState("")
+
+  // 요일 버튼 => 해당 요일 스케쥴 보여주고, 버튼 CSS 변경
+  let dailyData;
+  const selectedDay = (arg) => () => {
+    setScheduleData(weeklyData[arg]);
+    console.log(dailyData);
+  };
+
   return (
-    <View style={styles.one}>
-      <View>
-        <Button
-          title="어제" // 날짜 정보 받아서 넣어주기
-          color="#C3E1EC" // 선택 여부에 따라서(T/F) 색상 다르게
-          accessibilityLabel="어제 일정 보기"
-        />
-        <Button
-          title="오늘" // 날짜 정보 받아서 넣어주기
-          color="#94CBD9" // 선택 여부에 따라서(T/F) 색상 다르게
-          accessibilityLabel="오늘 일정 보기"
-        />
-        <Button
-          title="내일" // 날짜 정보 받아서 넣어주기
-          color="#C3E1EC" // 선택 여부에 따라서(T/F) 색상 다르게
-          accessibilityLabel="내일 일정 보기"
-        />
-        <Text>그러네요</Text>
+    // 타임라인 전체 container
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          height: "15%",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity style={styles.button} onPress={selectedDay(0)}>
+          <Text>월요일</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={selectedDay(1)}>
+          <Text>화요일</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={selectedDay(2)}>
+          <Text>수요일</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={selectedDay(3)}>
+          <Text>목요일</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={selectedDay(4)}>
+          <Text>금요일</Text>
+        </TouchableOpacity>
       </View>
-      <TimeLineItem />
+      <View style={{ flex: 4 }}>
+        {/* <TimeLineItem /> */}
+        <Timeline style={styles.list} data={scheduleData} />
+      </View>
     </View>
   );
 }
-
-export default TimeLine;
