@@ -10,15 +10,16 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.ws.rs.core.Response;
 
 @RestController
 @RequestMapping("/api/v1/lunch")
@@ -27,27 +28,40 @@ public class LunchController {
 
     private final LunchService lunchService;
 
-    @GetMapping("/today")
+    @GetMapping("/lunch/today")
     @ApiOperation(value = "오늘 점심 메뉴 조회")
-    public ResponseEntity<List<LunchDto>> getLunchForToday() {
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Object>> getLunchForToday() {
         List<LunchDto> menus = lunchService.getTodayLunch();
-        return new ResponseEntity<>(menus, HttpStatus.OK);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/date/{date}")
+    @GetMapping("/lunch/date/{date}")
     @ApiOperation(value = "특정 날짜 점심 메뉴 조회")
-    public ResponseEntity<List<LunchDto>> getLunchForDate(@PathVariable String date) {
-        LocalDate day = LocalDate.parse(date);
-        return new ResponseEntity<>(lunchService.getLunchForDate(day), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Object>> getLunchForDate(@PathVariable String date) {
+        List<LunchDto> menus = lunchService.getLunchForDate(date);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return ResponseEntity.ok().body(result);
+
     }
 
-    @GetMapping("/period/{startDate}/{endDate}")
+    @GetMapping("/lunch/period/{startDate}/{endDate}")
     @ApiOperation(value = "특정 기간 점심 메뉴 조회")
-    public ResponseEntity<List<LunchDto>> getLunchForPeriod(@PathVariable String startDate,
-            @PathVariable String endDate) {
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        return new ResponseEntity<>(lunchService.getLunchesForPeriod(start, end),
-                HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Object>> getLunchForPeriod(@PathVariable String startDate, @PathVariable String endDate) {
+        List<LunchDto> menus = lunchService.getLunchesForPeriod(startDate, endDate);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", menus);
+
+        return ResponseEntity.ok().body(result);
     }
 }
