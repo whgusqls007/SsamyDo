@@ -41,7 +41,8 @@
     "react-native-web": "0.17.7",
     "react-native-wheel-picker-expo": "^0.5.2",
     "react-native-wheel-time-picker": "^0.4.3",
-    "react-redux": "^8.0.2"
+    "react-redux": "^8.0.2",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
