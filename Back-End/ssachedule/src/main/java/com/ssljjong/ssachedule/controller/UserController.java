@@ -4,7 +4,6 @@ import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
 import com.ssljjong.ssachedule.repository.TrackRepository;
-import com.ssljjong.ssachedule.service.TrackService;
 
 import java.util.Map;
 
@@ -30,7 +29,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final TrackService trackService;
     private final TrackRepository trackRepository;
 
     @GetMapping("/test")
