@@ -6,10 +6,59 @@ import {
   Platform,
 } from "react-native";
 import styles from "../../../app.module.css";
-import { Calendar } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
+import {
+  ssafySelector,
+  typeOneSelector,
+  typeTwoSelector,
+} from "../../store/store";
+
+// 캘린더를 위한 설정
+LocaleConfig.locales["ssamydo"] = {
+  monthNames: [
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
+  ],
+  monthNamesShort: [
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
+  ],
+  dayNames: [
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일",
+  ],
+  dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+  today: "Today",
+};
+LocaleConfig.defaultLocale = "ssamydo";
 
 export default function MakeSchedule({ navigation }) {
   const dispatch = useDispatch();
@@ -18,12 +67,28 @@ export default function MakeSchedule({ navigation }) {
     return state.Schedule[0];
   });
   // Store 활용을 위한 변수 설정(렌더링 시 한 번만)
-  useEffect(() => {}, []);
-
-  // 수정과 생성 버튼 이름 useState 사용시 Too many re-renders 오류 발생
-  const btnName = useSelector((state) => {
-    return state.Schedule[1];
+  useEffect(() => {
+    // 수정으로 들어온 경우(Schedule에 id값이 존재) 버튼의 이름과 해당 일자의 표시를 변경
+    if (Schedule.id) {
+      // 버튼 이름 수정
+      setBtnName("수정");
+      // 선택일 표시
+      setMarkedDate({
+        [Schedule.day]: { selected: true, selectedColor: "red" },
+      });
+      // 현재 value값 선택된 시각으로 변경
+      const [year, month, day] = Schedule.day.split("-");
+      setDate(
+        new Date(year, month - 1, day, Schedule.time[0], Schedule.time[1])
+      );
+    }
+  }, []);
+  // 현재 선택된 타입을 확인(생성이나 수정후 보내기 위한 도구)
+  const selectedType = useSelector((state) => {
+    return state.ScheduleList[4];
   });
+  // 수정과 생성 버튼 이름 useState 사용시 Too many re-renders 오류 발생
+  const [btnName, setBtnName] = useState("생성");
 
   // 달력 표시를 위한 셀렉터
   const [MarkedDate, setMarkedDate] = useState({});
@@ -72,6 +137,13 @@ export default function MakeSchedule({ navigation }) {
     });
   };
 
+  // 분류별 리스트 CreateSelector 값 불러오기
+  const typeList = [
+    useSelector(ssafySelector),
+    useSelector(typeOneSelector),
+    useSelector(typeTwoSelector),
+  ];
+
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
     return state.Setting[2];
@@ -81,6 +153,7 @@ export default function MakeSchedule({ navigation }) {
     <View>
       <View style={{ alignItems: "center", width: 400, height: 800 }}>
         <Text>개인 일정 추가: {type[Schedule.type]} </Text>
+        {/* 타입 선택 버튼 묶음 */}
         <View style={{ flexDirection: "row", margin: 5 }}>
           <TouchableOpacity
             style={[styles.button, { margin: 5 }]}
@@ -119,6 +192,7 @@ export default function MakeSchedule({ navigation }) {
             <Text>{type[2]}</Text>
           </TouchableOpacity>
         </View>
+        {/* 일정 이름 입력 */}
         <View style={{ flexDirection: "row" }}>
           <Text>일정 : </Text>
           <TextInput
@@ -129,6 +203,7 @@ export default function MakeSchedule({ navigation }) {
             }
           />
         </View>
+        {/* 일정 내용 입력 */}
         <View style={{ flexDirection: "row" }}>
           <Text>일정 내용 : </Text>
           <TextInput
@@ -140,6 +215,7 @@ export default function MakeSchedule({ navigation }) {
           />
         </View>
         <Text>일정일: {Schedule.day}</Text>
+        {/* 캘린더 */}
         <Calendar
           style={{ maxheight: 200 }}
           hideExtraDays={true}
@@ -160,6 +236,7 @@ export default function MakeSchedule({ navigation }) {
           }}
           markedDates={MarkedDate}
         />
+        {/* 일정 시각 선택(TimePicker) */}
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 20 }}>
             일정시각 {Schedule.time[0].toString().padStart(2, "0")} :{" "}
@@ -205,48 +282,47 @@ export default function MakeSchedule({ navigation }) {
               } else if (Schedule.day === "") {
                 alert("일정일을 선택해 주세요");
               } else {
-                const ScheduleListData = () => {
-                  if (Schedule.id) {
-                    dispatch({
-                      type: "ScheduleList/update",
-                      payload: {
-                        id: Schedule.id,
-                        type: Schedule.type,
-                        title: Schedule.title,
-                        content: Schedule.content,
-                        day: Schedule.day,
-                        time: Schedule.time,
-                      },
-                    });
-                  } else {
-                    dispatch({
-                      type: "ScheduleList/add",
-                      payload: {
-                        id: id,
-                        type: Schedule.type,
-                        title: Schedule.title,
-                        content: Schedule.content,
-                        day: Schedule.day,
-                        time: Schedule.time,
-                      },
-                    });
-                  }
-                };
-                const CalendarSet = () => {
-                  dispatch({ type: "Schedule/clear" });
-                  dispatch({ type: "ScheduleList/save" });
-                  dispatch({ type: "SchduleList/mark", select: "all" });
+                // id가 있으면 수정
+                if (Schedule.id) {
                   dispatch({
-                    type: "SchduleList/dayMark",
-                    select: Schedule.day,
+                    type: "ScheduleList/update",
+                    payload: {
+                      id: Schedule.id,
+                      type: Schedule.type,
+                      title: Schedule.title,
+                      content: Schedule.content,
+                      day: Schedule.day,
+                      time: Schedule.time,
+                    },
                   });
+                  // 생성으로 보내는 것
+                } else {
                   dispatch({
-                    type: "SchduleList/filter",
-                    select: Schedule.day,
+                    type: "ScheduleList/add",
+                    payload: {
+                      id: id,
+                      type: Schedule.type,
+                      title: Schedule.title,
+                      content: Schedule.content,
+                      day: Schedule.day,
+                      time: Schedule.time,
+                    },
                   });
-                };
-                await ScheduleListData();
-                await CalendarSet();
+                }
+                // MakeSchedule 내용 정리
+                dispatch({ type: "Schedule/clear" });
+                // 저장하기
+                dispatch({ type: "ScheduleList/save" });
+                // 마크 다시 처리하기(전체보기로)
+                dispatch({ type: "ScheduleList/mark", select: "all" });
+                // 선택일 다시 마크하기
+                dispatch({ type: "ScheduleList/mark", day: Schedule.day });
+                // 리스트 다시 보이기
+                dispatch({
+                  type: "ScheduleList/filter",
+                  select: "all",
+                  day: Schedule.day,
+                });
                 navigation.navigate("Calendar");
               }
             }}
