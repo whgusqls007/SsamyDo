@@ -1,26 +1,25 @@
 package com.ssljjong.ssachedule.entity;
 
-import lombok.*;
-
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "title", "description", "date"})
-public class Notice {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "source")
+public abstract class Notice {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "notice_id")
-    private int id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "channel_id")
-    private Channel channel;
+    private Long id;
 
     private String title;
     private String description;
-    private LocalDate date;
+    private Timestamp date;
+    private String file;
+
+
+
 
 }
