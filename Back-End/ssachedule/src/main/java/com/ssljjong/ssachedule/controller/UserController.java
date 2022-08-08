@@ -27,6 +27,8 @@ public class UserController {
 
     private final UserService userService;
     private final TrackService trackService;
+    private final TrackRepository trackRepository;
+
 
     @GetMapping("/test")
     public ResponseEntity<String> hello() {
@@ -43,7 +45,7 @@ public class UserController {
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,@RequestBody int gi){
-        Track track = trackService.findTrack(trackName, gi);
+        Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
         User user = userService.getUser(userDto.getUsername()).get();
         userService.changeTrack(user, track);
 
