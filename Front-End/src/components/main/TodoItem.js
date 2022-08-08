@@ -6,9 +6,7 @@ import styles from "../../../app.module.css";
 // 2. 현재 activate 된 설문
 // 3. 내가 완료하지 않은 할일 (isCompleted)
 
-const completeTodo = () => {
-  item["isCompleted"] = !item[isCompleted];
-};
+// onPress 하면 TodoStatus > addstatus로 추가 , savestatus로 로컬에 저장
 
 function TodoItem({ navigation, item }) {
   return (
@@ -20,9 +18,7 @@ function TodoItem({ navigation, item }) {
           <TouchableOpacity onPress={completeTodo}>
             <View style={[styles.circle]} />
           </TouchableOpacity>
-          <Text>
-            {item.title} {item.duedate}
-          </Text>
+          <Text>{item.title}</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("NoticeDetail", { id: item.id })}
