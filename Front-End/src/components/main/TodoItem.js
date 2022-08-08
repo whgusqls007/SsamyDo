@@ -11,7 +11,7 @@ const completeTodo = () => {
 };
 
 function TodoItem({ navigation, item }) {
-  console.log(item);
+  // console.log(item);
   return (
     <View style={styles.todoitemcontainer}>
       {/* <Text>{item.title}</Text> */}
