@@ -5,6 +5,7 @@ import com.ssljjong.ssachedule.entity.WeeklyPlan;
 import com.ssljjong.ssachedule.repository.WeeklyPlanRepository;
 import com.ssljjong.ssachedule.service.PlanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class PlanController {
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> findPlansByDate(@PathVariable String date) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByDate(date);
-
+        System.out.println(plans);
         Map<String, Object> response = new HashMap<>();
         response.put("data", plans);
 
@@ -36,14 +37,15 @@ public class PlanController {
     }
 
     @GetMapping("/weekly/period/{startDate}")
-    @PreAuthorize("hasAnyRole('USER')")
+//    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> findWeeklyPlans(@PathVariable String startDate) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByStartDate(startDate);
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", plans);
 
-        return ResponseEntity.ok().body(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/weekly/period/{startDate}/{endDate}")

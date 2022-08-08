@@ -21,7 +21,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public List<TodoDto> getTodosByUser(Long userId) {
         List<TodoDto> Todos = todoRepository.findTodosByUser(userId).stream()
-                .map(t -> new TodoDto(t.getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
+                .map(t -> new TodoDto(t.getId(), t.getNotice().getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
                 .collect(Collectors.toList());
         return Todos;
     }
@@ -29,7 +29,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public List<TodoDto> getTodosByUserFromDate(Long userId, String dueDate) {
         List<TodoDto> Todos = todoRepository.findTodosByUserAndDueDate(userId, dueDate).stream()
-                .map(t -> new TodoDto(t.getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
+                .map(t -> new TodoDto(t.getId(), t.getNotice().getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
                 .collect(Collectors.toList());
         return Todos;
 

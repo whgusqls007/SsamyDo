@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "name", "critical"})
+@ToString(of = {"id", "name"})
 public class Channel {
 
     @Id
@@ -27,11 +27,6 @@ public class Channel {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-
-    private boolean critical;
-
-    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
-    private List<Todo> todoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
     private List<MMNotice> notices = new ArrayList<>();

@@ -21,7 +21,7 @@ public class PlanServiceImpl implements PlanService{
     @Override
     public List<WeeklyPlanDto> findWeeklyPlanByDate(String date) {
         List<WeeklyPlanDto> result = weeklyPlanRepository.findWeeklyPlansByDate(date).stream()
-                .map(wp -> new WeeklyPlanDto(wp.getId(), wp.getTrack(),wp.getTitle(), wp.getType(), wp.getDate(), wp.getTime()))
+                .map(wp -> new WeeklyPlanDto(wp.getId(),wp.getTitle(), wp.getDate(), wp.getTime()))
                 .collect(Collectors.toList());
         return result;
     }
@@ -31,15 +31,16 @@ public class PlanServiceImpl implements PlanService{
         String endDate = String.valueOf(Long.valueOf(startDate) + 60000);
 
         List<WeeklyPlanDto> result = weeklyPlanRepository.findWeeklyPlansByDateBetween(startDate, endDate).stream()
-                .map(wp -> new WeeklyPlanDto(wp.getId(), wp.getTrack(),wp.getTitle(), wp.getType(), wp.getDate(), wp.getTime()))
+                .map(wp -> new WeeklyPlanDto(wp.getId(),wp.getTitle(), wp.getDate(), wp.getTime()))
                 .collect(Collectors.toList());
+        System.out.println(result);
         return result;
     }
 
     @Override
     public List<WeeklyPlanDto> findWeeklyPlanByDateBetween(String startDate, String endDate) {
         List<WeeklyPlanDto> result = weeklyPlanRepository.findWeeklyPlansByDateBetween(startDate, endDate).stream()
-                .map(wp -> new WeeklyPlanDto(wp.getId(), wp.getTrack(),wp.getTitle(), wp.getType(), wp.getDate(), wp.getTime()))
+                .map(wp -> new WeeklyPlanDto(wp.getId(),wp.getTitle(), wp.getDate(), wp.getTime()))
                 .collect(Collectors.toList());
         return result;
     }
