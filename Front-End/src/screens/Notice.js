@@ -1,6 +1,8 @@
-import { View, Text } from "react-native";
+
+import { View, Text, Button } from "react-native";
 import NoticeList from "../components/notice/NoticeList";
 import styles from "../../app.module.css";
+import { useState } from "react";
 
 export default function Notice({ navigation }) {
   return (
@@ -9,4 +11,5 @@ export default function Notice({ navigation }) {
       <NoticeList navigation={navigation} />
     </View>
   );
+
 }

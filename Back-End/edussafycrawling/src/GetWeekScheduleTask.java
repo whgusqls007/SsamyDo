@@ -14,7 +14,7 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
     public void run() {
         List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
         for (int i = 0; i < userList.size(); i++) {
-            String email = userList.get(i).getEduEmail();
+            String email = userList.get(i).getUserName();
             String pw = userList.get(i).getEduPw();
             this.Email = email;
             this.PW = pw;
@@ -40,7 +40,7 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
 
             for (int i = 0; i < li.size(); i++) {
                 String date = findElementByClassName(li.get(i), "date").getText();
-                WeekBox weekBox = new WeekBox(date);
+                WeekBox weekBox = new WeekBox(date.replaceAll("[^0-9]", ""));
 
                 List<WebElement> dl = findElementsByTagName(li.get(i), "dl");
                 for (int j = 0; j < dl.size(); j++) {
@@ -68,7 +68,12 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
         }
 
         for (int i = 0; i < weekBoxes.size(); i++) {
-            System.out.println(weekBoxes.get(i).toString());
+            WeekBox weekBox = weekBoxes.get(i);
+            List<Task> tasks = weekBox.getTasks();
+
+            for (int j = 0; j < tasks.size(); j++) {
+                jdbcDriver.saveWeeklyPlan(weekBox.getDate(), tasks.get(j));
+            }
         }
 
         closeDriver();

@@ -1,43 +1,23 @@
 import java.util.*;
 
 public class User {
-    private String userEmail;
-    private String userPw;
-    private String eduEmail;
+    private String userName;
     private String eduPw;
 
     public User() {
     }
 
-    public User(String userEmail, String userPw, String eduEmail, String eduPw) {
-        this.userEmail = userEmail;
-        this.userPw = userPw;
-        this.eduEmail = eduEmail;
+    public User(String userName, String eduPw) {
+        this.userName = userName;
         this.eduPw = eduPw;
     }
 
-    public String getUserEmail() {
-        return this.userEmail;
+    public String getUserName() {
+        return this.userName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getUserPw() {
-        return this.userPw;
-    }
-
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
-    }
-
-    public String getEduEmail() {
-        return this.eduEmail;
-    }
-
-    public void setEduEmail(String eduEmail) {
-        this.eduEmail = eduEmail;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEduPw() {
@@ -48,18 +28,8 @@ public class User {
         this.eduPw = eduPw;
     }
 
-    public User userEmail(String userEmail) {
-        setUserEmail(userEmail);
-        return this;
-    }
-
-    public User userPw(String userPw) {
-        setUserPw(userPw);
-        return this;
-    }
-
-    public User eduEmail(String eduEmail) {
-        setEduEmail(eduEmail);
+    public User userName(String userName) {
+        setUserName(userName);
         return this;
     }
 
@@ -76,21 +46,18 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(userEmail, user.userEmail) && Objects.equals(userPw, user.userPw)
-                && Objects.equals(eduEmail, user.eduEmail) && Objects.equals(eduPw, user.eduPw);
+        return Objects.equals(userName, user.userName) && Objects.equals(eduPw, user.eduPw);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userEmail, userPw, eduEmail, eduPw);
+        return Objects.hash(userName, eduPw);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " userEmail='" + getUserEmail() + "'" +
-                ", userPw='" + getUserPw() + "'" +
-                ", eduEmail='" + getEduEmail() + "'" +
+                " userName='" + getUserName() + "'" +
                 ", eduPw='" + getEduPw() + "'" +
                 "}";
     }
