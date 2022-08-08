@@ -72,6 +72,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  width: auto;
 }
 
 .todoitembox {
@@ -79,5 +80,13 @@
   margin-left: 10;
   margin-right: 10;
   background-color: white;
+  width: auto;
+}
+
+.noticeitembox { 
+  border-radius: 10px;
+  margin-left: 10;
+  margin-right: 10;
+  background-color: skyblue;
   width: auto;
 }

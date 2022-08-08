@@ -1,14 +1,16 @@
-import { View, Text, Button } from "react-native";
+import { View, Text,TouchableOpacity } from "react-native";
 import styles from "../../../app.module.css";
 
-export default function NoticeItem({ navigation }) {
+export default function NoticeItem({ navigation, notice }) {
   return (
-    <View style={([styles.two], { flexDirection: "row" })}>
-      <Text>NoticeItem.js</Text>
-      <Button
-        title="Detail"
-        onPress={() => navigation.navigate("NoticeDetail")}
-      />
+    <View style={styles.todolistcard}>
+      <View style={styles.noticeitembox}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate("NoticeDetail", {id: notice.id})} >
+            <Text> {notice.title}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

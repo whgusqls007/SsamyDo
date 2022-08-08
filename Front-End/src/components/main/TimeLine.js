@@ -21,7 +21,7 @@ function TimeLine({ navigation }) {
           color="#C3E1EC" // 선택 여부에 따라서(T/F) 색상 다르게
           accessibilityLabel="내일 일정 보기"
         />
-        <Text>보이나?</Text>
+        <Text>그러네요</Text>
       </View>
       <TimeLineItem />
     </View>
