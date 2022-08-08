@@ -17,17 +17,12 @@ export default function Main({ navigation }) {
         });
       }
     });
-  });
+  }, []);
   return (
-    <View style={[styles.border, styles.checkarea]}>
-      <Text>김싸피님, 반갑습니다!</Text>
+    <View style={{ flex: 1 }}>
       {/* <Text>Main</Text> */}
-      <View style={styles.todoarea}>
-        <TodoList navigation={navigation} />
-      </View>
-      <View style={styles.timelinearea}>
-        <TimeLine />
-      </View>
+      <TodoList navigation={navigation} style={{ flex: 2 }} />
+      <TimeLine style={{ flex: 3 }} />
     </View>
   );
 }

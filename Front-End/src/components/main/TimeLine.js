@@ -21,7 +21,7 @@ export default function TimeLine() {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          height: "10%",
+          height: "15%",
           flexDirection: "row",
           justifyContent: "center",
         }}
