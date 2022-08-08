@@ -1,23 +1,39 @@
 import { View, Text, ScrollView } from "react-native";
 import TodoItem from "./TodoItem";
 import styles from "../../../app.module.css";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { getTodo } from "../../store/slice/main/MainTodo";
+
+// TypeError ; useEffect is not a function 
 
 
-const DATA = [
-  {
-    id: '1',
-    title: '공지1',
-    duedate : '2022-08-03',
-  },
-  {
-    id: '2',
-    title: '공지2',
-    duedate : '2022-08-03'
-  }
-];
+
+
+// const DATA = [
+//   {
+//     id: '1',
+//     title: '공지1',
+//     duedate : '2022-08-03',
+//   },
+//   {
+//     id: '2',
+//     title: '공지2',
+//     duedate : '2022-08-03'
+//   }
+// ];
 
 export default function TodoList({ navigation }) {
+  const todoList = useSelector((state) => state.MainTodo);
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(getTodo());
+    }, []);
+
+
+  console.log(todoList)
+
+  
 
   // 공지들 가져오기 -> isCompleted : false인 애들만
   // const mainTodos = useSelector((state) => state.MainTodo);
@@ -27,13 +43,9 @@ export default function TodoList({ navigation }) {
     <View style={styles.todolistcard}>
       <Text>오늘의 설문</Text>
 
-      {/* map 사용해서 각각으로 넘기기 */}
-      {/* {activeTodos.map((item) => (
-        <TodoItem key={item.id} item={item} navigation={navigation}/>
-      ))}; */}
       <ScrollView>
-        {DATA.map((item) => (
-        <TodoItem item={item} key={item.id} title={item.title} navigation={navigation}/>
+        {todoList && (todoList.map((item) => (
+        <TodoItem item={item} key={item.id} navigation={navigation}/>)
       ))}
       </ScrollView>
 
