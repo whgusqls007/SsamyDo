@@ -2,10 +2,11 @@ import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../../../app.module.css";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
-import { Menu, Provider } from "react-native-paper";
+import { Menu } from "react-native-paper";
 import { useState } from "react";
 
 export default function ScheduleItem({ navigation, Schedule }) {
+  const dispatch = useDispatch();
   // 일정 타입에 따른 아이콘 색 표시를 위한 장치
   var iconColor = "";
   if (Schedule.type === 1) {
@@ -57,8 +58,24 @@ export default function ScheduleItem({ navigation, Schedule }) {
               </TouchableOpacity>
             }
           >
-            <Menu.Item onPress={() => {}} title="수정" />
-            <Menu.Item onPress={() => {}} title="삭제" />
+            <Menu.Item
+              onPress={() => {
+                dispatch({ type: "Schedule/update", payload: Schedule });
+                dispatch({ type: "Schedule/day", day: Schedule.day });
+                dispatch({ type: "Schedule/btn", name: "수정" });
+                setVisible(false);
+                navigation.navigate("MakeSchedule");
+              }}
+              title="수정"
+            />
+            <Menu.Item
+              onPress={() => {
+                dispatch({ type: "ScheduleList/delete", id: Schedule.id });
+                dispatch({ type: "ScheduleList/save" });
+                setVisible(false);
+              }}
+              title="삭제"
+            />
           </Menu>
         </View>
       </View>

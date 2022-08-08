@@ -21,7 +21,7 @@ export default function Main({ navigation }) {
         });
       }
     });
-  });
+  }, []);
   return (
     <View style={[styles.border]}>
       <TodoList navigation={navigation} />
