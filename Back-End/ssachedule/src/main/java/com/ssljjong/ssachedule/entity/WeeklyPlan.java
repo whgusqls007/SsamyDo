@@ -1,12 +1,12 @@
 package com.ssljjong.ssachedule.entity;
 
+import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class WeeklyPlan {
         @Id
         @GeneratedValue
-        @Column(name = "mp_id")
+        @Column(name = "wp_id")
         private Long id;
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -24,6 +24,8 @@ public class WeeklyPlan {
 
         private String title;
         private String type;
-        private LocalDate date;
+        private String date;
+        private String time;
+
 
 }
