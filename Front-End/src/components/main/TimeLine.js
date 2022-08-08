@@ -13,7 +13,7 @@ export default function TimeLine() {
   let dailyData;
   const selectedDay = (arg) => () => {
     setScheduleData(weeklyData[arg]);
-    console.log(dailyData);
+    // console.log(dailyData);
   };
 
   return (

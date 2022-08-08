@@ -16,7 +16,7 @@ export default function ScheduleList({ navigation }) {
       <ScrollView style={{ maxHeight: 300 }}>
         {ScheduleList.map((Schedule) => {
           return (
-            <ScheduleItemd
+            <ScheduleItem
               navigation={navigation}
               Schedule={Schedule}
               key={Schedule.id}
