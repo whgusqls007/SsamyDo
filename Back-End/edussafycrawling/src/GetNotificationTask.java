@@ -13,7 +13,7 @@ public class GetNotificationTask extends ChromeDriverController implements Runna
     @Override
     public void run() {
         List<User> userList = jdbcDriver.runQuery("SELECT * FROM user LIMIT 1 OFFSET 0");
-        this.Email = userList.get(0).getEduEmail();
+        this.Email = userList.get(0).getUserName();
         this.PW = userList.get(0).getEduPw();
         startCrawling();
     }
@@ -90,7 +90,7 @@ public class GetNotificationTask extends ChromeDriverController implements Runna
         }
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+            jdbcDriver.saveNotification(list.get(i));
         }
 
         closeDriver();

@@ -21,7 +21,7 @@ export default function NoticeList({ navigation }) {
     <View style={styles.noticelist}>
       <ScrollView>
         {DATA.map((notice)=>(
-          <NoticeItem notice={notice} navigation={navigation} />
+          <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
         ))}        
       </ScrollView>
     </View>

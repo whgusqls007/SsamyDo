@@ -18,9 +18,9 @@ import static javax.persistence.FetchType.LAZY;
 @ToString(of = {"id", "name", "critical"})
 public class Channel {
 
-    @Id @GeneratedValue
+    @Id
     @Column(name="channel_id")
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -34,9 +34,10 @@ public class Channel {
     private List<Todo> todoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
-    private List<Notice> notices = new ArrayList<>();
+    private List<MMNotice> notices = new ArrayList<>();
 
-    public Channel(String name, Team team) {
+    public Channel(String id, String name, Team team) {
+        this.id = id;
         this.name = name;
         this.team = team;
     }
