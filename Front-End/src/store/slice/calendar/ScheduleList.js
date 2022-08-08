@@ -29,23 +29,27 @@ const ScheduleList = createSlice({
     // 특정 Schedule 수정
     update: (state, action) => {
       // 1. 순회하며 ScheduleList 내에서 해당 id를 가진 Schedule의 인덱스값 찾기
-      const index = state[0].map((Schedule) => {
+      let index = 0;
+      state[0].map((Schedule) => {
         if (Schedule.id === action.payload.id) {
-          return state[0].indexOf(Schedule);
+          index = state[0].indexOf(Schedule);
         }
       });
       // 해당 인덱스 번호를 가진 Schedule를 입력값으로 변경
       state[0][index] = action.payload;
+      state[3] = [];
     },
     // 특정 Schedule 삭제
     delete: (state, action) => {
       // 1. 전체 ScheduleList에서 해당 Schedule 삭제
-      const index = state[0].map((Schedule) => {
-        if (Schedule.id === action.payload.id) {
-          state[0].indexOf(Schedule);
+      let index = 0;
+      state[0].map((Schedule) => {
+        if (Schedule.id === action.id) {
+          index = state[0].indexOf(Schedule);
         }
       });
       state[0].splice(index, 1);
+      state[3] = [];
     },
 
     filter: (state, action) => {
@@ -54,12 +58,14 @@ const ScheduleList = createSlice({
       // 날짜 필터링
       if (state[4] === "all") {
         state[3] = state[0].filter((Schedule) => {
-          return Schedule.end === action.select;
+          return Schedule.day === action.select;
         });
       } else {
-        state[3] = action.payload.filter((Schedule) => {
-          return Schedule.end === action.select;
-        });
+        if (action.payload) {
+          state[3] = action.payload.filter((Schedule) => {
+            return Schedule.day === action.select;
+          });
+        }
       }
       // sort를 통해 시간에 따라 정렬(1차 기준, 2차 기준)
       state[3].sort((a, b) => a.time[0] - b.time[0] || a.time[1] - b.time[1]);
@@ -67,92 +73,112 @@ const ScheduleList = createSlice({
 
     // 버튼을 눌러서 Schedule의 Type 변경시 보여줄 캘린더 속성 제작
     mark: (state, action) => {
-      // 스타일 초기화 및 분류 저장
-      state[2] = {};
-      state[4] = action.select;
-      // zero는 아무 의미 없는 역할
-      const zero = {};
-      const ssafy = { key: "ssafy", color: "blue" };
-      const typeOne = { key: "typeOne", color: "red" };
-      const typeTwo = { key: "typeTwo", color: "green" };
-      // 1. 전체보기의 경우
-      if (action.select === "all") {
-        state[0].map((Schedule) => {
-          // 1-1. 타입 0(ssafy)인 경우
-          if (Schedule.type === 0) {
-            // 1-1-1. 이미 해당 일의 일정이 있는 경우
-            if (state[2][`${Schedule.end}`]) {
-              // 해당 속성에 ssafy타입이 없는 경우
-              if (state[2][`${Schedule.end}`].dots[0] === zero) {
-                state[2][`${Schedule.end}`].dots[0] = ssafy;
+      // 1-1. 선택한 날자만 마킹하는 경우
+      if (action.dayMark) {
+        // 1-1. 이미 해당 일자에 마킹이 있는 경우
+        if (state[2][action.select]) {
+          state[2][action.select] = {
+            ...state[2][action.select],
+            selectedColor: "red",
+          };
+        } else {
+          state[2] = { selectedColor: "red" };
+        }
+        // 전체 일정을 마킹하는 경우
+      } else {
+        // 스타일 초기화 및 분류 저장(해당 분류를 저장하여 현재의 분류 내용을 이해함)
+        state[2] = {};
+        state[4] = action.select;
+        // zero는 아무 의미 없는 역할
+        const zero = {};
+        const ssafy = { key: "ssafy", color: "blue" };
+        const typeOne = { key: "typeOne", color: "red" };
+        const typeTwo = { key: "typeTwo", color: "green" };
+        // 1. 전체보기의 경우
+        if (action.select === "all") {
+          state[0].map((Schedule) => {
+            // 1-1. 타입 0(ssafy)인 경우
+            if (Schedule.type === 0) {
+              // 1-1-1. 이미 해당 일의 일정이 있는 경우
+              if (state[2][`${Schedule.day}`]) {
+                // 해당 속성에 ssafy타입이 없는 경우
+                if (state[2][`${Schedule.day}`].dots[0] === zero) {
+                  state[2][`${Schedule.day}`].dots[0] = ssafy;
+                }
+                // 1-1-2. 해당 일의 기존 일정이 없는 경우
+              } else {
+                state[2][`${Schedule.day}`] = {
+                  ...state[2][`${Schedule.day}`],
+                  dots: [ssafy, zero, zero],
+                };
               }
-              // 1-1-2. 해당 일의 기존 일정이 없는 경우
-            } else {
-              state[2][`${Schedule.end}`] = {
-                dots: [ssafy, zero, zero],
-              };
             }
-          }
-          // 1-2. 타입 1인 경우
-          else if (Schedule.type === 1) {
-            // 1-2-1. 이미 해당 일의 일정이 있는 경우
-            if (state[2][`${Schedule.end}`]) {
-              // 해당 속성에 타입 1이 없는 경우
-              if (state[2][`${Schedule.end}`].dots[1] === zero) {
-                state[2][`${Schedule.end}`].dots[1] = typeOne;
-              } // 1-2-2. 해당 일의 기존 일정이 없는 경우
-            } else {
-              state[2][`${Schedule.end}`] = {
-                dots: [zero, typeOne, zero],
-              };
+            // 1-2. 타입 1인 경우
+            else if (Schedule.type === 1) {
+              // 1-2-1. 이미 해당 일의 일정이 있는 경우
+              if (state[2][`${Schedule.day}`]) {
+                // 해당 속성에 타입 1이 없는 경우
+                if (state[2][`${Schedule.day}`].dots[1] === zero) {
+                  state[2][`${Schedule.day}`].dots[1] = typeOne;
+                } // 1-2-2. 해당 일의 기존 일정이 없는 경우
+              } else {
+                state[2][`${Schedule.day}`] = {
+                  ...state[2][`${Schedule.day}`],
+                  dots: [zero, typeOne, zero],
+                };
+              }
             }
-          }
-          // 1-3. 타입 2인 경우
-          else {
-            // 1-3-1. 이미 해당 일의 일정이 있는 경우
-            if (state[2][`${Schedule.end}`]) {
-              // 해당 속성에 타입 1이 없는 경우
-              if (state[2][`${Schedule.end}`].dots[2] === zero) {
-                state[2][`${Schedule.end}`].dots[2] = typeTwo;
-              } // 1-3-2. 해당 일의 기존 일정이 없는 경우
-            } else {
-              state[2][`${Schedule.end}`] = {
-                dots: [zero, zero, typeTwo],
-              };
+            // 1-3. 타입 2인 경우
+            else {
+              // 1-3-1. 이미 해당 일의 일정이 있는 경우
+              if (state[2][`${Schedule.day}`]) {
+                // 해당 속성에 타입 1이 없는 경우
+                if (state[2][`${Schedule.day}`].dots[2] === zero) {
+                  state[2][`${Schedule.day}`].dots[2] = typeTwo;
+                } // 1-3-2. 해당 일의 기존 일정이 없는 경우
+              } else {
+                state[2][`${Schedule.day}`] = {
+                  ...state[2][`${Schedule.day}`],
+                  dots: [zero, zero, typeTwo],
+                };
+              }
             }
-          }
-        });
-        // 2. 타입 1만 보기의 경우
-      } else if (action.select === 1 && action.payload) {
-        action.payload.map((Schedule) => {
-          // 2-1.해당일에 기존 일정이 없는 경우 스타일 추가
-          if (!state[2][`${Schedule.end}`]) {
-            state[2][`${Schedule.end}`] = {
-              dots: [typeOne],
-            };
-          }
-        });
-        // 3. 타입 2만 보기의 경우
-      } else if (action.select === 2 && action.payload) {
-        action.payload.map((Schedule) => {
-          // 3-1. 해당일에 기존 일정이 없는 경우 스타일 추가
-          if (!state[2][`${Schedule.end}`]) {
-            state[2][`${Schedule.end}`] = {
-              dots: [typeTwo],
-            };
-          }
-        });
-      }
-      // ssafy(0)만 선택한 경우 추가 필요
-      else {
-        if (action.payload) {
+          });
+          // 2. 타입 1만 보기의 경우
+        } else if (action.select === 1 && action.payload) {
           action.payload.map((Schedule) => {
-            if (!state[2][`${Schedule.end}`]) {
-              state[2][`${Schedule.end}`] = {
-                dots: [ssafy],
+            // 2-1.해당일에 기존 일정이 없는 경우 스타일 추가
+            if (!state[2][`${Schedule.day}`]) {
+              state[2][`${Schedule.day}`] = {
+                ...state[2][`${Schedule.day}`],
+                dots: [typeOne],
               };
             }
           });
+          // 3. 타입 2만 보기의 경우
+        } else if (action.select === 2 && action.payload) {
+          action.payload.map((Schedule) => {
+            // 3-1. 해당일에 기존 일정이 없는 경우 스타일 추가
+            if (!state[2][`${Schedule.day}`]) {
+              state[2][`${Schedule.day}`] = {
+                ...state[2][`${Schedule.day}`],
+                dots: [typeTwo],
+              };
+            }
+          });
+        }
+        // ssafy(0)만 선택한 경우 추가 필요
+        else {
+          if (action.payload) {
+            action.payload.map((Schedule) => {
+              if (!state[2][`${Schedule.day}`]) {
+                state[2][`${Schedule.day}`] = {
+                  ...state[2][`${Schedule.day}`],
+                  dots: [ssafy],
+                };
+              }
+            });
+          }
         }
       }
     },

@@ -22,7 +22,7 @@
 }
 
 .border {
-  border-Width: 5px;
+  border-Width: 1px;
 }
 
 .one {
@@ -53,7 +53,7 @@
   margin-left: 10;
   margin-right: 10;
   background-color: lightblue;
-  height: 85%;
+  flex: 1.5;
   width: auto;
   align-items: center;
 }
@@ -72,6 +72,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  width: auto;
 }
 
 .todoitembox {
@@ -82,7 +83,6 @@
   width: auto;
 }
 
-<<<<<<< HEAD
 .checkarea {
   flex: 1;
   background-color: crimson;
@@ -102,6 +102,14 @@
 .timelinelistarea {
   flex: 1;
   background-color: fuchsia;
+}
+
+.noticeitembox { 
+  border-radius: 10px;
+  margin-left: 10;
+  margin-right: 10;
+  background-color: skyblue;
+  width: auto;
 }
 
 .button {

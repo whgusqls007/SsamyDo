@@ -22,8 +22,8 @@ public class App {
         Boolean thread3 = false;
         Boolean thread4 = false;
         // service.execute(new GetNotificationTask(jdbcDriver));
-        service.execute(new GetWeekScheduleTask(jdbcDriver));
-        
+        // service.execute(new GetWeekScheduleTask(jdbcDriver));
+        service.execute(new GetSurveyTask(jdbcDriver));
 
         // while (true) {
         // LocalTime localTime = LocalTime.now();

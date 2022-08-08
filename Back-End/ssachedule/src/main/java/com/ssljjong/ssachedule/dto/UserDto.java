@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @Builder
 public class UserDto {
 
-    @NotNull
+    // @NotNull
     private String username;
 
-    @NotNull
+    // @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -29,7 +29,8 @@ public class UserDto {
     private Set<AuthorityDto> authorityDtoSet;
 
     public static UserDto from(User user) {
-        if(user == null) return null;
+        if (user == null)
+            return null;
 
         return UserDto.builder()
                 .username(user.getUsername())

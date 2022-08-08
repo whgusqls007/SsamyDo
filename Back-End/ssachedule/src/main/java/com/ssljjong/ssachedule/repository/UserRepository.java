@@ -1,6 +1,7 @@
 package com.ssljjong.ssachedule.repository;
 
 import com.ssljjong.ssachedule.dto.UserListDto;
+import com.ssljjong.ssachedule.entity.Team;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -15,23 +16,13 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
-     * * find UserDtoList by Track
+     * * find UserList by Track
      *
      * @param Track Object
      * @return UserDto List only id
      */
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u where u.track = :track")
-    List<UserListDto> findUserIdListByTrack(@Param("track") Track track);
+    List<User> findUsersByTrack(Track track);
 
-    /**
-     * * find UsersEntityList by Track
-     *
-     * @param Track Object
-     * @return UserDomainList
-     */
-
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u where u.track.id = :trackId")
-    List<User> findUserDomainListByTrack(@Param("trackId") Long trackId);
 
     /**
      * * find Users by Team
@@ -40,16 +31,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return UserId List
      */
 
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u join fetch TeamUser tu " +
-            "join fetch Team t where t.id = :teamId")
-    List<UserListDto> findUserIdListByTeam(@Param("teamId") Long teamId);
+    @Query("select u from Team t join TeamUser tu join tu.user u" +
+            " where t.id = :teamId")
+    List<User> findUsersByTeam(@Param("teamId") String teamId);
 
-    @Query("select new com.ssljjong.ssachedule.dto.UserListDto(u.id) from User u join fetch TeamUser tu " +
-            "join fetch Team t join fetch Channel c where c.id = :channelId")
-    List<UserListDto> findUserIdListByChannel(@Param("channelId") Long channelId);
+    @Query("select u from Channel c join c.team t join TeamUser tu join tu.user u" +
+            " where c.id = :channelId")
+    List<User> findUsersByChannelId(@Param("channelId") String channelId);
 
 
     Optional<User> findUserByUsername(String username);
+
     @EntityGraph(attributePaths = "authorities") // Eager로 받아오게 해줌
-    Optional<Object> findOneWithAuthoritiesByUsername(String username);
+    Optional<User> findOneWithAuthoritiesByUsername(String username);
 }

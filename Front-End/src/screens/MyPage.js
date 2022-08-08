@@ -6,10 +6,10 @@ import styles from "../../app.module.css";
 
 export default function MyPage() {
   return (
-    <View style={styles.center}>
+    <View>
       <Text>MyPage</Text>
-      <Alarm />
       <UserDetail />
+      <Alarm />
       <Setting />
     </View>
   );

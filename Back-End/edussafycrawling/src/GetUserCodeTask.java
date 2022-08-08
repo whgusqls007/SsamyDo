@@ -15,7 +15,7 @@ public class GetUserCodeTask extends ChromeDriverController implements Runnable 
     public void run() {
         List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
         for (int i = 0; i < userList.size(); i++) {
-            String email = userList.get(i).getEduEmail();
+            String email = userList.get(i).getUserName();
             String pw = userList.get(i).getEduPw();
             this.Email = email;
             this.PW = pw;
