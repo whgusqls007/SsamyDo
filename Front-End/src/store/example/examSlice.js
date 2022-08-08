@@ -6,21 +6,21 @@ const example = createSlice({
   reducers: {
     plus: (state, action) => {
       state.valueOne = state.valueOne + action.step;
-      console.log(state.valueOne);
+      // console.log(state.valueOne);
     },
     change: (state) => {
       state.valueTwo = !state.valueTwo;
-      console.log(state.valueTwo);
+      // console.log(state.valueTwo);
     },
     input: (state, action) => {
       state.valueThree = action.payload;
-      console.log(state.valueThree);
+      // console.log(state.valueThree);
     },
     delete: (state) => {
       state.valueOne = 0;
       state.valueTwo = false;
       state.valueThree = "";
-      console.log(state);
+      // console.log(state);
     },
   },
 });
