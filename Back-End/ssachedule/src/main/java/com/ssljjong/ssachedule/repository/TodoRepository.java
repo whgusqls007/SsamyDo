@@ -27,7 +27,9 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @return TodoListDto
      */
 
-    List<Todo> findTodosByTeam(Team team);
+    @Query ("select to from Todo to join fetch to.channel c join fetch c.team t " +
+            "where t.id = :teamId")
+    List<Todo> findTodosByTeam(@Param("teamId") String teamId);
 
     /**
      * * find Todos by User
@@ -36,7 +38,9 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @return TodoListDto
      */
 
-    List<Todo> findTodosByUser(User user);
+    @Query ("select to from Todo to join fetch to.channel c join fetch c.team t join TeamUser tu join User u" +
+            " where u.id = :userId")
+    List<Todo> findTodosByUser(@Param("userId")Long userId);
 
 
     /**

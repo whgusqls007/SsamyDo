@@ -1,26 +1,33 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import styles from "../../app.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getTodo } from "../store/slice/main/MainTodo";
+
 
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    AsyncStorage.getItem("TodoList", (err, result) => {
-      dispatch({
-        type: "TodoList/import",
-        payload: JSON.parse(result),
-      });
+    AsyncStorage.getItem("ScheduleList", (err, result) => {
+      if (result) {
+        dispatch({
+          type: "ScheduleList/import",
+          payload: JSON.parse(result),
+        });
+      }
     });
-  });
+
+
+  }, []);
+
   return (
-    <View style={[styles.border]}>
+    <View style={{ flex: 1 }}>
       {/* <Text>Main</Text> */}
-      <TodoList navigation={navigation} />
-      <TimeLine />
+      <TodoList navigation={navigation} style={{ flex: 2 }} />
+      <TimeLine style={{ flex: 3 }} />
     </View>
   );
 }

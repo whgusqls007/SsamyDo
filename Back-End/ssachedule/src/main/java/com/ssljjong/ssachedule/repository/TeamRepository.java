@@ -18,7 +18,9 @@ public interface TeamRepository extends JpaRepository<Team, String> {
      * @return List of Teams given user belongs to
      */
 
-    List<Team> findTeamsByUser(User user);
+    @Query("select t from Team t join TeamUser tu join tu.user u" +
+            " where u.id = :userId")
+    List<Team> findTeamsByUser(@Param("userId") Long userId);
 
 
 

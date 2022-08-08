@@ -1,15 +1,25 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../../../app.module.css";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Start({ navigation }) {
   return (
     <View style={styles.back}>
       <Text style={styles.ssamydo}>SSAMY DO!</Text>
-      <Button title="Main" onPress={() => navigation.navigate("TabNav")} />
-      <Button
-        title="redux 예시"
-        onPress={() => navigation.navigate("example")}
-      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("TabNav")}
+      >
+        <Text>Main</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          AsyncStorage.removeItem("ScheduleList");
+        }}
+      >
+        <Text>로컬 삭제</Text>
+      </TouchableOpacity>
       <Text style={styles.container}></Text>
     </View>
   );

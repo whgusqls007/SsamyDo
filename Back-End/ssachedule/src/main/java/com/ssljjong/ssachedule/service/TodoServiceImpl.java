@@ -17,12 +17,10 @@ import java.util.stream.Collectors;
 public class TodoServiceImpl implements TodoService{
 
     private final TodoRepository todoRepository;
-    private final UserRepository userRepository;
 
     @Override
     public List<TodoDto> getTodosByUser(Long userId) {
-        User user = userRepository.findById(userId).get();
-        List<TodoDto> Todos = todoRepository.findTodosByUser(user).stream()
+        List<TodoDto> Todos = todoRepository.findTodosByUser(userId).stream()
                 .map(t -> new TodoDto(t.getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
                 .collect(Collectors.toList());
         return Todos;
