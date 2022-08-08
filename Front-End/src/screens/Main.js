@@ -17,7 +17,7 @@ export default function Main({ navigation }) {
         });
       }
     });
-  });
+  }, []);
   return (
     <View style={[styles.border]}>
       {/* <Text>Main</Text> */}
