@@ -46,6 +46,7 @@ export default function TimeLine() {
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
     setScheduleData(weeklyData[arg]);
+    // console.log(dailyData);
   };
 
   useEffect(() => {
