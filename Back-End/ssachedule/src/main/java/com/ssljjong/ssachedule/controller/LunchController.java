@@ -42,7 +42,7 @@ public class LunchController {
 
     @GetMapping("/lunch/date/{date}")
     @ApiOperation(value = "특정 날짜 점심 메뉴 조회")
-    @PreAuthorize("hasAnyRole('USER')")
+    // @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForDate(@PathVariable String date) {
         List<LunchDto> menus = lunchService.getLunchForDate(date);
 
