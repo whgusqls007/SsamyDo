@@ -1,4 +1,4 @@
-import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -7,47 +7,46 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../../store/store";
-import Schedule from "../../store/slice/calendar/Schedule";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ],
   monthNamesShort: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aou",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ],
   dayNames: [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일",
   ],
-  dayNamesShort: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+  dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
   today: "Today",
 };
 LocaleConfig.defaultLocale = "ssamydo";
@@ -82,7 +81,11 @@ export default function CustomCalendar() {
   });
   // 현재 달력에서 보일 타입 선택(타입에 따라 캘린더 마크가 변경)
   const type = useSelector((state) => {
-    return state.ScheduleList[4];
+    return state.ScheduleList[4][0];
+  });
+
+  const check = useSelector((state) => {
+    return state.ScheduleList[0];
   });
 
   return (
@@ -91,23 +94,23 @@ export default function CustomCalendar() {
         onDayPress={(day) => {
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
-            dispatch({ type: "ScheduleList/filter", select: day.dateString });
-            dispatch({
-              type: "ScheduleList/dayMark",
-              select: day.dateString,
-              dayMark: 1,
-            });
+            // 우선 캘린더에 점을 표시하기 위해 mark 실행
+            dispatch({ type: "ScheduleList/mark", day: day.dateString });
+            // 우선 필터링된 리스트를 보기 위해 filter 실행
+            dispatch({ type: "ScheduleList/filter", day: day.dateString });
           } else {
-            // 타입별 보기의 경우 해당 타입의 리스트도 보냄(Schedule.js에는 createSelector X)
+            // 타입별 보기의 경우 해당 타입의 리스트도 보냄(Schedule.js에는 createSelector X) ?? 뭐였지
+            // 캘린더에 점을 표시하기 위해 mark 실행(해당 리스트도 같이 보내줌)
             dispatch({
-              type: "ScheduleList/filter",
-              select: day.dateString,
+              type: "ScheduleList/mark",
+              day: day.dateString,
               payload: typeList[type],
             });
+            // 필터링된 리스트를 보기 위해 filter 실행(해당 리스트도 같이 보내줌)
             dispatch({
-              type: "ScheduleList/dayMark",
-              select: day.dateString,
-              dayMark: 1,
+              type: "ScheduleList/filter",
+              day: day.dateString,
+              payload: typeList[type],
             });
           }
         }}
