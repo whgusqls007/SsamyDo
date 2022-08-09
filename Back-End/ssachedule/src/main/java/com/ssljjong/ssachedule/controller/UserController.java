@@ -24,10 +24,9 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/avi/v1/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
     private final TrackRepository trackRepository;
 
@@ -38,20 +37,23 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(
-            @Valid @RequestBody UserDto userDto
-    ) throws Exception {
+            @Valid @RequestBody UserDto userDto) throws Exception {
         return ResponseEntity.ok(userService.signup(userDto));
     }
 
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,@RequestBody int gi){
+
+    public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,
+            @RequestBody int gi) {
+
         Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
         User user = userService.getUser(userDto.getUsername()).get();
         userService.changeTrack(user, track);
 
         return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
     }
+
     /**
      * 
      * @param map json
@@ -77,49 +79,5 @@ public class UserController {
 
         return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
     }
-    // @PostMapping("/checkuser")
-    // public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String>
-    // map) {
-    // UserDomain userDomain = new UserDomain();
-    // String email = map.get("email");
-    // String pw = map.get("pw");
-    //
-    // userDomain.setUserEmail(email);
-    // userDomain.setUserPw(pw);
-    //
-    // if (userService.checkUser(userDomain)) {
-    // return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    // }
-    //
-    // return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
-    // }
-
-    /**
-     * 
-     * @param map json
-     * @return ResponseEntity<Boolean>(true, HttpStatus.OK)
-     *         when update result is true
-     *         otherwise ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST)
-     */
-    // @PostMapping("/setusereduinfo")
-    // public ResponseEntity<Boolean> setUserEduInfo(@RequestBody Map<String,
-    // String> map) {
-    // String userEmail = map.get("userEmail");
-    // String eduEmail = map.get("eduEmail");
-    // String eduPw = map.get("eduPw");
-    //
-    // UserDomain userDomain = new UserDomain();
-    // userDomain.setUserEmail(userEmail);
-    // userDomain.setEduEmail(eduEmail);
-    // userDomain.setEduPw(eduPw);
-    //
-    // Boolean result = userService.setUserEduInfo(userDomain);
-    //
-    // if (!result) {
-    // return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-    // }
-    //
-    // return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    // }
-
+    
 }

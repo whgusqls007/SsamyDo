@@ -15,7 +15,7 @@ public class GetSurveyTask extends ChromeDriverController implements Runnable {
 		List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
 
 		for (int i = 0; i < userList.size(); i++) {
-			String email = userList.get(i).getEduEmail();
+			String email = userList.get(i).getUserName();
 			String pw = userList.get(i).getEduPw();
 			this.Email = email;
 			this.PW = pw;
@@ -48,7 +48,7 @@ public class GetSurveyTask extends ChromeDriverController implements Runnable {
 				survey.setTitle(findElementByClassName(mqltt, "tit").getText());
 				survey.setDate(findElementByClassName(mqltt, "txt").getText());
 				survey.setType(findElementByClassName(mqlinfor, "mql-point").getText());
-				System.out.println(survey);
+				jdbcDriver.saveSurvey(survey);
 			}
 
 			break;

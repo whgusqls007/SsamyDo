@@ -1,6 +1,5 @@
 package com.ssljjong.ssachedule.controller;
 
-
 import com.ssljjong.ssachedule.dto.LoginDto;
 import com.ssljjong.ssachedule.dto.TokenDto;
 import com.ssljjong.ssachedule.jwt.JwtFilter;
@@ -32,9 +31,10 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+        System.out.println("loginDto: " + loginDto);
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                loginDto.getUsername(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
