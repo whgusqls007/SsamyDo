@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "title", "type", "date"})
+@ToString(of = {"id", "title", "date"})
 @Table(name = "weeklyplan")
 public class WeeklyPlan {
         @Id
@@ -19,11 +19,7 @@ public class WeeklyPlan {
         @Column(name = "wp_id")
         private Long id;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private Track track;
-
         private String title;
-        private String type;
         private String date;
         private String time;
 

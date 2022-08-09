@@ -5,5 +5,7 @@ app_name="nlp"
 
 urlpatterns = [
     path('', views.preprocess),
+    path('/todo', views.make_todo),
+    path('/push', views.push)
 
 ]
