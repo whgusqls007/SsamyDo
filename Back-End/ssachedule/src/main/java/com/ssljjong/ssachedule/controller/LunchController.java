@@ -30,7 +30,7 @@ public class LunchController {
 
     @GetMapping("/lunch/today")
     @ApiOperation(value = "오늘 점심 메뉴 조회")
-    @PreAuthorize("hasAnyRole('USER')")
+//    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForToday() {
         List<LunchDto> menus = lunchService.getTodayLunch();
 
@@ -42,7 +42,7 @@ public class LunchController {
 
     @GetMapping("/lunch/date/{date}")
     @ApiOperation(value = "특정 날짜 점심 메뉴 조회")
-    // @PreAuthorize("hasAnyRole('USER')")
+//    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForDate(@PathVariable String date) {
         List<LunchDto> menus = lunchService.getLunchForDate(date);
 
@@ -55,7 +55,7 @@ public class LunchController {
 
     @GetMapping("/lunch/period/{startDate}/{endDate}")
     @ApiOperation(value = "특정 기간 점심 메뉴 조회")
-    @PreAuthorize("hasAnyRole('USER')")
+//    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForPeriod(@PathVariable String startDate, @PathVariable String endDate) {
         List<LunchDto> menus = lunchService.getLunchesForPeriod(startDate, endDate);
 
