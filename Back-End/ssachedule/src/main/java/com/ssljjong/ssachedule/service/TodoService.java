@@ -16,4 +16,6 @@ public interface TodoService {
      */
 
     List<TodoDto> getTodosByUserFromDate(Long userId, String dueDate);
+
+    List<TodoDto> getTodosFromDate(String dueDate);
 }
