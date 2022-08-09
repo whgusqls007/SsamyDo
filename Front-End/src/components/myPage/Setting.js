@@ -4,7 +4,7 @@ import styles from "../../../app.module.css";
 
 export default function Alarm() {
   const typeList = useSelector((state) => {
-    return state.Setting[2];
+    return state.Setting[1];
   });
   return (
     <View style={[styles.border, { height: 200, backgroundColor: "#E5F3F6" }]}>
