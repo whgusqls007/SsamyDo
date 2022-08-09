@@ -1,6 +1,5 @@
 package com.ssljjong.ssachedule.repository;
 
-import com.ssljjong.ssachedule.entity.EduNotice;
 import com.ssljjong.ssachedule.entity.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +17,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Override
     Page<Notice> findAll(Pageable pageable);
+
 }
+

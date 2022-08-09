@@ -11,5 +11,6 @@ import java.util.List;
 public interface NoticeService {
 
     List<NoticeDto> findNoticesByPage(Integer page);
+    List<NoticeDto> findNoticesByOffsetAndSize(Integer offset, Integer size);
 
 }

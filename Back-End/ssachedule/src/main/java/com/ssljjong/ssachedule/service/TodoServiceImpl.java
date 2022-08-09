@@ -34,4 +34,13 @@ public class TodoServiceImpl implements TodoService{
         return Todos;
 
     }
+
+    @Override
+    public List<TodoDto> getTodosFromDate(String dueDate) {
+        List<TodoDto> Todos = todoRepository.findTodosByDueDate(dueDate).stream()
+                .map(t -> new TodoDto(t.getId(), t.getNotice().getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
+                .collect(Collectors.toList());
+        return Todos;
+
+    }
 }
