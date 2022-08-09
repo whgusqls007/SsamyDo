@@ -1,4 +1,8 @@
-import { configureStore, combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import example from "./example/examSlice";
 import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
