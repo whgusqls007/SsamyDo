@@ -8,9 +8,13 @@ function Start({ navigation }) {
   useEffect(() => {
     AsyncStorage.getItem("User", (err, result) => {
       if (result) {
+        // 로컬의 계정 정보(id, pw, tokken)를 받아서 Redux에 저장
+        dispatch({
+          type: "Account/import",
+          payload: JSON.parse(result),
+        });
+        // 메인화면으로 이동
         navigation.navigate("TabNav");
-        // 로컬의 사용자정보를 받아서 Redux에 저장하는 dispatch 필요
-        // dispatch()
       } else {
         navigation.navigate("SignIn");
       }
