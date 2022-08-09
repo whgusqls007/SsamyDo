@@ -18,6 +18,11 @@ export default function ScheduleItem({ navigation, Schedule }) {
   }
   // 드랍 메뉴의 보이는 여부를 결정할 변수
   const [visible, setVisible] = useState(false);
+
+  // 현재의 타입과 선택일을 가져올 변수(삭제 후 함께 보내야 mark와 filter에 표시가 가능)
+  const type = useSelector((state) => {
+    return state.ScheduleList[4];
+  });
   return (
     <View style={{ border: "1 black" }}>
       <View
@@ -33,9 +38,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
           style={{ flexDirection: "row", alignContent: "center", height: 30 }}
         >
           <Ionicons
-            onPress={() => {
-              console.log(Schedule);
-            }}
+            onPress={() => {}}
             name="ellipse-sharp"
             size={10}
             color={iconColor}
@@ -49,6 +52,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
             {Schedule.time[0].toString().padStart(2, "0")} :{" "}
             {Schedule.time[1].toString().padStart(2, "0")}
           </Text>
+          {/* 클릭시 수정/삭제 메뉴가 나올 Menu 컴포넌트 */}
           <Menu
             visible={visible}
             onDismiss={() => setVisible(false)}
@@ -58,20 +62,34 @@ export default function ScheduleItem({ navigation, Schedule }) {
               </TouchableOpacity>
             }
           >
+            {/* 수정메뉴 */}
             <Menu.Item
               onPress={() => {
+                // MakeSchedule에 현재 값 넣기
                 dispatch({ type: "Schedule/update", payload: Schedule });
-                dispatch({ type: "Schedule/day", day: Schedule.day });
-                dispatch({ type: "Schedule/btn", name: "수정" });
+                // 메뉴 사라지기
                 setVisible(false);
+                // 수정(MakeSchedule) 화면으로 이동
                 navigation.navigate("MakeSchedule");
               }}
               title="수정"
             />
+            {/* 삭제메뉴 */}
             <Menu.Item
               onPress={() => {
+                // 삭제하기
                 dispatch({ type: "ScheduleList/delete", id: Schedule.id });
+                // 마크 다시 처리하기
+                dispatch({ type: "ScheduleList/mark", select: type[0] });
+                // 리스트 다시 보이기
+                dispatch({
+                  type: "ScheduleList/filter",
+                  select: type[0],
+                  day: type[1],
+                });
+                // 저장하기
                 dispatch({ type: "ScheduleList/save" });
+                // 메뉴 사라지기
                 setVisible(false);
               }}
               title="삭제"
