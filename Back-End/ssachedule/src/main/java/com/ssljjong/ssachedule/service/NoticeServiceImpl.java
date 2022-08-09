@@ -29,4 +29,13 @@ public class NoticeServiceImpl implements NoticeService{
                 .collect(Collectors.toList());
         return result;
     }
+
+    public List<NoticeDto> findNoticesByOffsetAndSize(Integer offset, Integer size) {
+        PageRequest pageRequest = PageRequest.of(offset, size, Sort.by(Sort.Direction.DESC, "date"));
+        List<Notice> notices = noticeRepository.findAll(pageRequest).getContent();
+        List<NoticeDto> result = notices.stream()
+                .map(n -> new NoticeDto(n.getId(), n.getTitle(), n.getDescription(), n.getDate()))
+                .collect(Collectors.toList());
+        return result;
+    }
 }

@@ -1,8 +1,6 @@
 package com.ssljjong.ssachedule.controller;
 
 import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
-import com.ssljjong.ssachedule.entity.WeeklyPlan;
-import com.ssljjong.ssachedule.repository.WeeklyPlanRepository;
 import com.ssljjong.ssachedule.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,14 +17,14 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/plan")
+@RequestMapping("/api/plan")
 public class PlanController {
 
     private final PlanService planService;
 
 
+//    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/date/{date}")
-    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> findPlansByDate(@PathVariable String date) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByDate(date);
         System.out.println(plans);
@@ -36,8 +34,8 @@ public class PlanController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/weekly/period/{startDate}")
 //    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("/weekly/period/{startDate}")
     public ResponseEntity<Map<String, Object>> findWeeklyPlans(@PathVariable String startDate) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByStartDate(startDate);
 
@@ -48,8 +46,8 @@ public class PlanController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+//    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/period/{startDate}/{endDate}")
-    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> findPlansByPeriod(@PathVariable String startDate, @PathVariable String endDate) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByDateBetween(startDate, endDate);
 
