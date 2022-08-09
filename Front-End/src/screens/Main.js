@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getTodo } from "../store/slice/main/MainTodo";
 
-
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,8 +18,6 @@ export default function Main({ navigation }) {
         });
       }
     });
-
-
   }, []);
 
   return (
