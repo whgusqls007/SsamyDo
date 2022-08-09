@@ -7,10 +7,6 @@ import { TextInput } from "react-native-gesture-handler";
 
 export default function UserDetail() {
   const dispatch = useDispatch();
-  // name: "",
-  //     No: 0,
-  //     campus: "",
-  //     track: "",
   const user = useSelector((state) => {
     return state.Setting[0];
   });

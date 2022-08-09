@@ -12,7 +12,7 @@ export default function ScheduleList({ navigation }) {
 
   return (
     <View>
-      {ScheduleList[0] && <Text>{ScheduleList[0].end} 일정</Text>}
+      {ScheduleList[0] && <Text>{ScheduleList[0].day} 일정</Text>}
       <ScrollView style={{ maxHeight: 300 }}>
         {ScheduleList.map((Schedule) => {
           return (
