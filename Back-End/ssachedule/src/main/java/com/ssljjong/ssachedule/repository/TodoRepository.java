@@ -18,7 +18,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @param Channel Object
      * @return TodoListDto
      */
-    List<Todo> findTodosByChannel(Channel Channel);
+    @Query("select t from Todo t join fetch t.notice n join Channel c where c.id = :channelId")
+    List<Todo> findTodosByChannel(@Param("channelId") String channelId);
 
     /**
      * * find Todos by Team
@@ -27,7 +28,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @return TodoListDto
      */
 
-    @Query ("select to from Todo to join fetch to.channel c join fetch c.team t " +
+    @Query ("select to from Todo to join fetch to.notice n join Channel c join c.team t " +
             "where t.id = :teamId")
     List<Todo> findTodosByTeam(@Param("teamId") String teamId);
 
@@ -38,7 +39,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @return TodoListDto
      */
 
-    @Query ("select to from Todo to join fetch to.channel c join fetch c.team t join TeamUser tu join User u" +
+    @Query ("select to from Todo to join to.notice n join Channel c join c.team t join TeamUser tu join tu.user u" +
             " where u.id = :userId")
     List<Todo> findTodosByUser(@Param("userId")Long userId);
 
@@ -50,7 +51,11 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
      * @param date LocalDate
      * @return TodoDto List
      */
-    @Query("select t from Todo t join fetch t.channel c join fetch c.team te join TeamUser tu join tu.user u" +
+    @Query("select t from Todo t join t.notice n join Channel c join c.team te join TeamUser tu join tu.user u" +
             " where u.id = :userId and t.dueDate < :dueDate")
     List<Todo> findTodosByUserAndDueDate(@Param("userId") Long userId, @Param("dueDate") String dueDate);
+
+
+    @Query("select t from Todo t where t.dueDate < :dueDate")
+    List<Todo> findTodosByDueDate(@Param("dueDate") String date);
 }
