@@ -15,30 +15,29 @@ public class Todo {
     @Column(name = "todo_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "channel_id")
-    private Channel channel;
+    @OneToOne
+    @JoinColumn(name = "notice_id")
+    private Notice notice;
 
     private String title;
     private String description;
     private TodoType type;
-    private LocalDate dueDate;
+    private String dueDate;
 
     // 연관 메서드
-    public void changeDuedate(LocalDate date) {
+    public void changeDueDate(String date) {
         this.dueDate = date;
     }
 
     // 생성 메서드
-    public static Todo createTodo(Channel channel, String title, String description, TodoType type, LocalDate dueDate) {
-        Todo todo = new Todo();
-        todo.setChannel(channel);
-        todo.setTitle(title);
-        todo.setDescription(description);
-        todo.setType(type);
-        todo.setDueDate(dueDate);
-        return todo;
+
+
+    public Todo(Long id, Notice notice, String title, String description, TodoType type, String dueDate) {
+        this.id = id;
+        this.notice = notice;
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.dueDate = dueDate;
     }
-
-
 }
