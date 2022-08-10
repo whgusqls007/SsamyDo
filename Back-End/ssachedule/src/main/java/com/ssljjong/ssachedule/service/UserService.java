@@ -114,8 +114,14 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public String checkAccount(User userDomain) {
-        net.bis5.mattermost.model.User user = client.login(userDomain.getUsername(), userDomain.getPassword());
-        return "성공";
+    public Boolean validateAccount(User userDomain) {
+        try {
+            client.login(userDomain.getUsername(), userDomain.getPassword());
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
     }
+
+
 }

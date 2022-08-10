@@ -21,8 +21,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TodoController {
 
-    private TodoService todoService;
-    private TokenProvider tokenProvider;
+    private final TodoService todoService;
+
 
 //    @GetMapping("/todolist")
 //    @PreAuthorize("hasAnyRole('USER')")
@@ -38,8 +38,7 @@ public class TodoController {
 
 //    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/todolist/{date}")
-    public ResponseEntity<Map<String, Object>> getTodosByUser(@PathVariable String date) {
-
+    public ResponseEntity<Map<String, Object>> getTodos(@PathVariable String date) {
         List<TodoDto> todos = todoService.getTodosFromDate(date);
         Map<String, Object> response = new HashMap<>();
 
