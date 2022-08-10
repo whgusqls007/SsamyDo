@@ -97,7 +97,7 @@ export default function CustomCalendar() {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행
             dispatch({ type: "ScheduleList/mark", day: day.dateString });
             // 우선 필터링된 리스트를 보기 위해 filter 실행
-            dispatch({ type: "ScheduleList/filter", day: day.dateString });
+            dispatch({ type: "ScheduleList/filter" });
           } else {
             // 타입별 보기의 경우 해당 타입의 리스트도 보냄(Schedule.js에는 createSelector X) ?? 뭐였지
             // 캘린더에 점을 표시하기 위해 mark 실행(해당 리스트도 같이 보내줌)
@@ -109,7 +109,6 @@ export default function CustomCalendar() {
             // 필터링된 리스트를 보기 위해 filter 실행(해당 리스트도 같이 보내줌)
             dispatch({
               type: "ScheduleList/filter",
-              day: day.dateString,
               payload: typeList[type],
             });
           }
