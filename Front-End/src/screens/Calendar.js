@@ -31,7 +31,7 @@ export default function Calendar({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[2];
+    return state.Setting[1];
   });
   return (
     <View>
@@ -46,7 +46,6 @@ export default function Calendar({ navigation }) {
               });
               dispatch({
                 type: "ScheduleList/filter",
-                select: "all",
               });
             }}
           >
@@ -62,7 +61,6 @@ export default function Calendar({ navigation }) {
               });
               dispatch({
                 type: "ScheduleList/filter",
-                select: 0,
                 payload: typeList[0],
               });
             }}
@@ -82,7 +80,6 @@ export default function Calendar({ navigation }) {
               });
               dispatch({
                 type: "ScheduleList/filter",
-                select: 1,
                 payload: typeList[1],
               });
             }}
@@ -102,7 +99,6 @@ export default function Calendar({ navigation }) {
               });
               dispatch({
                 type: "ScheduleList/filter",
-                select: 2,
                 payload: typeList[2],
               });
             }}
