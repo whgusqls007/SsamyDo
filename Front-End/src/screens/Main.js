@@ -10,12 +10,19 @@ import { getTodo } from "../store/slice/main/MainTodo";
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
+    // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
         });
+      }
+    });
+    // 사용자 설정 불러오기
+    AsyncStorage.getItem("Setting", (err, result) => {
+      if (result) {
+        dispatch({ type: "Setting/import", payload: JSON.parse(result) });
       }
     });
   }, []);
