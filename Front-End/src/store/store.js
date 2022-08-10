@@ -8,8 +8,8 @@ import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
 import ScheduleList from "./slice/calendar/ScheduleList";
 import { createSelector } from "@reduxjs/toolkit";
-import Setting from "./slice/page/Setting";
-import logger from "redux-logger";
+import Setting from "./slice/mypage/Setting";
+import Account from "./slice/mypage/Account";
 
 const reducer = combineReducers({ MainTodo: MainTodo.reducer });
 
@@ -20,8 +20,9 @@ const store = configureStore({
     ScheduleList: ScheduleList.reducer,
     // MainTodo: MainTodo.reducer,
     Setting: Setting.reducer,
+    Account: Account.reducer,
   },
-  middleware: [...getDefaultMiddleware(), logger],
+  middleware: [...getDefaultMiddleware()],
 });
 
 export const allSelector = (state) => state.ScheduleList[0];

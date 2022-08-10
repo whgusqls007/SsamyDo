@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// 1. 캘린더에서 특정 일을 클릭하면 mark(day를 인자로 보낸다.), filter는 all 타입이 아닌 경우 해당 리스트를 payload로 보낸다.
+// 2. 캘린더 위 분류 타입에서 클릭을 하면(mark에 타입을 보내서 state[4]를 변화), filter로는 해당 리스트의 payload를 보낸다.
+// 3. 수정과 삭제시 mark와 filter에 해당 타입의 리스트만 payload로 보낸다.
+
 const ScheduleList = createSlice({
   name: "ScheduleList",
   // 0 : 전체 Schedule리스트, 1: LastId, 2: 달력에 표시 변수
@@ -67,14 +71,7 @@ const ScheduleList = createSlice({
     // 1. 타입을 누를 경우 select와 payload(all에는 x), 2. 일자를 선택한 경우(day와 payload(all은x)), mark를 먼저 보내야함
     // action = {select : 타입 선택, day: 일자 선택, payload: 해당 선택 타입의 스케쥴 리스트}
     filter: (state, action) => {
-      if (action.select || action.select === 0) {
-        state[4][0] = action.select;
-      }
-      // day가 있으면 현재 선택일 교체(캘린더내 일자 클릭 시)
-      // mark에서 처리함, mark는 기존 선택일이 필요
-      // if (action.day) {
-      //   state[4][1] = action.day;
-      // }
+      // day가 있으면 현재 선택일 교체(캘린더내 일자 클릭 시) => mark에서 처리함, mark는 기존 선택일이 필요
       // 목록 초기화
       state[3] = [];
       // 1. 날짜 필터링 중 타입이 all 인경우
@@ -102,9 +99,9 @@ const ScheduleList = createSlice({
     // 2가지 경우 사용 : 1. 현재 선택한 날을 표시하는 역할
     // 2. 타입을 선택하여 해당 일정들 타입을 점으로 캘린더에 생성하는 역할
     mark: (state, action) => {
-      // 1. 현재 선택한 일을 표시(인자로 일자를 넘긴 경우)
-      if (state[2][action.day]) {
-        // 1-1. 기존 선택일(state[4][1])을 지우기
+      // 1. 인자로 일자를 넘긴 경우(달력의 일을 클릭하여 선택한 날의 마크만 필요한 경우)
+      if (action.day) {
+        // 1-1. 기존 선택일(state[4][1])마크를 지우기
         state[2][state[4][1]] = {
           ...state[2][state[4][1]],
           selected: false,
@@ -129,8 +126,10 @@ const ScheduleList = createSlice({
       } else {
         // 기존 마크 초기화
         state[2] = {};
-        // 현재 선택한 타입을 저장
-        state[4][0] = action.select;
+        // 현재 선택한 타입이 있다면(0인 경우는 누락되므로 추가)
+        if (action.select || action.select === 0) {
+          state[4][0] = action.select;
+        }
         // zero는 아무 의미 없는 역할, 각 키워드에 적절한 색
         const zero = {};
         const ssafy = { key: "ssafy", color: "blue" };

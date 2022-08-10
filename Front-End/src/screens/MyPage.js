@@ -7,7 +7,6 @@ import styles from "../../app.module.css";
 export default function MyPage() {
   return (
     <View>
-      <Text>MyPage</Text>
       <UserDetail />
       <Alarm />
       <Setting />
