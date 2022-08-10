@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
 import weeklyData from "../../store/example/weeklyData.json";
+import rawData from "../../store/example/weeklyData2.json";
 import axios from "axios";
 
 export default function TimeLine() {
@@ -26,19 +27,42 @@ export default function TimeLine() {
     return formattedStartDate;
   }
 
-  // axios를 통해서 이번 주 스케쥴 받아오기
-  const baseURL = "http://127.0.0.1:8080/api/v1/plan/weekly/period/";
+  // // axios를 통해서 이번 주 스케쥴 받아오기
+  // const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period";
 
-  axios({
-    method: "get",
-    url: `${baseURL}/${formattingStartDate()}`,
-  }).then((response) => {
-    console.log(response.data);
-  });
+  // axios({
+  //   method: "get",
+  //   url: `${baseURL}/${formattingStartDate()}`,
+  // })
+  //   .then((response) => {
+  //     console.log(response.data);
+  //     console.log("됐다!");
+  //   })
+  //   .catch((error) => {
+  //     console.log("-----------------");
+  //     console.log(error);
+  //     console.log(error.response);
+  //     console.log("에러에러");
+  //   });
 
-  axios.get(`${baseURL}/${formattingStartDate()}`).then((response) => {
-    console.log(response.data);
-  });
+  // 일주일 스케쥴을 요일별로 묶기
+  function classifyDays(weekdata) {
+    let data = weekdata.data;
+    let result = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+    };
+    for (i=0; i<data.length; i++) {
+      if (data.i.date === data.(i+1).date) {
+        continue
+      }
+      }
+    }
+    return result;
+  }
 
   // 일일 스케쥴을 담아두는 변수
   const [scheduleData, setScheduleData] = useState();
