@@ -3,11 +3,17 @@ package com.ssljjong.ssachedule.controller;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
+import com.ssljjong.ssachedule.jwt.TokenProvider;
 import com.ssljjong.ssachedule.repository.TrackRepository;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a912829ecb2ab9695a04ede4185f1fe87647e01
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +34,7 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final TrackRepository trackRepository;
+    private final TokenProvider tokenProvider;
 
     @GetMapping("/test")
     public ResponseEntity<String> hello() {
@@ -42,11 +49,14 @@ public class UserController {
 
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<String> changeTrack(@RequestBody UserDto userDto, @RequestBody String trackName,
+    public ResponseEntity<String> changeTrack(@RequestHeader String Token, @RequestBody String trackName,
             @RequestBody int gi) {
-        Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
-        User user = userService.getUser(userDto.getUsername()).get();
-        userService.changeTrack(user, track);
+
+//        Authentication auth = tokenProvider.getAuthentication(Token);
+//        System.out.println(auth.getDetails().toString());
+//        Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
+//        User user = userService.getUserById(userId).get();
+//        userService.changeTrack(user, track);
 
         return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
     }
@@ -59,66 +69,22 @@ public class UserController {
      *         ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED)
      */
 
-    @PostMapping("/login")
-    @ApiOperation(value = "사용자가 싸피사람인지 인증한다.")
-    public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String> map) {
-        String email = map.get("email");
-        String pw = map.get("pw");
-        String eduPw = map.get("eduPw");
-
-        User userDomain = new User(email, pw, eduPw);
-
-        if (userService.getUser(email) == null) {
-            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
-        } else {
-            userService.checkAccount(userDomain);
-        }
-
-        return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
-    }
-    // @PostMapping("/checkuser")
-    // public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String>
-    // map) {
-    // UserDomain userDomain = new UserDomain();
-    // String email = map.get("email");
-    // String pw = map.get("pw");
-    //
-    // userDomain.setUserEmail(email);
-    // userDomain.setUserPw(pw);
-    //
-    // if (userService.checkUser(userDomain)) {
-    // return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    // }
-    //
-    // return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
-    // }
-
-    /**
-     * 
-     * @param map json
-     * @return ResponseEntity<Boolean>(true, HttpStatus.OK)
-     *         when update result is true
-     *         otherwise ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST)
-     */
-    // @PostMapping("/setusereduinfo")
-    // public ResponseEntity<Boolean> setUserEduInfo(@RequestBody Map<String,
-    // String> map) {
-    // String userEmail = map.get("userEmail");
-    // String eduEmail = map.get("eduEmail");
-    // String eduPw = map.get("eduPw");
-    //
-    // UserDomain userDomain = new UserDomain();
-    // userDomain.setUserEmail(userEmail);
-    // userDomain.setEduEmail(eduEmail);
-    // userDomain.setEduPw(eduPw);
-    //
-    // Boolean result = userService.setUserEduInfo(userDomain);
-    //
-    // if (!result) {
-    // return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-    // }
-    //
-    // return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    // }
-
+//    @PostMapping("/login")
+//    @ApiOperation(value = "사용자가 싸피사람인지 인증한다.")
+//    public ResponseEntity<Boolean> checkUser(@RequestBody Map<String, String> map) {
+//        String email = map.get("email");
+//        String pw = map.get("pw");
+//        String eduPw = map.get("eduPw");
+//
+//        User userDomain = new User(email, pw, eduPw);
+//
+//        if (userService.getUser(email) == null) {
+//            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+//        } else {
+//            userService.checkAccount(userDomain);
+//        }
+//
+//        return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+//    }
+//
 }

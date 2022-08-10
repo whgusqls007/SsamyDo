@@ -110,6 +110,10 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
     public String checkAccount(User userDomain) {
         net.bis5.mattermost.model.User user = client.login(userDomain.getUsername(), userDomain.getPassword());
         return "성공";
