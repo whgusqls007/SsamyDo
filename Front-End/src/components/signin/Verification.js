@@ -69,30 +69,31 @@ export default function Verification({ navigation }) {
             } else if (!MMPassword) {
               setInputError("Matta Most 비밀번호를 입력해주세요");
             } else {
+              const credentials = {
+                username: email,
+                password: MMPassword,
+                eduPw: eduPassword,
+              };
               axios({
-                url: drf.login(),
+                url: drf.signup(),
                 method: "POST",
-                credentials: {
-                  username: email,
-                  password: MMPassword,
-                  eduPw: eduPassword,
-                },
-              }) // 요청 성공 = 토큰 + id, 비밀번호 저장
+                data: credentials,
+              }) // 요청 성공 = 토큰만 저장(앱), id, 비밀번호는 로컬에 저장하고 사용
                 .then((res) => {
                   console.log(res);
-                  dispatch({
-                    type: "Account/import",
-                    payload: {
-                      id: res.data.username,
-                      eduPassword: res.data.eduPw,
-                      MMpassword: res.data.password,
-                      Tokken: res.data.Tokken,
-                    },
-                  });
-                  dispatch({ type: "Account/save" });
+                  // dispatch({
+                  //   type: "Account/import",
+                  //   payload: {
+                  //     id: res.data.username,
+                  //     eduPassword: res.data.eduPw,
+                  //     MMpassword: res.data.password,
+                  //     Tokken: res.data.Tokken,
+                  //   },
+                  // });
+                  // dispatch({ type: "Account/save" });
                 })
                 // 토큰 및 유저 정보 저장 후 Main 화면으로 이동
-                .then(() => navigation.navigate("MyTabs"))
+                // .then(() => navigation.navigate("MyTabs"))
                 // 요청이 실패한 경우 에러 정보 저장
                 .catch((err) => {
                   setInputError(err);
