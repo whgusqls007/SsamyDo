@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "../../../app.module.css";
 import { TextInput } from "react-native-gesture-handler";
-import DropDownPicker from "react-native-dropdown-picker";
 
 export default function UserDetail() {
   const dispatch = useDispatch();
@@ -12,30 +11,23 @@ export default function UserDetail() {
   const user = useSelector((state) => {
     return state.Setting[0];
   });
-  const [userBtn, setUserBtn] = useState(false);
-  // 캠퍼스 종류 및 트랙 종류(드랍다운 피커를 위한 설정)
-  const [openCampus, setOpenCampus] = useState(false);
-  const [campus, setCampus] = useState(user.campus);
-  const [campusItems, setCampusItems] = useState([
-    { label: "부울경", value: "부울경" },
-    { label: "서울", value: "서울" },
-    { label: "대전", value: "대전" },
-    { label: "구미", value: "구미" },
-    { label: "광주", value: "광주" },
-  ]);
-  const [openTrack, setOpenTrack] = useState(false);
-  const [track, setTrack] = useState(user.track);
-  const [trackitems, setTrackItems] = useState([
-    { label: "파이썬", value: "파이썬" },
-    { label: "자바(비전공)", value: "자바(비전공)" },
-    { label: "자바(전공)", value: "자바(전공)" },
-    { label: "임베디드", value: "임베디드" },
-    { label: "모바일", value: "모바일" },
-  ]);
+  const [showBtn, setShowBtn] = useState(false);
+  // 기수, 캠퍼스, 트랙 명 변수
+  const numberName = ["1기", "2기", "3기", "4기", "5기", "6기", "7기", "8기"];
+  const campusName = ["부울경", "서울", "대전", "구미", "광주"];
+  const trackName = [
+    "파이썬",
+    "자바(비전공)",
+    "자바(전공)",
+    "임베디드",
+    "모바일",
+  ];
 
   // input에 넣어질 값들
   const [name, setName] = useState(user.name);
   const [number, setNumber] = useState(user.number);
+  const [campus, setCampus] = useState(user.campus);
+  const [track, setTrack] = useState(user.track);
 
   return (
     <View>
@@ -46,10 +38,10 @@ export default function UserDetail() {
         <View>
           <View style={{ flexDirection: "row", padding: 5 }}>
             <Text>유저명: </Text>
-            {!userBtn && <Text>{user.name}</Text>}
-            {userBtn && (
+            {!showBtn && <Text>{user.name}</Text>}
+            {showBtn && (
               <TextInput
-                placeholder="이름을 입력하세요"
+                placeholder={user.name}
                 onChangeText={(text) => {
                   setName(text);
                 }}
@@ -58,84 +50,92 @@ export default function UserDetail() {
           </View>
           <View style={{ flexDirection: "row", padding: 5 }}>
             <Text>기수: </Text>
-            {!userBtn && <Text>{user.No} </Text>}
-            {userBtn && (
-              <TextInput
-                style={{ width: 10 }}
-                placeholder="기수를 입력하세요"
-                onChangeText={(text) => {
-                  setNumber(text);
-                }}
-              />
+            {!showBtn && <Text>{user.number} </Text>}
+            {showBtn && (
+              <View style={{ flexDirection: "row" }}>
+                {numberName.map((num, idx) => {
+                  return (
+                    <TouchableOpacity
+                      key={`num-${idx}`}
+                      style={[
+                        styles.button,
+                        { margin: 1 },
+                        num === number ? { backgroundColor: "pink" } : {},
+                      ]}
+                      onPress={() => setNumber(num)}
+                    >
+                      <Text>{num}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             )}
           </View>
           {/* 캠퍼스 선택 */}
           <View style={{ flexDirection: "row", padding: 5 }}>
             <Text>소속 캠퍼스: </Text>
-            {!userBtn && <Text>{user.campus} </Text>}
-            {userBtn && (
-              <View
-                style={{
-                  backgroundColor: "#171717",
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingHorizontal: 15,
-                }}
-              >
-                <DropDownPicker
-                  theme="DARK"
-                  mode="BADGE"
-                  badgeDotColors={[
-                    "#e76f51",
-                    "#00b4d8",
-                    "#e9c46a",
-                    "#e76f51",
-                    "#8ac926",
-                    "#00b4d8",
-                    "#e9c46a",
-                  ]}
-                  open={openCampus}
-                  value={campus}
-                  items={campusItems}
-                  setOpen={setOpenCampus}
-                  setValue={setCampus}
-                  setItems={setCampusItems}
-                />
+            {!showBtn && <Text>{user.campus} </Text>}
+            {showBtn && (
+              <View style={{ flexDirection: "row" }}>
+                {campusName.map((cam, idx) => {
+                  return (
+                    <TouchableOpacity
+                      key={`cam-${idx}`}
+                      style={[
+                        styles.button,
+                        { margin: 1 },
+                        cam === campus ? { backgroundColor: "pink" } : {},
+                      ]}
+                      onPress={() => setCampus(cam)}
+                    >
+                      <Text>{cam}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             )}
           </View>
           {/* 트랙 선택 */}
           <View style={{ flexDirection: "row", padding: 5 }}>
             <Text>소속 트랙: </Text>
-            {!userBtn && <Text>{user.track} </Text>}
-            {userBtn && (
-              <DropDownPicker
-                open={openTrack}
-                value={track}
-                items={trackitems}
-                setOpen={setOpenTrack}
-                setValue={setTrack}
-                setItems={setTrackItems}
-              />
+            {!showBtn && <Text>{user.track} </Text>}
+            {showBtn && (
+              <View style={{ flexDirection: "row" }}>
+                {trackName.map((tra, idx) => {
+                  return (
+                    <TouchableOpacity
+                      key={`tra-${idx}`}
+                      style={[
+                        styles.button,
+                        { margin: 1 },
+                        tra === track ? { backgroundColor: "pink" } : {},
+                      ]}
+                      onPress={() => setTrack(tra)}
+                    >
+                      <Text>{tra}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             )}
           </View>
         </View>
         {/* 수정 활성화 버튼 */}
-        {!userBtn && (
+        {!showBtn && (
           <TouchableOpacity
             style={{ marginLeft: 300 }}
             onPress={() => {
-              setUserBtn(!userBtn);
+              setShowBtn(!showBtn);
             }}
           >
             <FontAwesome name="pencil-square-o" size={24} color="black" />
             <Text>수정</Text>
           </TouchableOpacity>
         )}
-        {/* 수정 버튼 */}
-        {userBtn && (
+        {/* 수정 버튼과 취소버튼 */}
+        {showBtn && (
           <View style={{ marginLeft: 300, flexDirection: "row" }}>
+            {/* 수정버튼 */}
             <TouchableOpacity
               style={[styles.button, { margin: 3 }]}
               onPress={() => {
@@ -148,15 +148,21 @@ export default function UserDetail() {
                     track: track,
                   },
                 });
-                setUserBtn(!userBtn);
+                setShowBtn(!showBtn);
               }}
             >
               <Text>수정</Text>
             </TouchableOpacity>
+            {/* 취소버튼 */}
             <TouchableOpacity
               style={[styles.button, { margin: 3 }]}
               onPress={() => {
-                setUserBtn(!userBtn);
+                setShowBtn(!showBtn);
+                // 기존 입력 값들을 원래대로 취소 후 다시 할 때 미입력분이 이전것으로 입력되는 것 방지
+                setName(user.name);
+                setNumber(user.number);
+                setCampus(user.campus);
+                setTrack(user.track);
               }}
             >
               <Text>취소</Text>
