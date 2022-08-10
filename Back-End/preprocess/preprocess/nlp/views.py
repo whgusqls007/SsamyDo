@@ -18,6 +18,10 @@ import numpy as np
 import pytesseract
 import cv2
 import os
+import logging
+
+
+logger = logging.getLogger('my')
 
 driver = Driver({
         "url" : "meeting.ssafy.com",
@@ -30,6 +34,9 @@ pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesserac
 
 okt = Okt()
 stopwords = [
+    "습니다"
+    "입니다"
+    "다"
     "의",
     "가",
     "이",
@@ -83,42 +90,51 @@ def preprocess(request):
     text = request.data.get('text')
     file_ids = request.data.get('file_ids')
     post_id = request.data.get('post_id')
+
+    total_message = text
+    
     if file_ids:
         file_info = driver.posts.get_file_info_for_post(post_id)
         
-    if 'image' in file_info[0]['mime_type']:
-        data = driver.files.get_file(file_ids).content
+        if 'image' in file_info[0]['mime_type']:
+            data = driver.files.get_file(file_ids).content
 
 
-    encoded_img = np.fromstring(data, dtype = np.uint8)
-    img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+            encoded_img = np.fromstring(data, dtype = np.uint8)
+            img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
 
-    ocr = pytesseract.image_to_string(img, lang = 'kor+eng', config="")
-    
-    total_message = text + "\n" + ocr
+            ocr = pytesseract.image_to_string(img, lang = 'kor+eng', config="")
+   
+            total_message = text + "\n" + ocr
+            
 
+    if not file_ids:
+        file_ids = '[]'
+
+        
     if predict(total_message):
         channel_id = request.data.get('channel_id')
-        title = total_message.split("\n")[0]
+        title = total_message.split("\n")[1]
         description = total_message
-        date = request.data.get('timestamp')
-        datetime = str(datetime.datetime.fromtimestamp(date/1000))
-        
+        timestamp = request.data.get('timestamp')
+        date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
         notice = {
             "channel_id": channel_id,
             "title": title,
             "file_ids": file_ids,
             "description": description,
-            "date" : datetime
+            "date" : date
         }
-        
         serializer = NoticeSerializer(data=notice)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            print("저장완료")
-            return Response(status=status.HTTP_201_CREATED)    
+                
 
-    print("저장 안됨")
+        if serializer.is_valid():
+            serializer.save()
+            logger.info("저장 완료", notice)
+            return Response(status=status.HTTP_201_CREATED)    
+        
+
+    logger.info("저장 안됨", text)
     return Response(status=status.HTTP_200_OK)
 
 
@@ -133,8 +149,9 @@ def make_todo(request):
     channel_id = request.data.get('channel_id')
     title = text.split('\n')[1].replace('#', '')
     description = text
-    date = request.data.get('timestamp')
-    datetime = str(datetime.datetime.fromtimestamp(date/1000))
+    timestamp = request.data.get('timestamp')
+    datetime = str(datetime.datetime.fromtimestamp(timestamp/1000)).split()[0].replace('-','')
+
     file_ids = request.data.get('file_ids')
     
     notice = {
