@@ -1,10 +1,15 @@
-import { configureStore, combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import example from "./example/examSlice";
 import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
 import ScheduleList from "./slice/calendar/ScheduleList";
 import { createSelector } from "@reduxjs/toolkit";
-import Setting from "./slice/page/Setting";
+import Setting from "./slice/mypage/Setting";
+import Account from "./slice/mypage/Account";
 import logger from "redux-logger";
 
 const reducer = combineReducers({ MainTodo: MainTodo.reducer });
@@ -16,6 +21,7 @@ const store = configureStore({
     ScheduleList: ScheduleList.reducer,
     // MainTodo: MainTodo.reducer,
     Setting: Setting.reducer,
+    Account: Account.reducer,
   },
   middleware: [...getDefaultMiddleware(), logger],
 });
