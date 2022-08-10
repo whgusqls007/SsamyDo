@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,9 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     public List<TodoDto> getTodosFromDate(String dueDate) {
-        List<TodoDto> Todos = todoRepository.findTodosByDueDate(dueDate).stream()
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String today = simpleDateFormat.format(new Date());
+        List<TodoDto> Todos = todoRepository.findTodosByDueDate(today, dueDate).stream()
                 .map(t -> new TodoDto(t.getId(), t.getNotice().getId(), t.getTitle(), t.getDescription(), t.getType(), t.getDueDate()))
                 .collect(Collectors.toList());
         return Todos;

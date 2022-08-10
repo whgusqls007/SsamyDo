@@ -15,6 +15,8 @@ foo = Driver(
 )
 
 foo.login()
+user_id = foo.users.get_user(user_id='me')['id']
+print(foo.teams.get_user_teams(user_id))
 
 # print("로그인 성공")
 
@@ -57,37 +59,37 @@ foo.login()
 # df = pd.read_csv('mattermost_data.txt', sep="§")
 # print(df)
 
-res = foo.files.get_file("sqj4o3o7stdofeimh1tef71qga")
-print(res.headers)
-import base64
+# res = foo.files.get_file("sqj4o3o7stdofeimh1tef71qga")
+# print(res.headers)
+# import base64
 
-encoded = base64.b64encode(res.content)
-# # print(encoded)
+# encoded = base64.b64encode(res.content)
+# # # print(encoded)
 
-# imgdata = base64.b64decode(encoded)
-filename = "some_image.jpg"  # I assume you have a way of picking unique filenames
-with open(filename, "wb") as f:
-    f.write(res.content)
+# # imgdata = base64.b64decode(encoded)
+# filename = "some_image.jpg"  # I assume you have a way of picking unique filenames
+# with open(filename, "wb") as f:
+#     f.write(res.content)
 
 
-tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+# tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
-import pytesseract
-import cv2
+# import pytesseract
+# import cv2
 
-oem = 3
-psm = 4
+# oem = 3
+# psm = 4
 
-traineddata = "kor"
+# traineddata = "kor"
 
-# img = cv2.imread(encoded)
-import numpy as np
+# # img = cv2.imread(encoded)
+# import numpy as np
 
-encoded_img = np.fromstring(res.content, dtype=np.uint8)
-img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+# encoded_img = np.fromstring(res.content, dtype=np.uint8)
+# img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
 
-ocr_result = pytesseract.image_to_string(
-    image=img, lang=traineddata, config="--oem " + str(oem) + " --psm " + str(psm)
-)
+# ocr_result = pytesseract.image_to_string(
+#     image=img, lang=traineddata, config="--oem " + str(oem) + " --psm " + str(psm)
+# )
 
-print(ocr_result)
+# print(ocr_result)
