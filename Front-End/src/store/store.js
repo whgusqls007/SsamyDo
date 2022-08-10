@@ -10,7 +10,6 @@ import ScheduleList from "./slice/calendar/ScheduleList";
 import { createSelector } from "@reduxjs/toolkit";
 import Setting from "./slice/mypage/Setting";
 import Account from "./slice/mypage/Account";
-import logger from "redux-logger";
 
 const reducer = combineReducers({ MainTodo: MainTodo.reducer });
 
@@ -23,7 +22,7 @@ const store = configureStore({
     Setting: Setting.reducer,
     Account: Account.reducer,
   },
-  middleware: [...getDefaultMiddleware(), logger],
+  middleware: [...getDefaultMiddleware()],
 });
 
 export const allSelector = (state) => state.ScheduleList[0];

@@ -20,11 +20,11 @@ export default function Main({ navigation }) {
       }
     });
     // 사용자 설정 불러오기
-    AsyncStorage.getItem("Setting", (err, result) => {
-      if (result) {
-        dispatch({ type: "Setting/import", payload: JSON.parse(result) });
-      }
-    });
+    // AsyncStorage.getItem("Setting", (err, result) => {
+    //   if (result) {
+    //     dispatch({ type: "Setting/import", payload: JSON.parse(result) });
+    //   }
+    // });
   }, []);
 
   return (
