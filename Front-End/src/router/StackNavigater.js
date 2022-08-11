@@ -6,7 +6,9 @@ import TodoDetail from "../components/main/TodoDetail";
 import MakeSchedule from "../components/calendar/MakeSchedule";
 // import ScheduleDetail from "../components/calendar/ScheduleDetail";
 import TodoItem from "../components/main/TodoItem";
+import NoticeSearch from "../components/notice/NoticeSearch";
 import MyTabs from ".";
+
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,7 @@ export default function MyStack() {
       <Stack.Screen name="TodoItem" component={TodoItem} />
       <Stack.Screen name="TodoDetail" component={TodoDetail} />
       <Stack.Screen name="MakeSchedule" component={MakeSchedule} />
+      <Stack.Screen name="NoticeSearch" component={NoticeSearch} />
     </Stack.Navigator>
   );
 }

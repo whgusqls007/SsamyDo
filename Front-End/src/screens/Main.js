@@ -13,20 +13,34 @@ export default function Main({ navigation }) {
   useEffect(() => {
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
+        console.log(`main schedule get`)
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
         });
       }
+      AsyncStorage.getItem("TodoStatus", (err, res) => {
+        if (res) {
+          dispatch({type: "TodoStatus/import", payload: res})
+        }
+      })
     });
 
-
+    // AsyncStorage.getItem("TodoStatus", (err,result) => {
+    //   if (result) {
+    //     console.log(`result ${result}`)
+    //     dispatch({
+    //       type: "TodoStatus/import",
+    //       payload: JSON.parse(result),
+    //     });
+    //   }
+    // });
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       {/* <Text>Main</Text> */}
-      <TodoList navigation={navigation} style={{ flex: 2 }} />
+      <TodoList navigation={navigation} style={{ flex: 1 }} />
       <TimeLine style={{ flex: 3 }} />
     </View>
   );
