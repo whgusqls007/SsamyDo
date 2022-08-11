@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+
 function Start({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
