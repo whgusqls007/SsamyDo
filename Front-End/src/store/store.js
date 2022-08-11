@@ -1,13 +1,18 @@
-import { configureStore, combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import example from "./example/examSlice";
 import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
 import ScheduleList from "./slice/calendar/ScheduleList";
 import { createSelector } from "@reduxjs/toolkit";
-import Setting from "./slice/page/Setting";
-import logger from "redux-logger";
+import Setting from "./slice/mypage/Setting";
 import TodoStatus from "./slice/main/TodoStatus";
 import Notice from "./slice/notice/Notice";
+import Account from "./slice/mypage/Account";
+
 
 // const reducer = combineReducers({ MainTodo: MainTodo.reducer });
 
@@ -18,10 +23,12 @@ const store = configureStore({
     ScheduleList: ScheduleList.reducer,
     MainTodo: combineReducers({ MainTodo: MainTodo.reducer }),
     Setting: Setting.reducer,
+    Account: Account.reducer,
+
     TodoStatus : TodoStatus.reducer,
     Notice: combineReducers({ Notice: Notice.reducer })
   },
-  // middleware: [...getDefaultMiddleware(), logger],
+  middleware: [...getDefaultMiddleware()],
 });
 
 export const allSelector = (state) => state.ScheduleList[0];

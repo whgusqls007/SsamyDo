@@ -18,33 +18,14 @@ const baseURL = "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
 // }
 
 // console.log(ymdFormat())
-let getNotice
-
-axios({
-  method: "get",
-  url: baseURL,
-})
-  .then((response) => {
-    // console.log("Notice Axios 요청 성공!");
-    // console.log(response.data);
-
-    getNotice = response.data;
-    // console.log(getTodo)
-  })
-  .catch((error) => {
-    console.log(error.response);
-  });
 
 const Notice = createSlice({
   name: 'Notice',
   initialState: [],
   reducers : {
-
-  },
-  extraReducers: {
-    [getNotice.fulfilled]: (state, action) => {
-      state.list = action.payload;
-    },
+    import(state, action) {
+      state = action.payload
+    }
   },
 });
 

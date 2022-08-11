@@ -14,48 +14,24 @@ import axios from "axios";
 
 // dueDate가 아직 오지 않은 모든 투두 받기 
 
-const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/"
-
-function ymdFormat(oriDate=new Date()) {
-  let result =
-    oriDate.getFullYear().toString() +
-    (oriDate.getMonth() + 1).toString().padStart(2, "0") +
-    oriDate.getDate().toString().padStart(2, "0");
-  return result;
-}
-
-// console.log(ymdFormat())
-let getTodo
-
-axios({
-  method: "get",
-  url: `${baseURL}${ymdFormat()}`,
-})
-  .then((response) => {
-    // console.log("Axios 요청 성공!");
-    // console.log(response.data);
-
-    getTodo = response.data;
-    // console.log(getTodo)
-  })
-  .catch((error) => {
-    console.log(error.response);
-  });
 
 const MainTodo = createSlice({
   name: 'MainTodo',
   // 기본 state 값 
   initialState: [],
   reducers: {
+    import ( state, action ) {
+      state = action.payload
+    },
 
   },
   extraReducers: {
-    [getTodo.fulfilled]: (state, action) => {
-      // console.log(state)
-      return state = action.payload;
-      state.list = action.payload;
-      // console.log('fulfilled')
-    },
+    // [getTodo.fulfilled]: (state, action) => {
+    //   console.log(action.payload)
+    //   state = action.payload ;
+    //   // state.list = action.payload;
+    //   // console.log('fulfilled')
+    // },
   },
 });
 

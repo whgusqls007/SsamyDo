@@ -134,4 +134,5 @@
 .todoCompleted {
   color: gainsboro;
   text-decoration-line: line-through;
+  padding: 6px;
 }
