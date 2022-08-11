@@ -1,14 +1,11 @@
 import { View, Text, ScrollView } from "react-native";
 import TodoItem from "./TodoItem";
 import styles from "../../../app.module.css";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getTodo } from "../../store/slice/main/MainTodo";
 
-// TypeError ; useEffect is not a function 
-
-
-
+// TypeError ; useEffect is not a function
 
 // const DATA = [
 //   {
@@ -27,13 +24,10 @@ export default function TodoList({ navigation }) {
   const todoList = useSelector((state) => state.MainTodo);
   const dispatch = useDispatch();
   useEffect(() => {
-      dispatch(getTodo());
-    }, []);
+    dispatch(getTodo());
+  }, []);
 
-
-  console.log(todoList)
-
-  
+  // console.log(todoList)
 
   // 공지들 가져오기 -> isCompleted : false인 애들만
   // const mainTodos = useSelector((state) => state.MainTodo);
@@ -44,12 +38,11 @@ export default function TodoList({ navigation }) {
       <Text>오늘의 설문</Text>
 
       <ScrollView>
-        {todoList && (todoList.map((item) => (
-        <TodoItem item={item} key={item.id} navigation={navigation}/>)
-      ))}
+        {todoList &&
+          todoList.map((item) => (
+            <TodoItem item={item} key={item.id} navigation={navigation} />
+          ))}
       </ScrollView>
-
-
     </View>
   );
 }
