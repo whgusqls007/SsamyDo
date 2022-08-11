@@ -15,6 +15,7 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../../store/store";
+import { Ionicons } from "@expo/vector-icons";
 
 // 캘린더를 위한 설정
 LocaleConfig.locales["ssamydo"] = {
@@ -82,11 +83,11 @@ export default function MakeSchedule({ navigation }) {
         new Date(year, month - 1, day, Schedule.time[0], Schedule.time[1])
       );
     }
+    setErrorMSG(false);
   }, []);
-  // 현재 선택된 타입을 확인(생성이나 수정후 보내기 위한 도구)
-  const selectedType = useSelector((state) => {
-    return state.ScheduleList[4];
-  });
+  // error 메시지
+  const [errorMSG, setErrorMSG] = useState(false);
+
   // 수정과 생성 버튼 이름 useState 사용시 Too many re-renders 오류 발생
   const [btnName, setBtnName] = useState("생성");
 
@@ -145,52 +146,40 @@ export default function MakeSchedule({ navigation }) {
   ];
 
   // settings에서 정한 분류값을 표현하기 위한 selector
-  const type = useSelector((state) => {
+  const typeName = useSelector((state) => {
     return state.Setting[1];
   });
 
   return (
     <View>
       <View style={{ alignItems: "center", width: 400, height: 800 }}>
-        <Text>개인 일정 추가: {type[Schedule.type]} </Text>
+        <Text>개인 일정 추가: {typeName[Schedule.type]} </Text>
         {/* 타입 선택 버튼 묶음 */}
         <View style={{ flexDirection: "row", margin: 5 }}>
-          <TouchableOpacity
-            style={[styles.button, { margin: 5 }]}
-            onPress={() => {
-              if (Schedule.type === 0) {
-                dispatch({ type: "Schedule/update", payload: { type: 3 } });
-              } else {
-                dispatch({ type: "Schedule/update", payload: { type: 0 } });
-              }
-            }}
-          >
-            <Text>{type[0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { margin: 5 }]}
-            onPress={() => {
-              if (Schedule.type === 1) {
-                dispatch({ type: "Schedule/update", payload: { type: 3 } });
-              } else {
-                dispatch({ type: "Schedule/update", payload: { type: 1 } });
-              }
-            }}
-          >
-            <Text>{type[1]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { margin: 5 }]}
-            onPress={() => {
-              if (Schedule.type === 2) {
-                dispatch({ type: "Schedule/update", payload: { type: 3 } });
-              } else {
-                dispatch({ type: "Schedule/update", payload: { type: 2 } });
-              }
-            }}
-          >
-            <Text>{type[2]}</Text>
-          </TouchableOpacity>
+          {typeName.map((type, idx) => {
+            return (
+              <TouchableOpacity
+                key={`type-${idx}`}
+                style={[
+                  styles.button,
+                  { margin: 5 },
+                  idx === Schedule.type ? { backgroundColor: "pink" } : {},
+                ]}
+                onPress={() => {
+                  if (Schedule.type === idx) {
+                    dispatch({ type: "Schedule/update", payload: { type: 3 } });
+                  } else {
+                    dispatch({
+                      type: "Schedule/update",
+                      payload: { type: idx },
+                    });
+                  }
+                }}
+              >
+                <Text>{typeName[idx]}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
         {/* 일정 이름 입력 */}
         <View style={{ flexDirection: "row" }}>
@@ -261,6 +250,14 @@ export default function MakeSchedule({ navigation }) {
           )}
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          {errorMSG && (
+            <View style={{ flexDirection: "row", margin: 4 }}>
+              <Ionicons name="warning" size={19} color="red" />
+              <Text style={{ fontWeight: "bold", color: "red" }}>
+                {errorMSG}
+              </Text>
+            </View>
+          )}
           {/* 뒤로가기 버튼 */}
           <TouchableOpacity
             style={[styles.button, { margin: 5 }]}
@@ -274,13 +271,13 @@ export default function MakeSchedule({ navigation }) {
           {/* 생성 버튼 */}
           <TouchableOpacity
             style={[styles.button, { margin: 5 }]}
-            onPress={async () => {
+            onPress={() => {
               if (Schedule.type === 3) {
-                alert("일정의 분류를 선택해주세요");
+                setErrorMSG("일정의 분류를 선택해주세요");
               } else if (Schedule.title === "") {
-                alert("일정 이름을 입력해주세요");
+                setErrorMSG("일정 이름을 입력해주세요");
               } else if (Schedule.day === "") {
-                alert("일정일을 선택해 주세요");
+                setErrorMSG("일정일을 선택해 주세요");
               } else {
                 // id가 있으면 수정
                 if (Schedule.id) {
@@ -313,15 +310,13 @@ export default function MakeSchedule({ navigation }) {
                 dispatch({ type: "Schedule/clear" });
                 // 저장하기
                 dispatch({ type: "ScheduleList/save" });
-                // 마크 다시 처리하기(전체보기로)
-                dispatch({ type: "ScheduleList/mark", select: "all" });
-                // 선택일 다시 마크하기
+                // 마크 다시 처리하기(일정 추가한 날로 옮김)
                 dispatch({ type: "ScheduleList/mark", day: Schedule.day });
-                // 리스트 다시 보이기
+                // 마크 전체보기로 처리
+                dispatch({ type: "ScheduleList/mark", select: "all" });
+                // 스케쥴 리스트 다시 보이기
                 dispatch({
                   type: "ScheduleList/filter",
-                  select: "all",
-                  day: Schedule.day,
                 });
                 navigation.navigate("Calendar");
               }
