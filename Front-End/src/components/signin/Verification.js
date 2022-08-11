@@ -27,13 +27,13 @@ export default function Verification({ navigation }) {
   // 에러메시지
   const [inputError, setInputError] = useState(false);
   // axios 요청 함수
-  const login = await axios({
-    url: drf.user.login(),
-    method: "POST",
-    data: credentials,
-  }).then((res) => {
-    console.log(res);
-  });
+  // const login = await axios({
+  //   url: drf.user.login(),
+  //   method: "POST",
+  //   data: credentials,
+  // }).then((res) => {
+  //   console.log(res);
+  // });
 
   return (
     <View>
