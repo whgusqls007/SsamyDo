@@ -53,7 +53,7 @@
   margin-left: 10;
   margin-right: 10;
   background-color: lightblue;
-  flex: 1.5;
+  flex: 1;
   width: auto;
   align-items: center;
 }
@@ -69,6 +69,7 @@
 }
 
 .todoitemcontainer {
+  flex: 1;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -108,12 +109,29 @@
   border-radius: 10px;
   margin-left: 10;
   margin-right: 10;
+  margin-bottom: 20;
   background-color: skyblue;
   width: auto;
+  align-items: flex-start;
 }
 
 .button {
   align-items: center;
   background-color: #DDDDDD;
   padding: 10px;
+}
+
+.noticelist {
+  flex: 1;
+  flex-direction: row; 
+}
+
+.noticebutton {
+  align-items: flex-start;
+  background-color: aliceblue;
+}
+
+.todoCompleted {
+  color: gainsboro;
+  text-decoration-line: line-through;
 }
