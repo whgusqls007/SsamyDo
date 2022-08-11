@@ -4,14 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function NoticeItem({ navigation, notice }) {
   return (
-    <View style={styles.todolistcard}>
-      <View style={styles.noticeitembox}>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => navigation.navigate("NoticeDetail", {id: notice.id})} >
-            <Text> {notice.title}</Text>
-        </TouchableOpacity>
-      </View>
+
+    <View style={styles.noticeitembox}>
+      <TouchableOpacity 
+        style={styles.noticebutton}
+        onPress={() => navigation.navigate("NoticeDetail", {id: notice.id})} >
+          <Text> {notice.title}</Text>
+      </TouchableOpacity>
+      <Text>{notice.duedate}</Text>
     </View>
+
   );
 }
