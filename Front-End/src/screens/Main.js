@@ -7,10 +7,10 @@ import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getTodo } from "../store/slice/main/MainTodo";
 
-
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
+    // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
         console.log(`main schedule get`)
@@ -26,15 +26,6 @@ export default function Main({ navigation }) {
       })
     });
 
-    // AsyncStorage.getItem("TodoStatus", (err,result) => {
-    //   if (result) {
-    //     console.log(`result ${result}`)
-    //     dispatch({
-    //       type: "TodoStatus/import",
-    //       payload: JSON.parse(result),
-    //     });
-    //   }
-    // });
   }, []);
 
   return (
@@ -42,6 +33,15 @@ export default function Main({ navigation }) {
       {/* <Text>Main</Text> */}
       <TodoList navigation={navigation} style={{ flex: 1 }} />
       <TimeLine style={{ flex: 3 }} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          AsyncStorage.removeItem("TodoStatus");
+        }}
+      >
+        <Text>로컬 삭제</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }

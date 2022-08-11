@@ -14,23 +14,24 @@ import {
 export default function Calendar({ navigation }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(type:"")
-  });
-
-  // createSelector로 생성한 값들(각각 전체 Schedule에서 해당 타입 리스트만 반환하는 Selector)
+  // 분류별 리스트 CreateSelector 값 불러오기
   const typeList = [
     useSelector(ssafySelector),
     useSelector(typeOneSelector),
     useSelector(typeTwoSelector),
   ];
+
+  useEffect(() => {
+    // dispatch(type:"")
+  });
+
   const check = useSelector((state) => {
     return state.ScheduleList[0];
   });
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[2];
+    return state.Setting[1];
   });
   return (
     <View>
@@ -43,6 +44,9 @@ export default function Calendar({ navigation }) {
                 type: "ScheduleList/mark",
                 select: "all",
               });
+              dispatch({
+                type: "ScheduleList/filter",
+              });
             }}
           >
             <Text>전체</Text>
@@ -53,6 +57,10 @@ export default function Calendar({ navigation }) {
               dispatch({
                 type: "ScheduleList/mark",
                 select: 0,
+                payload: typeList[0],
+              });
+              dispatch({
+                type: "ScheduleList/filter",
                 payload: typeList[0],
               });
             }}
@@ -70,6 +78,10 @@ export default function Calendar({ navigation }) {
                 select: 1,
                 payload: typeList[1],
               });
+              dispatch({
+                type: "ScheduleList/filter",
+                payload: typeList[1],
+              });
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -83,6 +95,10 @@ export default function Calendar({ navigation }) {
               dispatch({
                 type: "ScheduleList/mark",
                 select: 2,
+                payload: typeList[2],
+              });
+              dispatch({
+                type: "ScheduleList/filter",
                 payload: typeList[2],
               });
             }}

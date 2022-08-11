@@ -3,6 +3,7 @@ import NoticeItem from "./NoticeItem";
 import styles from "../../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import axios from "axios";
 
 
 // 여기서 data 받아오기  . . 
@@ -27,9 +28,22 @@ export default function NoticeList({ navigation, select }) {
   const noticeList = useSelector((state) => state.Notice);
 
   const dispatch = useDispatch();
-
+  const baseURL = "http://i7e204.p.ssafy.io:8080/api/notice/page/10"
   useEffect(() => {
-    dispatch(getNotice.fulfilled());
+    axios({
+      method: "get",
+      url: baseURL,
+    })
+      .then((response) => {
+        // console.log("Notice Axios 요청 성공!");
+        // console.log(response.data);
+    
+        dispatch({type: "Notice/import", payload: response.data})
+        // console.log(getTodo)
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   }, []);
 
 

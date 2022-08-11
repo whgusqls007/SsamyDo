@@ -16,49 +16,52 @@ public class App {
         WebDriverManager.chromedriver().setup();
         JDBCDriver jdbcDriver = new JDBCDriver();
         jdbcDriver.connect();
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(4);
         Boolean thread1 = false;
         Boolean thread2 = false;
         Boolean thread3 = false;
         Boolean thread4 = false;
-        // service.execute(new GetNotificationTask(jdbcDriver));
-        // service.execute(new GetWeekScheduleTask(jdbcDriver));
-        service.execute(new GetSurveyTask(jdbcDriver));
 
-        // while (true) {
-        // LocalTime localTime = LocalTime.now();
-        // int minute = localTime.getMinute();
-        // int second = localTime.getSecond();
+        while (true) {
+            LocalTime localTime = LocalTime.now();
+            int minute = localTime.getMinute();
+            int second = localTime.getSecond();
 
-        // if (minute % 1 == 0 && (0 < second && second < 60) && !thread1) {
+            if (minute % 1 == 0 && (0 < second && second < 60) && !thread1) {
+                service.execute(new GetUserCodeTask(jdbcDriver));
+                thread1 = true;
+            } else if (minute % 1 == 0 && (0 < second && second < 60) && thread1) {
+                // do nothing
+            } else {
+                thread1 = false;
+            }
 
-        // service.execute(new GetUserCodeTask(jdbcDriver));
-        // thread1 = true;
-        // } else if (minute % 1 == 0 && (0 < second && second < 60) && thread1) {
-        // // do nothing
-        // } else {
-        // thread1 = false;
-        // }
+            if (minute % 3 == 0 && (0 < second && second < 60) && !thread2) {
+                service.execute(new GetWeekScheduleTask(jdbcDriver));
+                thread2 = true;
+            } else if (minute % 3 == 0 && (0 < second && second < 60) && thread2) {
+                // do nothing
+            } else {
+                thread2 = false;
+            }
 
-        // if (minute % 2 == 0 && (0 < second && second < 60) && !thread2) {
+            if (minute % 3 == 0 && (0 < second && second < 60) && !thread3) {
+                service.execute(new GetSurveyTask(jdbcDriver));
+                thread3 = true;
+            } else if (minute % 3 == 0 && (0 < second && second < 60) && thread3) {
+                // do nothing
+            } else {
+                thread3 = false;
+            }
 
-        // service.execute(new GetMonthScheduleTask(jdbcDriver));
-        // thread2 = true;
-        // } else if (minute % 2 == 0 && (0 < second && second < 60) && thread2) {
-        // // do nothing
-        // } else {
-        // thread2 = false;
-        // }
-
-        // if (minute % 3 == 0 && (0 < second && second < 60) && !thread3) {
-
-        // service.execute(new GetWeekScheduleTask(jdbcDriver));
-        // thread3 = true;
-        // } else if (minute % 3 == 0 && (0 < second && second < 60) && thread3) {
-        // // do nothing
-        // } else {
-        // thread3 = false;
-        // }
-        // }
+            if (minute % 3 == 0 && (0 < second && second < 60) && !thread4) {
+                service.execute(new GetNotificationTask(jdbcDriver));
+                thread4 = true;
+            } else if (minute % 3 == 0 && (0 < second && second < 60) && thread4) {
+                // do nothing
+            } else {
+                thread4 = false;
+            }
+        }
     }
 }
