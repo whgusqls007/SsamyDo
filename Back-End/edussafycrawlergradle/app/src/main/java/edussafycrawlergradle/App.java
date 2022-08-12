@@ -42,7 +42,7 @@ public class App {
 
             System.out.println(day + " -- " + hour + " : " + minute + " : " + second);
 
-            if (day == 2 && hour == 1 && minute == 0 && (0 < second && second < 60) &&
+            if (day == 2 && hour == 19 && minute == 0 && (0 < second && second < 60) &&
                     !thread2) {
                 System.out.println("주간일정");
                 service.execute(new GetWeekScheduleTask(jdbcDriver));
@@ -57,7 +57,8 @@ public class App {
                 System.out.println("설문");
                 service.execute(new GetSurveyTask(jdbcDriver));
                 thread3 = true;
-            } else if (hour == 1 && minute == 0 && (0 < second && second < 60) && thread3) {
+            } else if (hour == 1 && minute == 0 && (0 < second && second < 60) &&
+                    thread3) {
                 // do nothing
             } else {
                 thread3 = false;
