@@ -56,6 +56,6 @@ public interface TodoRepository extends JpaRepository<Todo, Integer>{
     List<Todo> findTodosByUserAndDueDate(@Param("userId") Long userId, @Param("dueDate") String dueDate);
 
 
-    @Query("select t from Todo t where t.dueDate <= :dueDate and t.dueDate >= :today")
-    List<Todo> findTodosByDueDate(@Param("today") String today, @Param("dueDate") String dueDate);
+    @Query("select t from Todo t where t.dueDate >= :today")
+    List<Todo> findTodosByDueDate(@Param("today") String today);
 }

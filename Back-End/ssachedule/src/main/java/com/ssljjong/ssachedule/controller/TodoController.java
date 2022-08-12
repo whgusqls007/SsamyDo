@@ -3,6 +3,7 @@ package com.ssljjong.ssachedule.controller;
 import antlr.Token;
 import com.ssljjong.ssachedule.dto.NoticeDto;
 import com.ssljjong.ssachedule.dto.TodoDto;
+import com.ssljjong.ssachedule.entity.Todo;
 import com.ssljjong.ssachedule.jwt.TokenProvider;
 import com.ssljjong.ssachedule.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +38,10 @@ public class TodoController {
 //    }
 
 //    @PreAuthorize("hasAnyRole('USER')")
-    @GetMapping("/todolist/{date}")
-    public ResponseEntity<Map<String, Object>> getTodos(@PathVariable String date) {
-        List<TodoDto> todos = todoService.getTodosFromDate(date);
+    @GetMapping("/todolist")
+    public ResponseEntity<Map<String, Object>> getTodos() {
+        List<Todo> todos = todoService.getTodosFromDate();
         Map<String, Object> response = new HashMap<>();
-
         response.put("data", todos);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
