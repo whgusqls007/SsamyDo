@@ -80,12 +80,10 @@ export default function ScheduleItem({ navigation, Schedule }) {
                 // 삭제하기
                 dispatch({ type: "ScheduleList/delete", id: Schedule.id });
                 // 마크 다시 처리하기
-                dispatch({ type: "ScheduleList/mark", select: type[0] });
+                dispatch({ type: "ScheduleList/mark" });
                 // 리스트 다시 보이기
                 dispatch({
                   type: "ScheduleList/filter",
-                  select: type[0],
-                  day: type[1],
                 });
                 // 저장하기
                 dispatch({ type: "ScheduleList/save" });
