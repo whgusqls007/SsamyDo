@@ -6,12 +6,12 @@ import java.sql.Timestamp;
 
 @Data
 public class NoticeDto {
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
     private String date;
 
-    public NoticeDto(Long id, String title, String description, String date) {
+    public NoticeDto(Integer id, String title, String description, String date) {
         this.id = id;
         this.title = title;
         this.description = description;

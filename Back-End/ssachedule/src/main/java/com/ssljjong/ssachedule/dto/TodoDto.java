@@ -15,18 +15,15 @@ public class TodoDto {
 
     private Integer id;
 
-    private Long noticeId;
+    private Integer noticeId;
     private String title;
     private String description;
     private TodoType type;
     private String startDate;
     private String dueDate;
 
-    public TodoDto(Integer id) {
-        this.id = id;
-    }
 
-    public TodoDto(Integer id, Long noticeId, String title, String description, TodoType type, String startDate, String dueDate) {
+    public TodoDto(Integer id, Integer noticeId, String title, String description, TodoType type, String startDate, String dueDate) {
         this.id = id;
         this.noticeId = noticeId;
         this.title = title;
