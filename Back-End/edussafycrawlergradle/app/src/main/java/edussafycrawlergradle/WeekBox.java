@@ -1,4 +1,7 @@
-import java.util.*;
+package edussafycrawlergradle;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class WeekBox {
     String date;

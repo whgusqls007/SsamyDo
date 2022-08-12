@@ -1,6 +1,8 @@
-import org.openqa.selenium.WebElement;
+package edussafycrawlergradle;
 
-import java.util.*;
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
 
 public class GetSurveyTask extends ChromeDriverController implements Runnable {
 	JDBCDriver jdbcDriver;
@@ -12,15 +14,12 @@ public class GetSurveyTask extends ChromeDriverController implements Runnable {
 
 	@Override
 	public void run() {
-		List<User> userList = jdbcDriver.runQuery("SELECT * FROM user");
-
-		for (int i = 0; i < userList.size(); i++) {
-			String email = userList.get(i).getUserName();
-			String pw = userList.get(i).getEduPw();
-			this.Email = email;
-			this.PW = pw;
-			startCrawling();
-		}
+		// User user = jdbcDriver.runQuery("SELECT * FROM user LIMIT 1 OFFSET 0");
+		// String email = user.getUserName();
+		// String pw = user.getEduPw();
+		// this.Email = email;
+		// this.PW = pw;
+		startCrawling();
 	}
 
 	@Override
