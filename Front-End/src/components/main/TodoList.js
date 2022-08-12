@@ -59,11 +59,11 @@ export default function TodoList({ navigation }) {
         dispatch({ type: "MainTodo/import", payload: response.data });
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
   }, []);
 
-  console.log(`todoList ${todoList.MainTodo}`);
+  // console.log(`todoList ${todoList.MainTodo}`);
 
   // 위의 dispatch(fulfilled) 안먹으면 ,,, getTodo 쓰세요
   //   dispatch(getTodo());
