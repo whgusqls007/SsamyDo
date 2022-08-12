@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -9,7 +10,6 @@ import {
 } from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
-// import weeklyData from "../../store/example/weeklyData.json";
 import weeklyData from "../../store/example/weeklyData2.json";
 import axios from "axios";
 
@@ -98,6 +98,7 @@ export default function TimeLine() {
           result[daily.date].push(afterLunch);
         }
       } else {
+        daily.time = daily.time.substring(0, 5);
         result[daily.date].push(daily);
       }
     }
@@ -115,53 +116,45 @@ export default function TimeLine() {
 
   // 일일 스케쥴을 담아두는 변수
   const [scheduleData, setScheduleData] = useState();
-  // const [weeklySchedule, setWeeklySchedule] = useState();
+  const [weeklySchedule, setWeeklySchedule] = useState("undefined");
 
   // 변수 모음
   const today = ymdFormat(new Date());
   const thisMonday = findMonday();
   const thisWeek = formattingWeek(thisMonday);
-  let classifiedData;
 
   // axios를 통해서 이번 주 스케쥴 받아오기
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
-
-  // axios({
-  //   method: "get",
-  //   url: `${baseURL}${ymdFormat(thisMonday)}`,
-  // })
-  //   .then((response) => {
-  //     // console.log("Axios 요청 성공!");
-  //     // console.log(response.data);
-  //     classifiedData = classifyWeekData(response.data);
-  //     // console.log(classifiedData);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response);
-  //   });
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      return response.data;
+    }
+    fetchData().then((res) => {
+      setWeeklySchedule(classifyWeekData(res));
+    });
+    fetchData().catch((err) => {
+      console.log(err.response);
+    });
+  }, []);
 
   // axios 요청 오기 전까지
-  // console.log(weeklyData);
-  classifiedData = classifyWeekData(weeklyData);
-  // console.log(classifiedData);
+  // let weeklySchedule = weeklySchedule;
 
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
-    setScheduleData(classifiedData[thisWeek[arg]]);
+    setScheduleData(weeklySchedule[thisWeek[arg]]);
   };
 
   // 오늘 스케쥴부터 보여주기
   useEffect(() => {
     if (scheduleData == undefined) {
-      setScheduleData(classifiedData[today]);
+      setScheduleData(weeklySchedule[today]);
     }
-  }, [today]);
+  }, [weeklySchedule]);
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#E5F3F6", paddingTop: 15 }}
-    >
-      {/* 버튼 */}
+    <View style={{ flex: 1, backgroundColor: "#E5F3F6", paddingTop: 15 }}>
       <View
         style={{
           height: "12%",
@@ -171,7 +164,7 @@ export default function TimeLine() {
         }}
       >
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(0)}>
-          <Text style={mainStyles.dayText}>월</Text>
+          <Text>월</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(1)}>
           <Text>화</Text>
@@ -186,7 +179,6 @@ export default function TimeLine() {
           <Text>금</Text>
         </TouchableOpacity>
       </View>
-      {/* 타임라인 */}
       <View
         style={{
           flex: 4,
@@ -194,7 +186,6 @@ export default function TimeLine() {
           paddingHorizontal: 15,
         }}
       >
-        {/* <TimeLineItem /> */}
         <Timeline
           style={styles.list}
           data={scheduleData}
@@ -220,7 +211,6 @@ export default function TimeLine() {
           }}
         />
       </View>
-      {/* 점심메뉴 버튼 */}
       <TouchableOpacity
         activeOpacity={0.7}
         style={mainStyles.touchableOpacityStyle}
@@ -232,7 +222,7 @@ export default function TimeLine() {
           style={mainStyles.floatingButtonStyle}
         />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -244,9 +234,6 @@ const mainStyles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
     alignItems: "center",
-  },
-  dayText: {
-    fontWeight: "500",
   },
   touchableOpacityStyle: {
     position: "absolute",
