@@ -1,6 +1,6 @@
 .back {
   flex: 1;
-  background-Color: #E5F3F6;
+  background-Color: #ffffff;
   align-Items: center;
   justify-Content: center;
 }
@@ -43,18 +43,6 @@
 .add {
   flex: 1;
   justify-Content: center;
-}
-
-.todolistcard { 
-  border-radius: 10px;
-  margin-top: 20;
-  margin-bottom: 10;
-  margin-left: 10;
-  margin-right: 10;
-  background-color: lightblue;
-  flex: 1;
-  width: auto;
-  align-items: center;
 }
 
 .circle {
@@ -116,8 +104,10 @@
 
 .button {
   align-items: center;
-  background-color: #DDDDDD;
+  background-color: #A8D1FF;
   padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
 }
 
 .noticelist {
@@ -134,4 +124,24 @@
   color: gainsboro;
   text-decoration-line: line-through;
   padding: 6px;
+}
+
+/* 컴포넌트 전체 CSS */
+.todoContainer { 
+  border-radius: 10px;
+  margin-top: 20;
+  margin-bottom: 10;
+  margin-left: 10;
+  margin-right: 10;
+  flex: 1;
+  width: auto;
+  align-items: center;
+}
+
+.timelineContainer {
+  flex: 1;
+  background-color: #ffffff;
+  border-top-left-radius: 30;
+  border-top-right-radius: 30;
+  padding-top: 15;
 }
