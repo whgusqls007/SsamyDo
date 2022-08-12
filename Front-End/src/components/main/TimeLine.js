@@ -98,6 +98,7 @@ export default function TimeLine() {
           result[daily.date].push(afterLunch);
         }
       } else {
+        daily.time = daily.time.substring(0, 5);
         result[daily.date].push(daily);
       }
     }
@@ -130,11 +131,16 @@ export default function TimeLine() {
       return response.data;
     }
     fetchData().then((res) => {
-      setWeeklySchedule(res);
+      setWeeklySchedule(classifyWeekData(res));
+    });
+    fetchData().catch((err) => {
+      console.log(err.response);
     });
   }, []);
+
   // axios 요청 오기 전까지
   // let weeklySchedule = weeklySchedule;
+
   console.log("weeklyschedule------------------------");
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
