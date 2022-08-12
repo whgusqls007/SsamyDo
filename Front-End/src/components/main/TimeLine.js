@@ -141,6 +141,7 @@ export default function TimeLine() {
   // axios 요청 오기 전까지
   // let weeklySchedule = weeklySchedule;
 
+  console.log("weeklyschedule------------------------");
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
     setScheduleData(weeklySchedule[thisWeek[arg]]);

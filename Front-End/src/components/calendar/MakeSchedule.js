@@ -147,7 +147,7 @@ export default function MakeSchedule({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const typeName = useSelector((state) => {
-    return state.Setting[1];
+    return state.Setting[0];
   });
 
   return (
