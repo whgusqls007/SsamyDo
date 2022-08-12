@@ -1,3 +1,5 @@
+package edussafycrawlergradle;
+
 import java.util.*;
 
 public class Box {
