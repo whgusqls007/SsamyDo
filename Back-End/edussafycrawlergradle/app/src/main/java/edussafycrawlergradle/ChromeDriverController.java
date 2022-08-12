@@ -1,16 +1,18 @@
+package edussafycrawlergradle;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.*;
-
 public class ChromeDriverController {
     public ChromeDriver chromeDriver;
     protected ChromeOptions chromeOptions;
-    protected String Email = "";
-    protected String PW = "";
+    protected String Email = "jo7hb@naver.com";
+    protected String PW = "qlalfqjsgh4*";
 
     protected ChromeDriverController() {
         initDriver();
@@ -163,8 +165,9 @@ public class ChromeDriverController {
     protected void initDriver() {
 
         chromeOptions = new ChromeOptions();
-        // chromeOptions.addArguments("headless");
-        chromeOptions.addArguments("--start-maximized");
+        chromeOptions.addArguments("headless");
+        // chromeOptions.addArguments("--start-maximized");
+        chromeOptions.addArguments("--window-size=1920x1080");
 
         try {
             Thread.sleep(500);
@@ -207,6 +210,7 @@ public class ChromeDriverController {
 
     protected void openDriver() {
         chromeDriver = new ChromeDriver(chromeOptions);
+
     }
 
     protected void closeDriver() {
