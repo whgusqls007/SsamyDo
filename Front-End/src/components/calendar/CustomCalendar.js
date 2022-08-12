@@ -85,7 +85,7 @@ export default function CustomCalendar() {
   });
 
   const check = useSelector((state) => {
-    return state.ScheduleList[0];
+    return state.Account;
   });
 
   return (
@@ -115,7 +115,6 @@ export default function CustomCalendar() {
           }
         }}
         hideExtraDays={true}
-        enableSwipeMonths={true}
         // 테마
         theme={theme}
         // 일정표시 기능
