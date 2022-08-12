@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface NoticeRepository extends JpaRepository<Notice, Long> {
+public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
     @Query("select n from Notice n join fetch Channel c" +
             " join c.team t join t.teamUsers tu join tu.user u where u.id = :userId")

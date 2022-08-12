@@ -18,7 +18,7 @@ public class Track {
 
     @Id @GeneratedValue
     @Column(name = "track_id")
-    private Long id;
+    private Integer id;
 
     private String name;
     private int gi;

@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TodoRepository extends JpaRepository<Todo, Long>{
+public interface TodoRepository extends JpaRepository<Todo, Integer>{
 
     /**
      * * find Todos by Channel
