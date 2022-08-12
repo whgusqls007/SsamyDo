@@ -45,25 +45,6 @@ export default function TimeLine() {
   //     console.log("에러에러");
   //   });
 
-  // 일주일 스케쥴을 요일별로 묶기
-  function classifyDays(weekdata) {
-    let data = weekdata.data;
-    let result = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-    };
-    for (i=0; i<data.length; i++) {
-      if (data.i.date === data.(i+1).date) {
-        continue
-      }
-      }
-    }
-    return result;
-  }
-
   // 일일 스케쥴을 담아두는 변수
   const [scheduleData, setScheduleData] = useState();
 
@@ -110,5 +91,4 @@ export default function TimeLine() {
         <Timeline style={styles.list} data={scheduleData} />
       </View>
     </View>
-  );
-
+  )}
