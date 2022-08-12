@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
 // import weeklyData from "../../store/example/weeklyData.json";
@@ -152,7 +159,9 @@ export default function TimeLine() {
   }, [today]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#E5F3F6" }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#E5F3F6", paddingTop: 15 }}
+    >
       {/* 버튼 */}
       <View
         style={{
@@ -163,19 +172,19 @@ export default function TimeLine() {
         }}
       >
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(0)}>
-          <Text>월요일</Text>
+          <Text style={mainStyles.dayText}>월</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(1)}>
-          <Text>화요일</Text>
+          <Text>화</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(2)}>
-          <Text>수요일</Text>
+          <Text>수</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(3)}>
-          <Text>목요일</Text>
+          <Text>목</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(4)}>
-          <Text>금요일</Text>
+          <Text>금</Text>
         </TouchableOpacity>
       </View>
       {/* 타임라인 */}
@@ -197,22 +206,34 @@ export default function TimeLine() {
           timeContainerStyle={{ minWidth: 52, marginTop: -5, marginRight: -10 }}
           timeStyle={{
             textAlign: "center",
-            backgroundColor: "#94CBD9",
-            color: "#E5F3F6",
+            color: "#6986A8",
             padding: 2,
             borderRadius: 10,
+            fontWeight: "500",
           }}
           titleStyle={{
-            minHeight: 40,
-            backgroundColor: "#94CBD9",
+            minHeight: 50,
+            backgroundColor: "#C3E1EC",
             borderRadius: 10,
             fontWeight: "400",
             paddingHorizontal: 10,
-            paddingVertical: 10,
+            paddingVertical: 13,
           }}
         />
       </View>
-    </View>
+      {/* 점심메뉴 버튼 */}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={mainStyles.touchableOpacityStyle}
+      >
+        <Image
+          source={{
+            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/779215e857ead4a3cb819bbabacc1ea2/cutlery-spoon.png",
+          }}
+          style={mainStyles.floatingButtonStyle}
+        />
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 }
 
@@ -220,9 +241,29 @@ const mainStyles = StyleSheet.create({
   dayButton: {
     backgroundColor: "#C3E1EC",
     marginHorizontal: 5,
+    paddingHorizontal: 15,
     borderRadius: 5,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 7,
+  },
+  dayText: {
+    fontWeight: "500",
+  },
+  touchableOpacityStyle: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    padding: 5,
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 20,
+    bottom: 20,
+  },
+  floatingButtonStyle: {
+    resizeMode: "contain",
+    width: 55,
+    height: 55,
   },
 });
