@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
-// import weeklyData from "../../store/example/weeklyData.json";
 import weeklyData from "../../store/example/weeklyData2.json";
 import axios from "axios";
 
@@ -54,7 +61,6 @@ export default function TimeLine() {
         title: "점심시간",
         time: "12:20",
       };
-
       // 오전에 시작해서 오전에 끝나는 일정
       if (startTime < 12 && endTime <= 12) {
         daily.time = daily.time.substring(0, 5);
@@ -109,51 +115,41 @@ export default function TimeLine() {
 
   // 일일 스케쥴을 담아두는 변수
   const [scheduleData, setScheduleData] = useState();
-  // const [weeklySchedule, setWeeklySchedule] = useState();
+  const [weeklySchedule, setWeeklySchedule] = useState("undefined");
 
   // 변수 모음
   const today = ymdFormat(new Date());
   const thisMonday = findMonday();
   const thisWeek = formattingWeek(thisMonday);
-  let classifiedData;
 
   // axios를 통해서 이번 주 스케쥴 받아오기
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
-
-  // axios({
-  //   method: "get",
-  //   url: `${baseURL}${ymdFormat(thisMonday)}`,
-  // })
-  //   .then((response) => {
-  //     // console.log("Axios 요청 성공!");
-  //     // console.log(response.data);
-  //     classifiedData = classifyWeekData(response.data);
-  //     // console.log(classifiedData);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response);
-  //   });
-
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      return response.data;
+    }
+    fetchData().then((res) => {
+      setWeeklySchedule(res);
+    });
+  }, []);
   // axios 요청 오기 전까지
-  // console.log(weeklyData);
-  classifiedData = classifyWeekData(weeklyData);
-  // console.log(classifiedData);
-
+  // let weeklySchedule = weeklySchedule;
+  console.log("weeklyschedule------------------------");
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
-    setScheduleData(classifiedData[thisWeek[arg]]);
+    setScheduleData(weeklySchedule[thisWeek[arg]]);
   };
 
   // 오늘 스케쥴부터 보여주기
   useEffect(() => {
     if (scheduleData == undefined) {
-      setScheduleData(classifiedData[today]);
+      setScheduleData(weeklySchedule[today]);
     }
-  }, [today]);
+  }, [weeklySchedule]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#E5F3F6" }}>
-      {/* 버튼 */}
+    <View style={{ flex: 1, backgroundColor: "#E5F3F6", paddingTop: 15 }}>
       <View
         style={{
           height: "12%",
@@ -163,22 +159,21 @@ export default function TimeLine() {
         }}
       >
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(0)}>
-          <Text>월요일</Text>
+          <Text>월</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(1)}>
-          <Text>화요일</Text>
+          <Text>화</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(2)}>
-          <Text>수요일</Text>
+          <Text>수</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(3)}>
-          <Text>목요일</Text>
+          <Text>목</Text>
         </TouchableOpacity>
         <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(4)}>
-          <Text>금요일</Text>
+          <Text>금</Text>
         </TouchableOpacity>
       </View>
-      {/* 타임라인 */}
       <View
         style={{
           flex: 4,
@@ -186,7 +181,6 @@ export default function TimeLine() {
           paddingHorizontal: 15,
         }}
       >
-        {/* <TimeLineItem /> */}
         <Timeline
           style={styles.list}
           data={scheduleData}
@@ -197,21 +191,32 @@ export default function TimeLine() {
           timeContainerStyle={{ minWidth: 52, marginTop: -5, marginRight: -10 }}
           timeStyle={{
             textAlign: "center",
-            backgroundColor: "#94CBD9",
-            color: "#E5F3F6",
+            color: "#6986A8",
             padding: 2,
             borderRadius: 10,
+            fontWeight: "500",
           }}
           titleStyle={{
-            minHeight: 40,
-            backgroundColor: "#94CBD9",
+            minHeight: 50,
+            backgroundColor: "#C3E1EC",
             borderRadius: 10,
             fontWeight: "400",
             paddingHorizontal: 10,
-            paddingVertical: 10,
+            paddingVertical: 13,
           }}
         />
       </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={mainStyles.touchableOpacityStyle}
+      >
+        <Image
+          source={{
+            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/779215e857ead4a3cb819bbabacc1ea2/cutlery-spoon.png",
+          }}
+          style={mainStyles.floatingButtonStyle}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -220,9 +225,26 @@ const mainStyles = StyleSheet.create({
   dayButton: {
     backgroundColor: "#C3E1EC",
     marginHorizontal: 5,
+    paddingHorizontal: 15,
     borderRadius: 5,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 7,
+  },
+  touchableOpacityStyle: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    padding: 5,
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 20,
+    bottom: 20,
+  },
+  floatingButtonStyle: {
+    resizeMode: "contain",
+    width: 55,
+    height: 55,
   },
 });

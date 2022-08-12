@@ -13,7 +13,7 @@ export default function Main({ navigation }) {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
-        console.log(`main schedule get`)
+        console.log(`main schedule get`);
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
@@ -21,11 +21,10 @@ export default function Main({ navigation }) {
       }
       AsyncStorage.getItem("TodoStatus", (err, res) => {
         if (res) {
-          dispatch({type: "TodoStatus/import", payload: res})
+          dispatch({ type: "TodoStatus/import", payload: res });
         }
-      })
+      });
     });
-
   }, []);
 
   return (
@@ -36,12 +35,11 @@ export default function Main({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          AsyncStorage.removeItem("TodoStatus");
+          AsyncStorage.removeItem("Account");
         }}
       >
         <Text>로컬 삭제</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
