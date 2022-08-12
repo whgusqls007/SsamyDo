@@ -61,7 +61,6 @@ export default function TimeLine() {
         title: "점심시간",
         time: "12:20",
       };
-
       // 오전에 시작해서 오전에 끝나는 일정
       if (startTime < 12 && endTime <= 12) {
         daily.time = daily.time.substring(0, 5);
