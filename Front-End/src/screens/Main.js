@@ -37,7 +37,7 @@ export default function Main({ navigation }) {
       {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          AsyncStorage.removeItem("TodoStatus");
+          AsyncStorage.removeItem("Account");
         }}
       >
         <Text>로컬 삭제</Text>
