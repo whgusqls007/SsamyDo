@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView } from "react-native";
 import NoticeList from "../components/notice/NoticeList";
 import styles from "../../app.module.css";
 // import { useState, useEffect } from "react";
@@ -16,21 +16,19 @@ export default function Notice({ navigation }) {
   // console.log(showNotice)
 
   return (
-    <View style={styles.center}>
+    
+    <View>
       <Text>새미가 알려주는 공지</Text>
-      <View>
-        <SearchBar
-          placeholder={"공지를 검색하세요."}
-          value={value}
-          onChangeText={setValue}
-          // onEndEditting={() => navigation.navigate("NoticeSearch", {state:value})}
-        />
-        <TouchableOpacity
-          onPress={() => navigation.navigate("NoticeSearch", { value: value })}
-        >
-          <Text>검색</Text>
-        </TouchableOpacity>
-      </View>
+      <KeyboardAvoidingView>
+        <View>
+          <SearchBar
+            placeholder={"공지를 검색하세요."}
+            value={value}
+            onChangeText={setValue}
+            onSubmitEditing={()=>navigation.navigate("NoticeSearch", { value: value })}
+          />
+        </View>
+      </KeyboardAvoidingView>
       <View>
         <View style={[{ flexDirection: "row", margin: 5 }]}>
           <TouchableOpacity
