@@ -59,6 +59,7 @@ export default function TodoList({ navigation }) {
       })
       .catch((error) => {
         // console.log(error.response);
+        console.log("todo axios 실패함")
       });
   }, []);
 
