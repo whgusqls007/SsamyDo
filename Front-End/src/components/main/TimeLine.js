@@ -1,16 +1,32 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Image,
+  Pressable,
+} from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
-// import weeklyData from "../../store/example/weeklyData.json";
-import weeklyData from "../../store/example/weeklyData2.json";
+// import weeklyData from "../../store/example/weeklyData2.json";
 import axios from "axios";
+import LunchMenu from "./LunchMenu";
 
 export default function TimeLine() {
+  // 수업일과 주말을 구분하는 변수
+  let weekdays = "true";
+
   // 접속일 기준 이번 주 월요일 찾기
   function findMonday() {
     let result = new Date(); // 접속한 날짜
     result.setDate(result.getDate() - (result.getDay() - 1));
+    // 오늘이 주말이라면 주말 표시
+    if (result.getDay() == 0 || result.getDay() == 6) {
+      weekdays = false;
+    }
     return result;
   }
 
@@ -54,7 +70,6 @@ export default function TimeLine() {
         title: "점심시간",
         time: "12:20",
       };
-
       // 오전에 시작해서 오전에 끝나는 일정
       if (startTime < 12 && endTime <= 12) {
         daily.time = daily.time.substring(0, 5);
@@ -92,6 +107,7 @@ export default function TimeLine() {
           result[daily.date].push(afterLunch);
         }
       } else {
+        daily.time = daily.time.substring(0, 5);
         result[daily.date].push(daily);
       }
     }
@@ -109,73 +125,98 @@ export default function TimeLine() {
 
   // 일일 스케쥴을 담아두는 변수
   const [scheduleData, setScheduleData] = useState();
-  // const [weeklySchedule, setWeeklySchedule] = useState();
+  const [weeklySchedule, setWeeklySchedule] = useState("undefined");
 
   // 변수 모음
   const today = ymdFormat(new Date());
   const thisMonday = findMonday();
   const thisWeek = formattingWeek(thisMonday);
-  let classifiedData;
 
   // axios를 통해서 이번 주 스케쥴 받아오기
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
-
-  // axios({
-  //   method: "get",
-  //   url: `${baseURL}${ymdFormat(thisMonday)}`,
-  // })
-  //   .then((response) => {
-  //     // console.log("Axios 요청 성공!");
-  //     // console.log(response.data);
-  //     classifiedData = classifyWeekData(response.data);
-  //     // console.log(classifiedData);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response);
-  //   });
-
-  // axios 요청 오기 전까지
-  // console.log(weeklyData);
-  classifiedData = classifyWeekData(weeklyData);
-  // console.log(classifiedData);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      return response.data;
+    }
+    fetchData().then((res) => {
+      setWeeklySchedule(classifyWeekData(res));
+    });
+    fetchData().catch((err) => {
+      console.log(err.response);
+    });
+  }, []);
 
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
-    setScheduleData(classifiedData[thisWeek[arg]]);
+    // 주중으로 표시
+    weekdays = "true";
+    setScheduleData(weeklySchedule[thisWeek[arg]]);
   };
 
   // 오늘 스케쥴부터 보여주기
   useEffect(() => {
     if (scheduleData == undefined) {
-      setScheduleData(classifiedData[today]);
+      if (weekdays) {
+        setScheduleData(weeklySchedule[today]);
+      } else {
+        console.log("주말이에요");
+      }
     }
-  }, [today]);
+  }, [weeklySchedule]);
+
+  // 점심 메뉴 모달
+  const [showLunch, setShowLunch] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#E5F3F6" }}>
-      {/* 버튼 */}
-      <View
-        style={{
-          height: "12%",
-          flexDirection: "row",
-          justifyContent: "center",
-          paddingBottom: 4,
-        }}
-      >
-        <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(0)}>
-          <Text>월요일</Text>
+    <View style={styles.timelineContainer}>
+      {/* 요일 버튼 */}
+      <View style={timelineStyles.dayContainer}>
+        <TouchableOpacity
+          style={timelineStyles.dayButton}
+          onPress={selectedDay(0)}
+        >
+          <Text style={timelineStyles.dayText}>
+            {thisWeek[0].substring(6, 8)}
+            {"\n"}월
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(1)}>
-          <Text>화요일</Text>
+        <TouchableOpacity
+          style={timelineStyles.dayButton}
+          onPress={selectedDay(1)}
+        >
+          <Text style={timelineStyles.dayText}>
+            {thisWeek[1].substring(6, 8)}
+            {"\n"}화
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(2)}>
-          <Text>수요일</Text>
+        <TouchableOpacity
+          style={timelineStyles.dayButton}
+          onPress={selectedDay(2)}
+        >
+          <Text style={timelineStyles.dayText}>
+            {thisWeek[2].substring(6, 8)}
+            {"\n"}수
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(3)}>
-          <Text>목요일</Text>
+        <TouchableOpacity
+          style={timelineStyles.dayButton}
+          onPress={selectedDay(3)}
+        >
+          <Text style={timelineStyles.dayText}>
+            {thisWeek[3].substring(6, 8)}
+            {"\n"}목
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={mainStyles.dayButton} onPress={selectedDay(4)}>
-          <Text>금요일</Text>
+        <TouchableOpacity
+          style={timelineStyles.dayButton}
+          onPress={selectedDay(4)}
+        >
+          <Text style={timelineStyles.dayText}>
+            {thisWeek[4].substring(6, 8)}
+            {"\n"}금
+          </Text>
         </TouchableOpacity>
       </View>
       {/* 타임라인 */}
@@ -186,43 +227,137 @@ export default function TimeLine() {
           paddingHorizontal: 15,
         }}
       >
-        {/* <TimeLineItem /> */}
-        <Timeline
-          style={styles.list}
-          data={scheduleData}
-          circleSize={12}
-          circleColor="#6986A8"
-          lineColor="#94CBD9"
-          lineWidth={4}
-          timeContainerStyle={{ minWidth: 52, marginTop: -5, marginRight: -10 }}
-          timeStyle={{
-            textAlign: "center",
-            backgroundColor: "#94CBD9",
-            color: "#E5F3F6",
-            padding: 2,
-            borderRadius: 10,
-          }}
-          titleStyle={{
-            minHeight: 40,
-            backgroundColor: "#94CBD9",
-            borderRadius: 10,
-            fontWeight: "400",
-            paddingHorizontal: 10,
-            paddingVertical: 10,
-          }}
-        />
+        {weekdays && (
+          <Timeline
+            style={styles.list}
+            data={scheduleData}
+            circleSize={12}
+            circleColor="#A8D1FF"
+            lineColor="#A8D1FF"
+            lineWidth={4}
+            timeContainerStyle={{
+              minWidth: 52,
+              marginTop: -5,
+              marginRight: -10,
+            }}
+            timeStyle={{
+              textAlign: "center",
+              color: "#111111",
+              padding: 2,
+              borderRadius: 10,
+              fontWeight: "500",
+            }}
+            titleStyle={{
+              minHeight: 50,
+              backgroundColor: "#EDEDED",
+              borderRadius: 10,
+              color: "#111111",
+              fontWeight: "400",
+              paddingHorizontal: 13,
+              paddingVertical: 13,
+            }}
+          />
+        )}
+        {!weekdays && (
+          <View>
+            <Text>오늘은 쉬는 날이에요!</Text>
+          </View>
+        )}
       </View>
+      {/* 점심 버튼 */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={timelineStyles.centeredView}>
+          <View style={timelineStyles.modalView}>
+            <LunchMenu />
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>닫기</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={timelineStyles.touchableOpacityStyle}
+        onPress={() => setModalVisible(true)}
+      >
+        <Image
+          source={{
+            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/c90cea420d8a3cb833a0418a7c1e7c69/lunch.png",
+          }}
+          style={timelineStyles.floatingButtonStyle}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
 
-const mainStyles = StyleSheet.create({
+const timelineStyles = StyleSheet.create({
+  dayContainer: {
+    height: "20%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 4,
+  },
   dayButton: {
-    backgroundColor: "#C3E1EC",
+    backgroundColor: "#EDEDED",
     marginHorizontal: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
     borderRadius: 5,
+    height: "auto",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 7,
+  },
+  dayText: {
+    textAlign: "center",
+  },
+  touchableOpacityStyle: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    padding: 5,
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 20,
+    bottom: 20,
+  },
+  floatingButtonStyle: {
+    resizeMode: "contain",
+    width: 55,
+    height: 55,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

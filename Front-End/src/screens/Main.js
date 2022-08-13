@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import styles from "../../app.module.css";
@@ -13,7 +13,7 @@ export default function Main({ navigation }) {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
-        console.log(`main schedule get`)
+        console.log(`main schedule get`);
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
@@ -21,27 +21,42 @@ export default function Main({ navigation }) {
       }
       AsyncStorage.getItem("TodoStatus", (err, res) => {
         if (res) {
-          dispatch({type: "TodoStatus/import", payload: res})
+          dispatch({ type: "TodoStatus/import", payload: res });
         }
-      })
+      });
     });
-
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* <Text>Main</Text> */}
-      <TodoList navigation={navigation} style={{ flex: 1 }} />
-      <TimeLine style={{ flex: 3 }} />
-      <TouchableOpacity
+    <View style={mainStyles.mainContainer}>
+      <View style={mainStyles.helloContainer}>
+        <Text style={mainStyles.helloText}>김싸피님, 안녕하세요!</Text>
+      </View>
+      <TodoList navigation={navigation} />
+      <TimeLine />
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          AsyncStorage.removeItem("TodoStatus");
+          AsyncStorage.removeItem("Account");
         }}
       >
         <Text>로컬 삭제</Text>
-      </TouchableOpacity>
-
+      </TouchableOpacity> */}
     </View>
   );
 }
+
+const mainStyles = StyleSheet.create({
+  helloContainer: {
+    paddingTop: 30,
+    paddingLeft: 20,
+  },
+  helloText: {
+    fontSize: 20,
+    color: "#ffffff",
+  },
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#5ba8ff",
+  },
+});

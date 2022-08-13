@@ -1,4 +1,3 @@
-
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import NoticeList from "../components/notice/NoticeList";
 import styles from "../../app.module.css";
@@ -8,11 +7,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState, useEffect } from "react";
 import SearchBar from "react-native-platform-searchbar";
 
-
 export default function Notice({ navigation }) {
-
-  const [showNotice, setShowNotice] = useState('All');
-  const [value, setValue] = useState('');
+  const [showNotice, setShowNotice] = useState("All");
+  const [value, setValue] = useState("");
 
   // console.log(value)
 
@@ -20,29 +17,32 @@ export default function Notice({ navigation }) {
 
   return (
     <View style={styles.center}>
-      
       <Text>새미가 알려주는 공지</Text>
       <View>
         <SearchBar
-          placeholder={"공지를 검색하세요." }
+          placeholder={"공지를 검색하세요."}
           value={value}
           onChangeText={setValue}
           // onEndEditting={() => navigation.navigate("NoticeSearch", {state:value})}
         />
-        <TouchableOpacity onPress={() => navigation.navigate("NoticeSearch", {value:value})}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("NoticeSearch", { value: value })}
+        >
           <Text>검색</Text>
         </TouchableOpacity>
       </View>
       <View>
-      <View style={[{ flexDirection: "row", margin: 5 }]}>
+        <View style={[{ flexDirection: "row", margin: 5 }]}>
           <TouchableOpacity
             style={styles.button}
-            onPress={()=>setShowNotice('All')}>
+            onPress={() => setShowNotice("All")}
+          >
             <Text>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={()=>setShowNotice('MM')}>
+            onPress={() => setShowNotice("MM")}
+          >
             <View style={{ flexDirection: "row" }}>
               <Ionicons name="ellipse-sharp" size={10} color="blue" />
               <Text>mm</Text>
@@ -50,15 +50,16 @@ export default function Notice({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={()=>setShowNotice('Edu')} >
+            onPress={() => setShowNotice("Edu")}
+          >
             <View style={{ flexDirection: "row" }}>
               <Ionicons name="ellipse-sharp" size={10} color="red" />
               <Text>edu</Text>
             </View>
-          </TouchableOpacity>   
+          </TouchableOpacity>
+        </View>
+        <NoticeList navigation={navigation} select={showNotice} />
       </View>
-      <NoticeList navigation={navigation} select={showNotice} />
-  </View>
-  </View>
+    </View>
   );
 }
