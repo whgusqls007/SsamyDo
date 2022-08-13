@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import TodoItem from "./TodoItem";
 import styles from "../../../app.module.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -72,7 +72,7 @@ export default function TodoList({ navigation }) {
   // console.log(todoList)
 
   return (
-    <View style={styles.todolistcard}>
+    <View style={styles.todoContainer}>
       <Text>오늘의 설문</Text>
 
       {/* 주석처리함 ,, status 진행중인 애들만 item으로 넘긴다 */}
