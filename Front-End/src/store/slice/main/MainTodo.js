@@ -22,17 +22,12 @@ const MainTodo = createSlice({
   reducers: {
     import ( state, action ) {
       state = JSON.stringify(action.payload)
-      console.log(`todo 받아온거 ${state}`)
+      // console.log(`todo 받아온거 ${state}`)
     },
 
   },
   extraReducers: {
-    // [getTodo.fulfilled]: (state, action) => {
-    //   console.log(action.payload)
-    //   state = action.payload ;
-    //   // state.list = action.payload;
-    //   // console.log('fulfilled')
-    // },
+
   },
 });
 

@@ -96,7 +96,11 @@ export default function ScheduleItem({ navigation, Schedule }) {
         </View>
       </View>
       <View style={{ height: 30, justifyContent: "center" }}>
-        <Text style={{ height: 30, textAlign: "center" }}>
+        {/* css에서 textoverflow로 처리할 수도 있다 ,,,
+            2줄 기본으로 보여주고 그 이상 ... 처리 */}
+        <Text 
+          numberOfLines={2} ellipsizeMode="tail"
+          style={{ height: 30, textAlign: "center" }}>
           {Schedule.content}
         </Text>
       </View>
