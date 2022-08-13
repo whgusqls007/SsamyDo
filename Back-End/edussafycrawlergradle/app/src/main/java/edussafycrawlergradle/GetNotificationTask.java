@@ -1,4 +1,7 @@
-import java.util.*;
+package edussafycrawlergradle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
@@ -12,9 +15,11 @@ public class GetNotificationTask extends ChromeDriverController implements Runna
 
     @Override
     public void run() {
-        List<User> userList = jdbcDriver.runQuery("SELECT * FROM user LIMIT 1 OFFSET 0");
-        this.Email = userList.get(0).getUserName();
-        this.PW = userList.get(0).getEduPw();
+        // User user = jdbcDriver.runQuery("SELECT * FROM user LIMIT 1 OFFSET 0");
+        // String email = user.getUserName();
+        // String pw = user.getEduPw();
+        // this.Email = email;
+        // this.PW = pw;
         startCrawling();
     }
 

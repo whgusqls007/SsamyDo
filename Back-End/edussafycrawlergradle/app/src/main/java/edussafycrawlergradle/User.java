@@ -1,4 +1,6 @@
-import java.util.*;
+package edussafycrawlergradle;
+
+import java.util.Objects;
 
 public class User {
     private String userName;

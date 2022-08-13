@@ -85,13 +85,14 @@ export default function CustomCalendar() {
   });
 
   const check = useSelector((state) => {
-    return state.ScheduleList[0];
+    return state.Account;
   });
 
   return (
     <View>
       <Calendar
         onDayPress={(day) => {
+          console.log(check);
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행
@@ -114,7 +115,6 @@ export default function CustomCalendar() {
           }
         }}
         hideExtraDays={true}
-        enableSwipeMonths={true}
         // 테마
         theme={theme}
         // 일정표시 기능
