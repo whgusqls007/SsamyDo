@@ -21,7 +21,8 @@ const MainTodo = createSlice({
   initialState: [],
   reducers: {
     import ( state, action ) {
-      state = action.payload
+      state = JSON.stringify(action.payload)
+      console.log(`todo 받아온거 ${state}`)
     },
 
   },
