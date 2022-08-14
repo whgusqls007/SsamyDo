@@ -18,7 +18,7 @@ function Start({ navigation }) {
           if (result) {
             dispatch({
               type: "Setting/import",
-              payload: { typeName: JSON.parse(result) },
+              payload: { typeName: JSON.parse(result).typeName },
             });
           }
         });
