@@ -10,6 +10,8 @@ export default {
     login: () => HOST + "login",
     // POST, credentials = {username: , password: , eduPw: }
     signup: () => HOST + "signup",
+    // POST, credentials = {gi: , trackName: ,}
+    track: () => HOST + "track/change",
   },
   // yearmonth(202207)에 존재하는 모든 ToDo 리스트 조회 =>
   // return [{id, title, Dudate}] → 공지 id (연결된 공지 ID 제공)

@@ -22,6 +22,7 @@ export default Account = createSlice({
     import(state, action) {
       state[0] = action.payload;
       state[1] = "재인증";
+      state[2] = { Token: action.payload.token };
     },
     // 유저 정보 저장 사용해서 추가
     save(state) {
@@ -29,7 +30,7 @@ export default Account = createSlice({
     },
     // userDetail 업데이트
     update(state, action) {
-      state[2] = { ...state[2], ...action.payload };
+      state[0] = { ...state[0], ...action.payload };
     },
   },
 });
