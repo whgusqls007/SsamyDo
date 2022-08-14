@@ -29,7 +29,7 @@ export default function NoticeSearch({ navigation, route }){
 
   if (searchNotice.length !== 0) {
     return (
-      <View style={styles.noticelist}>
+      <View>
         <Text>{value} 검색 결과입니다.</Text>
         <ScrollView>
           {searchNotice.map((notice)=>(
