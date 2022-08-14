@@ -49,7 +49,7 @@ public class UserController {
 
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<String> changeTrack(@RequestHeader String Token, @RequestBody String trackName,
+    public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody String trackName,
             @RequestBody int gi) {
 
 //        Authentication auth = tokenProvider.getAuthentication(Token);
