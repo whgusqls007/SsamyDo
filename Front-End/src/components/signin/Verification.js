@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import styles from "../../../app.module.css";
 import drf from "../../api/drf";
 import { Ionicons } from "@expo/vector-icons";
@@ -73,95 +79,87 @@ export default function Verification({ navigation }) {
       });
 
   return (
-    <View>
-      <Text>SSAFY 교육생 인증</Text>
-      <View style={{ margin: 10, borderWidth: 1 }}>
+    <View style={VerificationStyles.back}>
+      <TouchableOpacity style={VerificationStyles.ssamy}>
+        <Text>마크?</Text>
+      </TouchableOpacity>
+      <View style={VerificationStyles.container}>
         {/* 학번 입력 */}
-        <View style={{ flexDirection: "row", margin: 5, height: 35 }}>
-          <Text>학번: </Text>
-          {btnName === "인증" ? (
-            <TextInput
-              keyboardType="numeric"
-              maxLength={7}
-              style={{ borderWidth: 1 }}
-              value={studentNo}
-              placeholder="SSAFY 학번을 입력해주세요"
-              onChangeText={(text) => {
-                setStudentNo(text);
-                if (studentNo[1]) {
-                  setNumber(Number(studentNo[1]));
-                } else {
-                  setNumber("");
-                }
-              }}
-            />
-          ) : (
-            <Text>{studentNo}</Text>
-          )}
-        </View>
+        {btnName === "인증" ? (
+          <TextInput
+            style={VerificationStyles.input}
+            keyboardType="numeric"
+            maxLength={7}
+            value={studentNo}
+            placeholder="SSAFY 학번을 입력해주세요"
+            placeholderTextColor="#6986A8"
+            onChangeText={(text) => {
+              setStudentNo(text);
+              if (studentNo[1]) {
+                setNumber(Number(studentNo[1]));
+              } else {
+                setNumber("");
+              }
+            }}
+          />
+        ) : (
+          <Text style={VerificationStyles.input}>{studentNo}</Text>
+        )}
         {/* 이름 이름 */}
-        <View style={{ flexDirection: "row", margin: 5, height: 35 }}>
-          <Text>이름: </Text>
-          {btnName === "인증" ? (
-            <TextInput
-              style={{ borderWidth: 1 }}
-              placeholder="이름을 입력해주세요"
-              onChangeText={(text) => {
-                setName(text);
-              }}
-            />
-          ) : (
-            <Text>{name}</Text>
-          )}
-        </View>
+        {btnName === "인증" ? (
+          <TextInput
+            style={VerificationStyles.input}
+            placeholder="이름을 입력해주세요"
+            placeholderTextColor="#6986A8"
+            onChangeText={(text) => {
+              setName(text);
+            }}
+          />
+        ) : (
+          <Text style={VerificationStyles.input}>{name}</Text>
+        )}
         {/* 이메일 입력 */}
-        <View style={{ flexDirection: "row", margin: 5, height: 35 }}>
-          <Text>EduSSAFY ID: </Text>
-          {btnName === "인증" ? (
-            <TextInput
-              style={{ borderWidth: 1 }}
-              placeholder=" edu ssafy와 MattaMost의 ID를 입력해 주세요"
-              onChangeText={(text) => {
-                setEmail(text);
-                emailValid(text);
-              }}
-            />
-          ) : (
-            <Text>{email}</Text>
-          )}
-        </View>
+        {btnName === "인증" ? (
+          <TextInput
+            style={VerificationStyles.input}
+            placeholder=" edu ssafy와 MattaMost의 ID를 입력해 주세요"
+            placeholderTextColor="#6986A8"
+            onChangeText={(text) => {
+              setEmail(text);
+              emailValid(text);
+            }}
+          />
+        ) : (
+          <Text style={VerificationStyles.input}>{email}</Text>
+        )}
         {/* edussafy 비밀번호 입력 */}
-        <View style={{ flexDirection: "row", margin: 5, height: 35 }}>
-          <Text>EduSSAFY 비밀번호 : </Text>
-          <TextInput
-            style={{ borderWidth: 1, width: 245 }}
-            secureTextEntry={true}
-            placeholder=" edu ssafy 패스워드를 입력해 주세요"
-            onChangeText={(text) => setEduPassword(text)}
-          />
-        </View>
+        <TextInput
+          style={VerificationStyles.input}
+          secureTextEntry={true}
+          placeholder=" edu ssafy 패스워드를 입력해 주세요"
+          placeholderTextColor="#6986A8"
+          onChangeText={(text) => setEduPassword(text)}
+        />
         {/* MattaMost 비밀번호 */}
-        <View style={{ flexDirection: "row", margin: 5, height: 35 }}>
-          <Text>MattaMost 비밀번호 : </Text>
-          <TextInput
-            style={{ borderWidth: 1, width: 237 }}
-            secureTextEntry={true}
-            placeholder="MattaMost의 패스워드를 입력해 주세요"
-            onChangeText={(text) => setMMPassword(text)}
-          />
-        </View>
+        <TextInput
+          style={VerificationStyles.input}
+          secureTextEntry={true}
+          placeholder="MattaMost의 패스워드를 입력해 주세요"
+          placeholderTextColor="#6986A8"
+          onChangeText={(text) => setMMPassword(text)}
+        />
         {/* 트랙 선택 */}
         <View style={{ flexDirection: "row", padding: 5 }}>
-          <Text>소속 트랙: </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{ flexDirection: "row", flex: 1, alignItems: "stretch" }}
+          >
             {btnName === "인증" ? (
               trackName.map((tra, idx) => {
                 return (
                   <TouchableOpacity
                     key={`tra-${idx}`}
                     style={[
-                      styles.button,
-                      { margin: 1 },
+                      VerificationStyles.btn,
                       idx + 1 === track ? { backgroundColor: "pink" } : {},
                     ]}
                     onPress={() => setTrack(idx + 1)}
@@ -261,3 +259,40 @@ export default function Verification({ navigation }) {
     </View>
   );
 }
+
+const VerificationStyles = StyleSheet.create({
+  // 전체 화면 스타일
+  back: {
+    backgroundColor: "#EDEDED",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
+  },
+  ssamy: {
+    marginTop: 50,
+    height: 180,
+    borderWidth: 1,
+    width: "50%",
+    backgroundColor: "#E5F3F6",
+  },
+  container: {
+    margin: 10,
+    borderRadius: 5,
+    width: "80%",
+    backgroundColor: "#E5F3F6",
+  },
+  input: { flexDirection: "row", margin: 5, height: 35 },
+  btn: {
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 3,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    height: "auto",
+    width: "auto",
+    alignItems: "center",
+    flex: 4,
+    flexBasis: "auto",
+  },
+});

@@ -38,6 +38,7 @@ export default function Main({ navigation }) {
         style={styles.button}
         onPress={() => {
           AsyncStorage.removeItem("Account");
+          AsyncStorage.removeItem("Setting");
         }}
       >
         <Text>로컬 삭제</Text>
