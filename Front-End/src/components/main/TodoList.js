@@ -32,44 +32,48 @@ const DATA = [
 // 받아온 data에서 status 기준으로 필터링
 
 export default function TodoList({ navigation }) {
-  const todoList = useSelector((state) => state.MainTodo);
-  // console.log(todoList)
 
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
 
-  function ymdFormat(oriDate = new Date()) {
-    let result =
-      oriDate.getFullYear().toString() +
-      (oriDate.getMonth() + 1).toString().padStart(2, "0") +
-      oriDate.getDate().toString().padStart(2, "0");
-    return result;
-  }
+  // 오늘날짜 
+  // function ymdFormat(oriDate = new Date()) {
+  //   let result =
+  //     oriDate.getFullYear().toString() +
+  //     (oriDate.getMonth() + 1).toString().padStart(2, "0") +
+  //     oriDate.getDate().toString().padStart(2, "0");
+  //   return result;
+  // }
 
   // console.log(ymdFormat())
 
   useEffect(() => {
     axios({
       method: "get",
-      url: `${baseURL}${ymdFormat()}`,
+      url: baseURL,
     })
       .then((response) => {
         console.log("Todo Axios 요청 성공!");
-        // console.log(response.data);
-        dispatch({ type: "MainTodo/import", payload: response.data });
+        // console.log(`받은 데이터 ${response}`);
+        dispatch({type: "MainTodo/import", payload: response.data})
       })
       .catch((error) => {
         // console.log(error.response);
+        console.log("todo axios 실패함")
       });
   }, []);
 
-  // console.log(`todoList ${todoList.MainTodo}`);
+
 
   // 위의 dispatch(fulfilled) 안먹으면 ,,, getTodo 쓰세요
   //   dispatch(getTodo());
   // }, []);
 
   // console.log(todoList)
+  let todoList = useSelector((state) => state.MainTodo);
+  // console.log(todoList)
+  todoList = JSON.stringify(todoList)
+  console.log(`todoList 순서 체크용`)
 
   return (
     <View style={styles.todoContainer}>
@@ -81,15 +85,11 @@ export default function TodoList({ navigation }) {
         <TodoItem item={item} key={item.id} navigation={navigation}/>)
       ))} */}
       <ScrollView>
-        {DATA &&
-          DATA.map((item) => (
-            <TodoItem item={item} key={item.id} navigation={navigation} />
-          ))}
 
-        {/* {DATA &&
-          DATA.map((item) => (
-            <TodoItem item={item} key={item.id} navigation={navigation} />
-          ))} */}
+        {DATA && (DATA.map((item) => (
+        <TodoItem item={item} key={item.id} navigation={navigation}/>)
+      ))} 
+
       </ScrollView>
     </View>
   );
