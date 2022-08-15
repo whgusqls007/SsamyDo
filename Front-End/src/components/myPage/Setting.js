@@ -27,20 +27,20 @@ export default function Alarm() {
             <Text>{typeList[0]} / </Text>
             <TextInput
               maxLength={15}
-              style={{ borderWidth: 1, width: 50 }}
+              style={{ borderWidth: 1, width: 100 }}
               autoCapitalize="none"
               value={typeOne}
-              onChange={(text) => {
+              onChangeText={(text) => {
                 setTypeOne(text);
               }}
             />
             <Text> / </Text>
             <TextInput
               maxLength={15}
-              style={{ borderWidth: 1, width: 50 }}
+              style={{ borderWidth: 1, width: 100 }}
               autoCapitalize="none"
               value={typeTwo}
-              onChange={(text) => {
+              onChangeText={(text) => {
                 setTypeTwo(text);
               }}
             />
@@ -66,14 +66,10 @@ export default function Alarm() {
             style={[styles.button, { margin: 3 }]}
             onPress={() => {
               dispatch({
-                type: "Setting/update",
-                payload: {
-                  name: name,
-                  number: number,
-                  campus: campus,
-                  track: track,
-                },
+                type: "Setting/changeType",
+                payload: [typeList[0], typeOne, typeTwo],
               });
+              dispatch({ type: "Setting/save" });
               setShowBtn(!showBtn);
             }}
           >
