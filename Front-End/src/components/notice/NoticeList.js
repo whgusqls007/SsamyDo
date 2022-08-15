@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import NoticeItem from "./NoticeItem";
 import styles from "../../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,18 +52,18 @@ export default function NoticeList({ navigation, select }) {
 
   if (select === 'All') {
     return (
-          <View style={styles.noticelist}>
+          <View>
             <ScrollView>
               {DATA.map((notice)=>(
                 <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
-              ))}        
+              ))}    
             </ScrollView>
           </View>
     );  
   }
   else if (select === 'MM') {
     return (
-      <View style={styles.noticelist}>
+      <View>
         <ScrollView>
           {DATA.filter(notice => notice.route === 'MM').map((notice)=>(
             <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
@@ -74,7 +74,7 @@ export default function NoticeList({ navigation, select }) {
   }
   else if (select === 'Edu') {
     return  (
-      <View style={styles.noticelist}>
+      <View>
         <ScrollView>
           {DATA.filter(notice => notice.route === 'Edu').map((notice)=>(
               <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
