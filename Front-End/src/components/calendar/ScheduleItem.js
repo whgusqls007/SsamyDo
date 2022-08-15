@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styles from "../../../app.module.css";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu } from "react-native-paper";
 import { useState } from "react";
+import { Entypo } from "@expo/vector-icons";
 
 export default function ScheduleItem({ navigation, Schedule }) {
   const dispatch = useDispatch();
@@ -16,38 +17,31 @@ export default function ScheduleItem({ navigation, Schedule }) {
   } else {
     iconColor = "blue";
   }
-  // 드랍 메뉴의 보이는 여부를 결정할 변수
+  // 드랍 메뉴의 보이는 여부를 결정할 변수(우측 ... 아이콘)
   const [visible, setVisible] = useState(false);
+  // 본문을 보여줄 변수
+  const [dropContent, setDropContent] = useState(false);
+  const [dropIcon, setDropIcon] = useState("triangle-down");
+  // 현재 본문의 길이
+  const contentLen = Schedule.content.split("\n").length;
 
   // 현재의 타입과 선택일을 가져올 변수(삭제 후 함께 보내야 mark와 filter에 표시가 가능)
   const type = useSelector((state) => {
     return state.ScheduleList[4];
   });
   return (
-    <View style={{ border: "1 black" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          margin: 10,
-          backgroundColor: "#E5F3F6",
-          height: 30,
-        }}
-      >
-        <View
-          style={{ flexDirection: "row", alignContent: "center", height: 30 }}
-        >
+    <View>
+      <View style={ScheduleItemStyle.back}>
+        <View style={ScheduleItemStyle.container}>
           <Ionicons
-            onPress={() => {}}
+            style={{ margin: 3 }}
             name="ellipse-sharp"
             size={10}
             color={iconColor}
           />
         </View>
         <Text style={{ fontSize: 20 }}>{Schedule.title}</Text>
-        <View
-          style={{ flexDirection: "row", alignContent: "center", margin: 2 }}
-        >
+        <View style={[ScheduleItemStyle.container, { margin: 2 }]}>
           <Text style={{ fontSize: 15, marginRight: 8 }}>
             {Schedule.time[0].toString().padStart(2, "0")} :{" "}
             {Schedule.time[1].toString().padStart(2, "0")}
@@ -95,15 +89,56 @@ export default function ScheduleItem({ navigation, Schedule }) {
           </Menu>
         </View>
       </View>
-      <View style={{ height: 30, justifyContent: "center" }}>
-        {/* css에서 textoverflow로 처리할 수도 있다 ,,,
-            2줄 기본으로 보여주고 그 이상 ... 처리 */}
-        <Text 
-          numberOfLines={2} ellipsizeMode="tail"
-          style={{ height: 30, textAlign: "center" }}>
+      <View style={ScheduleItemStyle.content}>
+        {contentLen > 2 && (
+          <Entypo
+            name={dropIcon}
+            size={20}
+            onPress={() => {
+              setDropContent(!dropContent);
+              if (dropIcon === "triangle-down") {
+                setDropIcon("triangle-up");
+              } else {
+                setDropIcon("triangle-down");
+              }
+            }}
+          />
+        )}
+        <Text
+          // 기본적으로 2를 보여주고 외에는 0(모든 줄)
+          numberOfLines={dropContent ? 0 : 2}
+          ellipsizeMode="tail"
+          style={{
+            marginLeft: 10,
+            marginHorizontal: 5,
+          }}
+        >
           {Schedule.content}
         </Text>
       </View>
     </View>
   );
 }
+
+const ScheduleItemStyle = StyleSheet.create({
+  back: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 5,
+    marginTop: 10,
+    backgroundColor: "#A8D1FF",
+    height: 30,
+    borderRadius: 2,
+  },
+  container: {
+    flexDirection: "row",
+    alignContent: "center",
+    borderRadius: 2,
+  },
+
+  content: {
+    height: "auto",
+    backgroundColor: "#E5F3F6",
+    flexDirection: "row",
+  },
+});
