@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "../../../app.module.css";
@@ -16,13 +16,14 @@ export default function UserDetail() {
   const user = useSelector((state) => {
     return state.Account[0];
   });
-  const [showBtn, setShowBtn] = useState(false);
+
+  const [showTrackBtn, setshowTrackBtn] = useState(false);
   // 기수, 캠퍼스, 트랙 명 변수
   const campusName = ["광주", "구미", "대전", "서울", "부울경"];
   const trackName = [
     "파이썬",
-    "자바(비전공)",
-    "자바(전공)",
+    "자바\n(비전공)",
+    "자바\n(전공)",
     "임베디드",
     "모바일",
   ];
@@ -31,56 +32,60 @@ export default function UserDetail() {
   const [track, setTrack] = useState(user.track);
 
   return (
-    <View>
-      <Text>{user.name}님의 페이지</Text>
-      <View
-        style={[styles.border, { height: 250, backgroundColor: "#E5F3F6" }]}
-      >
+    <View style={UserDetailStyle.back}>
+      <Text>MyPage</Text>
+      <View style={UserDetailStyle.container}>
         <View>
-          <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>이름: </Text>
-            <Text>{user.name}</Text>
+          {/* 사용자명 */}
+          <View style={UserDetailStyle.inputContainer}>
+            <Text style={UserDetailStyle.inputLabel}>{user.name}</Text>
           </View>
-          <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>기수: </Text>
-            <Text>{`${user.studentNo[1]}기`} </Text>
+          {/* 기수 */}
+          <View style={UserDetailStyle.inputContainer}>
+            <Text style={UserDetailStyle.inputLabel}>
+              {`${user.studentNo[1]}기`}{" "}
+            </Text>
           </View>
-          {/* 캠퍼스 선택 */}
-          <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>소속 캠퍼스: </Text>
-            <Text>{campusName[user.studentNo[2]]}</Text>
+          {/* 캠퍼스*/}
+          <View style={UserDetailStyle.inputContainer}>
+            <Text style={UserDetailStyle.inputLabel}>
+              {campusName[user.studentNo[2]]} 소속
+            </Text>
+          </View>
+          {/* 이메일 */}
+          <View style={UserDetailStyle.inputContainer}>
+            <Text style={UserDetailStyle.inputLabel}>{user.email}</Text>
           </View>
           {/* 트랙 선택 */}
           <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>소속 트랙: </Text>
-            {!showBtn && <Text>{trackName[track]} </Text>}
-            {showBtn && (
-              <View style={{ flexDirection: "row" }}>
-                {trackName.map((tra, idx) => {
-                  return (
-                    <TouchableOpacity
-                      key={`tra-${idx}`}
-                      style={[
-                        styles.button,
-                        { margin: 1 },
-                        idx === track ? { backgroundColor: "pink" } : {},
-                      ]}
-                      onPress={() => setTrack(idx)}
-                    >
-                      <Text>{tra}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            )}
+            <Text>소속 트랙 </Text>
+            {!showTrackBtn && <Text>{trackName[track]} </Text>}
           </View>
+          {showTrackBtn && (
+            <View style={{ flexDirection: "row" }}>
+              {trackName.map((tra, idx) => {
+                return (
+                  <TouchableOpacity
+                    key={`tra-${idx}`}
+                    style={[
+                      UserDetailStyle.btn,
+                      idx === track ? { backgroundColor: "pink" } : {},
+                    ]}
+                    onPress={() => setTrack(idx)}
+                  >
+                    <Text style={{ textAlign: "center" }}>{tra}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
         </View>
         {/* 수정 활성화 버튼 */}
-        {!showBtn && (
+        {!showTrackBtn && (
           <TouchableOpacity
             style={{ marginLeft: 300, flexDirection: "row" }}
             onPress={() => {
-              setShowBtn(!showBtn);
+              setshowTrackBtn(!showTrackBtn);
             }}
           >
             <FontAwesome name="pencil-square-o" size={24} color="black" />
@@ -88,8 +93,8 @@ export default function UserDetail() {
           </TouchableOpacity>
         )}
         {/* 수정 버튼과 취소버튼 */}
-        {showBtn && (
-          <View style={{ marginLeft: 300, flexDirection: "row" }}>
+        {showTrackBtn && (
+          <View style={{ marginLeft: 250, flexDirection: "row" }}>
             {/* 수정버튼 */}
             <TouchableOpacity
               style={[styles.button, { margin: 3 }]}
@@ -115,7 +120,7 @@ export default function UserDetail() {
                       payload: { track: track },
                     });
                     dispatch({ type: "Account/save" });
-                    setShowBtn(!showBtn);
+                    setshowTrackBtn(!showTrackBtn);
                   })
                   .catch((err) => {
                     console.log(err);
@@ -128,7 +133,7 @@ export default function UserDetail() {
             <TouchableOpacity
               style={[styles.button, { margin: 3 }]}
               onPress={() => {
-                setShowBtn(!showBtn);
+                setshowTrackBtn(!showTrackBtn);
                 // 기존 입력 값들을 원래대로 취소 후 다시 할 때 미입력분이 이전것으로 입력되는 것 방지
                 setTrack(user.track);
               }}
@@ -141,3 +146,50 @@ export default function UserDetail() {
     </View>
   );
 }
+
+const UserDetailStyle = StyleSheet.create({
+  back: {
+    alignContent: "center",
+    margin: 10,
+    backgroundColor: "#A8D1FF",
+    width: "95%",
+    height: "26%",
+    borderRadius: 2,
+  },
+  container: {
+    alignContent: "center",
+    borderRadius: 2,
+    height: "100%",
+    backgroundColor: "#E5F3F6",
+  },
+
+  content: {
+    height: "auto",
+    backgroundColor: "#E5F3F6",
+    flexDirection: "row",
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputLabel: {
+    flex: 2,
+    margin: 5,
+  },
+
+  input: { flexDirection: "row", margin: 5, height: 35, flex: 6 },
+
+  btn: {
+    padding: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#EDEDED",
+    borderRadius: 5,
+    height: "auto",
+    width: "auto",
+    flex: 1,
+    justifyContent: "center",
+  },
+});

@@ -22,47 +22,72 @@ export default function Aggrement({ navigation }) {
       {/* 개인정보 이용동의서 내용 */}
       <View style={AggrementStyles.container}>
         <ScrollView>
-          <Text style={{ fontWeight: "bold" }}>
+          <Text style={AggrementStyles.textTitle}>
             개인정보 수집 및 이용에 대한 안내
           </Text>
-          <Text>1. 수집하는 개인정보의 항목 및 수집 방법</Text>
-          <Text>
-            가. 수집하는 개인정보의 항목 SSamyDo!(이하 '쌔미두')는 서비스 제공을
-            위해 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다.{" "}
-            {"\n"}- 필수항목: EduSSAFY 아이디 및 비밀번호, MatterMost 이메일
-            주소 및 비밀번호 서비스 이용과정에서 아래와 같은 정보들이 추가로
-            수집될 수 있습니다.{"\n"} - EduSSAFY 기반 출석 체크 정보, 교육생의
-            트랙 정보 등
+          <Text style={AggrementStyles.textSubTitle}>
+            1. 수집하는 개인정보의 항목 및 수집 방법
           </Text>
-          <Text>2. 개인정보의 수집 및 이용 목적</Text>
-          <Text>
-            ① SSamyDo!(이하 '쌔미두')는 다음의 목적을 위하여 개인정보를
-            처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는
-            이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보 보호법
-            제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
+          <Text style={AggrementStyles.textMiniTitle}>
+            가. 수집하는 개인정보의 항목
           </Text>
-          <Text>가. SSAFY 교육생을 SSAFY 공지 및 일정 제공</Text>
-          <Text>
-            1) EduSSAFY 출석 여부 확인 및 MatterMost API 활용 등 어플리케이션
-            서비스 제공을 목적으로 개인정보를 처리합니다.
+          <Text style={AggrementStyles.text}>
+            SSamyDo!(이하 '쌔미두')는 서비스 제공을 위해 아래와 같은 최소한의
+            개인정보를 필수항목으로 수집하고 있습니다. {"\n"}- 필수항목:
+            EduSSAFY 아이디 및 비밀번호, MatterMost 이메일 주소 및 비밀번호
+            서비스 이용과정에서 아래와 같은 정보들이 추가로 수집될 수 있습니다.
+            {"\n"}- EduSSAFY 기반 출석 체크 정보, 교육생의 트랙 정보 등{"\n"}
           </Text>
-          <Text>
-            2. 개인정보의 수집 및 이용목적 가. 서비스 제공에 관한 계약 이행
-            SSAFY 전체 공지 및 교육생이 속한 트랙별 개별 공지, EduSSAFY 출석
-            상태 알림, 설문 등을 위한 투두 리스트 제공을 위한 본인호가인 3.
-            개인정보의 보유 및 이용기간 교육생의 개인정보는 개인정보의 수집 및
-            이용목적이 달성되면 지체 없이 파기 됩니다. 교육생의 개인 정보는 교육
-            기간 내에 퇴소하거나 1년의 교육과정 후 수료할 경우 별도의 보관 기간
-            없이 바로 삭제 도비니다. 또한, 교육생이 계정 삭제를 원할 경우에도
-            즉시 파기 됩니다. 4. 개인정보 파기절차 및 방법 교육생이 입력한
-            정보는 공지 및 출석 상태 업데이트를 위해 DB에 암호화하여 저장되며,
-            목적이 달성 되었거나 퇴소 또는 수료, 교육생의 요청에 따라 즉시
-            DB에서 삭제 됩니다. 5. 개인정보의 기술적/관리적 보호 대책 쌔미두는
-            교육생들의 개인정보를 처맇마에 있어 개인정보가 분실, 도난, 유출,
-            변조 또는 훼손되지 않도록 안전성 확보를 위하여 다음과 같은
-            기술적/관리적 대책을 강구하고 있습니다. 가. 비밀번호 암호화 위
-            개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으나, 동의를
-            거부할 경우 서비스 이용이 제한됩니다.
+          <Text style={AggrementStyles.textMiniTitle}>
+            나. 개인정보 수집방법
+          </Text>
+          <Text style={AggrementStyles.text}>
+            쌔미두는 다음과 같은 방법으로 개인정보를 수집합니다.{"\n"}-
+            어플리케이션 내 최초 인증 화면, 재인증 화면
+          </Text>
+          <Text style={AggrementStyles.textSubTitle}>
+            2. 개인정보의 수집 및 이용 목적
+          </Text>
+          <Text style={AggrementStyles.text}>
+            {" "}
+            '쌔미두'는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는
+            개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이
+            변경되는 경우에는 개인정보 보호법 제18조에 따라 별도의 동의를 받는
+            등 필요한 조치를 이행할 예정입니다.{"\n"}
+            가. SSAFY 교육생의 EduSSAFY 공지 및 일정 제공{"\n"}- EduSSAFY 사이트
+            내 출석과 설문 응답 여부 확인을 위한 크롤링을 목적으로 개인정보를
+            사용합니다.{"\n"}나. SSAFY 교육생의 MatterMost 공지 및 일정 제공
+            {"\n"}- MatterMost API 활용 등 어플리케이션 서비스 제공을 목적으로
+            개인정보를 사용합니다.
+          </Text>
+          <Text style={AggrementStyles.textSubTitle}>
+            3. 개인정보의 보유 및 이용기간
+          </Text>
+          <Text style={AggrementStyles.text}>
+            {" "}
+            교육생의 개인정보는 개인정보의 수집 및 이용목적이 달성되면 지체 없이
+            파기 됩니다. 교육생의 개인 정보는 교육 기간 내에 퇴소하거나 1년의
+            교육과정 후 수료할 경우 별도의 보관 기간 없이 바로 삭제 됩니다.
+            또한, 교육생이 계정 삭제를 원할 경우에도 즉시 파기 됩니다.
+          </Text>
+          <Text style={AggrementStyles.textSubTitle}>
+            4. 개인정보 파기절차 및 방법
+          </Text>
+          <Text style={AggrementStyles.text}>
+            교육생이 입력한 정보는 공지 및 출석 상태 업데이트를 위해 DB에
+            암호화하여 저장되며, 목적이 달성 되었거나 교육생의 요청에 따라 즉시
+            DB에서 삭제 됩니다.
+          </Text>
+          <Text style={AggrementStyles.textSubTitle}>
+            5. 개인정보의 기술적/관리적 보호 대책
+          </Text>
+          <Text style={AggrementStyles.text}>
+            ‘쌔미두’는 교육생들의 개인정보를 처리함에 있어 개인정보가 분실,
+            도난, 유출, 변조 또는 훼손되지 않도록 안전성 확보를 위하여
+            EduSSAFY와 MattaMost 계정 관련 정보는 데이터베이스에 암호화하여
+            저장하고 있습니다.{"\n"}
+            {"\n"}위 개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으나,
+            동의를 거부할 경우 서비스 이용이 제한됩니다.
           </Text>
         </ScrollView>
       </View>
@@ -123,4 +148,19 @@ const AggrementStyles = StyleSheet.create({
     backgroundColor: "#E5F3F6",
     margin: 10,
   },
+
+  textTitle: {
+    fontWeight: "bold",
+    fontSize: 20,
+    marginVertical: 10,
+    textAlign: "center",
+  },
+  textSubTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginVertical: 8,
+    marginLeft: 8,
+  },
+  textMiniTitle: { fontSize: 15, marginVertical: 5, marginLeft: 5 },
+  text: { fontSize: 14, marginVertical: 3, marginLeft: 3 },
 });
