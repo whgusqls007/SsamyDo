@@ -21,7 +21,6 @@ export default Account = createSlice({
     // 시작시 값들 불러오기 + 값이 있으므로 이제는 재인증으로만 Verifiaction을 가게 변경
     import(state, action) {
       state[0] = action.payload;
-      state[1] = "재인증";
       state[2] = { Authorization: `Bearer ${action.payload.token}` };
     },
     // 유저 정보 저장 사용해서 추가
@@ -31,6 +30,10 @@ export default Account = createSlice({
     // userDetail 업데이트
     update(state, action) {
       state[0] = { ...state[0], ...action.payload };
+    },
+    // 탈퇴, 재인증, 인증 상태 변경
+    mode(state, action) {
+      state[1] = action.mode;
     },
   },
 });
