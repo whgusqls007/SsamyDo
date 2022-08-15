@@ -8,8 +8,8 @@ export default function MyPage() {
   return (
     <View>
       <UserDetail />
-      <Alarm />
       <Setting />
+      <Alarm />
     </View>
   );
 }

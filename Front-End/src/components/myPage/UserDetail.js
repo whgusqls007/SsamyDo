@@ -96,21 +96,30 @@ export default function UserDetail() {
               onPress={() => {
                 const credentials = {
                   gi: Number(user.studentNo[1]),
-                  track: track,
+                  trackName: inputTrackName[track],
                 };
+                console.log(credentials);
+                console.log(drf.user.track());
+                console.log(token);
                 axios({
-                  url: drf.user.track,
-                  data: credentials,
+                  method: "post",
+                  url: drf.user.track(),
+                  body: credentials,
                   headers: token,
                   // 요청이 성공 한다면
-                }).then((res) => {
-                  dispatch({
-                    type: "Account/update",
-                    payload: { track: track },
+                })
+                  .then((res) => {
+                    console.log(res);
+                    dispatch({
+                      type: "Account/update",
+                      payload: { track: track },
+                    });
+                    dispatch({ type: "Account/save" });
+                    setShowBtn(!showBtn);
+                  })
+                  .catch((err) => {
+                    console.log(err);
                   });
-                  dispatch({ type: "Account/save" });
-                  setShowBtn(!showBtn);
-                });
               }}
             >
               <Text>변경</Text>

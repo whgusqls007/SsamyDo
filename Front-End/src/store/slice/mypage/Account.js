@@ -22,7 +22,7 @@ export default Account = createSlice({
     import(state, action) {
       state[0] = action.payload;
       state[1] = "재인증";
-      state[2] = { Token: action.payload.token };
+      state[2] = { Authorization: `Bearer ${action.payload.token}` };
     },
     // 유저 정보 저장 사용해서 추가
     save(state) {
