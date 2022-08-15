@@ -3,9 +3,14 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "../../../app.module.css";
-import { TextInput } from "react-native-gesture-handler";
+import axios from "axios";
+import drf from "../../api/drf";
 
 export default function UserDetail() {
+  // 함께 첨부할 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   const dispatch = useDispatch();
   //기본 정보
   const user = useSelector((state) => {
@@ -21,7 +26,7 @@ export default function UserDetail() {
     "임베디드",
     "모바일",
   ];
-
+  const inputTrackName = ["Python", "Javab", "Java", "Embeded", "Mobile"];
   // 트랙만 변경
   const [track, setTrack] = useState(user.track);
 
@@ -89,13 +94,32 @@ export default function UserDetail() {
             <TouchableOpacity
               style={[styles.button, { margin: 3 }]}
               onPress={() => {
-                dispatch({
-                  type: "Account/update",
-                  payload: {
-                    track: track,
-                  },
-                });
-                setShowBtn(!showBtn);
+                const credentials = {
+                  gi: Number(user.studentNo[1]),
+                  trackName: inputTrackName[track],
+                };
+                console.log(credentials);
+                console.log(drf.user.track());
+                console.log(token);
+                axios({
+                  method: "post",
+                  url: drf.user.track(),
+                  body: credentials,
+                  headers: token,
+                  // 요청이 성공 한다면
+                })
+                  .then((res) => {
+                    console.log(res);
+                    dispatch({
+                      type: "Account/update",
+                      payload: { track: track },
+                    });
+                    dispatch({ type: "Account/save" });
+                    setShowBtn(!showBtn);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
               }}
             >
               <Text>변경</Text>
