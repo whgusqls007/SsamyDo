@@ -29,7 +29,7 @@ export default function Main({ navigation }) {
   return (
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
-        <Text style={mainStyles.helloText}>김싸피님, 안녕하세요!</Text>
+        <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
       </View>
       <TodoList navigation={navigation} />
       <TimeLine />
