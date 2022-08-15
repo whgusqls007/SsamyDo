@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  Image,
 } from "react-native";
 import styles from "../../../app.module.css";
 import drf from "../../api/drf";
@@ -26,12 +27,12 @@ export default function Verification({ navigation }) {
   const [studentNo, setStudentNo] = useState(user.studentNo);
   const trackName = [
     "파이썬",
-    "자바(비전공)",
-    "자바(전공)",
+    "자바\n(비전공)",
+    "자바\n(전공)",
     "임베디드",
     "모바일",
   ];
-  // 각각 siginin에 입력형식, campus 이름 내용(실제 input 제출용)
+  // 각각 siginin에 입력 형식, campus 이름 내용(실제 input 제출용)
   const inputTrackName = ["Python", "Javab", "Java", "Embeded", "Mobile"];
   const [number, setNumber] = useState(user.number);
   const [track, setTrack] = useState(user.track);
@@ -80,8 +81,19 @@ export default function Verification({ navigation }) {
 
   return (
     <View style={VerificationStyles.back}>
+      <Image
+        style={{ position: "absolute" }}
+        source={{
+          uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/1912574a6cbf63857b5348af2b783be6/logo.png",
+        }}
+      />
       <TouchableOpacity style={VerificationStyles.ssamy}>
-        <Text>마크?</Text>
+        <Image
+          style={{ position: "absolute" }}
+          source={{
+            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/1912574a6cbf63857b5348af2b783be6/logo.png",
+          }}
+        />
       </TouchableOpacity>
       <View style={VerificationStyles.container}>
         {/* 학번 입력 */}
@@ -91,8 +103,8 @@ export default function Verification({ navigation }) {
             keyboardType="numeric"
             maxLength={7}
             value={studentNo}
-            placeholder="SSAFY 학번을 입력해주세요"
-            placeholderTextColor="#6986A8"
+            placeholder="SSAFY 학번"
+            placeholderTextColor="#111111"
             onChangeText={(text) => {
               setStudentNo(text);
               if (studentNo[1]) {
@@ -109,8 +121,8 @@ export default function Verification({ navigation }) {
         {btnName === "인증" ? (
           <TextInput
             style={VerificationStyles.input}
-            placeholder="이름을 입력해주세요"
-            placeholderTextColor="#6986A8"
+            placeholder="교육생 이름"
+            placeholderTextColor="#111111"
             onChangeText={(text) => {
               setName(text);
             }}
@@ -122,8 +134,8 @@ export default function Verification({ navigation }) {
         {btnName === "인증" ? (
           <TextInput
             style={VerificationStyles.input}
-            placeholder=" edu ssafy와 MattaMost의 ID를 입력해 주세요"
-            placeholderTextColor="#6986A8"
+            placeholder="Edu SSAFY 로그인 ID"
+            placeholderTextColor="#111111"
             onChangeText={(text) => {
               setEmail(text);
               emailValid(text);
@@ -136,20 +148,20 @@ export default function Verification({ navigation }) {
         <TextInput
           style={VerificationStyles.input}
           secureTextEntry={true}
-          placeholder=" edu ssafy 패스워드를 입력해 주세요"
-          placeholderTextColor="#6986A8"
+          placeholder="Edu SSAFY 비밀번호"
+          placeholderTextColor="#111111"
           onChangeText={(text) => setEduPassword(text)}
         />
         {/* MattaMost 비밀번호 */}
         <TextInput
           style={VerificationStyles.input}
           secureTextEntry={true}
-          placeholder="MattaMost의 패스워드를 입력해 주세요"
-          placeholderTextColor="#6986A8"
+          placeholder="MattaMost 비밀번호"
+          placeholderTextColor="#111111"
           onChangeText={(text) => setMMPassword(text)}
         />
         {/* 트랙 선택 */}
-        <View style={{ flexDirection: "row", padding: 5 }}>
+        <View style={[VerificationStyles.btnContainer]}>
           <View
             style={{ flexDirection: "row", flex: 1, alignItems: "stretch" }}
           >
@@ -159,12 +171,12 @@ export default function Verification({ navigation }) {
                   <TouchableOpacity
                     key={`tra-${idx}`}
                     style={[
-                      VerificationStyles.btn,
-                      idx + 1 === track ? { backgroundColor: "pink" } : {},
+                      VerificationStyles.trackBtn,
+                      idx + 1 === track ? { backgroundColor: "#a8d1ff" } : {},
                     ]}
                     onPress={() => setTrack(idx + 1)}
                   >
-                    <Text>{tra}</Text>
+                    <Text style={{ textAlign: "center" }}>{tra}</Text>
                   </TouchableOpacity>
                 );
               })
@@ -182,80 +194,73 @@ export default function Verification({ navigation }) {
             </Text>
           </View>
         )}
-        {/* 인증버튼(모두 입력된 경우 보냄) */}
-        <TouchableOpacity
-          style={[
-            styles.button,
-            { width: 50, marginLeft: 150, marginVertical: 20 },
-          ]}
-          onPress={() => {
-            // 누락분이 있는 경우 error 텍스트
-            if (!valid) {
-              setInputError("Edu SSAFY ID를 확인하세요");
-            } else if (!eduPassword) {
-              setInputError("Edu SSAFY 비밀번호를 입력해주세요");
-            } else if (!name) {
-              setInputError("이름을 입력해주세요");
-            } else if (!MMPassword) {
-              setInputError("MattaMost 비밀번호를 입력해주세요");
-              //학번이 없거나, 캠퍼스 번호가 5번보다 크거나 길이가 7이 아닌 경우
-            } else if (
-              !studentNo ||
-              studentNo[2] > 5 ||
-              studentNo.length !== 7
-            ) {
-              setInputError("학번을 확인해주세요");
-              // track 은 인덱스 +1 시킴
-            } else if (track === "") {
-              setInputError("트랙을 선택해주세요");
-            } else {
-              if (btnName === "재인증") {
-                credentials = {
-                  username: email,
-                  password: MMPassword,
-                  eduPw: eduPassword,
-                };
-                login(credentials);
-              } else {
-                let credentials = {
-                  id: studentNo,
-                  username: email,
-                  password: MMPassword,
-                  eduPw: eduPassword,
-                  gi: number,
-                  trackName: inputTrackName[track - 1],
-                };
-                axios({
-                  method: "post",
-                  url: drf.user.signup(),
-                  data: credentials,
-                })
-                  .then((res) => {
-                    // 회원가입에 성공한 경우(토큰 저장 추가 필요)
-                    if (
-                      res.data.authorityDtoSet[0].authorityName === "ROLE_USER"
-                    );
-                    {
-                      // 토큰및 유저 email 및 학번 저장
-                      credentials = {
-                        username: email,
-                        password: MMPassword,
-                        eduPw: eduPassword,
-                      };
-                      // 로그인함수
-                      login(credentials);
-                    }
-                  })
-                  .catch((err) => {
-                    setInputError("입력 내용을 다시 확인해주세요");
-                  });
-              }
-            }
-          }}
-        >
-          <Text>{btnName}</Text>
-        </TouchableOpacity>
       </View>
+      {/* 인증버튼(모두 입력된 경우 보냄) */}
+      <TouchableOpacity
+        style={VerificationStyles.submitBtn}
+        onPress={() => {
+          // 누락분이 있는 경우 error 텍스트
+          if (!valid) {
+            setInputError("Edu SSAFY ID를 확인하세요");
+          } else if (!eduPassword) {
+            setInputError("Edu SSAFY 비밀번호를 입력해주세요");
+          } else if (!name) {
+            setInputError("이름을 입력해주세요");
+          } else if (!MMPassword) {
+            setInputError("MattaMost 비밀번호를 입력해주세요");
+            //학번이 없거나, 캠퍼스 번호가 5번보다 크거나 길이가 7이 아닌 경우
+          } else if (!studentNo || studentNo[2] > 5 || studentNo.length !== 7) {
+            setInputError("학번을 확인해주세요");
+            // track 은 인덱스 +1 시킴
+          } else if (track === "") {
+            setInputError("트랙을 선택해주세요");
+          } else {
+            if (btnName === "재인증") {
+              credentials = {
+                username: email,
+                password: MMPassword,
+                eduPw: eduPassword,
+              };
+              login(credentials);
+            } else {
+              let credentials = {
+                id: studentNo,
+                username: email,
+                password: MMPassword,
+                eduPw: eduPassword,
+                gi: number,
+                trackName: inputTrackName[track - 1],
+              };
+              axios({
+                method: "post",
+                url: drf.user.signup(),
+                data: credentials,
+              })
+                .then((res) => {
+                  // 회원가입에 성공한 경우(토큰 저장 추가 필요)
+                  if (
+                    res.data.authorityDtoSet[0].authorityName === "ROLE_USER"
+                  );
+                  {
+                    // 토큰및 유저 email 및 학번 저장
+                    credentials = {
+                      username: email,
+                      password: MMPassword,
+                      eduPw: eduPassword,
+                    };
+                    // 로그인함수
+                    login(credentials);
+                  }
+                })
+                .catch((err) => {
+                  setInputError("입력 내용을 다시 확인해주세요");
+                });
+            }
+          }
+        }}
+      >
+        <Text style={VerificationStyles.submitText}>{btnName}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -263,9 +268,11 @@ export default function Verification({ navigation }) {
 const VerificationStyles = StyleSheet.create({
   // 전체 화면 스타일
   back: {
-    backgroundColor: "#EDEDED",
+    flex: 1,
+    backgroundColor: "#ededed",
     justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     margin: 5,
   },
   ssamy: {
@@ -273,26 +280,57 @@ const VerificationStyles = StyleSheet.create({
     height: 180,
     borderWidth: 1,
     width: "50%",
-    backgroundColor: "#E5F3F6",
   },
   container: {
+    flexDirection: "column",
     margin: 10,
-    borderRadius: 5,
-    width: "80%",
-    backgroundColor: "#E5F3F6",
+    padding: 15,
+    width: "90%",
+    borderRadius: 10,
+    alignContent: "center",
+    backgroundColor: "#ffffff",
+    borderWidth: 2,
+    borderColor: "#ededed",
   },
-  input: { flexDirection: "row", margin: 5, height: 35 },
-  btn: {
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 10,
-    marginHorizontal: 3,
-    backgroundColor: "#FFFFFF",
+  input: {
+    flexDirection: "row",
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    height: 35,
+    width: "100%",
+    borderBottomWidth: 1.5,
+    borderBottomColor: "#a8d1ff",
+    borderRadius: 7,
+  },
+  btnContainer: {
+    paddingTop: 15,
+    flexDirection: "row",
+  },
+  trackBtn: {
+    flex: 4,
+    flexBasis: "auto",
+    marginHorizontal: 4,
+    paddingVertical: 4,
+    backgroundColor: "#ededed",
     borderRadius: 5,
     height: "auto",
     width: "auto",
     alignItems: "center",
-    flex: 4,
-    flexBasis: "auto",
+    justifyContent: "center",
+  },
+  submitBtn: {
+    flexDirection: "row",
+    width: "90%",
+    height: 45,
+    backgroundColor: "#5ba8ff",
+    borderRadius: 10,
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  submitText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });

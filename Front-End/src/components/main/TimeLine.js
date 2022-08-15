@@ -244,57 +244,10 @@ export default function TimeLine() {
   return (
     <View style={styles.timelineContainer}>
       {/* 요일 버튼 */}
-      {/* <View style={timelineStyles.dayContainer}>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(0)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[0].substring(6, 8)}
-            {"\n"}월
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(1)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[1].substring(6, 8)}
-            {"\n"}화
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(2)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[2].substring(6, 8)}
-            {"\n"}수
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(3)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[3].substring(6, 8)}
-            {"\n"}목
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(4)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[4].substring(6, 8)}
-            {"\n"}금
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-      {/* 요일버튼 테스트 */}
       <View style={timelineStyles.dayContainer}>
-        {dayBtns.days.map((item, key) => (
+        {dayBtns.days.map((item) => (
           <TouchableOpacity
+            key={item.id}
             style={[
               timelineStyles.dayButton,
               { backgroundColor: item.backgroundcolor },
