@@ -4,6 +4,7 @@ import { Linking } from "react-native";
 import { useCallback } from "react";
 import { BackHandler } from "react-native";
 // notice id로 해당 notice만 뽑아오기
+import { ScrollView } from "react-native";
 
 const handlePressBack = () => {
   if (navigation?.canGoBack()) {
@@ -19,34 +20,88 @@ export default function NoticeDetail({ navigation, route }) {
     const destinationURL = 'https://edu.ssafy.com/edu/board/notice/list.do' 
     if (await Linking.canOpenURL(destinationURL)) await Linking.openURL(destinationURL)
   }, [])
-  return (
-    <View style={styles.center}>
-      {/* 전달받은 id 잘 찍히는지 확인용으로 넣어둠 */}
-      {/* <Text>{route.params.id}</Text> */}
-      <Text style={styles.noticedetail}>notice.{route.params.id}번</Text>
-      <Text>notice.</Text>
-      <TouchableOpacity onPress={goEdussafy} style={styles.button}>
-        <Text>에듀싸피로 이동</Text>
-      </TouchableOpacity>
 
+
+  return (
+    <View style={styles.detailcontainer}>
+      <Text style={styles.titlecontainer}>Ssamy Says</Text>
+      <View style={styles.detailbox}>
+        <Text style={styles.detailtitle}>title</Text>
+        <ScrollView>
+          <Text style={styles.detaildescription}>description</Text>
+        </ScrollView>
+      </View> 
+
+      <View style={styles.detailfooter}>
+
+        <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
+          <Text >에듀싸피로 이동</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.pop()}>
+          <Text>돌아가기 ⬅ </Text>
+        </TouchableOpacity>
+    </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  center: {
+  detailcontainer:{
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#fff"
   },
-  noticedetail : { 
-    marginTop: 10,
+  titlecontainer: { 
+    paddingTop: 30,
+    paddingLeft: 20,
+    paddingBottom: 15,
+    textAlign: 'left',
+    backgroundColor: "#5ba8ff",
     marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#eaeaea',
+    fontSize: 30,
+    fontWeight: "bold",
   },
-  button : {
-    backgroundColor: '#cc33ff'
+  detailbox : {
+    margin: 20,
+    flex: 0.9,
+    backgroundColor: "#ededed",
+    borderRadius: 20,
+    padding: 20,
+  },
+  detailtitle : {
+    fontSize: 30,
+    textAlign: "center",
+    margin: 15
+  },
+  detaildescription : {
+    fontSize: 15,
+    textAlign: "center",
+    margin: 15,
+  },
+
+  detailfooter : {
+    flex: 0.1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginBottom: 30,
+    // marginHorizontal: 30,
+  },
+  
+  buttonedussafy : {
+    padding: 10,
+    backgroundColor: "#5ba8ff",
+    borderRadius: 15,
+    marginBottom: 20,
+    marginHorizontal: 30,
+    textAlign: "center"
+  },
+
+  buttonnotice : {
+    padding: 10,
+    backgroundColor: "#ffe34f",
+    borderRadius: 15,
+    marginBottom: 20,
+    marginHorizontal: 30,
+    textAlign: "center"
   }
 });
