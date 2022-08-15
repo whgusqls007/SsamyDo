@@ -115,7 +115,8 @@ export default function MakeSchedule({ navigation }) {
     // 임시 변수 현재일(currentDate)은 선택한 날 or 기존 date
     let currentDate = selectedDate || date;
     const timeSet = () => {
-      if (Platform.OS === "android") {
+      // Platform이 없으면 계속 실행됨
+      if (Platform.OS === "android"){
         setShow(false);
         // for iOS, add a button that closes the picker
       }
