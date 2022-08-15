@@ -1,5 +1,5 @@
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import {
@@ -54,6 +54,20 @@ LocaleConfig.defaultLocale = "ssamydo";
 export default function CustomCalendar() {
   const dispatch = useDispatch();
   // 시작시 해당 일자로 리스트 나오는 설정
+  // 테마설정을 위한 키
+  const [key, setKey] = useState("첫");
+  // 테마
+  const theme = {
+    backgroundColor: "#E5F3F6",
+    "stylesheet.calendar.header": {
+      dayTextAtIndex0: {
+        color: "red",
+      },
+      dayTextAtIndex6: {
+        color: "blue",
+      },
+    },
+  };
   useEffect(() => {
     const date = new Date();
     dispatch({
@@ -92,7 +106,6 @@ export default function CustomCalendar() {
     <View>
       <Calendar
         onDayPress={(day) => {
-          console.log(check);
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행
@@ -114,9 +127,20 @@ export default function CustomCalendar() {
             });
           }
         }}
+        style={[
+          CustomCalendarStyles.style,
+          {
+            "stylesheet.calendar.header": {
+              dayTextAtIndex0: {
+                color: "red",
+              },
+              dayTextAtIndex6: {
+                color: "blue",
+              },
+            },
+          },
+        ]}
         hideExtraDays={true}
-        // 테마
-        theme={theme}
         // 일정표시 기능
         markingType={"multi-dot"}
         markedDates={markDate}
@@ -125,14 +149,11 @@ export default function CustomCalendar() {
   );
 }
 
-// 안먹히는 중
-const theme = {
-  "stylesheet.calendar.header": {
-    dayTextAtIndex0: {
-      color: "red",
-    },
-    dayTextAtIndex6: {
-      color: "blue",
-    },
+const CustomCalendarStyles = StyleSheet.create({
+  style: {
+    margin: 5,
+    width: 390,
+    height: 320,
+    borderRadius: 5,
   },
-};
+});
