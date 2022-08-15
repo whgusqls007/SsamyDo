@@ -2,9 +2,9 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import TodoItem from "./TodoItem";
 import styles from "../../../app.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getTodo } from "../../store/slice/main/MainTodo";
+import { useEffect, useState } from "react";
 import axios from "axios";
+
 
 // TypeError ; useEffect is not a function
 
@@ -35,6 +35,11 @@ export default function TodoList({ navigation }) {
 
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
+  const [todoList, setTodoList] = useState();
+
+  const onFetchTodo = (res) => {
+    setTodoList(JSON.stringify(res));
+  }
 
   // 오늘날짜 
   // function ymdFormat(oriDate = new Date()) {
@@ -47,48 +52,61 @@ export default function TodoList({ navigation }) {
 
   // console.log(ymdFormat())
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: baseURL,
-    })
-      .then((response) => {
-        console.log("Todo Axios 요청 성공!");
-        // console.log(`받은 데이터 ${response}`);
-        dispatch({type: "MainTodo/import", payload: response.data})
-      })
-      .catch((error) => {
-        // console.log(error.response);
-        console.log("todo axios 실패함")
-      });
-  }, []);
+  // 이전에 쓰던 axios 
 
-
-
-  // 위의 dispatch(fulfilled) 안먹으면 ,,, getTodo 쓰세요
-  //   dispatch(getTodo());
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: baseURL,
+  //   })
+  //     .then((response) => {
+  //       console.log("Todo Axios 요청 성공!");
+  //       dispatch({type: "MainTodo/import", payload: response.data})
+  //     })
+  //     .catch((error) => {
+  //       console.log("todo axios 실패함")
+  //     });
   // }, []);
 
+  useEffect(()=> {
+    async function fetchTodo(){
+      const response = await axios.get("http://i7e204.p.ssafy.io:8080/api/todo/todolist/");
+      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
+      return response.data
+
+    }
+    fetchTodo().then((res) => {
+      // console.log(`넘어온 res ${res}`)
+      onFetchTodo(res);
+      dispatch({type: "MainTodo/import", payload: res.data});
+    });
+    // fetchTodo().catch((error) => {
+    //   console.log("todo axios 실패함")
+    // });
+  }, []);
+
   // console.log(todoList)
-  let todoList = useSelector((state) => state.MainTodo);
+  // let todoList = useSelector((state) => state.MainTodo);
+  // todoList = JSON.stringify(todoList)
+  // console.log(`todoList 순서 체크용`)
   // console.log(todoList)
-  todoList = JSON.stringify(todoList)
-  console.log(`todoList 순서 체크용`)
+
+  // console.log(`usestate todolist ${todoList}`)
+  
 
   return (
     <View style={styles.todoContainer}>
       <Text>오늘의 설문</Text>
 
-      {/* 주석처리함 ,, status 진행중인 애들만 item으로 넘긴다 */}
-      {/* <ScrollView>
-        {todoList.filter(item => item.status == '진행중').map((item) => (
-        <TodoItem item={item} key={item.id} navigation={navigation}/>)
-      ))} */}
       <ScrollView>
 
         {DATA && (DATA.map((item) => (
         <TodoItem item={item} key={item.id} navigation={navigation}/>)
-      ))} 
+        ))} 
+
+        {/* {(todoList.data.map((item)=>(
+          <TodoItem item={item} key={item.id} navigation={navigation} />)
+        ))} */}
 
       </ScrollView>
     </View>
