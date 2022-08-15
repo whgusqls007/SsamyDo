@@ -23,6 +23,7 @@ const TodoStatus = createSlice({
     }, 
     // 완료한 투두 생성 
     addstatus: (state, action) => {
+      // console.log(`state ------------ ${state[0]}`)
       state[0].push(action.payload);
     },
 
