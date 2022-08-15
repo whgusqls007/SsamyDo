@@ -90,7 +90,7 @@ export default function NoticeList({ navigation, select }) {
 const styles = StyleSheet.create({
   noticelistcontainer: {
     flexDirection: 'row',    
-    backgroundColor: "#A8D1FF",
+    backgroundColor: "#5ba8ff",
     paddingTop: 30,
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
