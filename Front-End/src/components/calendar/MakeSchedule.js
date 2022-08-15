@@ -116,7 +116,9 @@ export default function MakeSchedule({ navigation }) {
     let currentDate = selectedDate || date;
     const timeSet = () => {
       // Platform이 없으면 계속 실행됨
-      setShow(Platform.OS === "ios");
+      if (Platform.OS === "android"){
+        setShow(false);
+      }
       // date를 현재일(currentDate)로 변경
       setDate(currentDate);
     };
