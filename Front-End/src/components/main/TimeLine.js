@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -8,11 +7,9 @@ import {
   Modal,
   Image,
   Pressable,
-  Touchable,
 } from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
-// import weeklyData from "../../store/example/weeklyData2.json";
 import axios from "axios";
 import LunchMenu from "./LunchMenu";
 
@@ -59,6 +56,7 @@ export default function TimeLine() {
     for (let date of thisWeek) {
       result[date] = [];
     }
+
     // 같은 날짜끼리 묶기
     for (let i = 0; i < weekly.data.length; i++) {
       let daily = weekly.data[i];
@@ -72,10 +70,17 @@ export default function TimeLine() {
         title: "점심시간",
         time: "12:20",
       };
-      // 오전에 시작해서 오전에 끝나는 일정
+      // 오전에 시작해서 12시 전에 끝나는 일정
       if (startTime < 12 && endTime <= 12) {
         daily.time = daily.time.substring(0, 5);
         result[daily.date].push(daily);
+        // 오전에 시작해서 딱 점심시간에 끝나는 일정 & 대면
+        //
+        if (endTime == 12 && daily.date === ymdFormat(findMonday())) {
+          result[daily.date].push(lunch2);
+        } else {
+          result[daily.date].push(lunch);
+        }
       }
       // 오전에 시작해서 오후에 끝나는 일정 => 사이에 점심시간 추가
       else if (startTime < 12 && endTime > 12) {
@@ -86,26 +91,22 @@ export default function TimeLine() {
         if (daily.date === ymdFormat(findMonday())) {
           // 점심 이전
           beforeLunch.time = beforeLunch.time.substring(0, 5);
-          // beforeLunch.time = `${startTime}:00~12:20`;
           result[daily.date].push(beforeLunch);
           // 점심
           result[daily.date].push(lunch2);
           // 점심 이후
           afterLunch.time = "13:30";
-          // afterLunch.time = `13:30~${endTime}:00`;
           result[daily.date].push(afterLunch);
         }
         // 비대면하는 날 => 점심시간 12:00~13:00
         else {
           // 점심 이전
           beforeLunch.time = beforeLunch.time.substring(0, 5);
-          // beforeLunch.time = `${startTime}:00~12:00`;
           result[daily.date].push(beforeLunch);
           // 점심
           result[daily.date].push(lunch);
           // 점심 이후
           afterLunch.time = "13:00";
-          // afterLunch.time = `13:00~${endTime}:00`;
           result[daily.date].push(afterLunch);
         }
       } else {
@@ -145,14 +146,13 @@ export default function TimeLine() {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
-      console.log("axios성공!");
       return response.data;
     }
     fetchData().then((res) => {
       setWeeklySchedule(classifyWeekData(res));
     });
     fetchData().catch((err) => {
-      // console.log(err.response);
+      console.log(err.response);
     });
   }, []);
 
@@ -225,18 +225,11 @@ export default function TimeLine() {
   // 오늘 스케쥴부터 보여주기
   useEffect(() => {
     if (scheduleData == undefined) {
-      if (weekdays) {
-        setScheduleData(weeklySchedule[today]);
-        // 버튼 색 바꾸기
-        changeBackground(thisWeek.indexOf(today));
-        if (!weeklySchedule[today]) {
-          console.log("평일이지만 수업이 없어요");
-        }
-      } else {
-        console.log("주말이에요");
-      }
+      setScheduleData(weeklySchedule[today]);
+      // 버튼 색 바꾸기
+      changeBackground(thisWeek.indexOf(today));
     }
-  }, [today]);
+  }, [weeklySchedule]);
 
   // 점심 메뉴 모달
   const [showLunch, setShowLunch] = useState(false);
@@ -263,13 +256,7 @@ export default function TimeLine() {
         ))}
       </View>
       {/* 타임라인 */}
-      <View
-        style={{
-          flex: 4,
-          marginTop: 15,
-          paddingHorizontal: 15,
-        }}
-      >
+      <View style={timelineStyles.timelineContainer}>
         {weekdays && (
           <Timeline
             style={styles.list}
@@ -363,6 +350,11 @@ const timelineStyles = StyleSheet.create({
   },
   dayText: {
     textAlign: "center",
+  },
+  timelineContainer: {
+    flex: 4,
+    marginTop: 20,
+    paddingHorizontal: 15,
   },
   touchableOpacityStyle: {
     position: "absolute",
