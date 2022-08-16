@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
-public class UserDto {
+public class SignupDto {
 
     @NotNull
     private String username;
@@ -28,9 +28,7 @@ public class UserDto {
     private String trackName;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Integer gi;
-
-    private Set<AuthorityDto> authorityDtoSet;
+    private String gi;
 
     public static UserDto from(User user) {
         if (user == null)
