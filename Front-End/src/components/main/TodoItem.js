@@ -15,21 +15,23 @@ import Notice from "../../store/slice/notice/Notice";
 
 
 export default function TodoItem({ navigation, item }) {
+  // console.log(item)
   const dispatch = useDispatch();
   const itemId = item.id
-  const itemDate = item.duedate.slice(0,8)
+  const itemDate = item.dueDate.slice(0,8)
   // console.log(itemDate)
   // const [completedTodo, setCompletedTodo] = useState('');
 
-  const year = item.duedate.slice(2,4)
-  const month = item.duedate.slice(4,6)
-  const day = item.duedate.slice(6,8)
-  const hour = item.duedate.slice(8,10)
-  const min = item.duedate.slice(10,12)
+  const year = item.dueDate.slice(2,4)
+  const month = item.dueDate.slice(4,6)
+  const day = item.dueDate.slice(6,8)
+  const hour = item.dueDate.slice(8,10)
+  const min = item.dueDate.slice(10,12)
 
   const goEdussafy = useCallback(async () => {
     const destinationURL = 'https://edu.ssafy.com/edu/board/notice/list.do' 
     if (await Linking.canOpenURL(destinationURL)) await Linking.openURL(destinationURL)
+    console.log("룰루")
   }, [])
 
   const saveCompletedTodo=()=>{
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
 
   itemtext: {
     marginHorizontal: 20,
+    // whiteSpace: "pre-wrap",
   },
 
   disabled : {

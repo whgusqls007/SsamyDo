@@ -34,68 +34,44 @@ const DATA = [
 // tododata 받아오기 (main으로 옮겨야할 수도 ..)
 // 받아온 data에서 status 기준으로 필터링
 
-export default function TodoList({ navigation }) {
+export default function TodoList({ navigation, todoList }) {
 
-  const dispatch = useDispatch();
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
-  const [todoList, setTodoList] = useState();
-
-  const onFetchTodo = (res) => {
-    setTodoList(JSON.stringify(res));
-  }
-
-  // 오늘날짜 
-  // function ymdFormat(oriDate = new Date()) {
-  //   let result =
-  //     oriDate.getFullYear().toString() +
-  //     (oriDate.getMonth() + 1).toString().padStart(2, "0") +
-  //     oriDate.getDate().toString().padStart(2, "0");
-  //   return result;
+  // const dispatch = useDispatch();
+  // const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
+  // const [todoList, setTodoList] = useState([]);
+  // const onFetchTodo = (res) => {
+  //   setTodoList(JSON.stringify(res));
   // }
 
-  // console.log(ymdFormat())
+  // console.log(`todolist state에 저장한거 ----------------------- ${todoList}`)
 
-  // 이전에 쓰던 axios 
+  // 오늘날짜 
+  function ymdFormat(oriDate = new Date()) {
+    let result =
+      oriDate.getFullYear().toString() +
+      (oriDate.getMonth() + 1).toString().padStart(2, "0") +
+      oriDate.getDate().toString().padStart(2, "0");
+    return result;
+  }
 
-  // useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: baseURL,
-  //   })
-  //     .then((response) => {
-  //       console.log("Todo Axios 요청 성공!");
-  //       dispatch({type: "MainTodo/import", payload: response.data})
-  //     })
-  //     .catch((error) => {
-  //       console.log("todo axios 실패함")
-  //     });
+
+
+  // useEffect(()=> {
+  //   async function fetchTodo(){
+  //     const response = await axios.get(baseURL);
+  //     return response.data
+
+  //   }
+  //   fetchTodo().then((res) => {
+  //     console.log(`넘어온 res ${res}`)
+  //     onFetchTodo(res);
+  //     dispatch({type: "MainTodo/import", payload: res.data});
+  //   });
   // }, []);
 
-  useEffect(()=> {
-    async function fetchTodo(){
-      const response = await axios.get("http://i7e204.p.ssafy.io:8080/api/todo/todolist/");
-      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
-      return response.data
-
-    }
-    fetchTodo().then((res) => {
-      // console.log(`넘어온 res ${res}`)
-      onFetchTodo(res);
-      dispatch({type: "MainTodo/import", payload: res.data});
-    });
-    // fetchTodo().catch((error) => {
-    //   console.log("todo axios 실패함")
-    // });
-  }, []);
-
-  // console.log(todoList)
-  // let todoList = useSelector((state) => state.MainTodo);
-  // todoList = JSON.stringify(todoList)
-  // console.log(`todoList 순서 체크용`)
-  // console.log(todoList)
-
-  // console.log(`usestate todolist ${todoList}`)
-  
+  // console.log(`아니 이게 뭐여 ${todoList}`)
+  // console.log("todolist-----------------------------------")
+  // console.log(todoList[0])
 
   return (
     <View style={styles.todoContainer}>
@@ -106,13 +82,14 @@ export default function TodoList({ navigation }) {
       <View style={styles.todobox}>
         <ScrollView>
 
-          {DATA && (DATA.map((item) => (
+          {/* {DATA && (DATA.filter(item => item.duedate.slice(0,8) >= ymdFormat()).map((item) => (
           <TodoItem item={item} key={item.id} navigation={navigation}/>)
-          ))} 
+          ))}  */}
+          {/* <Text>{todoList[0].id}</Text> */}
 
-          {/* {(todoList.data.map((item)=>(
+          {todoList && (todoList.map((item)=>(
             <TodoItem item={item} key={item.id} navigation={navigation} />)
-          ))} */}
+          ))}
 
         </ScrollView>
       </View>

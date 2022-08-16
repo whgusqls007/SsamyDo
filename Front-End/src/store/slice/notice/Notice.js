@@ -24,7 +24,8 @@ const Notice = createSlice({
   initialState: [],
   reducers : {
     import(state, action) {
-      state = JSON.stringify(action.payload)
+      console.log(`action ------------ ${JSON.stringify(action.payload.data)}`)
+      state = JSON.stringify(action.payload.data)
       console.log(`state ------------ ${state}`)
     }
   },
