@@ -100,7 +100,8 @@ export default function TodoList({ navigation, todoList }) {
 const styles = StyleSheet.create({
   todoContainer : {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginBottom: 20,
   },
   todobox : {
     flexDirection: 'row',    
