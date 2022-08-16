@@ -3,10 +3,12 @@ import { View, Text,TouchableOpacity, StyleSheet, TouchableHighlight } from "rea
 import { useNavigation } from "@react-navigation/native";
 
 
-export default function NoticeItem({ navigation, notice }) {
+export default function NoticeItem({ navigation, notice, noticeList }) {
 
   const blacksquare = String.fromCodePoint(0x25AA)
   const bell = String.fromCodePoint(0x1F514)
+
+  // console.log(`noticeItem ---------------------- ${noticeList}`)
 	
   return (
 
@@ -16,7 +18,7 @@ export default function NoticeItem({ navigation, notice }) {
       <Text>🍀</Text>
       <TouchableOpacity
         onFocus={styles.itemfocus}
-        onPress={() => navigation.navigate("NoticeDetail", {id: notice.id})} >
+        onPress={() => navigation.navigate("NoticeDetail", {id: notice.id, noticeList: noticeList})} >
           <Text> {notice.title}</Text>
       </TouchableOpacity>
       <Text>{notice.duedate}</Text>

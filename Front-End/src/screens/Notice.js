@@ -3,17 +3,43 @@ import { View, Text, TouchableOpacity,
 import NoticeList from "../components/notice/NoticeList";
 // import styles from "../../app.module.css";
 // import { useState, useEffect } from "react";
-// import { useDispatch, useState } from "react-redux";
+import { useDispatch } from "react-redux";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState, useEffect } from "react";
 import SearchBar from "react-native-platform-searchbar";
 import { Entypo } from '@expo/vector-icons';
+import axios from "axios";
+
 
 
 export default function Notice({ navigation }) {
+  const dispatch = useDispatch();
+
   const [showNotice, setShowNotice] = useState("All");
   const [value, setValue] = useState("");
+
+  const [noticeList, setNoticeList] = useState([]);
+  // const todoList = useSelector(state => state.MainTodo)
+  const onFetchNotice = (res) => {
+    setNoticeList(res);
+  }  
   
+  useEffect(()=> {
+    async function fetchNotice(){
+      const response = await axios.get("http://i7e204.p.ssafy.io:8080/api/notice/page/1");
+      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
+      return response.data
+
+    }
+    fetchNotice().then((res) => {
+      // console.log(`넘어온 res ${res}`)
+      onFetchNotice(res.data)
+      dispatch({type: "Notice/import", payload: res.data});
+    }).catch((err) => {
+      console.log(err)
+    });
+  }, []);
+
 
   // console.log(value)
 
@@ -83,7 +109,7 @@ export default function Notice({ navigation }) {
         </View>
 
         <View>
-          <NoticeList navigation={navigation} select={showNotice} />
+          <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
         </View>
 
       </View>
