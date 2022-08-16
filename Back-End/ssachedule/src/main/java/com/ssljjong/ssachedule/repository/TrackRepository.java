@@ -2,6 +2,8 @@ package com.ssljjong.ssachedule.repository;
 
 import com.ssljjong.ssachedule.entity.Track;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ public interface TrackRepository extends JpaRepository<Track, Integer> {
      * @param gi
      * @return Track Object
      */
-    Optional<Track> findTrackByNameAndGi(String name, int gi);
+
+    @Query("select t from Track t where t.name = :name and t.gi = :gi")
+    Optional<Track> findTrackByNameAndGi(@Param("name") String name, @Param("gi") Integer gi);
 
 }

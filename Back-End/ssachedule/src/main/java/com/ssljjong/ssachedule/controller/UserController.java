@@ -1,5 +1,7 @@
 package com.ssljjong.ssachedule.controller;
 
+import com.ssljjong.ssachedule.aes.AES_Encryption;
+import com.ssljjong.ssachedule.dto.LoginDto;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
@@ -9,8 +11,11 @@ import com.ssljjong.ssachedule.repository.TrackRepository;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,7 +38,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final TrackRepository trackRepository;
+    private final AES_Encryption aes_encryption;
     private final TokenProvider tokenProvider;
 
     @GetMapping("/test")
@@ -49,8 +54,10 @@ public class UserController {
 
     @PostMapping("/track/change")
     @PreAuthorize("hasAnyRole('USER')")
-    public ResponseEntity<String> changeTrack(@RequestHeader String Token, @RequestBody String trackName,
+    public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody String trackName,
             @RequestBody int gi) {
+
+
 
 //        Authentication auth = tokenProvider.getAuthentication(Token);
 //        System.out.println(auth.getDetails().toString());
@@ -87,4 +94,17 @@ public class UserController {
 //        return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
 //    }
 //
+
+
+    @GetMapping("/getUsers")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<Map<String, Object>> getUserInfo() {
+        System.out.println();
+        Map<String, Object> info = new HashMap<>();
+        List<LoginDto> allUsers = userService.getAllUsers();
+
+        info.put("data", allUsers);
+
+        return new ResponseEntity<>(info, HttpStatus.OK);
+    }
 }
