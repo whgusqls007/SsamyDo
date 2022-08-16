@@ -13,13 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 export default function Notice({ navigation }) {
   const [showNotice, setShowNotice] = useState("All");
   const [value, setValue] = useState("");
-
-  const check = String.fromCodePoint(0x2714)
-  const sparkle = String.fromCodePoint(0x2728)
-  const bleuheart = String.fromCodePoint(0x1F499)
-  const yellowheart = String.fromCodePoint(0x1F49B)
-  const redheart = String.fromCodePoint(0x1F496)
-  const speaker = String.fromCodePoint(0x1F4E2)
+  
 
   // console.log(value)
 
@@ -48,18 +42,17 @@ export default function Notice({ navigation }) {
         <View style={styles.buttonbar}>
           <View style={[{ flexDirection: "row"}]}>
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, showNotice === "All" && styles.clickbutton]}
               onPress={() => setShowNotice("All")}
             >
               <View >
-                {/* <Entypo name="check" size={24} color="black" /> */}
                 <Text style={styles.buttontext}>전체 🐬</Text>
               </View>
             </TouchableOpacity>
 
 
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, showNotice === "MM" && styles.clickbutton]}
               onPress={() => setShowNotice("MM")}
             >
               <View >
@@ -73,7 +66,7 @@ export default function Notice({ navigation }) {
 
 
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, showNotice === "Edu" && styles.clickbutton]}
               onPress={() => setShowNotice("Edu")}
             >
               <View >
@@ -139,6 +132,13 @@ const styles = StyleSheet.create({
     // marginHorizontal: 5,
     // paddingHorizontal: 10,
     // width: "auto",
+    borderRadius: 8,
+    padding: 10,
+    margin: 10,
+  },
+
+  clickbutton: {
+    backgroundColor: "#FFE34F",
     borderRadius: 8,
     padding: 10,
     margin: 10,

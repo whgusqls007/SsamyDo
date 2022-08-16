@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import TodoItem from "./TodoItem";
-import styles from "../../../app.module.css";
+// import styles from "../../../app.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,18 +13,21 @@ const DATA = [
   {
     id: "1",
     title: "공지1",
-    duedate: "2022-08-03",
+    duedate: "202208151400",
+    notice : null,
   },
   {
     id: "2",
     title: "공지2",
-    duedate: "2022-08-03",
+    duedate: "202208161400",
+    notice : 1234
   },
   {
     id: "3",
     title: "공지 3",
-    duedate: "2022-08-03",
+    duedate: "202208171400",
     route: "Edu",
+    notice : null,
   },
 ];
 
@@ -96,19 +99,39 @@ export default function TodoList({ navigation }) {
 
   return (
     <View style={styles.todoContainer}>
-      <Text>오늘의 설문</Text>
+      {/* <View>
+        <Text style={styles.titlecontainer}>오늘의 설문</Text>
+      </View> */}
 
-      <ScrollView>
+      <View style={styles.todobox}>
+        <ScrollView>
 
-        {DATA && (DATA.map((item) => (
-        <TodoItem item={item} key={item.id} navigation={navigation}/>)
-        ))} 
+          {DATA && (DATA.map((item) => (
+          <TodoItem item={item} key={item.id} navigation={navigation}/>)
+          ))} 
 
-        {/* {(todoList.data.map((item)=>(
-          <TodoItem item={item} key={item.id} navigation={navigation} />)
-        ))} */}
+          {/* {(todoList.data.map((item)=>(
+            <TodoItem item={item} key={item.id} navigation={navigation} />)
+          ))} */}
 
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  todoContainer : {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  todobox : {
+    flexDirection: 'row',    
+    paddingTop: 30,
+    paddingHorizontal: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    marginTop: 10,
+    height: "100%",
+  }
+})
