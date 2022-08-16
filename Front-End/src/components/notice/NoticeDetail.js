@@ -16,6 +16,13 @@ const handlePressBack = () => {
 
 export default function NoticeDetail({ navigation, route }) {
 
+  // route.id 있으면 noticelist에서 id === 같은거 찾아서 사용
+
+  // noticeList라고 가정.. 
+
+  const id = route.params.id
+  const item = noticeList.filter(item => item.id === id)
+
   const goEdussafy = useCallback(async () => {
     const destinationURL = 'https://edu.ssafy.com/edu/board/notice/list.do' 
     if (await Linking.canOpenURL(destinationURL)) await Linking.openURL(destinationURL)
@@ -26,9 +33,9 @@ export default function NoticeDetail({ navigation, route }) {
     <View style={styles.detailcontainer}>
       <Text style={styles.titlecontainer}>Ssamy Says</Text>
       <View style={styles.detailbox}>
-        <Text style={styles.detailtitle}>title</Text>
+        <Text style={styles.detailtitle}>{item.title}</Text>
         <ScrollView>
-          <Text style={styles.detaildescription}>description</Text>
+          <Text style={styles.detaildescription}>{item.description}</Text>
         </ScrollView>
       </View> 
 
