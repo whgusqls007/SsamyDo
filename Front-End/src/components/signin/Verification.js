@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Verification({ navigation }) {
   const dispatch = useDispatch();
   // 비밀번호 변경 등으로 다시 온 경우가 있으므로 유저 정보들 받기
+  useEffect(() => {
+    if (btnName !== "인증") {
+      setMMPassword("");
+      setEduPassword("");
+    }
+  }, []);
   const user = useSelector((state) => state.Account[0]);
   const btnName = useSelector((state) => state.Account[1]);
   // 회원가입 + 로그인 모두에 필요한 값들
@@ -73,8 +79,11 @@ export default function Verification({ navigation }) {
         dispatch({ type: "Account/save" });
         // 메인화면으로 이동
         navigation.navigate("TabNav");
+        // 재인증 모드로 변경
+        dispatch({ type: "Account/mode", mode: "재인증" });
       })
       .catch((err) => {
+        console.log(err);
         setInputError("입력 내용을 다시 확인해주세요");
       });
 
@@ -151,6 +160,7 @@ export default function Verification({ navigation }) {
           <TextInput
             style={VerificationStyles.input}
             secureTextEntry={true}
+            value={eduPassword}
             placeholder="EduSSAFY 패스워드를 입력하세요"
             placeholderTextColor="#6986A8"
             onChangeText={(text) => setEduPassword(text)}
@@ -164,14 +174,18 @@ export default function Verification({ navigation }) {
           <TextInput
             style={VerificationStyles.input}
             secureTextEntry={true}
+            value={MMPassword}
             placeholder="MattaMost의 패스워드를 입력하세요"
             placeholderTextColor="#6986A8"
             onChangeText={(text) => setMMPassword(text)}
           />
         </View>
         {/* 트랙 선택 */}
-        <View style={{ flexDirection: "row", padding: 5 }}>
-          <View style={{ flexDirection: "row", flex: 1 }}>
+        <View style={VerificationStyles.inputContainer}>
+          {btnName !== "인증" && (
+            <Text style={VerificationStyles.inputLabel}>소속 트랙</Text>
+          )}
+          <View style={{ flexDirection: "row" }}>
             {btnName === "인증" ? (
               trackName.map((tra, idx) => {
                 return (
@@ -179,7 +193,7 @@ export default function Verification({ navigation }) {
                     key={`tra-${idx}`}
                     style={[
                       VerificationStyles.btn,
-                      idx + 1 === track ? { backgroundColor: "pink" } : {},
+                      idx + 1 === track ? { backgroundColor: "#a8d1ff" } : {},
                     ]}
                     onPress={() => setTrack(idx + 1)}
                   >
@@ -188,7 +202,9 @@ export default function Verification({ navigation }) {
                 );
               })
             ) : (
-              <Text>{trackName[track - 1]}</Text>
+              <Text style={VerificationStyles.input}>
+                {trackName[track - 1].replace("\n", "")}
+              </Text>
             )}
           </View>
         </View>
@@ -216,7 +232,7 @@ export default function Verification({ navigation }) {
                 dispatch({ type: "Account/mode", mode: "재인증" });
               }}
             >
-              <Text>취소</Text>
+              <Text style={VerificationStyles.submitText}>취소</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity
@@ -228,14 +244,14 @@ export default function Verification({ navigation }) {
                 setInputError("MattaMost 비밀번호를 입력해주세요");
               } else {
                 if (btnName === "재인증") {
-                  credentials = {
+                  const credentials = {
                     username: email,
                     password: MMPassword,
                     eduPw: eduPassword,
                   };
                   login(credentials);
                 } else if (btnName === "탈퇴") {
-                  credentials = {
+                  const credentials = {
                     username: email,
                     password: MMPassword,
                     eduPw: eduPassword,
@@ -259,7 +275,6 @@ export default function Verification({ navigation }) {
                     setInputError("트랙을 선택해주세요");
                   } else {
                     let credentials = {
-                      id: studentNo,
                       username: email,
                       password: MMPassword,
                       eduPw: eduPassword,
@@ -296,7 +311,7 @@ export default function Verification({ navigation }) {
               }
             }}
           >
-            <Text>{btnName}</Text>
+            <Text style={VerificationStyles.submitText}>{btnName}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -321,9 +336,11 @@ const VerificationStyles = StyleSheet.create({
   },
   container: {
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     width: "95%",
-    backgroundColor: "#E5F3F6",
+    backgroundColor: "#ffffff",
+    borderWidth: 2,
+    borderColor: "#ededed",
   },
   inputContainer: {
     flexDirection: "row",
@@ -331,10 +348,20 @@ const VerificationStyles = StyleSheet.create({
   },
   inputLabel: {
     flex: 2,
-    margin: 5,
+    margin: 8,
+    color: "#5ba8ff",
+    textAlign: "center",
   },
 
-  input: { flexDirection: "row", margin: 5, height: 35, flex: 6 },
+  input: {
+    flexDirection: "row",
+    margin: 5,
+    height: 35,
+    flex: 8,
+    borderBottomWidth: 1.5,
+    borderBottomColor: "#a8d1ff",
+    borderRadius: 7,
+  },
   btn: {
     padding: 5,
     marginTop: 5,
@@ -350,9 +377,15 @@ const VerificationStyles = StyleSheet.create({
 
   submitBtn: {
     alignItems: "center",
-    backgroundColor: "#A8D1FF",
+    backgroundColor: "#5ba8ff",
     padding: 10,
     margin: 10,
     borderRadius: 8,
+  },
+
+  submitText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
