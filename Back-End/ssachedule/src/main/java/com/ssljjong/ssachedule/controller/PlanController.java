@@ -34,7 +34,7 @@ public class PlanController {
         return ResponseEntity.ok().body(response);
     }
 
-//    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/period/{startDate}")
     public ResponseEntity<Map<String, Object>> findWeeklyPlans(@PathVariable String startDate) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByStartDate(startDate);

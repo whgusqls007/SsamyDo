@@ -21,7 +21,7 @@ public class Track {
     private Integer id;
 
     private String name;
-    private int gi;
+    private Integer gi;
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
