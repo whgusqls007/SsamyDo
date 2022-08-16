@@ -2,13 +2,12 @@ package com.ssljjong.ssachedule.service;
 
 import com.ssljjong.ssachedule.aes.AES_Encryption;
 import com.ssljjong.ssachedule.dto.LoginDto;
-import com.ssljjong.ssachedule.dto.TrackDto;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.*;
+import com.ssljjong.ssachedule.repository.TrackRepository;
 import com.ssljjong.ssachedule.util.SecurityUtil;
 import com.ssljjong.ssachedule.repository.TeamUserRepository;
 import javassist.bytecode.DuplicateMemberException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssljjong.ssachedule.repository.UserRepository;
@@ -28,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final TrackRepository trackRepository;
     private final UserRepository userRepository;
     private final TeamUserRepository teamUserRepository;
 //    private final PasswordEncoder passwordEncoder;
@@ -62,6 +62,8 @@ public class UserService {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
+        Optional<Track> track = trackRepository.findTrackByNameAndGi(userDto.getTrackName(), userDto.getGi());
+
         Authority authority = Authority.builder()
                 .authorityName("ROLE_USER")
                 .build();
@@ -71,6 +73,7 @@ public class UserService {
                 .password(aes_encryption.encrypt(userDto.getPassword()))
                 .eduPw(aes_encryption.encrypt(userDto.getEduPw()))
                 .authorities(Collections.singleton(authority))
+                .track(track.get())
                 .build();
 
         return UserDto.from(userRepository.save(user));
@@ -124,6 +127,7 @@ public class UserService {
                     try {
                         return new LoginDto(u.getUsername(), aes_encryption.decrypt(u.getPassword()), aes_encryption.decrypt(u.getEduPw()));
                     } catch (Exception e) {
+                        System.out.println(11);
                         throw new RuntimeException(e);
                     }
                 }).collect(Collectors.toList());
@@ -136,6 +140,12 @@ public class UserService {
         } catch (Exception e) {
             return Boolean.FALSE;
         }
+    }
+
+    public LoginDto findUserByUsername(String username){
+        User user = userRepository.findUserByUsername(username).get();
+
+        return new LoginDto(user.getUsername(), user.getPassword(), user.getEduPw());
     }
 
 
