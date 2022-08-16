@@ -1,5 +1,7 @@
 package com.ssljjong.ssachedule.service;
 
+import com.ssljjong.ssachedule.aes.AES_Encryption;
+import com.ssljjong.ssachedule.dto.LoginDto;
 import com.ssljjong.ssachedule.dto.TrackDto;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.entity.*;
@@ -17,7 +19,9 @@ import net.bis5.mattermost.client4.MattermostClient;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,7 +30,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final TeamUserRepository teamUserRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
+    private final AES_Encryption aes_encryption;
 
     MattermostClient client = MattermostClient.builder()
             .url("https://meeting.ssafy.com")
@@ -52,7 +57,7 @@ public class UserService {
      */
 
     @Transactional
-    public UserDto signup(UserDto userDto) throws DuplicateMemberException {
+    public UserDto signup(UserDto userDto) throws Exception {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
@@ -63,8 +68,8 @@ public class UserService {
 
         User user = User.builder()
                 .username(userDto.getUsername())
-                .password(passwordEncoder.encode(userDto.getPassword()))
-                .eduPw(passwordEncoder.encode(userDto.getEduPw()))
+                .password(aes_encryption.encrypt(userDto.getPassword()))
+                .eduPw(aes_encryption.encrypt(userDto.getEduPw()))
                 .authorities(Collections.singleton(authority))
                 .build();
 
@@ -113,7 +118,17 @@ public class UserService {
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
-
+    public List<LoginDto> getAllUsers(){
+        List<LoginDto> userDtos = userRepository.findAll().stream()
+                .map(u -> {
+                    try {
+                        return new LoginDto(u.getUsername(), aes_encryption.decrypt(u.getPassword()), aes_encryption.decrypt(u.getEduPw()));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toList());
+        return userDtos;
+    }
     public Boolean validateAccount(User userDomain) {
         try {
             client.login(userDomain.getUsername(), userDomain.getPassword());
