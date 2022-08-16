@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
 public class LoginDto {
 
     @NotNull
@@ -18,4 +17,9 @@ public class LoginDto {
     @NotNull
     private String eduPw;
 
+    public LoginDto(String username, String password, String eduPw) {
+        this.username = username;
+        this.password = password;
+        this.eduPw = eduPw;
+    }
 }

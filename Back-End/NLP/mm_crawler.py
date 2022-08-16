@@ -21,18 +21,18 @@ foo = Driver(
 foo.login()
 # user_id = foo.users.get_user(user_id='me')['id']
 # print(foo.teams.get_user_teams(user_id))
-# import os
+import os
 file_id = "sqj4o3o7stdofeimh1tef71qga"
 # # for file_id in file_ids:
 res = foo.files.get_file(file_id)
-#     encoded_img = np.fromstring(res.content, dtype = np.uint8)
-#     img = cv2.imdecode(encoded_img, cv2.IMREAD_GRAYSCALE)
+    # encoded_img = np.fromstring(res.content, dtype = np.uint8)
+    # img = cv2.imdecode(encoded_img, cv2.IMREAD_GRAYSCALE)
     
-#     ocr = pytesseract.image_to_string(encoded_img, lang="kor")
-#     filename = f"{file_id}.jpg"  
-#     completeName = os.path.join("./images", filename)       
-#     with open(completeName, "wb") as f:
-#         f.write(res.content)
+    # ocr = pytesseract.image_to_string(encoded_img, lang="kor")
+filename = f"{file_id}.jpg"  
+completeName = os.path.join("./images", filename)       
+with open(completeName, "wb") as f:
+    f.write(res.content)
 # print("로그인 성공")
 
 
@@ -87,25 +87,25 @@ res = foo.files.get_file(file_id)
 
 
 
-tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+# tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
-import pytesseract
-import cv2
+# import pytesseract
+# import cv2
 
-oem = 3
-psm = 4
+# oem = 3
+# psm = 4
 
-# traineddata = "kor"
+# # traineddata = "kor"
 
-import numpy as np
-# img = cv2.imread()
+# import numpy as np
+# # img = cv2.imread()
 
-encoded_img = np.fromstring(res.content, dtype=np.uint8)
-img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+# encoded_img = np.fromstring(res.content, dtype=np.uint8)
+# img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
 
-result = pytesseract.image_to_string(img, "kor", config="--oem 3 --psm 4")
-# ocr_result = pytesseract.image_to_string(
-#     image=img, lang="kor", config="--oem " + str(oem) + " --psm " + str(psm)
-# )
+# result = pytesseract.image_to_string(img, "kor", config="--oem 3 --psm 4")
+# # ocr_result = pytesseract.image_to_string(
+# #     image=img, lang="kor", config="--oem " + str(oem) + " --psm " + str(psm)
+# # )
 
-print(result)
+# print(result)
