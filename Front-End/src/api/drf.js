@@ -1,4 +1,4 @@
-const HOST = "http://i7e204.p.ssafy.io:4000/api/";
+const HOST = "http://i7e204.p.ssafy.io:8080/api/";
 const TODO = "todo/";
 const PLAN = "plan/weekly";
 const NOTICE = "notice/";
