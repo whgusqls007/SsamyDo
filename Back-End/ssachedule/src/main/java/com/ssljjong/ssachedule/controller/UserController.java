@@ -57,8 +57,14 @@ public class UserController {
     public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody String trackName,
             @RequestBody int gi) {
 
+<<<<<<< HEAD
 
 
+=======
+        System.out.println(Authorization);
+        System.out.println(trackName);
+        System.out.println(gi);
+>>>>>>> 6dbc107fd3044685d8dc2df9ab605f2305f8e33b
 //        Authentication auth = tokenProvider.getAuthentication(Token);
 //        System.out.println(auth.getDetails().toString());
 //        Track track = trackRepository.findTrackByNameAndGi(trackName, gi).get();
@@ -99,7 +105,11 @@ public class UserController {
     @GetMapping("/getUsers")
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getUserInfo() {
+<<<<<<< HEAD
         System.out.println();
+=======
+        System.out.println("servlet");
+>>>>>>> 6dbc107fd3044685d8dc2df9ab605f2305f8e33b
         Map<String, Object> info = new HashMap<>();
         List<LoginDto> allUsers = userService.getAllUsers();
 
