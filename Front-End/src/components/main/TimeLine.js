@@ -8,6 +8,7 @@ import {
   Modal,
   Image,
   Pressable,
+  Touchable,
 } from "react-native";
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
@@ -22,11 +23,12 @@ export default function TimeLine() {
   // 접속일 기준 이번 주 월요일 찾기
   function findMonday() {
     let result = new Date(); // 접속한 날짜
-    result.setDate(result.getDate() - (result.getDay() - 1));
     // 오늘이 주말이라면 주말 표시
     if (result.getDay() == 0 || result.getDay() == 6) {
       weekdays = false;
     }
+    // 오늘 날짜에서 오늘 요일의 인덱스 -1을 빼면 월요일이 나온다
+    result.setDate(result.getDate() - (result.getDay() - 1));
     return result;
   }
 
@@ -115,9 +117,15 @@ export default function TimeLine() {
       title: "오늘 하루 끝!",
       time: "18:00",
     };
+    const holiday = {
+      title: "오늘은 쉬는 날!",
+    };
+    // 마지막에 하루 끝 입력 but 공휴일에는 X
     for (let d of thisWeek) {
-      if (result[d] != []) {
+      if (result[d].length) {
         result[d].push(theLast);
+      } else {
+        result[d].push(holiday);
       }
     }
     return result;
@@ -137,21 +145,81 @@ export default function TimeLine() {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      console.log("axios성공!");
       return response.data;
     }
     fetchData().then((res) => {
       setWeeklySchedule(classifyWeekData(res));
     });
     fetchData().catch((err) => {
-      console.log(err.response);
+      // console.log(err.response);
     });
   }, []);
+
+  // 요일 반복 컴포넌트화
+  const [dayBtns, setDayBtns] = useState({
+    days: [
+      {
+        id: 0,
+        date: thisWeek[0].substring(6, 8),
+        day: "월",
+        backgroundcolor: "#EDEDED",
+      },
+      {
+        id: 1,
+        date: thisWeek[1].substring(6, 8),
+        day: "화",
+        backgroundcolor: "#EDEDED",
+      },
+      {
+        id: 2,
+        date: thisWeek[2].substring(6, 8),
+        day: "수",
+        backgroundcolor: "#EDEDED",
+      },
+      {
+        id: 3,
+        date: thisWeek[3].substring(6, 8),
+        day: "목",
+        backgroundcolor: "#EDEDED",
+      },
+      {
+        id: 4,
+        date: thisWeek[4].substring(6, 8),
+        day: "금",
+        backgroundcolor: "#EDEDED",
+      },
+    ],
+  });
+
+  // 배경 색 바꾸는 함수
+  const changeBackground = (arg) => {
+    let daysData = dayBtns.days;
+    for (let x = 0; x < daysData.length; x++) {
+      if (daysData[x].id == arg) {
+        daysData[x].backgroundcolor = "#FFE34F";
+
+        setDayBtns({
+          days: daysData,
+        });
+      } else {
+        daysData[x].backgroundcolor = "#EDEDED";
+
+        setDayBtns({
+          days: daysData,
+        });
+      }
+    }
+  };
 
   // 요일 버튼을 누르면 해당 요일의 스케줄 정보를 보여준다
   const selectedDay = (arg) => () => {
     // 주중으로 표시
     weekdays = "true";
+    // 일일 스케쥴 넣기
     setScheduleData(weeklySchedule[thisWeek[arg]]);
+    // 색 바꿔주기
+    changeBackground(arg);
   };
 
   // 오늘 스케쥴부터 보여주기
@@ -159,65 +227,40 @@ export default function TimeLine() {
     if (scheduleData == undefined) {
       if (weekdays) {
         setScheduleData(weeklySchedule[today]);
+        // 버튼 색 바꾸기
+        changeBackground(thisWeek.indexOf(today));
+        if (!weeklySchedule[today]) {
+          console.log("평일이지만 수업이 없어요");
+        }
       } else {
         console.log("주말이에요");
       }
     }
-  }, [weeklySchedule]);
+  }, [today]);
 
   // 점심 메뉴 모달
   const [showLunch, setShowLunch] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.timelineContainer}>
       {/* 요일 버튼 */}
       <View style={timelineStyles.dayContainer}>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(0)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[0].substring(6, 8)}
-            {"\n"}월
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(1)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[1].substring(6, 8)}
-            {"\n"}화
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(2)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[2].substring(6, 8)}
-            {"\n"}수
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(3)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[3].substring(6, 8)}
-            {"\n"}목
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={timelineStyles.dayButton}
-          onPress={selectedDay(4)}
-        >
-          <Text style={timelineStyles.dayText}>
-            {thisWeek[4].substring(6, 8)}
-            {"\n"}금
-          </Text>
-        </TouchableOpacity>
+        {dayBtns.days.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={[
+              timelineStyles.dayButton,
+              { backgroundColor: item.backgroundcolor },
+            ]}
+            onPress={selectedDay(item.id)}
+          >
+            <Text style={timelineStyles.dayText}>
+              {item.date}
+              {"\n"}
+              {item.day}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
       {/* 타임라인 */}
       <View
@@ -268,9 +311,9 @@ export default function TimeLine() {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={showLunch}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setShowLunch(!showLunch);
         }}
       >
         <View style={timelineStyles.centeredView}>
@@ -278,7 +321,7 @@ export default function TimeLine() {
             <LunchMenu />
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => setShowLunch(!showLunch)}
             >
               <Text style={styles.textStyle}>닫기</Text>
             </Pressable>
@@ -288,7 +331,7 @@ export default function TimeLine() {
       <TouchableOpacity
         activeOpacity={0.7}
         style={timelineStyles.touchableOpacityStyle}
-        onPress={() => setModalVisible(true)}
+        onPress={() => setShowLunch(true)}
       >
         <Image
           source={{
@@ -310,7 +353,6 @@ const timelineStyles = StyleSheet.create({
     paddingBottom: 4,
   },
   dayButton: {
-    backgroundColor: "#EDEDED",
     marginHorizontal: 5,
     paddingHorizontal: 20,
     paddingVertical: 5,

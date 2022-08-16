@@ -58,8 +58,10 @@ export default function UserDetail() {
           </View>
           {/* 트랙 선택 */}
           <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>소속 트랙 </Text>
-            {!showTrackBtn && <Text>{trackName[track]} </Text>}
+            <Text>소속 트랙: </Text>
+            {!showTrackBtn && (
+              <Text>{trackName[track].replace("\n", "")} </Text>
+            )}
           </View>
           {showTrackBtn && (
             <View style={{ flexDirection: "row" }}>
@@ -153,7 +155,7 @@ const UserDetailStyle = StyleSheet.create({
     margin: 10,
     backgroundColor: "#A8D1FF",
     width: "95%",
-    height: "26%",
+    height: "40%",
     borderRadius: 2,
   },
   container: {
