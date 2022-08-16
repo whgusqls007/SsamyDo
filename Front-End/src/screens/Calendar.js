@@ -123,6 +123,7 @@ export default function Calendar({ navigation }) {
               <Text>{type[2]}</Text>
             </View>
           </TouchableOpacity>
+          {/* 나중에 삭제해야함 */}
           <TouchableOpacity
             style={CalendarStyles.btn}
             onPress={() => {
@@ -131,6 +132,14 @@ export default function Calendar({ navigation }) {
             }}
           >
             <Text>삭제용</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={CalendarStyles.btn}
+            onPress={() => {
+              navigation.navigate("Verification");
+            }}
+          >
+            <Text>이동</Text>
           </TouchableOpacity>
         </View>
         <CustomCalendar />

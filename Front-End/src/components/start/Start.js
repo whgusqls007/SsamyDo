@@ -13,6 +13,7 @@ function Start({ navigation }) {
           type: "Account/import",
           payload: JSON.parse(result),
         });
+        dispatch({ type: "Account/mode", mode: "재인증" });
         AsyncStorage.getItem("Setting", (err, result) => {
           // 타입변경으로 저장된것이 있는 경우
           if (result) {
