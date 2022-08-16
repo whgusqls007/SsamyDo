@@ -104,7 +104,7 @@ export default function Alarm() {
 const SettingStyle = StyleSheet.create({
   back: {
     alignContent: "center",
-    margin: 10,
+    margin: 20,
     backgroundColor: "#A8D1FF",
     width: "95%",
     height: 400,

@@ -38,7 +38,7 @@ export default function Verification({ navigation }) {
     "모바일",
   ];
   // 각각 siginin에 입력형식, campus 이름 내용(실제 input 제출용)
-  const inputTrackName = ["Python", "Javab", "Java", "Embeded", "Mobile"];
+  const inputTrackName = ["Python", "Javab", "Java", "Embedded", "Mobile"];
   const [number, setNumber] = useState(user.number);
   const [track, setTrack] = useState(user.track);
 
@@ -84,6 +84,7 @@ export default function Verification({ navigation }) {
       })
       .catch((err) => {
         console.log(err);
+        console.log("로그인 실패");
         setInputError("입력 내용을 다시 확인해주세요");
       });
 
@@ -304,6 +305,8 @@ export default function Verification({ navigation }) {
                         }
                       })
                       .catch((err) => {
+                        console.log(err);
+                        console.log(`가입실패`);
                         setInputError("입력 내용을 다시 확인해주세요");
                       });
                   }
