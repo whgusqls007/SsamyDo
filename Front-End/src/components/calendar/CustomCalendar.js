@@ -144,6 +144,16 @@ export default function CustomCalendar() {
         // 일정표시 기능
         markingType={"multi-dot"}
         markedDates={markDate}
+        theme={{
+          "stylesheet.calendar.header": {
+            dayTextAtIndex0: {
+              color: "red",
+            },
+            dayTextAtIndex6: {
+              color: "blue",
+            },
+          },
+        }}
       />
     </View>
   );

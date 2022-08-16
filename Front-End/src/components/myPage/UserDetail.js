@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Fontisto,
+  FontAwesome5,
+  Ionicons,
+} from "@expo/vector-icons";
 import styles from "../../../app.module.css";
 import axios from "axios";
 import drf from "../../api/drf";
@@ -27,7 +32,7 @@ export default function UserDetail() {
     "임베디드",
     "모바일",
   ];
-  const inputTrackName = ["Python", "Javab", "Java", "Embeded", "Mobile"];
+  const inputTrackName = ["Python", "Javab", "Java", "Embedded", "Mobile"];
   // 트랙만 변경
   const [track, setTrack] = useState(user.track);
 
@@ -35,32 +40,66 @@ export default function UserDetail() {
     <View style={UserDetailStyle.back}>
       <Text>MyPage</Text>
       <View style={UserDetailStyle.container}>
-        <View>
-          {/* 사용자명 */}
+        <View
+          style={{
+            marginHorizontal: 30,
+            marginVertical: 10,
+            borderWidth: 1,
+            borderColor: "grey",
+            borderRadius: 8,
+          }}
+        >
+          {/* 사용자명 / 학번 */}
+          <View
+            style={{
+              flexDirection: "row",
+              marginVertical: 10,
+              justifyContent: "center",
+              borderBottomWidth: 5,
+              borderBottomEndRadius: 100,
+              borderColor: "#A8D1FF",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              {user.name}
+            </Text>
+          </View>
+          <View />
+          {/* 학번 */}
           <View style={UserDetailStyle.inputContainer}>
-            <Text style={UserDetailStyle.inputLabel}>{user.name}</Text>
+            <Ionicons style={{ margin: 5 }} name="school" size={20} />
+            <Text style={{ margin: 5, color: "grey" }}>{user.studentNo}</Text>
+          </View>
+          {/* 이메일 */}
+          <View style={UserDetailStyle.inputContainer}>
+            <Fontisto style={{ margin: 5 }} name="email" size={20} />
+            <Text style={{ margin: 5, color: "grey" }}>{user.email}</Text>
           </View>
           {/* 기수 */}
           <View style={UserDetailStyle.inputContainer}>
+            <FontAwesome style={{ margin: 5 }} name="flag" size={20} />
             <Text style={UserDetailStyle.inputLabel}>
-              {`${user.studentNo[1]}기`}{" "}
+              {`SSAFY ${user.studentNo[1]}기`}{" "}
             </Text>
           </View>
           {/* 캠퍼스*/}
           <View style={UserDetailStyle.inputContainer}>
+            <FontAwesome5 style={{ margin: 5 }} name="building" size={20} />
             <Text style={UserDetailStyle.inputLabel}>
-              {campusName[user.studentNo[2]]} 소속
+              {campusName[user.studentNo[2]]} 캠퍼스 소속
             </Text>
           </View>
-          {/* 이메일 */}
-          <View style={UserDetailStyle.inputContainer}>
-            <Text style={UserDetailStyle.inputLabel}>{user.email}</Text>
-          </View>
           {/* 트랙 선택 */}
-          <View style={{ flexDirection: "row", padding: 5 }}>
-            <Text>소속 트랙: </Text>
+          <View style={UserDetailStyle.inputContainer}>
+            <FontAwesome5 style={{ margin: 5 }} name="road" size={20} />
+            <Text>트랙 </Text>
             {!showTrackBtn && (
-              <Text>{trackName[track].replace("\n", "")} </Text>
+              <Text>{track && trackName[track].replace("\n", "")} </Text>
             )}
           </View>
           {showTrackBtn && (
@@ -105,9 +144,6 @@ export default function UserDetail() {
                   gi: Number(user.studentNo[1]),
                   trackName: inputTrackName[track],
                 };
-                console.log(credentials);
-                console.log(drf.user.track());
-                console.log(token);
                 axios({
                   method: "post",
                   url: drf.user.track(),
@@ -144,6 +180,27 @@ export default function UserDetail() {
             </TouchableOpacity>
           </View>
         )}
+        {/* 학번 */}
+        <View style={UserDetailStyle.lineContainer}>
+          <View style={UserDetailStyle.inputContainer}>
+            <Ionicons style={{ margin: 5 }} name="school" size={20} />
+            <Text style={{ margin: 5, color: "grey" }}>{user.studentNo}</Text>
+          </View>
+        </View>
+        <View style={UserDetailStyle.lineContainer}>
+          <View style={UserDetailStyle.inputContainer}>
+            <Fontisto style={{ margin: 5 }} name="email" size={20} />
+            <Text style={{ margin: 5, color: "grey" }}>{user.email}</Text>
+          </View>
+        </View>
+        <View style={UserDetailStyle.lineContainer}>
+          <View style={UserDetailStyle.inputContainer}>
+            <FontAwesome style={{ margin: 5 }} name="flag" size={20} />
+            <Text style={UserDetailStyle.inputLabel}>
+              {`SSAFY ${user.studentNo[1]}기`}{" "}
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -155,7 +212,7 @@ const UserDetailStyle = StyleSheet.create({
     margin: 10,
     backgroundColor: "#A8D1FF",
     width: "95%",
-    height: "40%",
+    height: "80%",
     borderRadius: 2,
   },
   container: {
@@ -163,6 +220,7 @@ const UserDetailStyle = StyleSheet.create({
     borderRadius: 2,
     height: "100%",
     backgroundColor: "#E5F3F6",
+    justifyContent: "center",
   },
 
   content: {
@@ -180,8 +238,6 @@ const UserDetailStyle = StyleSheet.create({
     margin: 5,
   },
 
-  input: { flexDirection: "row", margin: 5, height: 35, flex: 6 },
-
   btn: {
     padding: 5,
     marginTop: 5,
@@ -193,5 +249,12 @@ const UserDetailStyle = StyleSheet.create({
     width: "auto",
     flex: 1,
     justifyContent: "center",
+  },
+
+  lineContainer: {
+    width: "100%",
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
   },
 });

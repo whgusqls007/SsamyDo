@@ -9,7 +9,7 @@ export default function MyPage({ navigation }) {
   return (
     <View>
       <UserDetail />
-      <Setting />
+      {/* <Setting /> */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
