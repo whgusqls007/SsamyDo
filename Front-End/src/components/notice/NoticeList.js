@@ -23,41 +23,41 @@ const DATA = [
   }
 ];
 
-export default function NoticeList({ navigation, select }) {
+export default function NoticeList({ navigation, select, noticeList }) {
 
-  const noticeList = useSelector((state) => state.Notice);
+  // console.log(`noticeList ---------------------- ${noticeList}`)
+  // const noticeList = useSelector((state) => state.Notice);
 
-  const dispatch = useDispatch();
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: baseURL,
-    })
-      .then((response) => {
-        console.log("Notice Axios 요청 성공!");
-        console.log(`notice axios ---------- ${response.data}`);
+  // const dispatch = useDispatch();
+  // const baseURL = "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "http://i7e204.p.ssafy.io:8080/api/notice/page/1",
+  //   })
+  //     .then((response) => {
+  //       console.log("Notice Axios 요청 성공!");
+  //       console.log(`notice axios ---------- ${response.data}`);
     
-        dispatch({type: "Notice/import", payload: response.data})
-        // console.log(getTodo)
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }, []);
+  //       dispatch({type: "Notice/import", payload: response.data})
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response);
+  //     });
+  // }, []);
 
 
-  console.log(`notice list --------------- ${JSON.stringify(noticeList)}`)
+  // console.log(`notice list --------------- ${JSON.stringify(noticeList)}`)
 
   // DATA 부분 noticeList로 변경 필요
 
   if (select === 'All') {
     return (
           <View style={styles.noticelistcontainer}>
-            <ScrollView>
-              {DATA.map((notice)=>(
-                <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
-              ))}    
+            <ScrollView style={styles.noticebox}>
+              {noticeList && (noticeList.map((notice)=>(
+                <NoticeItem noticeList={noticeList} key={notice.id} notice={notice} navigation={navigation} />
+              )))}    
             </ScrollView>
           </View>
     );  
@@ -65,10 +65,10 @@ export default function NoticeList({ navigation, select }) {
   else if (select === 'MM') {
     return (
       <View style={styles.noticelistcontainer}>
-        <ScrollView>
-          {DATA.filter(notice => notice.route === 'MM').map((notice)=>(
-            <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
-          ))}        
+        <ScrollView style={styles.noticebox}>
+          {noticeList && (noticeList.filter(notice => notice.source === 'M').map((notice)=>(
+            <NoticeItem noticeList={noticeList} key={notice.id} notice={notice} navigation={navigation} />
+          )))}        
         </ScrollView>
       </View>
     );
@@ -76,10 +76,10 @@ export default function NoticeList({ navigation, select }) {
   else if (select === 'Edu') {
     return  (
       <View style={styles.noticelistcontainer}>
-        <ScrollView>
-          {DATA.filter(notice => notice.route === 'Edu').map((notice)=>(
-              <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
-            ))}     
+        <ScrollView style={styles.noticebox}>
+          {noticeList && (noticeList.filter(notice => notice.source === 'E').map((notice)=>(
+              <NoticeItem noticeList={noticeList} key={notice.id} notice={notice} navigation={navigation} />
+            )))}     
         </ScrollView>
       </View>
     );
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     marginTop: 10,
+    marginBottom: 20,
     height: "100%",
+  },
+  noticebox:{
   }
 })

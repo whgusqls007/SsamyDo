@@ -11,8 +11,8 @@ const TodoStatus = createSlice({
 
     //local 정보 읽기
     import: (state, action) => {
-      console.log(`import ------------ ${action.payload}`)
-      console.log(typeof(action.payload))
+      // console.log(`import ------------ ${action.payload}`)
+      // console.log(typeof(action.payload))
       state[0] = JSON.parse(action.payload);
     },
     // saveStatus 현재 상태 저장 
