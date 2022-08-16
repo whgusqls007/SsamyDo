@@ -5,6 +5,8 @@ import { useCallback } from "react";
 import { BackHandler } from "react-native";
 // notice id로 해당 notice만 뽑아오기
 import { ScrollView } from "react-native";
+import { useSelector } from "react-redux";
+import Markdown from "react-native-markdown-display";
 
 const handlePressBack = () => {
   if (navigation?.canGoBack()) {
@@ -16,12 +18,19 @@ const handlePressBack = () => {
 
 export default function NoticeDetail({ navigation, route }) {
 
+  
+  // console.log(noticeList)
+  // console.log(`noticelist --------------- ${JSON.stringify(noticeList)}`)
   // route.id 있으면 noticelist에서 id === 같은거 찾아서 사용
 
   // noticeList라고 가정.. 
 
   const id = route.params.id
-  const item = noticeList.filter(item => item.id === id)
+  const noticelist = route.params.noticeList
+  // console.log(`noticedetail ------------------- ${noticelist}`)
+  const item = noticelist.filter(item => item.id === id).map(item => item)
+  // console.log(item)
+  // console.log(item[0].date)
 
   const goEdussafy = useCallback(async () => {
     const destinationURL = 'https://edu.ssafy.com/edu/board/notice/list.do' 
@@ -33,9 +42,10 @@ export default function NoticeDetail({ navigation, route }) {
     <View style={styles.detailcontainer}>
       <Text style={styles.titlecontainer}>Ssamy Says</Text>
       <View style={styles.detailbox}>
-        <Text style={styles.detailtitle}>{item.title}</Text>
+        <Text style={styles.detailtitle}>{item[0].title}</Text>
         <ScrollView>
-          <Text style={styles.detaildescription}>{item.description}</Text>
+          <Markdown style={styles.detaildescription}>{item[0].description}</Markdown>
+          {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
         </ScrollView>
       </View> 
 
@@ -76,13 +86,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   detailtitle : {
-    fontSize: 30,
+    fontSize: 17,
+    fontWeight: 'bold',
     textAlign: "center",
-    margin: 15
+    margin: 10
   },
   detaildescription : {
     fontSize: 15,
-    textAlign: "center",
+    // textAlign: "center",
     margin: 15,
   },
 

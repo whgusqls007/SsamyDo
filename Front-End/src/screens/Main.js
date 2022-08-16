@@ -50,6 +50,8 @@ export default function Main({ navigation }) {
     });
   }, []);
 
+  
+
   // console.log(`main todolist ---------------- ${todoList}`)
 
   return (
