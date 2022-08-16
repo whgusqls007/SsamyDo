@@ -10,6 +10,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 
 export default function App() {
+  
+
   return (
     <SafeAreaView style={styles.appcontainer}>
       <Provider store={store}>
