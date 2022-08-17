@@ -1,0 +1,108 @@
+import { React, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+export default function LunchBoard() {
+  const [lunchData, setLunchData] = useState();
+
+  function ymdFormat(oriDate) {
+    let result =
+      oriDate.getFullYear().toString() +
+      (oriDate.getMonth() + 1).toString().padStart(2, "0") +
+      oriDate.getDate().toString().padStart(2, "0");
+    return result;
+  }
+  // axios를 통해서 이번 주 점심 받아오기
+  const baseURL = "http://i7e204.p.ssafy.io:8080/api/lunch/date/";
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get(`${baseURL}${ymdFormat(new Date())}`);
+      return response.data.data;
+    }
+    fetchData().then((res) => {
+      setLunchData(res);
+    });
+    fetchData().catch((err) => {
+      // console.log(err.response);
+      console.log("Lunch Axios 실패");
+    });
+  }, []);
+
+  return (
+    <ScrollView>
+      {lunchData &&
+        lunchData.map((item) => (
+          <View key={item.id} style={lunchStyles.menuContainer}>
+            <View style={lunchStyles.menuHeader}>
+              <Image source={{ uri: item.img }} style={lunchStyles.menuImg} />
+              <View style={lunchStyles.menuTitle}>
+                <TouchableOpacity style={lunchStyles.storeBox}>
+                  <Text style={lunchStyles.storeText}>{item.store}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text style={lunchStyles.menuName}>
+                    {item.main.replace("&", "\n& ")}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={lunchStyles.detailBox}>
+              <Text>{item.detail}</Text>
+            </View>
+          </View>
+        ))}
+    </ScrollView>
+  );
+}
+
+const lunchStyles = StyleSheet.create({
+  menuContainer: {
+    flex: 1,
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ededed",
+    shadowColor: "#888888",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 2,
+    backgroundColor: "#ffffff",
+  },
+  menuHeader: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    height: 100,
+    marginBottom: "2%",
+  },
+  menuImg: {
+    flex: 1,
+    borderRadius: 5,
+    height: 100,
+  },
+  menuTitle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 100,
+  },
+  menuName: {
+    padding: "2%",
+    margin: "5%",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  storeBox: {
+    padding: "2%",
+    marginLeft: "5%",
+    borderRadius: 5,
+    width: 65,
+    backgroundColor: "#ededed",
+  },
+  storeText: {
+    textAlign: "center",
+  },
+});
