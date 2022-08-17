@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,10 +74,8 @@ export default function Main({ navigation }) {
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine navigation={navigation} />
       {/* <TouchableOpacity
-        style={styles.button}
         onPress={() => {
-          AsyncStorage.removeItem("Account");
-          AsyncStorage.removeItem("Setting");
+          AsyncStorage.clear();
         }}
       >
         <Text>로컬 삭제</Text>
