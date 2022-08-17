@@ -53,17 +53,18 @@ export default function TodoList({ navigation, todoList }) {
     return result;
   }
 
+  // 필터링 걸었는데 안먹네용 
   // function checkItem(item) {
   //   if (item.title.include('건강') && item.startDate.slice(0,8) === ymdFormat()){
-  //     return item
+  //     return item;
   //   }
   //   else if (item.type === 'submit') {
-  //     return item
+  //     return item;
   //   }
   //   else if (!item.includes('건강')) {
-  //     return item
+  //     return item;
   //   }
-  // }
+  // };
 
 
   // useEffect(()=> {
