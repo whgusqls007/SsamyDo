@@ -1,6 +1,6 @@
 const HOST = "http://i7e204.p.ssafy.io:8080/api/";
 const TODO = "todo/";
-const PLAN = "plan/weekly";
+const PLAN = "plan/weekly/";
 const NOTICE = "notice/";
 const LUNCH = "lunch/";
 
@@ -17,7 +17,7 @@ export default {
   },
   // yearmonth(202207)에 존재하는 모든 ToDo 리스트 조회 =>
   // return [{id, title, Dudate}] → 공지 id (연결된 공지 ID 제공)
-  todo: (yearmonth) => HOST + "todo/list/" + `${yearmonth}`,
+  todo: () => HOST + "todo/todolist/",
   plan: {
     date: (date) => HOST + PLAN + `date/${date}`,
     weekly: (startDate) => HOST + PLAN + `period/${startDate}`,

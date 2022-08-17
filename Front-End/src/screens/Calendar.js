@@ -174,7 +174,7 @@ const CalendarStyles = StyleSheet.create({
   btn: {
     padding: "2%",
     marginTop: "3%",
-    marginBottom: "0.1%",
+    marginBottom: "1%",
     marginLeft: "2%",
     backgroundColor: "#FFFFFF",
     borderRadius: 5,
