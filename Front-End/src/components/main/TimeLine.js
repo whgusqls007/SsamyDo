@@ -11,7 +11,7 @@ import {
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
 import axios from "axios";
-import LunchMenu from "./LunchMenu";
+import LunchBoard from "./LunchBoard";
 
 export default function TimeLine() {
   // 수업일과 주말을 구분하는 변수
@@ -305,9 +305,9 @@ export default function TimeLine() {
       >
         <View style={timelineStyles.centeredView}>
           <View style={timelineStyles.modalView}>
-            <LunchMenu />
+            <LunchBoard />
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[timelineStyles.closeBtn]}
               onPress={() => setShowLunch(!showLunch)}
             >
               <Text style={styles.textStyle}>닫기</Text>
@@ -317,14 +317,14 @@ export default function TimeLine() {
       </Modal>
       <TouchableOpacity
         activeOpacity={0.7}
-        style={timelineStyles.touchableOpacityStyle}
+        style={timelineStyles.lunchShowBtn}
         onPress={() => setShowLunch(true)}
       >
         <Image
           source={{
             uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/c90cea420d8a3cb833a0418a7c1e7c69/lunch.png",
           }}
-          style={timelineStyles.floatingButtonStyle}
+          style={timelineStyles.lunchBtnImg}
         />
       </TouchableOpacity>
     </View>
@@ -356,7 +356,7 @@ const timelineStyles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 15,
   },
-  touchableOpacityStyle: {
+  lunchShowBtn: {
     position: "absolute",
     backgroundColor: "#fff",
     borderRadius: 50,
@@ -368,7 +368,7 @@ const timelineStyles = StyleSheet.create({
     right: 20,
     bottom: 20,
   },
-  floatingButtonStyle: {
+  lunchBtnImg: {
     resizeMode: "contain",
     width: 55,
     height: 55,
@@ -383,7 +383,7 @@ const timelineStyles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 25,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -393,5 +393,12 @@ const timelineStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  closeBtn: {
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    margin: 10,
+    borderRadius: 3,
+    backgroundColor: "#a8d1ff",
   },
 });

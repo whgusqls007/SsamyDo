@@ -389,7 +389,7 @@ const VerificationStyles = StyleSheet.create({
     marginHorizontal: 7,
     marginVertical: 10,
     borderRadius: 7,
-    shadowColor: "black",
+    shadowColor: "#111111",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
