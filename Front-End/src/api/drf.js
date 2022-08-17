@@ -12,6 +12,8 @@ export default {
     signup: () => HOST + "signup",
     // POST, credentials = {gi: , trackName: ,}
     track: () => HOST + "track/change",
+    // 탈퇴
+    delete: () => HOST + "user/delete",
   },
   // yearmonth(202207)에 존재하는 모든 ToDo 리스트 조회 =>
   // return [{id, title, Dudate}] → 공지 id (연결된 공지 ID 제공)
