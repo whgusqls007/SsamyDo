@@ -7,14 +7,14 @@ import java.time.LocalDate;
 @Data
 public class LunchDto {
 
-    private Long id;
+    private Integer id;
     private String main;
     private String detail;
     private String img;
     private String store;
-    private LocalDate date;
+    private String date;
 
-    public LunchDto(Long id, String main, String detail, String img, String store, LocalDate date) {
+    public LunchDto(Integer id, String main, String detail, String img, String store, String date) {
         this.id = id;
         this.main = main;
         this.detail = detail;
