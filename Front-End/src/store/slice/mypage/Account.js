@@ -40,6 +40,7 @@ export default Account = createSlice({
 
     changeType(state, action) {
       state[3] = action.payload;
+      console.log(action.payload);
     },
     // 로컬에 저장
     saveType(state) {

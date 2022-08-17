@@ -54,6 +54,7 @@ export default function UserDetail() {
               style={UserDetailStyle.detailText}
               name="school"
               size={20}
+              color="#A8D1FF"
             />
             <Text style={UserDetailStyle.detailText}>{user.studentNo}</Text>
           </View>
@@ -63,6 +64,7 @@ export default function UserDetail() {
               style={UserDetailStyle.detailText}
               name="email"
               size={20}
+              color="#A8D1FF"
             />
             <Text style={UserDetailStyle.detailText}>{user.email}</Text>
           </View>
@@ -72,6 +74,7 @@ export default function UserDetail() {
               style={UserDetailStyle.detailText}
               name="flag"
               size={20}
+              color="#A8D1FF"
             />
             <Text style={UserDetailStyle.detailText}>
               {`SSAFY ${user.studentNo[1]}기`}
@@ -83,9 +86,10 @@ export default function UserDetail() {
               style={UserDetailStyle.detailText}
               name="building"
               size={20}
+              color="#A8D1FF"
             />
             <Text style={UserDetailStyle.detailText}>
-              {campusName[user.studentNo[2]]} 캠퍼스 소속
+              {campusName[user.studentNo[2] - 1]} 캠퍼스 소속
             </Text>
           </View>
           {/* 트랙 선택 */}
@@ -94,6 +98,7 @@ export default function UserDetail() {
               style={UserDetailStyle.detailText}
               name="road"
               size={20}
+              color="#A8D1FF"
             />
             <Text style={UserDetailStyle.detailText}>
               {trackName[user.track]}
@@ -108,12 +113,10 @@ export default function UserDetail() {
 const UserDetailStyle = StyleSheet.create({
   back: {
     width: "95%",
-    height: "40%",
+    height: "32%",
     borderWidth: 1,
     marginBottom: "5%",
-    borderBottomEndRadius: 5,
-    borderBottomStartRadius: 5,
-    borderTopEndRadius: 5,
+    borderRadius: 10,
   },
   nameContainer: {
     marginTop: "3%",

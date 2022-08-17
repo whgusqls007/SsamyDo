@@ -16,18 +16,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function MyPage({ navigation }) {
   const dispatch = useDispatch();
   return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
+    <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
       <Text style={MyPageStyles.mypage}>MyPage</Text>
       <UserDetail />
-      <Setting />
+      <Setting navigate={navigation} />
       <TouchableOpacity
-        style={styles.button}
+        style={MyPageStyles.button}
         onPress={() => {
           dispatch({ type: "Account/mode", mode: "탈퇴" });
           navigation.navigate("Verification");
         }}
       >
-        <Text>탈퇴</Text>
+        <Text style={MyPageStyles.deleteText}>회원탈퇴</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,5 +41,17 @@ const MyPageStyles = StyleSheet.create({
     padding: "2%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  button: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    padding: "1%",
+    justifyContent: "center",
+  },
+  deleteText: {
+    fontSize: 15,
+    textDecorationLine: "underline",
+    color: "#A8D1FF",
   },
 });
