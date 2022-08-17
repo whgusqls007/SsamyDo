@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Foundation } from "@expo/vector-icons";
@@ -82,6 +83,7 @@ export default function Alarm() {
             name="clipboard-pencil"
             onPress={() => {
               setShowTrackBtn(!showTrackBtn);
+              setShowBtn(false);
             }}
             size={24}
             color="#A8D1FF"
@@ -94,6 +96,7 @@ export default function Alarm() {
           {trackName.map((tra, idx) => {
             return (
               <TouchableOpacity
+                key={`track-${idx}`}
                 style={[
                   SettingStyle.button,
                   idx === track ? { backgroundColor: "#A8D1FF" } : {},
@@ -122,7 +125,7 @@ export default function Alarm() {
               onPress={() => {
                 setShowBtn(!showBtn);
                 setTypeOne(typeList[1]);
-                setTypeOne(typeList[2]);
+                setTypeTwo(typeList[2]);
               }}
               style={SettingStyle.button}
             >
@@ -134,6 +137,7 @@ export default function Alarm() {
             name="clipboard-pencil"
             onPress={() => {
               setShowBtn(!showBtn);
+              setShowTrackBtn(false);
             }}
             size={24}
             color="#A8D1FF"
@@ -144,22 +148,26 @@ export default function Alarm() {
         <View
           style={[SettingStyle.lineContainer, { justifyContent: "flex-start" }]}
         >
-          <Text style={SettingStyle.button}>{typeList[0]}</Text>
+          <Text style={[SettingStyle.input, { borderWidth: 0 }]}>
+            {typeList[0]}
+          </Text>
           <TextInput
+            maxLength={8}
             autoCapitalize="none"
             value={typeOne}
             onChangeText={(text) => {
               setTypeOne(text);
             }}
-            style={SettingStyle.button}
+            style={SettingStyle.input}
           />
           <TextInput
+            maxLength={8}
             autoCapitalize="none"
             value={typeTwo}
             onChangeText={(text) => {
               setTypeTwo(text);
             }}
-            style={SettingStyle.button}
+            style={SettingStyle.input}
           />
         </View>
       )}
@@ -190,8 +198,18 @@ const SettingStyle = StyleSheet.create({
   button: {
     alignItems: "center",
     backgroundColor: "#EDEDED",
+    padding: "1%",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#A8D1FF",
+    justifyContent: "center",
+  },
+
+  input: {
+    alignItems: "center",
+    backgroundColor: "#EDEDED",
     padding: "2%",
-    margin: "0.5%",
+    margin: "2%",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#A8D1FF",

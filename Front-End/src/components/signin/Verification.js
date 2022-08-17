@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  BackHandler,
 } from "react-native";
 import drf from "../../api/drf";
 import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 async function getTheToken() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -39,11 +41,15 @@ export default function Verification({ navigation }) {
   const dispatch = useDispatch();
   // 비밀번호 변경 등으로 다시 온 경우가 있으므로 유저 정보들 받기
   useEffect(() => {
-    getTheToken().then((e) => setFcmToken(e));
     if (btnName !== "인증") {
       setMMPassword("");
       setEduPassword("");
     }
+    getTheToken()
+      .then((e) => setFcmToken(e))
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   const user = useSelector((state) => state.Account[0]);
   const btnName = useSelector((state) => state.Account[1]);
@@ -245,13 +251,13 @@ export default function Verification({ navigation }) {
                     key={`tra-${idx}`}
                     style={[
                       VerificationStyles.trackBtn,
-                      idx + 1 === track ? { backgroundColor: "#a8d1ff" } : {},
+                      idx === track ? { backgroundColor: "#a8d1ff" } : {},
                     ]}
                     onPress={() => {
                       if (idx === 4) {
                         navigation.navigate("TabNav");
                       }
-                      setTrack(idx + 1);
+                      setTrack(idx);
                     }}
                   >
                     <Text style={{ textAlign: "center" }}>{tra}</Text>
@@ -260,7 +266,7 @@ export default function Verification({ navigation }) {
               })
             ) : (
               <Text style={VerificationStyles.input}>
-                {trackName[track - 1].replace("\n", "")}
+                {trackName[track].replace("\n", "")}
               </Text>
             )}
           </View>
@@ -274,30 +280,15 @@ export default function Verification({ navigation }) {
             </Text>
           </View>
         ) : (
-          <View style={{ height: 22 }}></View>
+          <View style={{ height: "10%", width: "100%" }}></View>
         )}
         <View style={VerificationStyles.submitContainer}>
           {/* 인증버튼(모두 입력된 경우 보냄) */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            {btnName === "탈퇴" && (
-              <TouchableOpacity
-                style={VerificationStyles.submitBtn}
-                onPress={() => {
-                  navigation.goBack();
-                  dispatch({ type: "Account/mode", mode: "재인증" });
-                }}
-              >
-                <Text style={VerificationStyles.submitText}>취소</Text>
-              </TouchableOpacity>
-            )}
-          </View>
           <TouchableOpacity
-            style={VerificationStyles.submitBtn}
+            style={[
+              VerificationStyles.submitBtn,
+              btnName === "탈퇴" && { height: "20%" },
+            ]}
             onPress={() => {
               if (!eduPassword) {
                 setInputError("Edu SSAFY 비밀번호를 입력해주세요");
@@ -312,16 +303,18 @@ export default function Verification({ navigation }) {
                   };
                   login(credentials);
                 } else if (btnName === "탈퇴") {
-                  const credentials = {
-                    username: email,
-                    password: MMPassword,
-                    eduPw: eduPassword,
-                  };
                   axios({
                     method: "POST",
                     url: drf.user.delete(),
                     headers: token,
-                  });
+                  })
+                    .then((res) => {
+                      AsyncStorage.clear();
+                      BackHandler.exitApp();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 } else {
                   // 누락분이 있는 경우 error 텍스트
                   if (!valid) {
@@ -344,10 +337,9 @@ export default function Verification({ navigation }) {
                       password: MMPassword,
                       eduPw: eduPassword,
                       gi: number,
-                      trackName: inputTrackName[track - 1],
+                      trackName: inputTrackName[track],
                       fcmToken: fcmToken,
                     };
-
                     axios({
                       method: "post",
                       url: drf.user.signup(),
@@ -360,6 +352,7 @@ export default function Verification({ navigation }) {
                           "ROLE_USER"
                         );
                         {
+                          setInputError("");
                           // 토큰및 유저 email 및 학번 저장
                           credentials = {
                             username: email,
@@ -382,6 +375,20 @@ export default function Verification({ navigation }) {
           >
             <Text style={VerificationStyles.submitText}>{btnName}</Text>
           </TouchableOpacity>
+          {btnName === "탈퇴" && (
+            <TouchableOpacity
+              style={[
+                VerificationStyles.submitBtn,
+                { backgroundColor: "red", height: "20%" },
+              ]}
+              onPress={() => {
+                navigation.goBack();
+                dispatch({ type: "Account/mode", mode: "재인증" });
+              }}
+            >
+              <Text style={VerificationStyles.submitText}>취소</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -440,12 +447,6 @@ const VerificationStyles = StyleSheet.create({
   inputData: {
     color: "#111111",
   },
-  // inputLabel: {
-  //   flex: 2,
-  //   margin: 8,
-  //   color: "#5ba8ff",
-  //   textAlign: "center",
-  // },
   trackBtn: {
     padding: 5,
     marginTop: 5,

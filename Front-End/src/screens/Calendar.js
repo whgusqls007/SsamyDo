@@ -35,6 +35,7 @@ export default function Calendar({ navigation }) {
   const type = useSelector((state) => {
     return state.Account[3];
   });
+
   return (
     <View style={CalendarStyles.back}>
       <View>
