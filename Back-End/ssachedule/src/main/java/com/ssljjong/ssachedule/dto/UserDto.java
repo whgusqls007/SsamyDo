@@ -30,6 +30,9 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Integer gi;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String fcmToken;
+
     private Set<AuthorityDto> authorityDtoSet;
 
     public static UserDto from(User user) {

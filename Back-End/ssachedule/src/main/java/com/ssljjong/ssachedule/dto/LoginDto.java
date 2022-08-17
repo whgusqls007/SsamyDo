@@ -17,6 +17,7 @@ public class LoginDto {
     @NotNull
     private String eduPw;
 
+
     public LoginDto(String username, String password, String eduPw) {
         this.username = username;
         this.password = password;

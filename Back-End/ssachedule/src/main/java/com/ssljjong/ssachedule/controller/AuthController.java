@@ -27,8 +27,8 @@ import javax.validation.Valid;
 public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserService userService;
-    private final AES_Encryption aes_encryption;
+
+
 //    @PostMapping("/login")
 //    public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) {
 //
@@ -49,7 +49,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        System.out.println("loginDto: " + loginDto);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword());

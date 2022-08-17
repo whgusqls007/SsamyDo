@@ -63,20 +63,6 @@ public class TokenProvider implements InitializingBean {
                 .setExpiration(validity)
                 .compact();
     }
-//    public String createToken(LoginDto user) {
-//
-//        Set<Authority> authorities = userRepository.findUserByUsername(user.getUsername()).get().getAuthorities();
-//        long now = (new Date()).getTime();
-//        Date validity = new Date(now + this.tokenValidityInMilliseconds);
-//
-//        return Jwts.builder()
-//                .setSubject(user.getUsername())
-//                .signWith(key, SignatureAlgorithm.HS512)
-//                .claim(AUTHORITIES_KEY, authorities)
-//                .setExpiration(validity)
-//                .compact();
-//    }
-//
 
 
     // 토큰 => 유저 정보
