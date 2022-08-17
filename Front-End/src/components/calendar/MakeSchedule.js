@@ -116,7 +116,7 @@ export default function MakeSchedule({ navigation }) {
     let currentDate = selectedDate || date;
     const timeSet = () => {
       // Platform이 없으면 계속 실행됨
-      if (Platform.OS === "android"){
+      if (Platform.OS === "android") {
         setShow(false);
         // for iOS, add a button that closes the picker
       }
@@ -145,7 +145,7 @@ export default function MakeSchedule({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const typeName = useSelector((state) => {
-    return state.Setting[0];
+    return state.Account[3];
   });
   // 분류값 버튼 색을 위한
   const btnColor = ["blue", "red", "green"];
