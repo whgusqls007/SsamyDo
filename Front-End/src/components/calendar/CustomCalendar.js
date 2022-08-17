@@ -108,17 +108,7 @@ export default function CustomCalendar() {
     <View>
       <Calendar
         onDayPress={(day) => {
-          // axios({
-          //   url: "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/20220810",
-          //   method: "get",
-          //   // headers: check[2],
-          // })
-          //   .then((res) => {
-          //     console.log(res);
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //   });
+          console.log(check);
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행

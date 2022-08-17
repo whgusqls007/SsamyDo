@@ -1,10 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
 import UserDetail from "../components/myPage/UserDetail";
 import Setting from "../components/myPage/Setting";
 import styles from "../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import drf from "../api/drf";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MyPage({ navigation }) {
   const dispatch = useDispatch();
@@ -28,11 +35,10 @@ export default function MyPage({ navigation }) {
 
 const MyPageStyles = StyleSheet.create({
   mypage: {
-    marginRight: "80%",
     marginTop: "5%",
     borderWidth: 1,
     borderBottomWidth: 0,
-    padding: "1%",
+    padding: "2%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
