@@ -24,19 +24,6 @@ public class TodoController {
 
     private final TodoService todoService;
 
-
-//    @GetMapping("/todolist")
-//    @PreAuthorize("hasAnyRole('USER')")
-//    public ResponseEntity<Map<String, Object>> getTodosByUser(@RequestHeader String Token) {
-//
-//        Authentication authentication = tokenProvider.getAuthentication(Token);
-//        System.out.println(authentication.getCredentials().toString());
-//
-//        Map<String, Object> response = new HashMap<>();
-//
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
-
 //    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/todolist")
     public ResponseEntity<Map<String, Object>> getTodos() {
