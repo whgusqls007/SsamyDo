@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,12 @@ export default function Main({ navigation }) {
   // const todoList = useSelector(state => state.MainTodo)
   const onFetchTodo = (res) => {
     setTodoList(res);
-  };
+  }
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
+  
+
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -34,9 +39,14 @@ export default function Main({ navigation }) {
     });
   }, []);
 
-  useEffect(() => {
-    async function fetchTodo() {
-      const response = await axios.get(baseURL);
+
+  useEffect(()=> {
+    async function fetchTodo(){
+      const response = await axios({
+        method: 'get',
+        url : baseURL,
+        headers: token
+        });
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
@@ -51,9 +61,11 @@ export default function Main({ navigation }) {
       });
   }, []);
 
+
   // console.log(`main todolist ---------------- ${todoList}`)
 
   return (
+
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
         <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
@@ -61,10 +73,8 @@ export default function Main({ navigation }) {
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine />
       {/* <TouchableOpacity
-        style={styles.button}
         onPress={() => {
-          AsyncStorage.removeItem("Account");
-          AsyncStorage.removeItem("Setting");
+          AsyncStorage.clear();
         }}
       >
         <Text>로컬 삭제</Text>

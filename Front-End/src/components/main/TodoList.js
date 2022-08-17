@@ -31,8 +31,7 @@ const DATA = [
   },
 ];
 
-// tododata 받아오기 (main으로 옮겨야할 수도 ..)
-// 받아온 data에서 status 기준으로 필터링
+
 
 export default function TodoList({ navigation, todoList }) {
 
@@ -54,6 +53,18 @@ export default function TodoList({ navigation, todoList }) {
     return result;
   }
 
+  // 필터링 걸었는데 안먹네용 
+  // function checkItem(item) {
+  //   if (item.title.include('건강') && item.startDate.slice(0,8) === ymdFormat()){
+  //     return item;
+  //   }
+  //   else if (item.type === 'submit') {
+  //     return item;
+  //   }
+  //   else if (!item.includes('건강')) {
+  //     return item;
+  //   }
+  // };
 
 
   // useEffect(()=> {
@@ -75,10 +86,6 @@ export default function TodoList({ navigation, todoList }) {
 
   return (
     <View style={styles.todoContainer}>
-      {/* <View>
-        <Text style={styles.titlecontainer}>오늘의 설문</Text>
-      </View> */}
-
       <View style={styles.todobox}>
         <ScrollView>
 
@@ -87,9 +94,9 @@ export default function TodoList({ navigation, todoList }) {
           ))}  */}
           {/* <Text>{todoList[0].id}</Text> */}
 
-          {todoList && (todoList.map((item)=>(
+          {todoList && todoList.map((item)=>(
             <TodoItem item={item} key={item.id} navigation={navigation} />)
-          ))}
+          )}
 
         </ScrollView>
       </View>

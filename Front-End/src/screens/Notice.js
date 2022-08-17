@@ -54,99 +54,124 @@ export default function Notice({ navigation }) {
 
   return (
     <View style={styles.noticecontainer}>
-      <Text style={styles.titlecontainer}>Ssamy Says</Text>
-
-      <View style={styles.searchbar}>
-        <SearchBar
-          maxLength={15}
-          placeholder={"궁금한 공지를 찾아보세요!"}
-          value={value}
-          onChangeText={setValue}
-          onSubmitEditing={() =>
-            navigation.navigate("NoticeSearch", { value: value })
-          }
-        />
+      <View style={styles.titlecontainer}>
+          <Text style={styles.titletext}>Ssamy Says
+            {/* <Image source={require('../images/ssamy.png')} style={styles.imageicon} /> */}
+          </Text>
       </View>
+
+      <KeyboardAvoidingView>
+        <View style={styles.searchbar}>
+          <SearchBar
+            maxLength={15}
+            placeholder={"궁금한 공지를 찾아보세요!"}
+            value={value}
+            onChangeText={setValue}
+            onSubmitEditing={()=>navigation.navigate("NoticeSearch", { value: value, noticeList : noticeList })}
+          />
+        </View>
+      </KeyboardAvoidingView>
 
       <View>
         <View style={styles.buttonbar}>
-          <View style={[{ flexDirection: "row" }]}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                showNotice === "All" && styles.clickbutton,
-              ]}
-              onPress={() => setShowNotice("All")}
-            >
-              <View>
-                <Text style={styles.buttontext}>전체 🐬</Text>
-              </View>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, showNotice === "All" && styles.clickbutton]}
+            onPress={() => setShowNotice("All")}
+          >
+            <View >
+              <Text style={styles.buttontext}>전체 🐬</Text>
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.button, showNotice === "MM" && styles.clickbutton]}
-              onPress={() => setShowNotice("MM")}
-            >
-              <View>
-                {/* <Image 
-                  source={require('../images/mattermost.png')}
+
+          <TouchableOpacity
+            style={[styles.button, showNotice === "MM" && styles.clickbutton]}
+            onPress={() => setShowNotice("MM")}
+          >
+            <View >
+              {/* <Image 
+                source={require('../images/mattermost.png')}
+                style={styles.imageicon}
+              /> */}
+              <Text style={styles.buttontext}>MatterMost</Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity
+            style={[styles.button, showNotice === "Edu" && styles.clickbutton]}
+            onPress={() => setShowNotice("Edu")}
+          >
+            <View >
+              {/* <Image 
+                  source={require('../images/ssafy.png.png')}
                   style={styles.imageicon}
                 /> */}
-                <Text style={styles.buttontext}>MatterMost</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.button,
-                showNotice === "Edu" && styles.clickbutton,
-              ]}
-              onPress={() => setShowNotice("Edu")}
-            >
-              <View>
-                {/* <Image 
-                    source={require('../images/ssafy.png.png')}
-                    style={styles.imageicon}
-                  /> */}
-                <Text style={styles.buttontext}>EduSSAFY</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View>
-          <NoticeList
-            navigation={navigation}
-            select={showNotice}
-            noticeList={noticeList}
-          />
+              <Text style={styles.buttontext}>EduSSAFY</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+
+      <View>
+        <NoticeList
+          navigation={navigation}
+          select={showNotice}
+          noticeList={noticeList}
+        />
+      </View>
     </View>
+      // <View>
+      //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
+      // </View>
   );
 }
 
 const styles = StyleSheet.create({
+
+  header:{
+    flexDirection: "row",
+  },
+
   noticecontainer: {
     backgroundColor: "#ffffff",
     flex: 1,
     flexDirection: "column",
   },
 
-  titlecontainer: {
+
+  titlecontainer : {
+    marginTop: 30,
+    marginBottom: 20,
+    flexDirection: 'column',
+    // paddingBottom: 15,
+    // textAlign: 'left',
+    alignItems: "flex-start",
+    backgroundColor: "#ffffff",
+    // marginBottom: 10,
+  },
+
+  titletext:{
     paddingTop: 30,
     paddingLeft: 20,
     paddingBottom: 15,
     textAlign: "left",
     backgroundColor: "#5ba8ff",
     marginBottom: 10,
+
     fontSize: 30,
+    // paddingTop: 10,
+    paddingLeft: 20,
+    // paddingRight: 20,
     fontWeight: "bold",
+    color: "#000000"
   },
 
   imageicon: {
     padding: 10,
     margin: 5,
+    // height: 100,
+    // width: 100,
     height: 30,
     width: 30,
     resizeMode: "contain",
@@ -155,8 +180,9 @@ const styles = StyleSheet.create({
   buttonbar: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 5,
+    justifyContent: "space-around",
+    marginVertical: 10,
+    marginHorizontal: 20,
   },
 
   button: {
@@ -167,15 +193,14 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 10,
     // width: "auto",
     borderRadius: 8,
-    padding: 10,
-    margin: 10,
+    padding: 12,
+
   },
 
   clickbutton: {
     backgroundColor: "#FFE34F",
     borderRadius: 8,
-    padding: 10,
-    margin: 10,
+    padding: 12,
   },
 
   buttontext: {
@@ -189,3 +214,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 });
+
