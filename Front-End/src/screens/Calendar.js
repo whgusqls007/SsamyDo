@@ -1,15 +1,17 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styles from "../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCalendar from "../components/calendar/CustomCalendar";
 import ScheduleList from "../components/calendar/ScheduleList";
 import { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { AntDesign } from "@expo/vector-icons";
 import {
   ssafySelector,
   typeOneSelector,
   typeTwoSelector,
 } from "../store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Calendar({ navigation }) {
   const dispatch = useDispatch();
@@ -24,21 +26,25 @@ export default function Calendar({ navigation }) {
   useEffect(() => {
     // dispatch(type:"")
   });
-
+  // 현재 선택한 타입
   const check = useSelector((state) => {
-    return state.ScheduleList[0];
+    return state.ScheduleList[4][0];
   });
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[1];
+    return state.Setting[0];
   });
   return (
-    <View>
+    <View style={CalendarStyles.back}>
       <View>
-        <View style={[{ flexDirection: "row", margin: 5 }]}>
+        {/* 타입 선택 버튼  */}
+        <View style={[{ flexDirection: "row" }]}>
           <TouchableOpacity
-            style={styles.button}
+            style={[
+              CalendarStyles.btn,
+              check === "all" ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
             onPress={() => {
               dispatch({
                 type: "ScheduleList/mark",
@@ -52,7 +58,10 @@ export default function Calendar({ navigation }) {
             <Text>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[
+              CalendarStyles.btn,
+              check === 0 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
             onPress={() => {
               dispatch({
                 type: "ScheduleList/mark",
@@ -71,7 +80,10 @@ export default function Calendar({ navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[
+              CalendarStyles.btn,
+              check === 1 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
             onPress={() => {
               dispatch({
                 type: "ScheduleList/mark",
@@ -90,7 +102,10 @@ export default function Calendar({ navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[
+              CalendarStyles.btn,
+              check === 2 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
             onPress={() => {
               dispatch({
                 type: "ScheduleList/mark",
@@ -108,13 +123,30 @@ export default function Calendar({ navigation }) {
               <Text>{type[2]}</Text>
             </View>
           </TouchableOpacity>
+          {/* 나중에 삭제해야함 */}
+          <TouchableOpacity
+            style={CalendarStyles.btn}
+            onPress={() => {
+              AsyncStorage.removeItem("Account");
+              AsyncStorage.removeItem("Setting");
+            }}
+          >
+            <Text>삭제용</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={CalendarStyles.btn}
+            onPress={() => {
+              navigation.navigate("Verification");
+            }}
+          >
+            <Text>이동</Text>
+          </TouchableOpacity>
         </View>
         <CustomCalendar />
         <ScheduleList navigation={navigation} />
       </View>
       {/* 일정 추가 버튼 */}
       <TouchableOpacity
-        style={styles.button}
         onPress={() => {
           // schedule 내용 지우기
           dispatch({ type: "Schedule/clear" });
@@ -122,8 +154,34 @@ export default function Calendar({ navigation }) {
           navigation.navigate("MakeSchedule");
         }}
       >
-        <Text>일정 추가</Text>
+        <AntDesign
+          style={{ marginLeft: 360, marginTop: 3 }}
+          name="pluscircle"
+          size={40}
+          color="#A8D1FF"
+        />
       </TouchableOpacity>
     </View>
   );
 }
+
+const CalendarStyles = StyleSheet.create({
+  // 전체 화면 스타일
+  back: {
+    backgroundColor: "#EDEDED",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  // 일정분류 스타일
+  btn: {
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 3,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    height: "auto",
+    alignItems: "center",
+  },
+});

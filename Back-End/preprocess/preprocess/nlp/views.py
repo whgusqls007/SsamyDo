@@ -30,7 +30,6 @@ driver = Driver({
         "port" : 443,
     })
 
-pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 okt = Okt()
 stopwords = [
@@ -89,32 +88,44 @@ def preprocess(request):
     # 파일 있는지 확인
     text = request.data.get('text')
     file_ids = request.data.get('file_ids')
+    print(type(file_ids))
+    print(file_ids)
     post_id = request.data.get('post_id')
 
     total_message = text
     
     if file_ids:
-        file_info = driver.posts.get_file_info_for_post(post_id)
+        for file_id in file_ids.split(","):
+            try:
+                data = driver.files.get_file(file_ids).content
+
+                encoded_img = np.fromstring(data, dtype = np.uint8)
+                img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
         
-        if 'image' in file_info[0]['mime_type']:
-            data = driver.files.get_file(file_ids).content
+                print("이까진됨")
+                ocr = pytesseract.image_to_string(img, 'eng+Hangul')
+                print(ocr)
+                logger.info(ocr)
 
-
-            encoded_img = np.fromstring(data, dtype = np.uint8)
-            img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
-
-            ocr = pytesseract.image_to_string(img, lang = 'kor+eng', config="")
-   
-            total_message = text + "\n" + ocr
+                total_message = text + "\n" + ocr
             
+            except Exception as e:
+                logger.info(e)
+                print(e)
 
     if not file_ids:
-        file_ids = '[]'
+        file_ids = ''
 
         
     if predict(total_message):
         channel_id = request.data.get('channel_id')
-        title = total_message.split("\n")[1]
+        cnt = 1
+        while True:
+            title = total_message.split("\n")[cnt]
+            if title:
+                break
+            else:
+                cnt += 1
         description = total_message
         timestamp = request.data.get('timestamp')
         date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
@@ -123,18 +134,22 @@ def preprocess(request):
             "title": title,
             "file_ids": file_ids,
             "description": description,
-            "date" : date
+            "date" : date,
+            "source" : "M",
         }
+
         serializer = NoticeSerializer(data=notice)
                 
 
+     
         if serializer.is_valid():
+
             serializer.save()
             logger.info("저장 완료", notice)
             return Response(status=status.HTTP_201_CREATED)    
         
 
-    logger.info("저장 안됨", text)
+    logger.info("저장 안됨")
     return Response(status=status.HTTP_200_OK)
 
 
@@ -142,48 +157,79 @@ def preprocess(request):
 
 @api_view(['POST'])
 def make_todo(request):
+
     text = request.data.get('text')
     # MatterMostDriver 로그인
     driver.login()
 
     channel_id = request.data.get('channel_id')
-    title = text.split('\n')[1].replace('#', '')
+    cnt = 1
+    while True:
+        if text.split('\n')[cnt]:
+            break
+        cnt += 1
+
+    title = text.split('\n')[cnt].replace('#', '')
+    string = text.split('\n')[cnt+1]
+    duedate = re.sub(r'[^0-9]', '', string)
+
+
+    if duedate[:2] != '20'and duedate[:2] != 22:
+        duedate = '2022' + duedate
+    elif duedate[:2] == 22:
+        duedate = '20' + duedate
     description = text
     timestamp = request.data.get('timestamp')
-    datetime = str(datetime.datetime.fromtimestamp(timestamp/1000)).split()[0].replace('-','')
 
+    date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
+        
     file_ids = request.data.get('file_ids')
     
+    if not file_ids:
+        file_ids = '[]'
+
     notice = {
         "channel_id": channel_id,
         "title": title,
         "file_ids": file_ids,
         "description": description,
-        "date": datetime,
+        "date" : date,
+        "source" : "M",
     }
-    
+
     serializer = NoticeSerializer(data=notice)
     
-    if serializer.is_valid(raise_exception=True):
+    if serializer.is_valid():
         notice_id = serializer.save()
-        print("공지 저장완료")
+        logger.info("저장 완료", notice)
+    
+    file_id_list = file_ids.split(',')
+    
+    for file_id in file_id_list:
+        res = driver.files.get_file(file_id)
+        filename = f"{file_id}.jpg"
+        completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
+        with open(completeName, "wb") as f:
+            f.write(res.content)
 
-    duedate = text.split('\n')[2].replace('#', '')
     todo = {
         "title": title,
         "description":  description,
         "notice_id": notice_id,
         "file_ids": file_ids,
-        "date": datetime,
-        "duedate": duedate, 
+        "start_date": date,
+        "due_date": duedate, 
+        "type": 0,
     }
-    
+        
     serializer = TodoSerializer(data=todo)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
+        logger.info(serializer)
         print("Todo 저장완료")
-    
+   
         return Response(status=status.HTTP_201_CREATED)    
+    print("Todo 저장실패")
     return Response(status=status.HTTP_200_OK)
 
 
@@ -192,8 +238,5 @@ def push(request):
     text = request.data.get('text')
     title = text.split('\n')[1].replace('#', '')
     
-    push = {
-        "title":title
-    }
     print("푸시알림 보냄")
     return Response(status=status.HTTP_200_OK)
