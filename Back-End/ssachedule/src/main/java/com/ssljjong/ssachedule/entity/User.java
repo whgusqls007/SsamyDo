@@ -30,6 +30,8 @@ public class User {
     @Column(name = "edu_pw")
     private String eduPw;
 
+    @Column(name = "fcmtoken")
+    private String fcmToken;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
@@ -65,6 +67,16 @@ public class User {
         this.password = userPw;
         this.eduPw = eduPw;
     }
+
+    public User(Long id, String username, String password, String eduPw, String fcmToken, Set<Authority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.eduPw = eduPw;
+        this.fcmToken = fcmToken;
+        this.authorities = authorities;
+    }
+
     // 연관 메서드 //
 
     // 트랙을 바꾸는 메서드
