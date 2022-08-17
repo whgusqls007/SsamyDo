@@ -8,8 +8,10 @@ import {
 import styles from "../../../app.module.css";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { back } from "react-native/Libraries/Animated/Easing";
+import { useState, useEffect } from "react";
+// import { back } from "react-native/Libraries/Animated/Easing";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 
 export default function Agreement({ navigation }) {
   // 약관 동의 및 다음 버튼 활성화 변수
@@ -139,7 +141,7 @@ export default function Agreement({ navigation }) {
         <View style={{ height: 29 }}></View>
       )}
       <TouchableOpacity
-        style={[styles.button, { width: 50, marginLeft: 350 }]}
+        style={AgreementStyles.submitBtn}
         onPress={() => {
           if (agreement) {
             navigation.navigate("Verification");
@@ -149,7 +151,7 @@ export default function Agreement({ navigation }) {
           }
         }}
       >
-        <Text>다음</Text>
+        <Text styles={AgreementStyles.submitText}>다음</Text>
       </TouchableOpacity>
     </View>
   );
@@ -186,5 +188,19 @@ const AgreementStyles = StyleSheet.create({
   description: {
     fontSize: 12,
     marginHorizontal: 8,
+  },
+  submitBtn: {
+    alignItems: "center",
+    backgroundColor: "#5ba8ff",
+    padding: 10,
+    margin: 10,
+    marginTop: 20,
+    borderRadius: 8,
+    width: "92%",
+  },
+  submitText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
