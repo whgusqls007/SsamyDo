@@ -71,7 +71,6 @@ export default function Verification({ navigation }) {
   // email 여부를 검증하는 함수
   function emailValid(email) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      console.log("여기 실행");
       setValid(true);
     } else {
       setValid(false);
