@@ -13,7 +13,7 @@ public class Todo {
 
     @Id @GeneratedValue
     @Column(name = "todo_id")
-    private Long id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "notice_id")
@@ -22,6 +22,8 @@ public class Todo {
     private String title;
     private String description;
     private TodoType type;
+
+    private String startDate;
     private String dueDate;
 
     // 연관 메서드
@@ -32,12 +34,13 @@ public class Todo {
     // 생성 메서드
 
 
-    public Todo(Long id, Notice notice, String title, String description, TodoType type, String dueDate) {
+    public Todo(Integer id, Notice notice, String title, String description, TodoType type, String startDate, String dueDate) {
         this.id = id;
         this.notice = notice;
         this.title = title;
         this.description = description;
         this.type = type;
+        this.startDate = startDate;
         this.dueDate = dueDate;
     }
 }

@@ -14,7 +14,7 @@ public class MMNotice extends Notice {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-    public MMNotice(Long id, String title, String description, String date, String file, Channel channel) {
+    public MMNotice(Integer id, String title, String description, String date, String file, Channel channel) {
         super(id, title, description, date, file);
         this.channel = channel;
     }
