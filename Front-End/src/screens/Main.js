@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,26 +57,25 @@ export default function Main({ navigation }) {
     });
   }, []);
 
-  
+
 
   // console.log(`main todolist ---------------- ${todoList}`)
 
   return (
+
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
         <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
       </View>
       <TodoList navigation={navigation} todoList={todoList}/>
       <TimeLine />
-      {/* <TouchableOpacity
-        style={styles.button}
+      <TouchableOpacity
         onPress={() => {
-          AsyncStorage.removeItem("Account");
-          AsyncStorage.removeItem("Setting");
+          AsyncStorage.clear();
         }}
       >
         <Text>로컬 삭제</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 }
