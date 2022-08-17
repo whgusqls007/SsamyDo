@@ -13,22 +13,22 @@ public abstract class Notice {
     @Id
     @GeneratedValue
     @Column(name = "notice_id")
-    private Long id;
+    private Integer id;
 
     private String title;
     private String description;
     private String date;
-    private String file;
+    private String file_ids;
 
-    public Notice(Long id, String title, String description, String date, String file) {
+    public Notice(Integer id, String title, String description, String date, String file) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.date = date;
-        this.file = file;
+        this.file_ids = file;
     }
 
-    public Notice(Long id, String title, String description, String date) {
+    public Notice(Integer id, String title, String description, String date) {
         this.id = id;
         this.title = title;
         this.description = description;

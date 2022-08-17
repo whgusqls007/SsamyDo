@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TodoRepository extends JpaRepository<Todo, Long>{
+public interface TodoRepository extends JpaRepository<Todo, Integer>{
 
     /**
      * * find Todos by Channel
@@ -56,6 +56,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
     List<Todo> findTodosByUserAndDueDate(@Param("userId") Long userId, @Param("dueDate") String dueDate);
 
 
-    @Query("select t from Todo t where t.dueDate < :dueDate")
-    List<Todo> findTodosByDueDate(@Param("dueDate") String date);
+    @Query("select t from Todo t where t.dueDate >= :today")
+    List<Todo> findTodosByDueDate(@Param("today") String today);
 }

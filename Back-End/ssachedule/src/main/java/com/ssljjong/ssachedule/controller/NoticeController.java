@@ -1,7 +1,6 @@
 package com.ssljjong.ssachedule.controller;
 
 import com.ssljjong.ssachedule.dto.NoticeDto;
-import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
 import com.ssljjong.ssachedule.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/notice")
+@RequestMapping("/api/notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
