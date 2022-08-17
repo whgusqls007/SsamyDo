@@ -14,7 +14,7 @@ export default function Main({ navigation }) {
   // const todoList = useSelector(state => state.MainTodo)
   const onFetchTodo = (res) => {
     setTodoList(res);
-  }  
+  };
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -34,23 +34,22 @@ export default function Main({ navigation }) {
     });
   }, []);
 
-  useEffect(()=> {
-    async function fetchTodo(){
+  useEffect(() => {
+    async function fetchTodo() {
       const response = await axios.get(baseURL);
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
-      return response.data
-
+      return response.data;
     }
-    fetchTodo().then((res) => {
-      // console.log(`넘어온 res ${res}`)
-      onFetchTodo(res.data)
-      dispatch({type: "MainTodo/import", payload: res.data});
-    }).catch((err) => {
-      console.log(err)
-    });
+    fetchTodo()
+      .then((res) => {
+        // console.log(`넘어온 res ${res}`)
+        onFetchTodo(res.data);
+        dispatch({ type: "MainTodo/import", payload: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  
 
   // console.log(`main todolist ---------------- ${todoList}`)
 
@@ -59,7 +58,7 @@ export default function Main({ navigation }) {
       <View style={mainStyles.helloContainer}>
         <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
       </View>
-      <TodoList navigation={navigation} todoList={todoList}/>
+      <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine />
       {/* <TouchableOpacity
         style={styles.button}
