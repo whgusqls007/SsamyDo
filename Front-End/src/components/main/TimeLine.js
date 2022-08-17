@@ -12,8 +12,13 @@ import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
 import axios from "axios";
 import LunchBoard from "./LunchBoard";
-
-export default function TimeLine() {
+import drf from "../../api/drf";
+import { useSelector } from "react-redux";
+export default function TimeLine({ navigation }) {
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   // 수업일과 주말을 구분하는 변수
   let weekdays = "true";
 
@@ -145,7 +150,13 @@ export default function TimeLine() {
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      const response = await axios({
+        method: "get",
+        url: drf.plan.weekly(ymdFormat(findMonday())),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
       return response.data;
     }
     fetchData().then((res) => {
@@ -305,7 +316,7 @@ export default function TimeLine() {
       >
         <View style={timelineStyles.centeredView}>
           <View style={timelineStyles.modalView}>
-            <LunchBoard />
+            <LunchBoard navigation={navigation} />
             <Pressable
               style={[timelineStyles.closeBtn]}
               onPress={() => setShowLunch(!showLunch)}

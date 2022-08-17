@@ -6,20 +6,20 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getTodo } from "../store/slice/main/MainTodo";
 import axios from "axios";
+import drf from "../api/drf";
 
 export default function Main({ navigation }) {
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
   // const todoList = useSelector(state => state.MainTodo)
   const onFetchTodo = (res) => {
     setTodoList(res);
-  }
-  const token = useSelector((state) => {
-    return state.Account[2];
-  });
-  
-
+  };
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -39,14 +39,17 @@ export default function Main({ navigation }) {
     });
   }, []);
 
-
-  useEffect(()=> {
-    async function fetchTodo(){
+  useEffect(() => {
+    async function fetchTodo() {
       const response = await axios({
-        method: 'get',
-        url : baseURL,
-        headers: token
-        });
+        method: "get",
+        url: drf.todo(),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+
+      // get(baseURL);
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
@@ -61,17 +64,15 @@ export default function Main({ navigation }) {
       });
   }, []);
 
-
   // console.log(`main todolist ---------------- ${todoList}`)
 
   return (
-
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
         <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
       </View>
       <TodoList navigation={navigation} todoList={todoList} />
-      <TimeLine />
+      <TimeLine navigation={navigation} />
       {/* <TouchableOpacity
         onPress={() => {
           AsyncStorage.clear();
