@@ -24,7 +24,14 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String eduPw;
 
-    private Track track;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String trackName;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Integer gi;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String fcmToken;
 
     private Set<AuthorityDto> authorityDtoSet;
 

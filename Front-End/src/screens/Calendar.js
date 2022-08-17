@@ -33,7 +33,7 @@ export default function Calendar({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[0];
+    return state.Account[3];
   });
   return (
     <View style={CalendarStyles.back}>

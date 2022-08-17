@@ -3,6 +3,7 @@ package com.ssljjong.ssachedule.controller;
 import antlr.Token;
 import com.ssljjong.ssachedule.dto.NoticeDto;
 import com.ssljjong.ssachedule.dto.TodoDto;
+import com.ssljjong.ssachedule.entity.Todo;
 import com.ssljjong.ssachedule.jwt.TokenProvider;
 import com.ssljjong.ssachedule.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -21,28 +22,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TodoController {
 
-    private TodoService todoService;
-    private TokenProvider tokenProvider;
-
-//    @GetMapping("/todolist")
-//    @PreAuthorize("hasAnyRole('USER')")
-//    public ResponseEntity<Map<String, Object>> getTodosByUser(@RequestHeader String Token) {
-//
-//        Authentication authentication = tokenProvider.getAuthentication(Token);
-//        System.out.println(authentication.getCredentials().toString());
-//
-//        Map<String, Object> response = new HashMap<>();
-//
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    private final TodoService todoService;
 
 //    @PreAuthorize("hasAnyRole('USER')")
-    @GetMapping("/todolist/{date}")
-    public ResponseEntity<Map<String, Object>> getTodosByUser(@PathVariable String date) {
-
-        List<TodoDto> todos = todoService.getTodosFromDate(date);
+    @GetMapping("/todolist")
+    public ResponseEntity<Map<String, Object>> getTodos() {
+        List<Todo> todos = todoService.getTodosFromDate();
         Map<String, Object> response = new HashMap<>();
-
         response.put("data", todos);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

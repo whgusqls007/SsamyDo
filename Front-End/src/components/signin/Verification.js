@@ -9,12 +9,37 @@ import {
 } from "react-native";
 import drf from "../../api/drf";
 import { Ionicons } from "@expo/vector-icons";
+import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
+async function getTheToken() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== "granted") {
+    alert("Failed to get push token for push notification!");
+    return null;
+  }
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  await Notifications.getPermissionsAsync();
+  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  return token;
+}
+
 export default function Verification({ navigation }) {
+  const [fcmToken, setFcmToken] = useState("");
   const dispatch = useDispatch();
   // 비밀번호 변경 등으로 다시 온 경우가 있으므로 유저 정보들 받기
   useEffect(() => {
+    getTheToken().then((e) => setFcmToken(e));
     if (btnName !== "인증") {
       setMMPassword("");
       setEduPassword("");
@@ -87,6 +112,11 @@ export default function Verification({ navigation }) {
         setInputError("입력 내용을 다시 확인해주세요");
       });
 
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
+
   return (
     <View style={VerificationStyles.container}>
       <View style={VerificationStyles.header}>
@@ -112,6 +142,7 @@ export default function Verification({ navigation }) {
               placeholderTextColor="#6986A8"
               onChangeText={(text) => {
                 setStudentNo(text);
+                setInputError("");
                 if (studentNo[1]) {
                   setNumber(Number(studentNo[1]));
                 } else {
@@ -130,9 +161,11 @@ export default function Verification({ navigation }) {
             <TextInput
               style={{ width: "100%" }}
               placeholder="교육생 이름"
+              autocapitalize={false}
               placeholderTextColor="#6986A8"
               onChangeText={(text) => {
                 setName(text);
+                setInputError("");
               }}
             />
           ) : (
@@ -152,7 +185,9 @@ export default function Verification({ navigation }) {
               onChangeText={(text) => {
                 setEmail(text);
                 emailValid(text);
+                setInputError("");
               }}
+              autoCapitalize="none"
             />
           ) : (
             <Text style={VerificationStyles.input}>{email}</Text>
@@ -169,7 +204,11 @@ export default function Verification({ navigation }) {
             value={eduPassword}
             placeholder="EduSSAFY 패스워드"
             placeholderTextColor="#6986A8"
-            onChangeText={(text) => setEduPassword(text)}
+            onChangeText={(text) => {
+              setInputError("");
+              setEduPassword(text);
+            }}
+            autoCapitalize="none"
           />
         </View>
         {/* MatterMost 비밀번호 */}
@@ -183,14 +222,21 @@ export default function Verification({ navigation }) {
             value={MMPassword}
             placeholder="MatterMost 패스워드"
             placeholderTextColor="#6986A8"
-            onChangeText={(text) => setMMPassword(text)}
+            onChangeText={(text) => {
+              setInputError("");
+              setMMPassword(text);
+            }}
+            autoCapitalize="none"
           />
         </View>
         {/* 트랙 선택 */}
-        <View style={VerificationStyles.trackContainer}>
-          {btnName !== "인증" && (
-            <Text style={VerificationStyles.inputLabel}>소속 트랙</Text>
-          )}
+        <View
+          style={
+            btnName === "인증"
+              ? VerificationStyles.trackContainer
+              : VerificationStyles.inputBox
+          }
+        >
           <View style={{ flexDirection: "row" }}>
             {btnName === "인증" ? (
               trackName.map((tra, idx) => {
@@ -201,7 +247,12 @@ export default function Verification({ navigation }) {
                       VerificationStyles.trackBtn,
                       idx + 1 === track ? { backgroundColor: "#a8d1ff" } : {},
                     ]}
-                    onPress={() => setTrack(idx + 1)}
+                    onPress={() => {
+                      if (idx === 4) {
+                        navigation.navigate("TabNav");
+                      }
+                      setTrack(idx + 1);
+                    }}
                   >
                     <Text style={{ textAlign: "center" }}>{tra}</Text>
                   </TouchableOpacity>
@@ -215,13 +266,15 @@ export default function Verification({ navigation }) {
           </View>
         </View>
         {/* 에러 메시지(누락된 부분이 있는 경우) */}
-        {inputError && (
+        {inputError ? (
           <View style={{ flexDirection: "row", margin: 4 }}>
             <Ionicons name="warning" size={19} color="red" />
             <Text style={{ fontWeight: "bold", color: "red" }}>
               {inputError}
             </Text>
           </View>
+        ) : (
+          <View style={{ height: 22 }}></View>
         )}
         <View style={VerificationStyles.submitContainer}>
           {/* 인증버튼(모두 입력된 경우 보냄) */}
@@ -264,7 +317,11 @@ export default function Verification({ navigation }) {
                     password: MMPassword,
                     eduPw: eduPassword,
                   };
-                  // 탈퇴로 보낼 url 필요
+                  axios({
+                    method: "POST",
+                    url: drf.user.delete(),
+                    headers: token,
+                  });
                 } else {
                   // 누락분이 있는 경우 error 텍스트
                   if (!valid) {
@@ -288,7 +345,9 @@ export default function Verification({ navigation }) {
                       eduPw: eduPassword,
                       gi: number,
                       trackName: inputTrackName[track - 1],
+                      fcmToken: fcmToken,
                     };
+
                     axios({
                       method: "post",
                       url: drf.user.signup(),
