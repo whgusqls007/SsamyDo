@@ -40,7 +40,10 @@ export default function NoticeDetail({ navigation, route }) {
 
   return (
     <View style={styles.detailcontainer}>
-      <Text style={styles.titlecontainer}>Ssamy Says</Text>
+      <View style={styles.titlecontainer}>
+          <Text style={styles.titletext}>Ssamy Says</Text>
+        </View>
+
       <View style={styles.detailbox}>
         <Text style={styles.detailtitle}>{item[0].title}</Text>
         <ScrollView>
@@ -58,7 +61,7 @@ export default function NoticeDetail({ navigation, route }) {
         <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.pop()}>
           <Text>돌아가기 ⬅ </Text>
         </TouchableOpacity>
-    </View>
+      </View>
     </View>
   );
 }
@@ -68,15 +71,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-  titlecontainer: { 
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingBottom: 15,
-    textAlign: 'left',
-    backgroundColor: "#5ba8ff",
-    marginBottom: 10,
+    titlecontainer : {
+    marginTop: 30,
+    marginBottom: 20,
+    flexDirection: 'column',
+    // paddingBottom: 15,
+    // textAlign: 'left',
+    alignItems: "flex-start",
+    backgroundColor: "#ffffff",
+    // marginBottom: 10,
+  },
+
+  titletext:{
     fontSize: 30,
+    // paddingTop: 10,
+    paddingLeft: 20,
+    // paddingRight: 20,
     fontWeight: "bold",
+    color: "#000000"
   },
   detailbox : {
     margin: 20,
