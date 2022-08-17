@@ -4,7 +4,11 @@ from requests import post
 from requests import models
 from requests.models import Response
 import json
+import numpy as np
+import cv2
+import pytesseract
 
+pytesseract.pytesseract.tesseract_cmd = "C://Program Files/Tesseract-OCR"
 foo = Driver(
     {
         "url": "meeting.ssafy.com",
@@ -15,8 +19,22 @@ foo = Driver(
 )
 
 foo.login()
-
+# user_id = foo.users.get_user(user_id='me')['id']
+# print(foo.teams.get_user_teams(user_id))
+import os
+file_id = "sqj4o3o7stdofeimh1tef71qga"
+# # for file_id in file_ids:
+res = foo.files.get_file(file_id)
+    # encoded_img = np.fromstring(res.content, dtype = np.uint8)
+    # img = cv2.imdecode(encoded_img, cv2.IMREAD_GRAYSCALE)
+    
+    # ocr = pytesseract.image_to_string(encoded_img, lang="kor")
+filename = f"{file_id}.jpg"  
+completeName = os.path.join("./images", filename)       
+with open(completeName, "wb") as f:
+    f.write(res.content)
 # print("로그인 성공")
+
 
 
 # # print(foo.users.get_user(user_id='me'))
@@ -57,37 +75,37 @@ foo.login()
 # df = pd.read_csv('mattermost_data.txt', sep="§")
 # print(df)
 
-res = foo.files.get_file("sqj4o3o7stdofeimh1tef71qga")
-print(res.headers)
-import base64
 
-encoded = base64.b64encode(res.content)
-# # print(encoded)
+# print(res.headers)
+# import base64
 
-# imgdata = base64.b64decode(encoded)
-filename = "some_image.jpg"  # I assume you have a way of picking unique filenames
-with open(filename, "wb") as f:
-    f.write(res.content)
+# encoded = base64.b64encode(res.content)
+# # # print(encoded)
+
+# # imgdata = base64.b64decode(encoded)
+# I assume you have a way of picking unique filenames
 
 
-tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
-import pytesseract
-import cv2
+# tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
-oem = 3
-psm = 4
+# import pytesseract
+# import cv2
 
-traineddata = "kor"
+# oem = 3
+# psm = 4
 
-# img = cv2.imread(encoded)
-import numpy as np
+# # traineddata = "kor"
 
-encoded_img = np.fromstring(res.content, dtype=np.uint8)
-img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+# import numpy as np
+# # img = cv2.imread()
 
-ocr_result = pytesseract.image_to_string(
-    image=img, lang=traineddata, config="--oem " + str(oem) + " --psm " + str(psm)
-)
+# encoded_img = np.fromstring(res.content, dtype=np.uint8)
+# img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
 
-print(ocr_result)
+# result = pytesseract.image_to_string(img, "kor", config="--oem 3 --psm 4")
+# # ocr_result = pytesseract.image_to_string(
+# #     image=img, lang="kor", config="--oem " + str(oem) + " --psm " + str(psm)
+# # )
+
+# print(result)
