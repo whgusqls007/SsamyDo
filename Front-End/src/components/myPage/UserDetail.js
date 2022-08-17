@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FontAwesome,
@@ -69,38 +69,49 @@ export default function UserDetail() {
               {user.name}
             </Text>
           </View>
-          <View />
-          {/* 학번 */}
-          <View style={UserDetailStyle.inputContainer}>
-            <Ionicons style={{ margin: 5 }} name="school" size={20} />
-            <Text style={{ margin: 5, color: "grey" }}>{user.studentNo}</Text>
-          </View>
-          {/* 이메일 */}
-          <View style={UserDetailStyle.inputContainer}>
-            <Fontisto style={{ margin: 5 }} name="email" size={20} />
-            <Text style={{ margin: 5, color: "grey" }}>{user.email}</Text>
-          </View>
-          {/* 기수 */}
-          <View style={UserDetailStyle.inputContainer}>
-            <FontAwesome style={{ margin: 5 }} name="flag" size={20} />
-            <Text style={UserDetailStyle.inputLabel}>
-              {`SSAFY ${user.studentNo[1]}기`}{" "}
-            </Text>
-          </View>
-          {/* 캠퍼스*/}
-          <View style={UserDetailStyle.inputContainer}>
-            <FontAwesome5 style={{ margin: 5 }} name="building" size={20} />
-            <Text style={UserDetailStyle.inputLabel}>
-              {campusName[user.studentNo[2]]} 캠퍼스 소속
-            </Text>
-          </View>
-          {/* 트랙 선택 */}
-          <View style={UserDetailStyle.inputContainer}>
-            <FontAwesome5 style={{ margin: 5 }} name="road" size={20} />
-            <Text>트랙 </Text>
-            {!showTrackBtn && (
-              <Text>{track && trackName[track].replace("\n", "")} </Text>
-            )}
+          {/* 카드 내부 내용 */}
+          <View style={{ flexDirection: "row" }}>
+            {/* 그림 */}
+            <View
+              style={{ borderWidth: 1, width: "50%", height: "90%", margin: 5 }}
+            />
+            {/* 인적사항 모임 */}
+            <View>
+              {/* 학번 */}
+              <View style={UserDetailStyle.inputContainer}>
+                <Ionicons style={{ margin: 5 }} name="school" size={20} />
+                <Text style={{ margin: 5, color: "grey" }}>
+                  {user.studentNo}
+                </Text>
+              </View>
+              {/* 이메일 */}
+              <View style={UserDetailStyle.inputContainer}>
+                <Fontisto style={{ margin: 5 }} name="email" size={20} />
+                <Text style={{ margin: 5, color: "grey" }}>{user.email}</Text>
+              </View>
+              {/* 기수 */}
+              <View style={UserDetailStyle.inputContainer}>
+                <FontAwesome style={{ margin: 5 }} name="flag" size={20} />
+                <Text style={UserDetailStyle.inputLabel}>
+                  {`SSAFY ${user.studentNo[1]}기`}{" "}
+                </Text>
+              </View>
+              {/* 캠퍼스*/}
+              <View style={UserDetailStyle.inputContainer}>
+                <FontAwesome5 style={{ margin: 5 }} name="building" size={20} />
+                <Text style={UserDetailStyle.inputLabel}>
+                  {campusName[user.studentNo[2]]} 캠퍼스 소속
+                </Text>
+              </View>
+              {/* 트랙 선택 */}
+              <View style={UserDetailStyle.inputContainer}>
+                <FontAwesome5 style={{ margin: 5 }} name="road" size={20} />
+                <Text>트랙 </Text>
+                {!showTrackBtn && (
+                  <Text>{track && trackName[track].replace("\n", "")} </Text>
+                )}
+              </View>
+            </View>
           </View>
           {showTrackBtn && (
             <View style={{ flexDirection: "row" }}>

@@ -1,8 +1,9 @@
-import { React, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { React, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
 import axios from "axios";
 
 export default function LunchMenu() {
+  const [lunchData, setLunchData] = useState();
   function ymdFormat(oriDate) {
     let result =
       oriDate.getFullYear().toString() +
@@ -11,25 +12,38 @@ export default function LunchMenu() {
     return result;
   }
   // axios를 통해서 이번 주 점심 받아오기
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
-
-  // axios({
-  //   method: "get",
-  //   url: `${baseURL}${ymdFormat(new Date())}`,
-  // })
-  //   .then((response) => {
-  //     console.log("Weekly Axios 요청 성공!");
-  //     return response.data.data;
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response);
-  //   });
-
-  //
+  const baseURL = "http://i7e204.p.ssafy.io:8080/api/lunch/date/";
+  useEffect(() => {
+    async function fetchData() {
+      const lunchData = await axios.get(`${baseURL}20220816`);
+      // const lunchData = await axios.get(`${baseURL}${ymdFormat(new Date())}`);
+      return lunchData.data;
+    }
+    fetchData().then((res) => {
+      console.log("Lunch Axios 요청 성공!");
+      setLunchData(res);
+    });
+    fetchData().catch((err) => {
+      console.log(err.response);
+    });
+  }, []);
 
   return (
     <View>
-      <Text>오늘 점심이 궁금해?!</Text>
+      {lunchData && (
+        <View>
+          {lunchData.data.map((item) => (
+            <View key={item.id}>
+              <Image source={{ uri: `"${item.img}"` }} />
+              <View>
+                <Text>{item.store}</Text>
+                <Text>{item.main}</Text>
+                <Text>{item.detail}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
     </View>
   );
 }

@@ -155,7 +155,7 @@ export default function Calendar({ navigation }) {
         }}
       >
         <AntDesign
-          style={{ marginLeft: 360, marginTop: 3 }}
+          style={{ marginLeft: 360, marginTop: 1 }}
           name="pluscircle"
           size={40}
           color="#A8D1FF"
