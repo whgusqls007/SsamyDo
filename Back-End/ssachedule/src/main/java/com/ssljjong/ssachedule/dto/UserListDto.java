@@ -5,9 +5,11 @@ import lombok.Data;
 @Data
 public class UserListDto {
 
-    private Long id;
+    private String username;
+    private String eduPw;
 
-    public UserListDto(Long id) {
-        this.id = id;
+    public UserListDto(String username, String eduPw) {
+        this.username = username;
+        this.eduPw = eduPw;
     }
 }

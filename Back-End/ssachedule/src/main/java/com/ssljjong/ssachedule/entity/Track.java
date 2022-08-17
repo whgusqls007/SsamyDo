@@ -18,10 +18,10 @@ public class Track {
 
     @Id @GeneratedValue
     @Column(name = "track_id")
-    private Long id;
+    private Integer id;
 
     private String name;
-    private int gi;
+    private Integer gi;
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
