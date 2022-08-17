@@ -33,8 +33,9 @@ export default function Calendar({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[0];
+    return state.Account[3];
   });
+
   return (
     <View style={CalendarStyles.back}>
       <View>
@@ -147,6 +148,7 @@ export default function Calendar({ navigation }) {
       </View>
       {/* 일정 추가 버튼 */}
       <TouchableOpacity
+        style={CalendarStyles.addBtn}
         onPress={() => {
           // schedule 내용 지우기
           dispatch({ type: "Schedule/clear" });
@@ -154,12 +156,7 @@ export default function Calendar({ navigation }) {
           navigation.navigate("MakeSchedule");
         }}
       >
-        <AntDesign
-          style={{ marginLeft: 360, marginTop: 3 }}
-          name="pluscircle"
-          size={40}
-          color="#A8D1FF"
-        />
+        <AntDesign name="pluscircle" size={40} color="#A8D1FF" />
       </TouchableOpacity>
     </View>
   );
@@ -175,13 +172,23 @@ const CalendarStyles = StyleSheet.create({
 
   // 일정분류 스타일
   btn: {
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 10,
-    marginHorizontal: 3,
+    padding: "2%",
+    marginTop: "3%",
+    marginBottom: "0.1%",
+    marginLeft: "2%",
     backgroundColor: "#FFFFFF",
     borderRadius: 5,
     height: "auto",
     alignItems: "center",
+  },
+
+  addBtn: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: "1%",
+    bottom: "-7%",
   },
 });
