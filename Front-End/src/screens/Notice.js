@@ -48,7 +48,13 @@ export default function Notice({ navigation }) {
   return (
     
     <View style={styles.noticecontainer}>
-      <Text style={styles.titlecontainer}>Ssamy Says</Text>
+      <View>
+        <Text style={styles.titlecontainer}>Ssamy Says
+          <Image source={require('../images/ssamy.png')} style={styles.imageicon} />
+        </Text>
+        
+      </View>
+      
 
 
       <KeyboardAvoidingView>
@@ -119,6 +125,10 @@ export default function Notice({ navigation }) {
 
 const styles = StyleSheet.create({
 
+  header:{
+    flexDirection: "row",
+  },
+
   noticecontainer : {
     backgroundColor: "#ffffff",
     flex: 1,
@@ -126,22 +136,24 @@ const styles = StyleSheet.create({
   },
 
   titlecontainer : {
-    paddingTop: 30,
+    paddingTop: 10,
     paddingLeft: 20,
+    paddingRight: 20,
     paddingBottom: 15,
     textAlign: 'left',
     backgroundColor: "#5ba8ff",
     marginBottom: 10,
     fontSize: 30,
     fontWeight: "bold",
+    color: "#ffffff"
   },
 
   imageicon: {
     padding: 10,
     margin: 5,
-    height: 30,
-    width: 30,
-    resizeMode: 'contain',
+    height: 100,
+    width: 100,
+    resizeMode: "contain",
   },
 
   buttonbar: {

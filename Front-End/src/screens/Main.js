@@ -14,7 +14,10 @@ export default function Main({ navigation }) {
   // const todoList = useSelector(state => state.MainTodo)
   const onFetchTodo = (res) => {
     setTodoList(res);
-  }  
+  }
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -36,7 +39,11 @@ export default function Main({ navigation }) {
 
   useEffect(()=> {
     async function fetchTodo(){
-      const response = await axios.get(baseURL);
+      const response = await axios({
+        method: 'get',
+        url : baseURL,
+        headers: token
+        });
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data
 
