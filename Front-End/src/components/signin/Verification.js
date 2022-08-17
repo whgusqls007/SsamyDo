@@ -9,12 +9,37 @@ import {
 } from "react-native";
 import drf from "../../api/drf";
 import { Ionicons } from "@expo/vector-icons";
+import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
 
+async function getTheToken() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== "granted") {
+    alert("Failed to get push token for push notification!");
+    return null;
+  }
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  await Notifications.getPermissionsAsync();
+  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  return token;
+}
+
 export default function Verification({ navigation }) {
+  const [fcmToken, setFcmToken] = useState("");
   const dispatch = useDispatch();
   // 비밀번호 변경 등으로 다시 온 경우가 있으므로 유저 정보들 받기
   useEffect(() => {
+    getTheToken().then((e) => setFcmToken(e));
     if (btnName !== "인증") {
       setMMPassword("");
       setEduPassword("");
@@ -46,6 +71,7 @@ export default function Verification({ navigation }) {
   // email 여부를 검증하는 함수
   function emailValid(email) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      console.log("여기 실행");
       setValid(true);
     } else {
       setValid(false);
@@ -287,7 +313,9 @@ export default function Verification({ navigation }) {
                       eduPw: eduPassword,
                       gi: number,
                       trackName: inputTrackName[track - 1],
+                      fcmToken: fcmToken,
                     };
+
                     axios({
                       method: "post",
                       url: drf.user.signup(),
