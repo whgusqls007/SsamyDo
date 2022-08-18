@@ -29,24 +29,6 @@ public class AuthController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
-//    @PostMapping("/login")
-//    public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) {
-//
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//                loginDto.getUsername(), loginDto.getPassword());
-//
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String jwt = tokenProvider.createToken(authentication);
-//
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
