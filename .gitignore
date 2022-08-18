@@ -83,3 +83,27 @@ __pycache__/
 local_settings.py
 db.sqlite3-journal
 media
+
+### BackEnd ###
+
+### attendence ###
+./Back-End/attendence/app/build
+./Back-End/attendence/.gradle
+./Back-End/attendence/.vscode
+
+### edussafycrawlergradle ###
+./Back-End/edussafycrawlergradle/app/build
+./Back-End/edussafycrawlergradle/.vscode
+./Back-End/edussafycrawlergradle/.gradle
+
+### imageServer ### 
+./Back-End/imageServer/demo/.gradle
+./Back-End/imageServer/demo/bin
+./Back-End/imageServer/demo/build
+./Back-End/imageServer/demo
+
+### ssachedule ###
+./Back-End/ssachedule/.gradle
+./Back-End/ssachedule/.vscode
+./Back-End/ssachedule/bin
+./Back-End/ssachedule/build

@@ -59,7 +59,6 @@ export default function ScheduleList({ navigation }) {
           }}
           style={ScheduleListStyles.createBtnImg}
         />
-        {/* <AntDesign name="pluscircle" color="#A8D1FF" /> */}
       </TouchableOpacity>
     </View>
   );

@@ -50,7 +50,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
           onDismiss={() => setVisible(false)}
           anchor={
             <TouchableOpacity onPress={() => setVisible(true)}>
-              <Ionicons name="ellipsis-horizontal" size={25} color="#a8d1ff" />
+              <Ionicons name="ellipsis-horizontal" size={25} color="#888888" />
             </TouchableOpacity>
           }
         >

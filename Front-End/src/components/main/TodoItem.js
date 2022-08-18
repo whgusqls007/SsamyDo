@@ -153,6 +153,16 @@ export default function TodoItem({ navigation, item }) {
                 <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
               </TouchableOpacity> */}
             {/* <Text style={[styles.itemdate, nowStatus&& styles.disabledtext]}>{year}/{month}/{day} {hour}:{min}</Text> */}
+            {/* {item.notice === null ? ( */}
+            <TouchableOpacity onPress={goEdussafy}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={"tail"}
+                style={[styles.itemtitle, nowStatus && styles.disabledtext]}
+              >
+                {itemTitle}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.itemdatebox} disabled={nowStatus}>

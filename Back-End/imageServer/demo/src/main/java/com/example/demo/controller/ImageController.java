@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.ImageService;
@@ -21,8 +21,8 @@ public class ImageController {
     @Autowired
     ImageService imageService;
 
-    @GetMapping("/getimage")
-    public ResponseEntity<Resource> getImage(@RequestParam("fileName") String fileName) {
+    @GetMapping("/api/image/{fileName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
         Map<String, Object> map = null;
         FileSystemResource resource = null;
         HttpHeaders header = null;

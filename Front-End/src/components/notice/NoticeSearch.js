@@ -8,13 +8,13 @@ import {
   Image,
 } from "react-native";
 import { useSelector } from "react-redux";
-// import styles from "../../../app.module.css";
 import NoticeItem from "./NoticeItem";
 
 // Notice data에서 찾기 ..
 
 export default function NoticeSearch({ navigation, route }) {
   const value = route.params.value;
+
   const noticeList = useSelector((state) => {
     return state.Notice[0];
   });
@@ -94,7 +94,7 @@ export default function NoticeSearch({ navigation, route }) {
 const styles = StyleSheet.create({
   searchcontainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
   },
 
   titlecontainer: {

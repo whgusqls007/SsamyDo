@@ -155,7 +155,7 @@ export default function Verification({ navigation }) {
               maxLength={7}
               value={studentNo}
               placeholder="SSAFY 학번"
-              placeholderTextColor="#6986A8"
+              placeholderTextColor="#888888"
               onChangeText={(text) => {
                 setStudentNo(text);
                 setInputError("");
@@ -177,7 +177,7 @@ export default function Verification({ navigation }) {
               style={{ width: "100%" }}
               placeholder="교육생 이름"
               autocapitalize={false}
-              placeholderTextColor="#6986A8"
+              placeholderTextColor="#888888"
               onChangeText={(text) => {
                 setName(text);
                 setInputError("");
@@ -193,7 +193,7 @@ export default function Verification({ navigation }) {
             <TextInput
               style={{ width: "100%" }}
               placeholder="EduSSAFY ID"
-              placeholderTextColor="#6986A8"
+              placeholderTextColor="#888888"
               onChangeText={(text) => {
                 setEmail(text);
                 emailValid(text);
@@ -212,7 +212,7 @@ export default function Verification({ navigation }) {
             secureTextEntry={true}
             value={eduPassword}
             placeholder="EduSSAFY 패스워드"
-            placeholderTextColor="#6986A8"
+            placeholderTextColor="#888888"
             onChangeText={(text) => {
               setInputError("");
               setEduPassword(text);
@@ -227,7 +227,7 @@ export default function Verification({ navigation }) {
             secureTextEntry={true}
             value={MMPassword}
             placeholder="MatterMost 패스워드"
-            placeholderTextColor="#6986A8"
+            placeholderTextColor="#888888"
             onChangeText={(text) => {
               setInputError("");
               setMMPassword(text);
@@ -271,20 +271,23 @@ export default function Verification({ navigation }) {
         {/* 에러 메시지(누락된 부분이 있는 경우) */}
         {inputError ? (
           <View style={{ flexDirection: "row", margin: 4 }}>
-            <Ionicons name="warning" size={19} color="#c1121f" />
-            <Text style={{ fontWeight: "bold", color: "#c1121f" }}>
+            <Ionicons name="warning" size={19} color="#C22D37" />
+            <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
               {inputError}
             </Text>
           </View>
         ) : (
-          <View style={{ height: "10%", width: "100%" }}></View>
+          <View style={{ height: "5%", width: "100%" }}></View>
         )}
         <View style={VerificationStyles.submitContainer}>
           {/* 인증버튼(모두 입력된 경우 보냄) */}
           <TouchableOpacity
             style={[
               VerificationStyles.submitBtn,
-              btnName === "탈퇴" && { height: "20%" },
+              btnName === "탈퇴" && {
+                height: "20%",
+                backgroundColor: "#C22D37",
+              },
             ]}
             onPress={() => {
               if (!eduPassword) {
@@ -387,7 +390,7 @@ export default function Verification({ navigation }) {
             <TouchableOpacity
               style={[
                 VerificationStyles.submitBtn,
-                { backgroundColor: "red", height: "20%" },
+                { backgroundColor: "#5ba8ff", height: "20%" },
               ]}
               onPress={() => {
                 navigation.navigate("TabNav", { screen: "MyPage" });

@@ -1,29 +1,28 @@
 package com.ssljjong.ssachedule.controller;
 
-import com.ssljjong.ssachedule.dto.TrackDto;
-import com.ssljjong.ssachedule.dto.UserDto;
-
-import com.ssljjong.ssachedule.dto.UserListDto;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bis5.mattermost.client4.MattermostClient;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssljjong.ssachedule.dto.TrackDto;
+import com.ssljjong.ssachedule.dto.UserDto;
+import com.ssljjong.ssachedule.dto.UserListDto;
 import com.ssljjong.ssachedule.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
-
-import javax.validation.Valid;
+import net.bis5.mattermost.client4.MattermostClient;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +34,7 @@ public class UserController {
             // .logLevel(Level.INFO)
             .ignoreUnknownProperties()
             .build();
+
     @GetMapping("/test")
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("test");
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/track/change")
-//    @PreAuthorize("hasAnyRole('USER')")
+    // @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody TrackDto track) {
         System.out.println(track);
         System.out.println(track.getName());
@@ -62,7 +62,6 @@ public class UserController {
      *         when email, pw is correct otherwise
      *         ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED)
      */
-
 
     @GetMapping("/getUsers")
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -79,6 +78,6 @@ public class UserController {
     @PostMapping("/user/delete")
     public ResponseEntity<String> deleteUser(@RequestHeader String Authorization) {
         userService.deleteUser(Authorization);
-        return new ResponseEntity(  "계정이 삭제되었습니다.",HttpStatus.OK);
+        return new ResponseEntity("계정이 삭제되었습니다.", HttpStatus.OK);
     }
 }
