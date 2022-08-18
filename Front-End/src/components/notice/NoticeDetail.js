@@ -60,12 +60,13 @@ export default function NoticeDetail({ navigation, route }) {
         <View style={styles.desbox}>
           {/* 이게 이미입니다. 그리고 이미지는 null값이 아니라 '[]' 빈값이
           문자형으로 와서 if르 저렇게 처리했습니다. */}
-          {/* {item.file_ids !== "[]" && (
+          {item.file_ids !== "[]" && item.file_ids !== null && (
             <Image
               style={{ width: "100%", height: "100%" }}
               source={{ uri: imgURI(item.file_ids) }}
             />
-          )} */}
+          )}
+          
           {item.source !== "E" ? (
             <ScrollView>
               <Markdown style={styles.detaildescription}>
@@ -73,6 +74,7 @@ export default function NoticeDetail({ navigation, route }) {
               </Markdown>
               {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
             </ScrollView>
+
           ) : (
             <View style={styles.ebox}>
               <Text style={styles.edussafydescription}>
