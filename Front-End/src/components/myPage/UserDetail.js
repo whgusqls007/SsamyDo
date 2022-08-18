@@ -7,6 +7,7 @@ import {
   FontAwesome5,
   Ionicons,
 } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
 // import styles from "../../../app.module.css";
 import axios from "axios";
 import drf from "../../api/drf";
@@ -26,34 +27,41 @@ export default function UserDetail() {
     "임베디드",
     "모바일",
   ];
-  return (
-    <View>
 
-      <View style={styles.back}>
+  // console.log(user.studentNo[2])
+  // console.log(campusName[Number(user.studentNo[2])-1])
+  return (
+    <View style={styles.userContainer}>
+
+      <View style={styles.studentcard}>
         {/* 이름 */}
         <View style={styles.nameContainer}>
           <Text style={styles.nametext}>
-            {user.name}
+            Student Card
           </Text>
         </View>
         {/* 인적사항 */}
         <View style={styles.detailContainer}>
-          <View>
+          <View style={styles.detailimg}>
             {/* 이미지파일 */}
-            {/* <Image
+            <Image
               style={styles.img}
-              source={require("../../images/그림1.png")}
-            /> */}
+              source={require("../../images/ssamy.png")}
+            />
           </View>
 
           {/* 인적사항 */}
           <View style={styles.detail}>
+            {/* 이름 */}
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.detailTextName}>{user.name} </Text>
+            </View>
             {/* 학번 */}
             <View style={{ flexDirection: "row" }}>
               <Ionicons
                 style={styles.detailText}
                 name="school"
-                size={20}
+                size={16}
               />
               <Text style={styles.detailText}>{user.studentNo}</Text>
             </View>
@@ -62,7 +70,7 @@ export default function UserDetail() {
               <Fontisto
                 style={styles.detailText}
                 name="email"
-                size={20}
+                size={16}
               />
               <Text style={styles.detailText}>{user.email}</Text>
             </View>
@@ -71,7 +79,7 @@ export default function UserDetail() {
               <FontAwesome
                 style={styles.detailText}
                 name="flag"
-                size={20}
+                size={16}
               />
               <Text style={styles.detailText}>
                 {`SSAFY ${user.studentNo[1]}기`}
@@ -82,10 +90,10 @@ export default function UserDetail() {
               <FontAwesome5
                 style={styles.detailText}
                 name="building"
-                size={20}
+                size={16}
               />
               <Text style={styles.detailText}>
-                {campusName[user.studentNo[2]]} 캠퍼스 소속
+                {campusName[Number(user.studentNo[2])-1]} 캠퍼스 소속
               </Text>
             </View>
             {/* 트랙 선택 */}
@@ -93,7 +101,7 @@ export default function UserDetail() {
               <FontAwesome5
                 style={styles.detailText}
                 name="road"
-                size={20}
+                size={16}
               />
               <Text style={styles.detailText}>
                 {trackName[user.track]}
@@ -107,61 +115,102 @@ export default function UserDetail() {
 }
 
 const styles = StyleSheet.create({
-  back: {
-    // width: "95%",
-    // height: "40%",
-    width: "auto",
-    height: "auto",
-    borderWidth: 1,
+  userContainer: {
+    width: "100%",
+    height: "72%",
+    // alignItems: "stretch",
+    flexDirection: 'row',    
+    backgroundColor: "#5ba8ff",
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    paddingHorizontal: 20,
+    // marginTop: 10,
+    marginBottom: 20,
+    // height: "100%",
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  studentcard: {
+    height: "75%",
+    width:"95%",
+    alignItems: "center",
+    // marginTop: "8%",
     // marginBottom: "5%",
-    borderBottomEndRadius: 5,
-    borderBottomStartRadius: 5,
-    borderTopEndRadius: 5,
-    padding: 5,
-    // marginBottom: 10
-    // width: "95%",
-    // height: "32%",
     // borderWidth: 1,
-    marginBottom: "5%",
-    borderRadius: 10,
+    // marginBottom: "5%",
+    borderRadius: 20,
+    // padding: 5,
+    backgroundColor: "#ffffff"
+
   },
   nameContainer: {
     // marginTop: "1%",
-    marginTop: 1,
+    width: "100%",
+    height:"20%",
+    // marginTop: 1,
     justifyContent: "center",
-    // borderBottomWidth: 5,
-    borderBottomEndRadius: 100,
-    borderColor: "#A8D1FF",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius:20,
+    marginBottom: "3%",
+    backgroundColor: "#a8d1ff",
+    alignItems: "center"
   },
   nametext: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
-    paddingTop: 2,
-    marginBottom: 10,
+    // paddingTop: 2,
+    marginVertical: 10,
+    color: "#000000"
+    // marginBottom: 10,
   },
   detailContainer: {
+    // flexShrink:1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     // width: "100%",
     // height: "90%",
+    flexWrap : "wrap"
+  },
+  detailimg:{
+    // flexShrink: 5,
+    width: "40%",
+    height: "60%",
+    // flexWrap: "wrap",
+    // flexGrow: 1,
   },
   img: {
-    // width: "40%",
-    // height: "80%",
-    marginLeft: "5%",
-    resizeMode: "contain"
+    position: "relative",
+    width: '100%',
+    height: '100%',
+    overflow: 'visible',
+    alignItems: 'center',
+    // width: '100%',
+    // height: undefined,
+    // aspectRatio: 1,
   },
   detail: {
     // width: "50%",
     // height: "80%",
     marginLeft: "5%",
-    flexDirection: "column"
+    flexDirection: "column",
+    // marginBottom: "5%"
 
   },
   detailText: {
-    marginVertical: "3%",
+    marginVertical: "2.5%",
     marginHorizontal: "2%",
+    color: "#555555"
   },
+  detailTextName: {
+    marginTop: "2.5%",
+    marginBottom: "3%",
+    marginHorizontal: "2%",
+    color: "#444444",
+    fontWeight: "bold",
+    fontSize: 20,
+  }
 });
