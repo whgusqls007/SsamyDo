@@ -1,3 +1,4 @@
+from email.mime import image
 from logging import raiseExceptions
 from sqlite3 import Timestamp
 from turtle import isvisible
@@ -81,54 +82,53 @@ def predict(new_sentence):
 # Create your views here.
 @api_view(['POST'])
 def preprocess(request):
+    def image_process(file_id):
+        global message
+        res = driver.files.get_file(file_id)
+        filename = f"{file_id}.jpg"
+        completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
+        with open(completeName, "wb") as f:
+            f.write(res.content)
 
-    # MatterMostDriver 로그인
+        try:
+            data = driver.files.get_file(file_ids).content
+
+            encoded_img = np.fromstring(data, dtype = np.uint8)
+            img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+    
+            oem = 3
+            psm = 4
+            ocr = pytesseract.image_to_string(img, lang="Hangul+eng", config="--oem " + str(oem) + " --psm " + str(psm))
+        
+
+            message = message + "\n" + ocr
+
+        except Exception as e:
+            logger.info(e)
+
+
     driver.login()
-
-    # 파일 있는지 확인
-    text = request.data.get('text')
+    message = request.data.get('text')
     file_ids = request.data.get('file_ids')
-    total_message = text
     
     if file_ids:
         for file_id in file_ids.split(","):
-            res = driver.files.get_file(file_id)
-            filename = f"{file_id}.jpg"
-            completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
-            with open(completeName, "wb") as f:
-                f.write(res.content)
-
-            try:
-                data = driver.files.get_file(file_ids).content
-
-                encoded_img = np.fromstring(data, dtype = np.uint8)
-                img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
-        
-                oem = 3
-                psm = 4
-                ocr = pytesseract.image_to_string(img, lang="Hangul+eng", config="--oem " + str(oem) + " --psm " + str(psm))
-            
-
-                total_message = text + "\n" + ocr
-            
-            except Exception as e:
-                logger.info(e)
-
+            image_process(file_id)
 
     if not file_ids:
         file_ids = '[]'
 
         
-    if predict(total_message):
+    if predict(message):
         channel_id = request.data.get('channel_id')
         cnt = 1
         while True:
-            title = total_message.split("\n")[cnt]
+            title = message.split("\n")[cnt]
             if title:
                 break
             else:
                 cnt += 1
-        description = total_message
+        description = message
         timestamp = request.data.get('timestamp')
         date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
         notice = {
@@ -144,7 +144,6 @@ def preprocess(request):
 
      
         if serializer.is_valid():
-
             serializer.save()
             logger.info("저장 완료", notice)
             return Response(status=status.HTTP_201_CREATED)    
@@ -158,46 +157,54 @@ def preprocess(request):
 
 @api_view(['POST'])
 def make_todo(request):
+    def duedate_process(duedate):
+        if duedate[:2] != '20'and duedate[:2] != 22:
+            duedate = '2022' + duedate
+        elif duedate[:2] == 22:
+            duedate = '20' + duedate
+        return duedate
 
-    text = request.data.get('text')
-    # MatterMostDriver 로그인
-    driver.login()
-    
-    channel_id = request.data.get('channel_id')
-    cnt = 1
-    while True:
-        if text.split('\n')[cnt]:
-            break
-        cnt += 1
-    
-    
-    title = text.split('\n')[cnt].replace('#', '')
-    string = text.split('\n')[cnt+1]
-    duedate = re.sub(r'[^0-9]', '', string)
+    def parse_context(text):
+        cnt = 1
+        while True:
+            if text.split('\n')[cnt]:
+                break
+            cnt += 1
 
-
-    if duedate[:2] != '20'and duedate[:2] != 22:
-        duedate = '2022' + duedate
-    elif duedate[:2] == 22:
-        duedate = '20' + duedate
-    description = text
-    timestamp = request.data.get('timestamp')
-    
-    
-    date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
+        title = text.split('\n')[cnt].replace('#', '')
+        string = text.split('\n')[cnt+1]
+        duedate = re.sub(r'[^0-9]', '', string)
+        description = text.split('\n')[cnt+1:]
         
+        return title, duedate, description
+
+    def save_images(file_id):
+        res = driver.files.get_file(file_id)
+        filename = f"{file_id}.jpg"
+        completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
+        with open(completeName, "wb") as f:
+            f.write(res.content)             
+        
+
+    driver.login()
+    text = request.data.get('text')
+    channel_id = request.data.get('channel_id')
+    timestamp = request.data.get('timestamp')
+    date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
+
+    
+    title, duedate, description = parse_context(text)
+    duedate = duedate_process(duedate)
+    
     file_ids = request.data.get('file_ids')
     
+
     if not file_ids:
         file_ids = '[]'
 
     else:
         for file_id in file_ids.split(","):
-            res = driver.files.get_file(file_id)
-            filename = f"{file_id}.jpg"
-            completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
-            with open(completeName, "wb") as f:
-                f.write(res.content)                             
+            save_images(file_id)                            
                                                            
     notice = {
         "channel_id": channel_id,
@@ -212,7 +219,6 @@ def make_todo(request):
     if serializer.is_valid():
         notice_id = serializer.save()
         logger.info("저장 완료", notice)
-    
 
     todo = {
         "title": title,
@@ -228,17 +234,9 @@ def make_todo(request):
     if serializer.is_valid():
         serializer.save()
         logger.info(serializer)
-        print("Todo 저장 완료")
-   
+        logger.info("Todo 저장 완료")
         return Response(status=status.HTTP_201_CREATED)    
+
     logger.info("Todo 저장 실패")
     return Response(status=status.HTTP_200_OK)
 
-
-def push(request):
-    
-    text = request.data.get('text')
-    title = text.split('\n')[1].replace('#', '')
-    
-    print("푸시알림 보냄")
-    return Response(status=status.HTTP_200_OK)
