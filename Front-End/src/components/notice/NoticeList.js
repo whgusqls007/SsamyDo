@@ -113,15 +113,15 @@ export default function NoticeList({ navigation, select, noticeList }) {
 
 const styles = StyleSheet.create({
   noticelistcontainer: {
+    height: "100%",
     flexDirection: "row",
     backgroundColor: "#5ba8ff",
-    paddingTop: 30,
-    paddingHorizontal: 20,
+    paddingTop: "8%",
+    paddingHorizontal: "8%",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    marginTop: 10,
-    marginBottom: 20,
-    height: "75%",
+    marginTop: "4%",
+    paddingBottom: "20%",
   },
   noticebox: { flex: 1, width: "100%" },
 });

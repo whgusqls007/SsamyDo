@@ -144,7 +144,7 @@ export default function TodoItem({ navigation, item }) {
 
         <View style={styles.textbox}>
           <View style={styles.itemtitlebox}>
-            {item.notice === null ? (
+            {/* {item.notice === null ? ( */}
               <TouchableOpacity onPress={goEdussafy}>
                 <Text
                   numberOfLines={1}
@@ -154,25 +154,7 @@ export default function TodoItem({ navigation, item }) {
                   {itemTitle}
                 </Text>
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={navigation.navigate("NoticeDetail", {
-                  id: item.notice,
-                })}
-              >
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode={"tail"}
-                  style={[styles.itemtitle, nowStatus && styles.disabledtext]}
-                >
-                  {itemTitle}
-                </Text>
-              </TouchableOpacity>
-            )}
-            {/* <TouchableOpacity onPress={goEdussafy}>
-                <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
-              </TouchableOpacity> */}
-            {/* <Text style={[styles.itemdate, nowStatus&& styles.disabledtext]}>{year}/{month}/{day} {hour}:{min}</Text> */}
+          
           </View>
 
           <View style={styles.itemdatebox} disabled={nowStatus}>
