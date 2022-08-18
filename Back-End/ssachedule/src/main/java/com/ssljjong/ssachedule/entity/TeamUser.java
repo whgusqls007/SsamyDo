@@ -1,20 +1,25 @@
 package com.ssljjong.ssachedule.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id"})
+@ToString(of = { "id" })
 public class TeamUser {
 
     // Attributes
-
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -43,6 +48,5 @@ public class TeamUser {
     public void setTeam(Team team) {
         this.team = team;
     }
-
 
 }

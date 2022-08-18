@@ -1,10 +1,9 @@
 package com.ssljjong.ssachedule.service;
 
+import java.util.List;
+
 import com.ssljjong.ssachedule.dto.TodoDto;
 import com.ssljjong.ssachedule.entity.Todo;
-
-import java.time.LocalDate;
-import java.util.List;
 
 public interface TodoService {
     List<TodoDto> getTodosByUser(Long userId);

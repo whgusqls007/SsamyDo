@@ -2,8 +2,6 @@ package com.ssljjong.ssachedule.dto;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 public class NoticeDto {
     private Integer id;
@@ -31,6 +29,7 @@ public class NoticeDto {
         this.date = date;
         this.source = source;
     }
+
     public NoticeDto(Integer id, String title, String description, String date) {
         this.id = id;
         this.title = title;

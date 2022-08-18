@@ -1,21 +1,20 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.dto.TeamDto;
-import com.ssljjong.ssachedule.entity.Team;
-import com.ssljjong.ssachedule.entity.User;
-import com.ssljjong.ssachedule.repository.TeamRepository;
-import com.ssljjong.ssachedule.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.ssljjong.ssachedule.dto.TeamDto;
+import com.ssljjong.ssachedule.repository.TeamRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
 

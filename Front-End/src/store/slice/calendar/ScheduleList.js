@@ -95,7 +95,7 @@ const ScheduleList = createSlice({
     },
 
     // 버튼을 눌러서 Schedule의 Type 변경시 보여줄 캘린더 속성 제작
-    // 예시: {{ '2017-10-25': {dots: [vacation, massage, workout], selected: true, selectedColor: "pink",} }}
+    // 예시: {{ '2017-10-25': {dots: [vacation, massage, workout], selected: true, selectedColor: "#a8d1ff",} }}
     // 2가지 경우 사용 : 1. 현재 선택한 날을 표시하는 역할
     // 2. 타입을 선택하여 해당 일정들 타입을 점으로 캘린더에 생성하는 역할
     mark: (state, action) => {
@@ -112,12 +112,12 @@ const ScheduleList = createSlice({
           state[2][action.day] = {
             ...state[2][action.day],
             selected: true,
-            selectedColor: "pink",
+            selectedColor: "#a8d1ff",
           }; // 1-2-2. 기존 선택이 없는 경우 바로 해당 값 할당
         } else {
           state[2][action.day] = {
             selected: true,
-            selectedColor: "pink",
+            selectedColor: "#a8d1ff",
           };
         }
         // 현재 선택한 날 입력
@@ -132,9 +132,9 @@ const ScheduleList = createSlice({
         }
         // zero는 아무 의미 없는 역할, 각 키워드에 적절한 색
         const zero = {};
-        const ssafy = { key: "ssafy", color: "blue" };
-        const typeOne = { key: "typeOne", color: "red" };
-        const typeTwo = { key: "typeTwo", color: "green" };
+        const ssafy = { key: "ssafy", color: "#5ba8ff" };
+        const typeOne = { key: "typeOne", color: "#ffe34f" };
+        const typeTwo = { key: "typeTwo", color: "#ffc0cb" };
         // 2-1. 전체보기(모든 타입 표시)의 경우 전체 리스트를 순회
         if (state[4][0] === "all") {
           state[0].map((Schedule) => {
@@ -229,11 +229,11 @@ const ScheduleList = createSlice({
         state[2][state[4][1]] = {
           ...state[2][state[4][1]],
           selected: true,
-          selectedColor: "pink",
+          selectedColor: "#a8d1ff",
         };
         // 2-5-2. 기존의 마크가 없다면 생성
       } else {
-        state[2][state[4][1]] = { selected: true, selectedColor: "pink" };
+        state[2][state[4][1]] = { selected: true, selectedColor: "#a8d1ff" };
       }
     },
   },
