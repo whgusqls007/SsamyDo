@@ -41,7 +41,7 @@ export default function Notice({ navigation }) {
 
       const response = await axios({
         method: "get",
-        url: drf.notice.noticePage(1),
+        url: drf.notice.noticeOffset(0,20),
         headers: token,
       }).catch(() => {
         navigation.navigate("Verification");
