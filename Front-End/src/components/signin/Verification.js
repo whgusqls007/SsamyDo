@@ -126,6 +126,7 @@ export default function Verification({ navigation }) {
   return (
     <View style={VerificationStyles.container}>
       <View style={VerificationStyles.header}>
+        {/* 뒤로 가기 */}
         <TouchableOpacity
           style={VerificationStyles.headerBack}
           onPress={() => navigation.pop()}
@@ -271,8 +272,8 @@ export default function Verification({ navigation }) {
         {/* 에러 메시지(누락된 부분이 있는 경우) */}
         {inputError ? (
           <View style={{ flexDirection: "row", margin: 4 }}>
-            <Ionicons name="warning" size={19} color="red" />
-            <Text style={{ fontWeight: "bold", color: "red" }}>
+            <Ionicons name="warning" size={19} color="#c1121f" />
+            <Text style={{ fontWeight: "bold", color: "#c1121f" }}>
               {inputError}
             </Text>
           </View>
