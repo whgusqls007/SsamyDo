@@ -5,15 +5,21 @@ import {
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
+  Modal,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Foundation } from "@expo/vector-icons";
-import styles from "../../../app.module.css";
+// import styles from "../../../app.module.css";
 import { useState } from "react";
 import drf from "../../api/drf";
 import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
+import CustomCalendar from "../calendar/CustomCalendar";
 
-export default function Alarm() {
+// import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+
+export default function Setting({ navigation }) {
+
   const dispatch = useDispatch();
   const token = useSelector((state) => {
     return state.Account[2];
@@ -42,14 +48,17 @@ export default function Alarm() {
   const [showTrackBtn, setShowTrackBtn] = useState(false);
 
   return (
-    <View style={SettingStyle.back}>
-      <View style={SettingStyle.lineContainer}>
-        <Text>트랙변경</Text>
+    <View style={styles.settingContainer}>
+      <View style={styles.settingheader}>
+        <View style={styles.settingbox}>
+          <Text style={styles.settingtext}>✏️   트랙 변경 </Text>
+        </View>
+        
         {/* 변경버튼과 완료버튼 */}
         {showTrackBtn ? (
-          <View style={SettingStyle.buttonContainer}>
+          <View style={styles.changeButtonbox}>
             <TouchableOpacity
-              style={SettingStyle.button}
+              style={styles.changebutton}
               onPress={() => {
                 axios({
                   method: "POST",
@@ -62,20 +71,20 @@ export default function Alarm() {
                     setShowTrackBtn(false);
                   })
                   .catch((err) => {
-                    console.log(err);
+                    navigation.navigate("Verification");
                   });
               }}
             >
-              <Text>변경</Text>
+              <Text style={styles.changebuttontext}>변경</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 setShowTrackBtn(!showTrackBtn);
                 setTrack(user.track);
               }}
-              style={SettingStyle.button}
+              style={styles.changebuttoncancel}
             >
-              <Text>취소</Text>
+              <Text style={styles.changebuttontext}>취소</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -86,21 +95,29 @@ export default function Alarm() {
               setShowBtn(false);
             }}
             size={24}
-            color="#A8D1FF"
+            color="#5ba8ff"
           />
         )}
       </View>
+
+      {/* <View style={styles.cs}>
+        <Entypo name="email" size={20} color="#A8D1FF" />
+        <Text>{"  "}기타 문의: ssafy@ssafy.com </Text>
+      </View> */}
       {/* 트랙 변경 버튼들 */}
       {showTrackBtn && (
-        <View style={[SettingStyle.lineContainer, { borderBottomWidth: 0 }]}>
+        <View style={styles.updateContainer}>
           {trackName.map((tra, idx) => {
             return (
               <TouchableOpacity
                 key={`track-${idx}`}
-                style={[
-                  SettingStyle.button,
+                style={[styles.trackButton,
                   idx === track ? { backgroundColor: "#A8D1FF" } : {},
                 ]}
+                // style={[
+                //   SettingStyle.buttonTrack,
+                //   idx === track ? { backgroundColor: "#A8D1FF" } : {},
+                // ]}
                 onPress={() => {
                   setTrack(idx);
                 }}
@@ -111,108 +128,156 @@ export default function Alarm() {
           })}
         </View>
       )}
-      <View style={SettingStyle.lineContainer}>
-        <Text>
-          스케쥴 타입명: {typeList[0]} / {typeList[1]} / {typeList[2]}{" "}
-        </Text>
-        {/* 변경버튼과 완료버튼 */}
-        {showBtn ? (
-          <View style={SettingStyle.buttonContainer}>
-            <TouchableOpacity style={SettingStyle.button}>
-              <Text>변경</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setShowBtn(!showBtn);
-                setTypeOne(typeList[1]);
-                setTypeTwo(typeList[2]);
-              }}
-              style={SettingStyle.button}
-            >
-              <Text>취소</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Foundation
-            name="clipboard-pencil"
-            onPress={() => {
-              setShowBtn(!showBtn);
-              setShowTrackBtn(false);
-            }}
-            size={24}
-            color="#A8D1FF"
-          />
-        )}
-      </View>
-      {showBtn && (
-        <View
-          style={[SettingStyle.lineContainer, { justifyContent: "flex-start" }]}
-        >
-          <Text style={[SettingStyle.input, { borderWidth: 0 }]}>
-            {typeList[0]}
-          </Text>
-          <TextInput
-            maxLength={8}
-            autoCapitalize="none"
-            value={typeOne}
-            onChangeText={(text) => {
-              setTypeOne(text);
-            }}
-            style={SettingStyle.input}
-          />
-          <TextInput
-            maxLength={8}
-            autoCapitalize="none"
-            value={typeTwo}
-            onChangeText={(text) => {
-              setTypeTwo(text);
-            }}
-            style={SettingStyle.input}
-          />
+      {!showTrackBtn && (
+        <View style={styles.cs}>
+          <Entypo name="email" size={20} color="#A8D1FF" />
+          <Text>{"  "}기타 문의: ssafy@ssafy.com </Text>
         </View>
       )}
     </View>
   );
 }
 
-const SettingStyle = StyleSheet.create({
-  back: {
+const styles = StyleSheet.create({
+  settingContainer: {
+    marginTop: "3%",
     width: "95%",
-    height: "30%",
-    borderWidth: 1,
-    marginBottom: "5%",
+    height: "25%",
+    // borderWidth: 1,
+    // marginBottom: "5%",
     backgroundColor: "#EDEDED",
-    borderRadius: 5,
+    borderRadius: 8,
+    marginBottom: "5%",
   },
-  lineContainer: {
+  settingheader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 1,
     borderColor: "#A8D1FF",
     margin: "2%",
-    height: "25%",
+    height: "30%",
   },
-  buttonContainer: { flexDirection: "row", justifyContent: "flex-end" },
+  settingtext : {
+    fontSize: 15,
+    marginLeft: "10%"
+  },
+  settingbox: {
 
-  button: {
-    alignItems: "center",
-    backgroundColor: "#EDEDED",
-    padding: "1%",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#A8D1FF",
-    justifyContent: "center",
+  },
+  changeButtonbox : {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    flexWrap: "wrap"
   },
 
-  input: {
-    alignItems: "center",
-    backgroundColor: "#EDEDED",
+  changebutton : {
+    backgroundColor: "#A8D1FF",
     padding: "2%",
-    margin: "2%",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#A8D1FF",
-    justifyContent: "center",
+    marginLeft: "3%",
+    marginBottom: "3%",
+    borderRadius: 15,
+    width: "27%",
+    // height: "40%",
+    alignItems: "center",
+    justifyContent: "center"
+
   },
+
+  changebuttoncancel: {
+    backgroundColor: "#ffffff",
+    padding: "2%",
+    marginLeft: "3%",
+    marginBottom: "3%",
+    borderRadius: 15,
+    width: "27%",
+    // height: "40%",
+    alignItems: "center",
+    justifyContent: "center"
+
+  },
+
+  changebuttontext :{
+    textAlign : "center",
+    fontSize: 14,
+  },
+
+  updateContainer: {
+    marginTop: "2%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center"
+
+  },
+  trackButton : {
+    backgroundColor: "#ffffff",
+    padding: "2%",
+    margin: "1%",
+    borderRadius: 10,
+    
+  },
+  cs : {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "5%",
+  }
+
+
+
+  // buttonContainer: { flexDirection: "row", justifyContent: "flex-end" },
+
+  // button: {
+  //   alignItems: "center",
+  //   backgroundColor: "#EDEDED",
+  //   padding: "5%",
+  //   margin: "1%",
+  //   borderRadius: 8,
+  //   borderWidth: 1,
+  //   borderColor: "#A8D1FF",
+  //   justifyContent: "center",
+  // },
+  // buttonTrack: {
+  //   alignItems: "center",
+  //   backgroundColor: "#EDEDED",
+  //   padding: "1%",
+  //   borderRadius: 8,
+  //   borderWidth: 1,
+  //   borderColor: "#A8D1FF",
+  //   justifyContent: "center",
+  // },
+
+  // input: {
+  //   alignItems: "center",
+  //   backgroundColor: "#EDEDED",
+  //   padding: "2%",
+  //   margin: "2%",
+  //   borderRadius: 8,
+  //   borderWidth: 1,
+  //   borderColor: "#A8D1FF",
+  //   justifyContent: "center",
+  // },
+
+  // centeredView: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginTop: 22,
+  // },
+  // modalView: {
+  //   margin: 20,
+  //   backgroundColor: "white",
+  //   borderRadius: 20,
+  //   padding: 25,
+  //   alignItems: "center",
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 2,
+  //   },
+  //   shadowOpacity: 0.25,
+  //   shadowRadius: 4,
+  //   elevation: 5,
+  // },
 });

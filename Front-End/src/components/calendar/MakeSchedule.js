@@ -74,7 +74,7 @@ export default function MakeSchedule({ navigation }) {
   // Store 활용을 위한 변수 설정(렌더링 시 한 번만)
   useEffect(() => {
     // 수정으로 들어온 경우(Schedule에 id값이 존재) 버튼의 이름과 해당 일자의 표시를 변경
-    if (Schedule.id) {
+    if (Schedule.id || Schedule.id === 0) {
       // 버튼 이름 수정
       setBtnName("수정");
       // 선택일 표시

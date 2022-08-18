@@ -2,9 +2,16 @@ import { React, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+// axios 요청을 위한 drf
+import drf from "../../api/drf";
 
-export default function LunchBoard() {
+export default function LunchBoard({ navigation }) {
   const [lunchData, setLunchData] = useState();
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
 
   function ymdFormat(oriDate) {
     let result =
@@ -14,10 +21,15 @@ export default function LunchBoard() {
     return result;
   }
   // axios를 통해서 이번 주 점심 받아오기
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/lunch/date/";
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`${baseURL}${ymdFormat(new Date())}`);
+      const response = await axios({
+        method: "get",
+        url: drf.lunch.date(ymdFormat(new Date())),
+        headers: token,
+      }).catch(() => {
+        navigation.navigete("Verification");
+      });
       return response.data.data;
     }
     fetchData().then((res) => {
