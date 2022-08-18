@@ -26,10 +26,6 @@ public class App {
         Boolean thread3 = false;
         Boolean thread4 = false;
 
-        // service.execute(new GetWeekScheduleTask(jdbcDriver));
-        // service.execute(new GetSurveyTask(jdbcDriver));
-        // service.execute(new GetNotificationTask(jdbcDriver));
-
         while (true) {
 
             Calendar calendar = Calendar.getInstance();
@@ -39,8 +35,6 @@ public class App {
             int hour = localTime.getHour();
             int minute = localTime.getMinute();
             int second = localTime.getSecond();
-
-            // System.out.println(day + " -- " + hour + " : " + minute + " : " + second);
 
             if (day == 1 && hour == 1 && minute == 0 && (0 < second && second < 60) &&
                     !thread1) {

@@ -23,7 +23,6 @@ public class PlanController {
 
     private final PlanService planService;
 
-    // @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/date/{date}")
     public ResponseEntity<Map<String, Object>> findPlansByDate(@PathVariable String date) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByDate(date);
@@ -34,7 +33,6 @@ public class PlanController {
         return ResponseEntity.ok().body(response);
     }
 
-    // @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/period/{startDate}")
     public ResponseEntity<Map<String, Object>> findWeeklyPlans(@PathVariable String startDate) {
         List<WeeklyPlanDto> plans = planService.findWeeklyPlanByStartDate(startDate);
@@ -45,7 +43,6 @@ public class PlanController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/weekly/period/{startDate}/{endDate}")
     public ResponseEntity<Map<String, Object>> findPlansByPeriod(@PathVariable String startDate,
             @PathVariable String endDate) {
