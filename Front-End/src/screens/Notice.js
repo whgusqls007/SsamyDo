@@ -69,9 +69,7 @@ export default function Notice({ navigation }) {
   return (
     <View style={styles.noticecontainer}>
       <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Ssamy Says
-            {/* <Image source={require('../images/ssamy.png')} style={styles.imageicon} /> */}
-          </Text>
+        <Image source={require('../images/notice_header.png')} style={styles.imageicon} />
       </View>
 
       <KeyboardAvoidingView>
@@ -153,14 +151,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   titlecontainer : {
-    marginTop: 30,
-    marginBottom: 20,
     flexDirection: 'column',
-    // paddingBottom: 15,
-    // textAlign: 'left',
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    // marginBottom: 10,
+    marginLeft: "7%"
   },
 
   titletext:{
@@ -172,12 +166,7 @@ const styles = StyleSheet.create({
     color: "#000000"
   },
   imageicon: {
-    padding: 10,
-    margin: 5,
-    // height: 100,
-    // width: 100,
-    height: 30,
-    width: 30,
+    width:"60%",
     resizeMode: "contain",
   },
 
@@ -213,7 +202,7 @@ const styles = StyleSheet.create({
   },
 
   searchbar: {
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 5,
     marginHorizontal: 30,
   },
