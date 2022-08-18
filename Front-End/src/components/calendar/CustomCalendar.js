@@ -138,7 +138,7 @@ export default function CustomCalendar() {
                 color: "red",
               },
               dayTextAtIndex6: {
-                color: "blue",
+                color: "#A8D1FF",
               },
             },
           },
