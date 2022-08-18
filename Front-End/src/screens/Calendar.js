@@ -1,4 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+} from "react-native";
 import styles from "../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCalendar from "../components/calendar/CustomCalendar";
@@ -11,7 +19,7 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../store/store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
 
 export default function Calendar({ navigation }) {
   const dispatch = useDispatch();
@@ -33,13 +41,18 @@ export default function Calendar({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const type = useSelector((state) => {
-    return state.Setting[0];
+    return state.Account[3];
   });
+
+  const [showBtn, setShowBtn] = useState(false);
+  const [typeOne, setTypeOne] = useState(type[1]);
+  const [typeTwo, setTypeTwo] = useState(type[2]);
+
   return (
     <View style={CalendarStyles.back}>
       <View>
-        {/* 타입 선택 버튼  */}
-        <View style={[{ flexDirection: "row" }]}>
+        {/* Type 선택 버튼 */}
+        <View style={CalendarStyles.container}>
           <TouchableOpacity
             style={[
               CalendarStyles.btn,
@@ -62,6 +75,7 @@ export default function Calendar({ navigation }) {
               CalendarStyles.btn,
               check === 0 ? { backgroundColor: "#A8D1FF" } : {},
             ]}
+            disabled={showBtn}
             onPress={() => {
               dispatch({
                 type: "ScheduleList/mark",
@@ -74,7 +88,7 @@ export default function Calendar({ navigation }) {
               });
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={CalendarStyles.container}>
               <Ionicons name="ellipse-sharp" size={10} color="blue" />
               <Text>{type[0]}</Text>
             </View>
@@ -96,7 +110,7 @@ export default function Calendar({ navigation }) {
               });
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={CalendarStyles.container}>
               <Ionicons name="ellipse-sharp" size={10} color="red" />
               <Text>{type[1]}</Text>
             </View>
@@ -118,28 +132,10 @@ export default function Calendar({ navigation }) {
               });
             }}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={CalendarStyles.container}>
               <Ionicons name="ellipse-sharp" size={10} color="green" />
               <Text>{type[2]}</Text>
             </View>
-          </TouchableOpacity>
-          {/* 나중에 삭제해야함 */}
-          <TouchableOpacity
-            style={CalendarStyles.btn}
-            onPress={() => {
-              AsyncStorage.removeItem("Account");
-              AsyncStorage.removeItem("Setting");
-            }}
-          >
-            <Text>삭제용</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={CalendarStyles.btn}
-            onPress={() => {
-              navigation.navigate("Verification");
-            }}
-          >
-            <Text>이동</Text>
           </TouchableOpacity>
         </View>
         <CustomCalendar />
@@ -147,6 +143,7 @@ export default function Calendar({ navigation }) {
       </View>
       {/* 일정 추가 버튼 */}
       <TouchableOpacity
+        style={CalendarStyles.addBtn}
         onPress={() => {
           // schedule 내용 지우기
           dispatch({ type: "Schedule/clear" });
@@ -154,12 +151,16 @@ export default function Calendar({ navigation }) {
           navigation.navigate("MakeSchedule");
         }}
       >
-        <AntDesign
-          style={{ marginLeft: 360, marginTop: 3 }}
-          name="pluscircle"
-          size={40}
-          color="#A8D1FF"
-        />
+        <AntDesign name="pluscircle" size={40} color="#A8D1FF" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={CalendarStyles.btn}
+        onPress={() => {
+          setShowBtn(!showBtn);
+        }}
+      >
+        {/* Type 이름 변경 버튼 */}
+        <Text>타입명 변경</Text>
       </TouchableOpacity>
     </View>
   );
@@ -168,20 +169,34 @@ export default function Calendar({ navigation }) {
 const CalendarStyles = StyleSheet.create({
   // 전체 화면 스타일
   back: {
-    backgroundColor: "#EDEDED",
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
 
   // 일정분류 스타일
   btn: {
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 10,
-    marginHorizontal: 3,
+    padding: "3%",
+    marginTop: "3%",
+    marginBottom: "1%",
+    marginLeft: "2%",
     backgroundColor: "#FFFFFF",
     borderRadius: 5,
     height: "auto",
     alignItems: "center",
+  },
+
+  addBtn: {
+    position: "absolute",
+    backgroundColor: "#ffffff",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: "1%",
+    bottom: "-7%",
+  },
+
+  container: {
+    flexDirection: "row",
   },
 });

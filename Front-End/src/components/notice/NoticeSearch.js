@@ -1,31 +1,18 @@
 import { View, Text, ScrollView, TouchableOpacity,
-KeyboardAvoidingView, StyleSheet } from "react-native";
+KeyboardAvoidingView, StyleSheet, Image } from "react-native";
 // import styles from "../../../app.module.css";
 import NoticeItem from "./NoticeItem";
 
 
 // Notice data에서 찾기 .. 
 
-const DATA = [
-  {
-    id: '1',
-    title: '공지1a',
-    duedate : '2022-08-03',
-    route: 'MM'
-  },
-  {
-    id: '2',
-    title: '공지2',
-    duedate : '2022-08-03',
-    route: 'Edu'
-  }
-];
 
 export default function NoticeSearch({ navigation, route }){
-  const {value} = route.params
+  const value = route.params.value
+  const noticeList = route.params.noticeList
   // console.log(value)
   // console.log('필터링된애들')
-  const searchNotice = DATA.filter(notice => notice.title.includes(value))
+  const searchNotice = noticeList.filter(notice => notice.title.includes(value))
   // console.log(searchNotice)
 
   const search = String.fromCodePoint(0x1F50E)
@@ -33,8 +20,12 @@ export default function NoticeSearch({ navigation, route }){
   if (searchNotice.length !== 0) {
     return (
       <View style={styles.searchcontainer} >
-        <Text style={styles.titlecontainer}>Ssamy Says</Text>
+        <View style={styles.titlecontainer}>
+          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
+        </View>
+        
         <Text style={styles.searchbox}>{search}  "{value}" 검색 결과입니다.</Text>
+
         <View style={styles.resultcontainer}>
           <View style={styles.resultbox}>
             <ScrollView>
@@ -44,8 +35,8 @@ export default function NoticeSearch({ navigation, route }){
             </ScrollView>
           </View>
 
-          <View >
-            <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.navigate("Notice")}>
+          <View style={styles.buttonbar}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Notice")}>
               <Text>공지로 돌아가기</Text>
             </TouchableOpacity>
           </View>
@@ -57,13 +48,16 @@ export default function NoticeSearch({ navigation, route }){
   else {
     return (
       <View style={styles.searchcontainer}>
-        <Text style={styles.titlecontainer}>Ssamy Says</Text>
+        <View style={styles.titlecontainer}>
+          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
+        </View>
+
         <View style={styles.failresult}>
           <Text style={styles.searchbox}>{search}  "{value}" 검색 결과가 없습니다. </Text>
           
-          <View>
-            <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.navigate("Notice")}>
-              <Text>공지 목록으로 돌아가기</Text>
+          <View style={styles.buttonbar}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Notice")}>
+              <Text>공지로 돌아가기</Text>
             </TouchableOpacity>
           </View>
 
@@ -79,17 +73,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-  titlecontainer: { 
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingBottom: 15,
-    textAlign: 'left',
-    backgroundColor: "#5ba8ff",
-    marginBottom: 10,
-    fontSize: 30,
-    fontWeight: "bold",
-  },
 
+  titlecontainer : {
+    flexDirection: 'column',
+    alignItems: "flex-start",
+    backgroundColor: "#ffffff",
+    marginLeft: "7%"
+  },
+  imageicon: {
+    width:"50%",
+    resizeMode: "contain",
+  },
+  titletext:{
+    fontSize: 30,
+    // paddingTop: 10,
+    paddingLeft: 20,
+    // paddingRight: 20,
+    fontWeight: "bold",
+    color: "#000000"
+  },
   searchbox : {
     backgroundColor: "#ededed",
     margin: 20,
@@ -110,14 +112,22 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  buttonnotice : {
-    padding: 10,
+  resultbox: {
+    marginBottom: 20
+  },
+
+  button : {
     backgroundColor: "#ffe34f",
-    borderRadius: 15,
-    marginBottom: 20,
-    marginHorizontal: 30,
-    textAlign: "center",
-    alignItems : "center",
+    borderRadius: 8,
+    padding: 12,
   },
   
+  buttonbar: {
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+
 })
