@@ -266,27 +266,26 @@ export default function MakeSchedule({ navigation }) {
             />
           </View>
           {/* 일정 시각 선택(TimePicker) */}
-          <View style={MakeScheduleStyles.timeBox}>
-            <TouchableOpacity
-              onPress={() => {
-                setShow(true);
-              }}
-            >
-              <Text style={MakeScheduleStyles.timeText}>
-                {Schedule.time[0].toString().padStart(2, "0")} :{" "}
-                {Schedule.time[1].toString().padStart(2, "0")}
-              </Text>
-            </TouchableOpacity>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="time"
-                is24Hour={true}
-                onChange={onChange}
-              />
-            )}
-          </View>
+          <TouchableOpacity
+            style={MakeScheduleStyles.timeBox}
+            onPress={() => {
+              setShow(true);
+            }}
+          >
+            <Text style={MakeScheduleStyles.timeText}>
+              {Schedule.time[0].toString().padStart(2, "0")} :{" "}
+              {Schedule.time[1].toString().padStart(2, "0")}
+            </Text>
+          </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="time"
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
           {/* 등록 버튼 */}
           <TouchableOpacity
             style={MakeScheduleStyles.submitBtn}

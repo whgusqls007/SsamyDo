@@ -39,8 +39,8 @@ export default Account = createSlice({
     },
 
     changeType(state, action) {
-      state[3] = action.payload;
-      console.log(action.payload);
+      state[3][1] = action.typeOne;
+      state[3][2] = action.typeTwo;
     },
     // 로컬에 저장
     saveType(state) {
@@ -49,6 +49,19 @@ export default Account = createSlice({
     // 값 불러오기
     importType(state, action) {
       state[3] = action.payload.typeName;
+    },
+
+    reset(state) {
+      state[0] = {
+        email: "",
+        token: "",
+        studentNo: "",
+        name: "",
+        track: "",
+      };
+      state[1] = "인증";
+      state[2] = {};
+      state[3] = ["싸피", "스터디", "개인일정"];
     },
   },
 });

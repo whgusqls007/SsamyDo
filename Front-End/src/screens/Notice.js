@@ -29,48 +29,42 @@ export default function Notice({ navigation }) {
   const [showNotice, setShowNotice] = useState("All");
   const [value, setValue] = useState("");
 
-  const [noticeList, setNoticeList] = useState([]);
+  const noticeList = useSelector((state) => {
+    return state.Notice[0];
+  });
   // const todoList = useSelector(state => state.MainTodo)
-  const onFetchNotice = (res) => {
-    setNoticeList(res);
-  };
+  // const onFetchNotice = (res) => {
+  //   setNoticeList(res);
+  // };
 
-  useEffect(() => {
-    async function fetchNotice() {
-      // console.log(drf.notice.noticePage(1));
-
-      const response = await axios({
-        method: "get",
-        url: drf.notice.noticeOffset(0,20),
-        headers: token,
-      }).catch(() => {
-        navigation.navigate("Verification");
-      });
-      // .get(
-      //   "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
-      // );
-      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
-      return response.data;
-    }
-    fetchNotice()
-      .then((res) => {
-        // console.log(`넘어온 res ${res}`)
-        onFetchNotice(res.data);
-        dispatch({ type: "Notice/import", payload: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  // console.log(value)
-
-  // console.log(showNotice)
+  // useEffect(() => {
+  //   async function fetchNotice() {
+  //     const response = await axios({
+  //       method: "get",
+  //       url: drf.notice.noticeOffset(0, 20),
+  //       headers: token,
+  //     }).catch(() => {
+  //       navigation.navigate("Verification");
+  //     });
+  //     return response.data;
+  //   }
+  //   fetchNotice()
+  //     .then((res) => {
+  //       onFetchNotice(res);
+  //       dispatch({ type: "Notice/import", payload: res });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <View style={styles.noticecontainer}>
       <View style={styles.titlecontainer}>
-        <Image source={require('../images/notice_header.png')} style={styles.imageicon} />
+        <Image
+          source={require("../images/notice_header.png")}
+          style={styles.imageicon}
+        />
       </View>
 
       <KeyboardAvoidingView>
@@ -83,7 +77,6 @@ export default function Notice({ navigation }) {
             onSubmitEditing={() =>
               navigation.navigate("NoticeSearch", {
                 value: value,
-                noticeList: noticeList,
               })
             }
           />
@@ -106,10 +99,6 @@ export default function Notice({ navigation }) {
             onPress={() => setShowNotice("MM")}
           >
             <View>
-              {/* <Image 
-                source={require('../images/mattermost.png')}
-                style={styles.imageicon}
-              /> */}
               <Text style={styles.buttontext}>MatterMost</Text>
             </View>
           </TouchableOpacity>
@@ -130,16 +119,9 @@ export default function Notice({ navigation }) {
       </View>
 
       <View>
-        <NoticeList
-          navigation={navigation}
-          select={showNotice}
-          noticeList={noticeList}
-        />
+        <NoticeList navigation={navigation} select={showNotice} />
       </View>
     </View>
-    // <View>
-    //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
-    // </View>
   );
 }
 
@@ -158,23 +140,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 20,
     flexDirection: "column",
-    // paddingBottom: 15,
-    // textAlign: 'left',
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    marginLeft: "7%"
+    marginLeft: "7%",
   },
 
   titletext: {
     fontSize: 30,
-    // paddingTop: 10,
     paddingLeft: 20,
-    // paddingRight: 20,
     fontWeight: "bold",
     color: "#000000",
   },
   imageicon: {
-    width:"60%",
+    width: "60%",
     resizeMode: "contain",
   },
 
@@ -188,11 +166,6 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "#ededed",
-    // borderRadius: 5,
-    // alignItems: "center",
-    // marginHorizontal: 5,
-    // paddingHorizontal: 10,
-    // width: "auto",
     borderRadius: 8,
     padding: 12,
   },
@@ -209,7 +182,6 @@ const styles = StyleSheet.create({
   },
 
   searchbar: {
-    // marginTop: 10,
     marginBottom: 5,
     marginHorizontal: 30,
   },
