@@ -10,14 +10,20 @@ import {
 import NoticeList from "../components/notice/NoticeList";
 // import styles from "../../app.module.css";
 // import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState, useEffect } from "react";
 import SearchBar from "react-native-platform-searchbar";
 import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
+import drf from "../api/drf";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 export default function Notice({ navigation }) {
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   const dispatch = useDispatch();
 
   const [showNotice, setShowNotice] = useState("All");
@@ -31,9 +37,18 @@ export default function Notice({ navigation }) {
 
   useEffect(() => {
     async function fetchNotice() {
-      const response = await axios.get(
-        "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
-      );
+      // console.log(drf.notice.noticePage(1));
+
+      const response = await axios({
+        method: "get",
+        url: drf.notice.noticePage(1),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+      // .get(
+      //   "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
+      // );
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
@@ -55,9 +70,7 @@ export default function Notice({ navigation }) {
   return (
     <View style={styles.noticecontainer}>
       <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Ssamy Says
-            {/* <Image source={require('../images/ssamy.png')} style={styles.imageicon} /> */}
-          </Text>
+        <Image source={require('../images/notice_header.png')} style={styles.imageicon} />
       </View>
 
       <KeyboardAvoidingView>
@@ -67,7 +80,12 @@ export default function Notice({ navigation }) {
             placeholder={"궁금한 공지를 찾아보세요!"}
             value={value}
             onChangeText={setValue}
-            onSubmitEditing={()=>navigation.navigate("NoticeSearch", { value: value, noticeList : noticeList })}
+            onSubmitEditing={() =>
+              navigation.navigate("NoticeSearch", {
+                value: value,
+                noticeList: noticeList,
+              })
+            }
           />
         </View>
       </KeyboardAvoidingView>
@@ -78,17 +96,16 @@ export default function Notice({ navigation }) {
             style={[styles.button, showNotice === "All" && styles.clickbutton]}
             onPress={() => setShowNotice("All")}
           >
-            <View >
+            <View>
               <Text style={styles.buttontext}>전체 🐬</Text>
             </View>
           </TouchableOpacity>
-
 
           <TouchableOpacity
             style={[styles.button, showNotice === "MM" && styles.clickbutton]}
             onPress={() => setShowNotice("MM")}
           >
-            <View >
+            <View>
               {/* <Image 
                 source={require('../images/mattermost.png')}
                 style={styles.imageicon}
@@ -97,12 +114,11 @@ export default function Notice({ navigation }) {
             </View>
           </TouchableOpacity>
 
-
           <TouchableOpacity
             style={[styles.button, showNotice === "Edu" && styles.clickbutton]}
             onPress={() => setShowNotice("Edu")}
           >
-            <View >
+            <View>
               {/* <Image 
                   source={require('../images/ssafy.png.png')}
                   style={styles.imageicon}
@@ -121,15 +137,14 @@ export default function Notice({ navigation }) {
         />
       </View>
     </View>
-      // <View>
-      //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
-      // </View>
+    // <View>
+    //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-
-  header:{
+  header: {
     flexDirection: "row",
   },
 
@@ -139,41 +154,27 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
 
-
-  titlecontainer : {
+  titlecontainer: {
     marginTop: 30,
     marginBottom: 20,
-    flexDirection: 'column',
+    flexDirection: "column",
     // paddingBottom: 15,
     // textAlign: 'left',
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    // marginBottom: 10,
+    marginLeft: "7%"
   },
 
-  titletext:{
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingBottom: 15,
-    textAlign: "left",
-    backgroundColor: "#5ba8ff",
-    marginBottom: 10,
-
+  titletext: {
     fontSize: 30,
     // paddingTop: 10,
     paddingLeft: 20,
     // paddingRight: 20,
     fontWeight: "bold",
-    color: "#000000"
+    color: "#000000",
   },
-
   imageicon: {
-    padding: 10,
-    margin: 5,
-    // height: 100,
-    // width: 100,
-    height: 30,
-    width: 30,
+    width:"60%",
     resizeMode: "contain",
   },
 
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 30,
   },
 
   button: {
@@ -194,7 +195,6 @@ const styles = StyleSheet.create({
     // width: "auto",
     borderRadius: 8,
     padding: 12,
-
   },
 
   clickbutton: {
@@ -209,9 +209,8 @@ const styles = StyleSheet.create({
   },
 
   searchbar: {
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 30,
   },
 });
-
