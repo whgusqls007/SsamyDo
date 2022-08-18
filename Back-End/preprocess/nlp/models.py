@@ -27,10 +27,10 @@ class Todo(models.Model):
     notice = models.ForeignKey(Notice, on_delete=models.CASCADE, related_name='todos')
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=1023)
-    status = models.CharField(max_length=255)
     file_ids = models.CharField(max_length=255)
-    date = models.CharField(max_length=255)
-    duedate = models.CharField(max_length=255)
+    start_date = models.CharField(max_length=255)
+    due_date = models.CharField(max_length=255)
+    type = models.CharField(max_length=31)
 
     class Meta:
         db_table = 'todo'
