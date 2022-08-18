@@ -42,7 +42,7 @@ export default function UserDetail() {
             {/* 이미지파일 */}
             {/* <Image
               style={styles.img}
-              source={require("../../images/ssamy.png")}
+              source={require("../../images/그림1.png")}
             /> */}
           </View>
 
@@ -118,7 +118,12 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 5,
     borderTopEndRadius: 5,
     padding: 5,
-    marginBottom: 10
+    // marginBottom: 10
+    // width: "95%",
+    // height: "32%",
+    // borderWidth: 1,
+    marginBottom: "5%",
+    borderRadius: 10,
   },
   nameContainer: {
     // marginTop: "1%",
