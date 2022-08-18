@@ -20,6 +20,7 @@ export default function TodoItem({ navigation, item }) {
   // console.log(item)
   const dispatch = useDispatch();
   const itemId = item.id
+  const itemTitle = (item.title.includes('건강') ? item.title.slice(4): item.title); 
   // console.log(`item notice ------ ${item.notice}`)
   
   // console.log(typeof(item))
@@ -27,7 +28,7 @@ export default function TodoItem({ navigation, item }) {
 
   const itemDuedate= (item.dueDate.length === 12 ? item.dueDate.slice(0,8): item.dueDate.slice(0,7));
 
-  const dDay = (itemDuedate.length === 8 ? itemDuedate - ymdFormat1() -1 : itemDuedate - ymdFormat2() -1);
+  const dDay = (itemDuedate.length === 8 ? itemDuedate - ymdFormat1()  : itemDuedate - ymdFormat2() );
 
   const hour = (item.dueDate.length === 12 ? item.dueDate.slice(8,10): item.dueDate.slice(8,9));
   const min = (item.dueDate.length === 12 ? item.dueDate.slice(10,12): item.dueDate.slice(9,11));
@@ -56,19 +57,31 @@ export default function TodoItem({ navigation, item }) {
 
   // 오늘날짜 220817
   function ymdFormat1(oriDate = new Date()) {
+
+    let utc = oriDate.getTime() + (oriDate.getTimezoneOffset()*60*1000);
+    
+    let timeDiff = 34*60*60*1000;
+    let kst = new Date(utc + (timeDiff))
+
     let result =
-      oriDate.getFullYear().toString() +
-      (oriDate.getMonth() + 1).toString().padStart(2, "0") +
-      oriDate.getDate().toString().padStart(2, "0");
+      kst.getFullYear().toString() +
+      (kst.getMonth() + 1).toString().padStart(2, "0") +
+      kst.getDate().toString().padStart(2, "0");
     return result;
   }
 
+
   // 오늘날짜 22817
   function ymdFormat2(oriDate = new Date()) {
+    let utc = oriDate.getTime() + (oriDate.getTimezoneOffset()*60*1000);
+    
+    let timeDiff = 34*60*60*1000;
+    let kst = new Date(utc + (timeDiff))
+
     let result =
-      oriDate.getFullYear().toString() +
-      (oriDate.getMonth() + 1).toString().padStart(1) +
-      oriDate.getDate().toString().padStart(2, "0");
+      kst.getFullYear().toString() +
+      (kst.getMonth() + 1).toString().padStart(1) +
+      kst.getDate().toString().padStart(2, "0");
     return result;
   }
 
@@ -97,10 +110,10 @@ export default function TodoItem({ navigation, item }) {
             <View style={styles.itemtitlebox}>
               {item.notice === null 
                 ? <TouchableOpacity onPress={goEdussafy}>
-                    <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
+                    <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{itemTitle}</Text>
                   </TouchableOpacity>
                 : <TouchableOpacity onPress={navigation.navigate("NoticeDetail", { id: item.notice })}>
-                    <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
+                    <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{itemTitle}</Text>
                   </TouchableOpacity>}
               {/* <TouchableOpacity onPress={goEdussafy}>
                 <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
