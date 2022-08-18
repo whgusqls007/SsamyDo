@@ -178,9 +178,9 @@ export default function Alarm() {
 const SettingStyle = StyleSheet.create({
   back: {
     width: "95%",
-    height: "30%",
+    height: "40%",
     borderWidth: 1,
-    marginBottom: "5%",
+    // marginBottom: "5%",
     backgroundColor: "#EDEDED",
     borderRadius: 5,
   },

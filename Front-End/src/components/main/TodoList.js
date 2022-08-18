@@ -44,12 +44,52 @@ export default function TodoList({ navigation, todoList }) {
 
   // console.log(`todolist state에 저장한거 ----------------------- ${todoList}`)
 
-  // 오늘날짜 
-  function ymdFormat(oriDate = new Date()) {
+  const todostatus = useSelector((state) => {
+    return state.TodoStatus[0]})
+
+  function checkDate(item){
+    const itemDuedate= (item.dueDate.length === 12 ? item.dueDate.slice(0,8): item.dueDate.slice(0,7));
+    const dDay = (itemDuedate.length === 8 ? itemDuedate - ymdFormat1() : itemDuedate - ymdFormat2() );
+    return dDay
+  }
+
+  function checkStatus(item){
+    const thisStatus = ( todostatus.includes(item.id) ? true : false );
+    return thisStatus
+  }
+
+  
+  
+
+  // 오늘날짜 220817
+  function ymdFormat1(oriDate = new Date()) {
+
+    let utc = oriDate.getTime() + (oriDate.getTimezoneOffset()*60*1000);
+    
+    let timeDiff = 34*60*60*1000;
+    let kst = new Date(utc + (timeDiff))
+
     let result =
-      oriDate.getFullYear().toString() +
-      (oriDate.getMonth() + 1).toString().padStart(2, "0") +
-      oriDate.getDate().toString().padStart(2, "0");
+      kst.getFullYear().toString() +
+      (kst.getMonth() + 1).toString().padStart(2, "0") +
+      kst.getDate().toString().padStart(2, "0");
+    return result;
+  }
+
+
+  // console.log(ymdFormat1())
+
+  // 오늘날짜 22817
+  function ymdFormat2(oriDate = new Date()) {
+    let utc = oriDate.getTime() + (oriDate.getTimezoneOffset()*60*1000);
+    
+    let timeDiff = 34*60*60*1000;
+    let kst = new Date(utc + (timeDiff))
+
+    let result =
+      kst.getFullYear().toString() +
+      (kst.getMonth() + 1).toString().padStart(1) +
+      kst.getDate().toString().padStart(2, "0");
     return result;
   }
 
@@ -84,6 +124,8 @@ export default function TodoList({ navigation, todoList }) {
   // console.log("todolist-----------------------------------")
   // console.log(todoList[0])
 
+  // todoList.sort((a, b) => a.time[0] - b.time[0] || a.time[1] - b.time[1]);
+
   return (
     <View style={styles.todoContainer}>
       <View style={styles.todobox}>
@@ -94,7 +136,7 @@ export default function TodoList({ navigation, todoList }) {
           ))}  */}
           {/* <Text>{todoList[0].id}</Text> */}
 
-          {todoList && todoList.map((item)=>(
+          {todoList && todoList.filter((item) => checkDate(item) >= 0).map((item)=>(
             <TodoItem item={item} key={item.id} navigation={navigation} />)
           )}
 
