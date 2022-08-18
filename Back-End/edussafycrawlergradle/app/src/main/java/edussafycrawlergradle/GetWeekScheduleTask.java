@@ -7,10 +7,12 @@ import org.openqa.selenium.WebElement;
 
 public class GetWeekScheduleTask extends ChromeDriverController implements Runnable {
     JDBCDriver jdbcDriver;
+    int day;
 
-    public GetWeekScheduleTask(JDBCDriver jdbcDriver) {
+    public GetWeekScheduleTask(JDBCDriver jdbcDriver, int day) {
         super();
         this.jdbcDriver = jdbcDriver;
+        this.day = day;
     }
 
     @Override
@@ -30,8 +32,21 @@ public class GetWeekScheduleTask extends ChromeDriverController implements Runna
         List<WeekBox> weekBoxes = new ArrayList<>();
         while (true) {
             move("https://edu.ssafy.com/edu/lectureroom/curriculumn/curriculumnWeeklyList.do");
+            WebElement elem = null;
 
-            WebElement elem = findElementById("_crclmDayTargetId");
+            if (this.day == 1) {
+                elem = findElementByXpath(
+                        "/html/body/div[1]/div[1]/div[2]/div/div/div[3]/div/div[2]/div[1]/div[1]/div[7]");
+                elem.click();
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            elem = findElementById("_crclmDayTargetId");
 
             if (checkStatus(elem)) {
                 continue;

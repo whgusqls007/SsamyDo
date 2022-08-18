@@ -1,30 +1,33 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.aes.AES_Encryption;
-import com.ssljjong.ssachedule.dto.LoginDto;
-import com.ssljjong.ssachedule.dto.UserDto;
-import com.ssljjong.ssachedule.dto.UserListDto;
-import com.ssljjong.ssachedule.entity.*;
-import com.ssljjong.ssachedule.jwt.TokenProvider;
-import com.ssljjong.ssachedule.repository.TrackRepository;
-import com.ssljjong.ssachedule.util.SecurityUtil;
-import com.ssljjong.ssachedule.repository.TeamUserRepository;
-import javassist.bytecode.DuplicateMemberException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.ssljjong.ssachedule.repository.UserRepository;
-
-import lombok.RequiredArgsConstructor;
-
-import net.bis5.mattermost.client4.MattermostClient;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ssljjong.ssachedule.aes.AES_Encryption;
+import com.ssljjong.ssachedule.dto.LoginDto;
+import com.ssljjong.ssachedule.dto.UserDto;
+import com.ssljjong.ssachedule.dto.UserListDto;
+import com.ssljjong.ssachedule.entity.Authority;
+import com.ssljjong.ssachedule.entity.Team;
+import com.ssljjong.ssachedule.entity.TeamUser;
+import com.ssljjong.ssachedule.entity.Track;
+import com.ssljjong.ssachedule.entity.User;
+import com.ssljjong.ssachedule.jwt.TokenProvider;
+import com.ssljjong.ssachedule.repository.TeamUserRepository;
+import com.ssljjong.ssachedule.repository.TrackRepository;
+import com.ssljjong.ssachedule.repository.UserRepository;
+import com.ssljjong.ssachedule.util.SecurityUtil;
+
+import javassist.bytecode.DuplicateMemberException;
+import lombok.RequiredArgsConstructor;
+import net.bis5.mattermost.client4.MattermostClient;
 
 @Service
 @Transactional
@@ -66,7 +69,7 @@ public class UserService {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
-        net.bis5.mattermost.model.User mmUser = client.login(userDto.getUsername(),  userDto.getPassword());
+        net.bis5.mattermost.model.User mmUser = client.login(userDto.getUsername(), userDto.getPassword());
         if (mmUser.getUsername() == null) {
             throw new Exception("매터모스트 계정을 확인하세요");
         }
@@ -88,7 +91,6 @@ public class UserService {
 
         return UserDto.from(userRepository.save(user));
     }
-
 
     @Transactional(readOnly = true)
     public UserDto getUserWithAuthorities(String username) {
@@ -129,7 +131,8 @@ public class UserService {
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
-    public List<UserListDto> getAllUsers(){
+
+    public List<UserListDto> getAllUsers() {
         List<UserListDto> userDtos = userRepository.findAll().stream()
                 .map(u -> {
                     try {
@@ -140,6 +143,7 @@ public class UserService {
                 }).collect(Collectors.toList());
         return userDtos;
     }
+
     public Boolean validateAccount(User userDomain) {
         try {
             client.login(userDomain.getUsername(), userDomain.getPassword());
@@ -149,12 +153,11 @@ public class UserService {
         }
     }
 
-    public LoginDto findUserByUsername(String username){
+    public LoginDto findUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username).get();
 
         return new LoginDto(user.getUsername(), user.getPassword(), user.getEduPw());
     }
-
 
     public void deleteUser(String auth) {
         User user = findUserByAuthentication(auth);
