@@ -48,7 +48,7 @@ LocaleConfig.locales["ssamydo"] = {
     "금요일",
     "토요일",
   ],
-  dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+  dayNamesShort: ["SUN ", "MON", "TUE ", "WED", " THU", " FRI", " SAT"],
   today: "Today",
 };
 LocaleConfig.defaultLocale = "ssamydo";
@@ -60,7 +60,11 @@ export default function CustomCalendar() {
   const [key, setKey] = useState("첫");
   // 테마
   const theme = {
-    backgroundColor: "#E5F3F6",
+    dayTextColor: "#111111",
+    backgroundColor: "#ffffff",
+    todayTextColor: "#5BA8FF",
+    textSectionTitleColor: "#111111",
+    arrowColor: "#888888",
     "stylesheet.calendar.header": {
       dayTextAtIndex0: {
         color: "red",
@@ -147,6 +151,11 @@ export default function CustomCalendar() {
         markingType={"multi-dot"}
         markedDates={markDate}
         theme={{
+          dayTextColor: "#111111",
+          textSectionTitleColor: "#888888",
+          arrowColor: "#888888",
+          todayTextColor: "#5BA8FF",
+          backgroundColor: "#ffffff",
           "stylesheet.calendar.header": {
             dayTextAtIndex0: {
               color: "red",
