@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity,
-KeyboardAvoidingView, StyleSheet } from "react-native";
+KeyboardAvoidingView, StyleSheet, Image } from "react-native";
 // import styles from "../../../app.module.css";
 import NoticeItem from "./NoticeItem";
 
@@ -21,7 +21,7 @@ export default function NoticeSearch({ navigation, route }){
     return (
       <View style={styles.searchcontainer} >
         <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Ssamy Says</Text>
+          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
         </View>
         
         <Text style={styles.searchbox}>{search}  "{value}" 검색 결과입니다.</Text>
@@ -49,7 +49,7 @@ export default function NoticeSearch({ navigation, route }){
     return (
       <View style={styles.searchcontainer}>
         <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Ssamy Says</Text>
+          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
         </View>
 
         <View style={styles.failresult}>
@@ -75,16 +75,15 @@ const styles = StyleSheet.create({
   },
 
   titlecontainer : {
-    marginTop: 30,
-    marginBottom: 20,
     flexDirection: 'column',
-    // paddingBottom: 15,
-    // textAlign: 'left',
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    // marginBottom: 10,
+    marginLeft: "7%"
   },
-
+  imageicon: {
+    width:"50%",
+    resizeMode: "contain",
+  },
   titletext:{
     fontSize: 30,
     // paddingTop: 10,
