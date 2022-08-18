@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "title", "date"})
+@ToString(of = { "id", "title", "date" })
 @Table(name = "weeklyplan")
 public class WeeklyPlan {
         @Id
@@ -22,6 +22,5 @@ public class WeeklyPlan {
         private String title;
         private String date;
         private String time;
-
 
 }

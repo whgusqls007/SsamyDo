@@ -30,6 +30,9 @@ public class User {
     @Column(name = "edu_pw")
     private String eduPw;
 
+    @Column(name = "fcmtoken")
+    private String fcmtoken;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
@@ -45,25 +48,28 @@ public class User {
 
     // Constructor
 
-    public User(Long id, String username, String password, String eduPw, Track track) {
+    public User(Long id, String username, String password, String eduPw, Track track, String fcmtoken) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.eduPw = eduPw;
         this.track = track;
+        this.fcmtoken = fcmtoken;
     }
 
-    public User(Long id, String username, String userPw, String eduPw) {
+    public User(Long id, String username, String userPw, String eduPw, String fcmtoken) {
         this.id = id;
         this.username = username;
         this.password = userPw;
         this.eduPw = eduPw;
+        this.fcmtoken = fcmtoken;
     }
 
-    public User(String username, String userPw, String eduPw) {
+    public User(String username, String userPw, String eduPw, String fcmtoken) {
         this.username = username;
         this.password = userPw;
         this.eduPw = eduPw;
+        this.fcmtoken = fcmtoken;
     }
     // 연관 메서드 //
 
