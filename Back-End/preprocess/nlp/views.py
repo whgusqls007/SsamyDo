@@ -88,33 +88,35 @@ def preprocess(request):
     # 파일 있는지 확인
     text = request.data.get('text')
     file_ids = request.data.get('file_ids')
-    print(type(file_ids))
-    print(file_ids)
-    post_id = request.data.get('post_id')
-
     total_message = text
     
     if file_ids:
         for file_id in file_ids.split(","):
+            res = driver.files.get_file(file_id)
+            filename = f"{file_id}.jpg"
+            completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
+            with open(completeName, "wb") as f:
+                f.write(res.content)
+
             try:
                 data = driver.files.get_file(file_ids).content
 
                 encoded_img = np.fromstring(data, dtype = np.uint8)
                 img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
         
-                print("이까진됨")
-                ocr = pytesseract.image_to_string(img, 'eng+Hangul')
-                print(ocr)
-                logger.info(ocr)
+                oem = 3
+                psm = 4
+                ocr = pytesseract.image_to_string(img, lang="Hangul+eng", config="--oem " + str(oem) + " --psm " + str(psm))
+            
 
                 total_message = text + "\n" + ocr
             
             except Exception as e:
                 logger.info(e)
-                print(e)
+
 
     if not file_ids:
-        file_ids = ''
+        file_ids = '[]'
 
         
     if predict(total_message):
@@ -138,8 +140,7 @@ def preprocess(request):
             "source" : "M",
         }
 
-        serializer = NoticeSerializer(data=notice)
-                
+        serializer = NoticeSerializer(data=notice)   
 
      
         if serializer.is_valid():
@@ -147,7 +148,7 @@ def preprocess(request):
             serializer.save()
             logger.info("저장 완료", notice)
             return Response(status=status.HTTP_201_CREATED)    
-        
+    
 
     logger.info("저장 안됨")
     return Response(status=status.HTTP_200_OK)
@@ -161,14 +162,15 @@ def make_todo(request):
     text = request.data.get('text')
     # MatterMostDriver 로그인
     driver.login()
-
+    
     channel_id = request.data.get('channel_id')
     cnt = 1
     while True:
         if text.split('\n')[cnt]:
             break
         cnt += 1
-
+    
+    
     title = text.split('\n')[cnt].replace('#', '')
     string = text.split('\n')[cnt+1]
     duedate = re.sub(r'[^0-9]', '', string)
@@ -180,7 +182,8 @@ def make_todo(request):
         duedate = '20' + duedate
     description = text
     timestamp = request.data.get('timestamp')
-
+    
+    
     date = str(datetime.datetime.fromtimestamp(timestamp//1000)).split()[0].replace('-', '')
         
     file_ids = request.data.get('file_ids')
@@ -188,6 +191,14 @@ def make_todo(request):
     if not file_ids:
         file_ids = '[]'
 
+    else:
+        for file_id in file_ids.split(","):
+            res = driver.files.get_file(file_id)
+            filename = f"{file_id}.jpg"
+            completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
+            with open(completeName, "wb") as f:
+                f.write(res.content)                             
+                                                           
     notice = {
         "channel_id": channel_id,
         "title": title,
@@ -198,19 +209,10 @@ def make_todo(request):
     }
 
     serializer = NoticeSerializer(data=notice)
-    
     if serializer.is_valid():
         notice_id = serializer.save()
         logger.info("저장 완료", notice)
     
-    file_id_list = file_ids.split(',')
-    
-    for file_id in file_id_list:
-        res = driver.files.get_file(file_id)
-        filename = f"{file_id}.jpg"
-        completeName = os.path.join(f"/home/ubuntu/imageServer/images", filename)
-        with open(completeName, "wb") as f:
-            f.write(res.content)
 
     todo = {
         "title": title,
@@ -223,13 +225,13 @@ def make_todo(request):
     }
         
     serializer = TodoSerializer(data=todo)
-    if serializer.is_valid(raise_exception=True):
+    if serializer.is_valid():
         serializer.save()
         logger.info(serializer)
-        print("Todo 저장완료")
+        print("Todo 저장 완료")
    
         return Response(status=status.HTTP_201_CREATED)    
-    print("Todo 저장실패")
+    logger.info("Todo 저장 실패")
     return Response(status=status.HTTP_200_OK)
 
 
