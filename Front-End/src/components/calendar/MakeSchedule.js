@@ -72,7 +72,7 @@ export default function MakeSchedule({ navigation }) {
   // Store 활용을 위한 변수 설정(렌더링 시 한 번만)
   useEffect(() => {
     // 수정으로 들어온 경우(Schedule에 id값이 존재) 버튼의 이름과 해당 일자의 표시를 변경
-    if (Schedule.id) {
+    if (Schedule.id || Schedule.id === 0) {
       // 버튼 이름 수정
       setBtnName("수정");
       // 선택일 표시
@@ -116,7 +116,7 @@ export default function MakeSchedule({ navigation }) {
     let currentDate = selectedDate || date;
     const timeSet = () => {
       // Platform이 없으면 계속 실행됨
-      if (Platform.OS === "android"){
+      if (Platform.OS === "android") {
         setShow(false);
         // for iOS, add a button that closes the picker
       }
@@ -145,7 +145,7 @@ export default function MakeSchedule({ navigation }) {
 
   // settings에서 정한 분류값을 표현하기 위한 selector
   const typeName = useSelector((state) => {
-    return state.Setting[0];
+    return state.Account[3];
   });
   // 분류값 버튼 색을 위한
   const btnColor = ["blue", "red", "green"];

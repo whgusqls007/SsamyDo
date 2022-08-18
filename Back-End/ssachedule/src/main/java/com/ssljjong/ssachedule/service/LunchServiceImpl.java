@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class LunchServiceImpl implements LunchService{
+public class LunchServiceImpl implements LunchService {
 
     private final LunchRepository lunchRepository;
 
@@ -27,7 +27,8 @@ public class LunchServiceImpl implements LunchService{
     public List<LunchDto> getTodayLunch() {
         String today = String.valueOf(LocalDate.now());
         List<LunchDto> todayLunch = lunchRepository.findByDate(today).stream()
-                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(),
+                        lunch.getStore(), lunch.getDate()))
                 .collect(Collectors.toList());
         return todayLunch;
     }
@@ -42,7 +43,8 @@ public class LunchServiceImpl implements LunchService{
     @Override
     public List<LunchDto> getLunchForDate(String date) {
         List<LunchDto> lunches = lunchRepository.findByDate(date).stream()
-                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(),
+                        lunch.getStore(), lunch.getDate()))
                 .collect(Collectors.toList());
 
         return lunches;
@@ -59,7 +61,8 @@ public class LunchServiceImpl implements LunchService{
     @Override
     public List<LunchDto> getLunchesForPeriod(String start, String end) {
         List<LunchDto> lunches = lunchRepository.findByDateBetween(start, end).stream()
-                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(), lunch.getStore(), lunch.getDate()))
+                .map(lunch -> new LunchDto(lunch.getId(), lunch.getMain(), lunch.getDetail(), lunch.getImg(),
+                        lunch.getStore(), lunch.getDate()))
                 .collect(Collectors.toList());
         return lunches;
     }

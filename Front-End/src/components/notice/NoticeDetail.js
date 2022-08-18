@@ -40,7 +40,16 @@ export default function NoticeDetail({ navigation, route }) {
 
   return (
     <View style={styles.detailcontainer}>
-      <Text style={styles.titlecontainer}>Ssamy Says</Text>
+      <View>
+        <TouchableOpacity style={styles.buttonback} onPress={() => navigation.pop()}>
+            <Text style={styles.buttonbacktext}>⬅</Text>
+          </TouchableOpacity>
+      </View>
+
+      <View style={styles.titlecontainer}>
+          <Text style={styles.titletext}>Ssamy Says</Text>
+        </View>
+
       <View style={styles.detailbox}>
         <Text style={styles.detailtitle}>{item[0].title}</Text>
         <ScrollView>
@@ -50,15 +59,10 @@ export default function NoticeDetail({ navigation, route }) {
       </View> 
 
       <View style={styles.detailfooter}>
-
         <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
-          <Text >에듀싸피로 이동</Text>
+          <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.pop()}>
-          <Text>돌아가기 ⬅ </Text>
-        </TouchableOpacity>
-    </View>
+      </View>
     </View>
   );
 }
@@ -68,15 +72,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-  titlecontainer: { 
-    paddingTop: 30,
+  titlecontainer : {
+    // marginTop: 30,
     paddingLeft: 20,
-    paddingBottom: 15,
-    textAlign: 'left',
-    backgroundColor: "#5ba8ff",
-    marginBottom: 10,
+    marginBottom: 20,
+    flexDirection: 'column',
+    // paddingBottom: 15,
+    // textAlign: 'left',
+    alignItems: "flex-start",
+    backgroundColor: "#ffffff",
+    // marginBottom: 10,
+  },
+
+  titletext:{
     fontSize: 30,
+    // paddingTop: 10,
+    paddingLeft: 20,
+    // paddingRight: 20,
     fontWeight: "bold",
+    color: "#000000"
   },
   detailbox : {
     margin: 20,
@@ -100,18 +114,25 @@ const styles = StyleSheet.create({
   detailfooter : {
     flex: 0.1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     // marginBottom: 30,
     // marginHorizontal: 30,
   },
   
   buttonedussafy : {
+    width: "90%",
     padding: 10,
     backgroundColor: "#5ba8ff",
     borderRadius: 15,
     marginBottom: 20,
-    marginHorizontal: 30,
-    textAlign: "center"
+    // marginHorizontal: 30,
+    // textAlign: "center"
+  },
+
+  buttonedussafytext : {
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 15,
   },
 
   buttonnotice : {
@@ -121,5 +142,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 30,
     textAlign: "center"
+  },
+  buttonback: {
+    margin: 15,
+  },
+  buttonbacktext : {
+    fontSize : 20,
   }
 });

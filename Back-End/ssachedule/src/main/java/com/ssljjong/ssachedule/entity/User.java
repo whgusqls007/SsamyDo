@@ -31,8 +31,7 @@ public class User {
     private String eduPw;
 
     @Column(name = "fcmtoken")
-    private String fcmtoken;
-
+    private String fcmToken;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Track track;
@@ -48,29 +47,36 @@ public class User {
 
     // Constructor
 
-    public User(Long id, String username, String password, String eduPw, Track track, String fcmtoken) {
+    public User(Long id, String username, String password, String eduPw, Track track) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.eduPw = eduPw;
         this.track = track;
-        this.fcmtoken = fcmtoken;
     }
 
-    public User(Long id, String username, String userPw, String eduPw, String fcmtoken) {
+    public User(Long id, String username, String userPw, String eduPw) {
         this.id = id;
         this.username = username;
         this.password = userPw;
         this.eduPw = eduPw;
-        this.fcmtoken = fcmtoken;
     }
 
-    public User(String username, String userPw, String eduPw, String fcmtoken) {
+    public User(String username, String userPw, String eduPw) {
         this.username = username;
         this.password = userPw;
         this.eduPw = eduPw;
-        this.fcmtoken = fcmtoken;
     }
+
+    public User(Long id, String username, String password, String eduPw, String fcmToken, Set<Authority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.eduPw = eduPw;
+        this.fcmToken = fcmToken;
+        this.authorities = authorities;
+    }
+
     // 연관 메서드 //
 
     // 트랙을 바꾸는 메서드
