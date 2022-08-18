@@ -15,18 +15,10 @@ import axios from "axios";
 import drf from "../api/drf";
 
 export default function Main({ navigation }) {
-<<<<<<< HEAD
-  const userName = useSelector((state) => {
-    return state.Account[0].name;
-  });
-=======
-
   const user = useSelector((state) => {
     return state.Account[0];
   });
 
-
->>>>>>> 0f4f1c33eb5db6fda0bc09652a43587151da9cbc
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
@@ -35,7 +27,6 @@ export default function Main({ navigation }) {
   const onFetchTodo = (res) => {
     setTodoList(res);
   };
-
 
   const token = useSelector((state) => {
     return state.Account[2];
@@ -84,11 +75,6 @@ export default function Main({ navigation }) {
     async function fetchTodo() {
       const response = await axios({
         method: "get",
-<<<<<<< HEAD
-        url: baseURL,
-        headers: token,
-      });
-=======
         url: drf.todo(),
         headers: token,
       }).catch(() => {
@@ -96,7 +82,6 @@ export default function Main({ navigation }) {
       });
 
       // get(baseURL);
->>>>>>> 0f4f1c33eb5db6fda0bc09652a43587151da9cbc
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
@@ -116,11 +101,9 @@ export default function Main({ navigation }) {
   return (
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
-<<<<<<< HEAD
-        <Text style={mainStyles.helloText}>{userName}님, 안녕하세요! 🦁💛</Text>
-=======
-        <Text style={mainStyles.helloText}>{user.name}님, 안녕하세요! 🙋</Text>
->>>>>>> 0f4f1c33eb5db6fda0bc09652a43587151da9cbc
+        <Text style={mainStyles.helloText}>
+          {user.name}님, 안녕하세요! 🦁💛
+        </Text>
       </View>
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine navigation={navigation} />
