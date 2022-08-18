@@ -18,20 +18,12 @@ const handlePressBack = () => {
 };
 
 export default function NoticeDetail({ navigation, route }) {
-  // console.log(noticeList)
-  // console.log(`noticelist --------------- ${JSON.stringify(noticeList)}`)
-  // route.id 있으면 noticelist에서 id === 같은거 찾아서 사용
-
-  // noticeList라고 가정..
-
   const id = route.params.id;
-  const noticelist = route.params.noticeList;
-  // console.log(`noticedetail ------------------- ${noticelist}`)
-  const item = noticelist.filter((item) => item.id === id).map((item) => item);
-  // console.log(item[0].source)
-  // console.log(item)
-  // console.log(item[0].date)
-  // console.log(item)
+  const item = route.params.notice;
+
+  function imgURI(path) {
+    return "http://i7e204.p.ssafy.io:8082/api/image/" + path;
+  }
 
   const goEdussafy = useCallback(async () => {
     const destinationURL = "https://edu.ssafy.com/edu/board/notice/list.do";
@@ -62,14 +54,22 @@ export default function NoticeDetail({ navigation, route }) {
 
       <View style={styles.detailbox}>
         <View style={styles.titlebox}>
-          <Text style={styles.detailtitle}>{item[0].title}</Text>
+          <Text style={styles.detailtitle}>{item.title}</Text>
         </View>
 
         <View style={styles.desbox}>
-          {item[0].source !== "E" ? (
+          {/* 이게 이미입니다. 그리고 이미지는 null값이 아니라 '[]' 빈값이
+          문자형으로 와서 if르 저렇게 처리했습니다. */}
+          {/* {item.file_ids !== "[]" && (
+            <Image
+              style={{ width: "100%", height: "100%" }}
+              source={{ uri: imgURI(item.file_ids) }}
+            />
+          )} */}
+          {item.source !== "E" ? (
             <ScrollView>
               <Markdown style={styles.detaildescription}>
-                {item[0].description}
+                {item.description}
               </Markdown>
               {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
             </ScrollView>
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
   detailbox: {
     // margin: 20,
     flexDirection: "column",
-    marginHorizontal: "5%",
-    marginBottom: "5%",
+    marginHorizontal: "3%",
+    marginBottom: "3%",
     flex: 0.9,
     backgroundColor: "#ededed",
     borderRadius: 20,
