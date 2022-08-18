@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import com.ssljjong.ssachedule.entity.Team;
 import com.ssljjong.ssachedule.entity.TeamUser;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.entity.User;
+import com.ssljjong.ssachedule.jwt.TokenProvider;
 import com.ssljjong.ssachedule.repository.TeamUserRepository;
 import com.ssljjong.ssachedule.repository.TrackRepository;
 import com.ssljjong.ssachedule.repository.UserRepository;
@@ -37,6 +39,7 @@ public class UserService {
     private final TeamUserRepository teamUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final AES_Encryption aes_encryption;
+    private final TokenProvider tokenProvider;
 
     MattermostClient client = MattermostClient.builder()
             .url("https://meeting.ssafy.com")
@@ -110,13 +113,10 @@ public class UserService {
      *         return false
      */
     @Transactional
-    public Boolean changeTrack(User user, Track track) {
-        Boolean result = Boolean.FALSE;
-        if (user != null) {
-            user.changeTrack(track);
-            result = Boolean.TRUE;
-        }
-        return result;
+    public void changeTrack(String Authorization, String trackName) {
+        User user = findUserByAuthentication(Authorization);
+        Track track = trackRepository.findTrackByNameAndGi(trackName, user.getTrack().getGi()).get();
+        user.changeTrack(track);
     }
 
     public void JoinTeam(Team team, User user) {
@@ -136,7 +136,7 @@ public class UserService {
         List<UserListDto> userDtos = userRepository.findAll().stream()
                 .map(u -> {
                     try {
-                        return new UserListDto(u.getUsername(), aes_encryption.decrypt(u.getEduPw()));
+                        return new UserListDto(u.getUsername(), aes_encryption.decrypt(u.getEduPw()), u.getFcmToken());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -159,4 +159,15 @@ public class UserService {
         return new LoginDto(user.getUsername(), user.getPassword(), user.getEduPw());
     }
 
+    public void deleteUser(String auth) {
+        User user = findUserByAuthentication(auth);
+        userRepository.delete(user);
+    }
+
+    public User findUserByAuthentication(String auth) {
+        String token = auth.substring(7);
+        Authentication authentication = tokenProvider.getAuthentication(token);
+        User user = userRepository.findUserByUsername(authentication.getName()).get();
+        return user;
+    }
 }

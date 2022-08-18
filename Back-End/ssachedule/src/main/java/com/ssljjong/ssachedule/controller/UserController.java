@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssljjong.ssachedule.dto.TrackDto;
 import com.ssljjong.ssachedule.dto.UserDto;
 import com.ssljjong.ssachedule.dto.UserListDto;
 import com.ssljjong.ssachedule.service.UserService;
@@ -46,13 +47,11 @@ public class UserController {
     }
 
     @PostMapping("/track/change")
-    public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody String trackName,
-            @RequestBody int gi) {
-
-        System.out.println(Authorization);
-        System.out.println(trackName);
-        System.out.println(gi);
-
+    // @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<String> changeTrack(@RequestHeader String Authorization, @RequestBody TrackDto track) {
+        System.out.println(track);
+        System.out.println(track.getName());
+        userService.changeTrack(Authorization, track.getName());
         return ResponseEntity.ok("트랙이 업데이트 되었습니다.");
     }
 
@@ -74,5 +73,11 @@ public class UserController {
         info.put("data", allUsers);
 
         return new ResponseEntity<>(info, HttpStatus.OK);
+    }
+
+    @PostMapping("/user/delete")
+    public ResponseEntity<String> deleteUser(@RequestHeader String Authorization) {
+        userService.deleteUser(Authorization);
+        return new ResponseEntity("계정이 삭제되었습니다.", HttpStatus.OK);
     }
 }

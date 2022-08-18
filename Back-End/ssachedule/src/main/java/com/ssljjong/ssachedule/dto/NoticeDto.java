@@ -8,7 +8,6 @@ public class NoticeDto {
     private String title;
     private String description;
     private String date;
-
     private String source;
 
     public NoticeDto(Integer id, String title, String description, String date, String source) {
@@ -25,4 +24,6 @@ public class NoticeDto {
         this.description = description;
         this.date = date;
     }
+
+
 }
