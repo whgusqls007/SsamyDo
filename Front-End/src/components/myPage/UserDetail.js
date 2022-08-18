@@ -26,24 +26,27 @@ export default function UserDetail() {
     "임베디드",
     "모바일",
   ];
+
+  // console.log(user.studentNo[2])
+  // console.log(campusName[Number(user.studentNo[2])-1])
   return (
-    <View>
+    <View style={styles.userContainer}>
 
       <View style={styles.back}>
         {/* 이름 */}
         <View style={styles.nameContainer}>
           <Text style={styles.nametext}>
-            {user.name}
+            {user.name}  👩🏻‍💻 
           </Text>
         </View>
         {/* 인적사항 */}
         <View style={styles.detailContainer}>
-          <View>
+          <View style={styles.detailimg}>
             {/* 이미지파일 */}
-            {/* <Image
+            <Image
               style={styles.img}
-              source={require("../../images/그림1.png")}
-            /> */}
+              source={require("../../images/ssamy.png")}
+            />
           </View>
 
           {/* 인적사항 */}
@@ -85,7 +88,7 @@ export default function UserDetail() {
                 size={20}
               />
               <Text style={styles.detailText}>
-                {campusName[user.studentNo[2]]} 캠퍼스 소속
+                {campusName[Number(user.studentNo[2])-1]} 캠퍼스 소속
               </Text>
             </View>
             {/* 트랙 선택 */}
@@ -107,61 +110,76 @@ export default function UserDetail() {
 }
 
 const styles = StyleSheet.create({
+  userContainer: {
+    width: "95%",
+    height: "60%",
+    alignItems: "stretch",
+  },
   back: {
-    // width: "95%",
-    // height: "40%",
-    width: "auto",
-    height: "auto",
-    borderWidth: 1,
-    // marginBottom: "5%",
-    borderBottomEndRadius: 5,
-    borderBottomStartRadius: 5,
-    borderTopEndRadius: 5,
-    padding: 5,
-    // marginBottom: 10
-    // width: "95%",
-    // height: "32%",
+    alignItems: "center",
     // borderWidth: 1,
-    marginBottom: "5%",
+    // marginBottom: "5%",
     borderRadius: 10,
+    padding: 5,
+    backgroundColor: "#ededed"
+
   },
   nameContainer: {
     // marginTop: "1%",
     marginTop: 1,
     justifyContent: "center",
     // borderBottomWidth: 5,
-    borderBottomEndRadius: 100,
+    // borderWidth: 5,
+    // borderBottomEndRadius: 100,
     borderColor: "#A8D1FF",
+    marginBottom: "3%",
   },
   nametext: {
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
     paddingTop: 2,
-    marginBottom: 10,
+    marginVertical: 10,
+    color: "#000000"
+    // marginBottom: 10,
   },
   detailContainer: {
+    // flexShrink:1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     // width: "100%",
     // height: "90%",
+    flexWrap : "wrap"
+  },
+  detailimg:{
+    // flexShrink: 5,
+    width: "40%",
+    height: "60%",
+    // flexWrap: "wrap",
+    // flexGrow: 1,
   },
   img: {
-    // width: "40%",
-    // height: "80%",
-    marginLeft: "5%",
-    resizeMode: "contain"
+    position: "relative",
+    width: '100%',
+    height: '100%',
+    overflow: 'visible',
+    alignItems: 'center',
+    // width: '100%',
+    // height: undefined,
+    // aspectRatio: 1,
   },
   detail: {
     // width: "50%",
     // height: "80%",
     marginLeft: "5%",
-    flexDirection: "column"
+    flexDirection: "column",
+    // marginBottom: "5%"
 
   },
   detailText: {
     marginVertical: "3%",
     marginHorizontal: "2%",
+    color: "#555555"
   },
 });

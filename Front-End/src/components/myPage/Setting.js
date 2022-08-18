@@ -209,7 +209,7 @@ export default function Setting({ navigation }) {
 const SettingStyle = StyleSheet.create({
   back: {
     width: "95%",
-    height: "40%",
+    height: "30%",
     borderWidth: 1,
     // marginBottom: "5%",
     backgroundColor: "#EDEDED",

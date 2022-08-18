@@ -10,7 +10,9 @@ import drf from "../api/drf";
 
 export default function Main({ navigation }) {
 
-
+  const user = useSelector((state) => {
+    return state.Account[0];
+  });
 
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
@@ -96,7 +98,7 @@ export default function Main({ navigation }) {
   return (
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
-        <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
+        <Text style={mainStyles.helloText}>{user.name}님, 안녕하세요! 🙋</Text>
       </View>
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine navigation={navigation} />

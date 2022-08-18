@@ -44,6 +44,7 @@ export default function MyPage({ navigation }) {
 
 const styles = StyleSheet.create({
   mypagecontainer:{
+    height: "100%",
     flexDirection: "column",
     justifyContent: "center",
     // alignItems: "center",
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff"
   },
   mypageheader: {
-    height: "10%",
+    height: "15%",
     // marginTop: "5%",
     // borderWidth: 1,
     // borderBottomWidth: 0,
@@ -63,10 +64,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'column',
     alignItems: "flex-start",
+    justifyContent: "center",
     backgroundColor: "#ffffff",
   },
   headertext: {
     fontSize: 30,
+    // marginTop: 30,
     // paddingLeft: 20,
     fontWeight: "bold",
     color: "#000000"
@@ -76,15 +79,16 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   footer : {
-    height: "10%",
-    alignItems: "center"
+    height: "15%",
+    alignItems: "center",
+    justifyContent: "center"
   },
   button : {
     width: "90%",
     padding: 10,
     backgroundColor: "#5ba8ff",
     borderRadius: 15,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   buttontext:{
     textAlign: "center"

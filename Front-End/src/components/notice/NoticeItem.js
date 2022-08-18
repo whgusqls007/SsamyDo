@@ -16,12 +16,14 @@ export default function NoticeItem({ navigation, notice, noticeList }) {
 
     <View style={[styles.noticeitembox]}>
       <Text style={styles.itememoji}>🍀</Text>
+      <View style={styles.itemtitlebox}>
       <TouchableOpacity
         onFocus={styles.itemfocus}
         onPress={() => navigation.navigate("NoticeDetail", {id: notice.id, noticeList: noticeList})} >
-          <Text style={styles.itemtext}> {notice.title}</Text>
+          <Text numberOfLines={1} ellipsizeMode={"tail"} style={styles.itemtext}> {notice.title}</Text>
       </TouchableOpacity>
       <Text>{notice.duedate}</Text>
+      </View>
     </View>
 
   );
@@ -35,7 +37,16 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 8,
+    flexWrap: "wrap"
     // height: 20
+  },
+  itemtitlebox:{
+    flexDirection: "row",
+    alignItems : "flex-end",
+    width: "85%",
+    // flexShrink: 1,
+    // flexGrow: 1,
+    flexWrap: 'wrap'
   },
   itememoji : {
     marginHorizontal: 5,
