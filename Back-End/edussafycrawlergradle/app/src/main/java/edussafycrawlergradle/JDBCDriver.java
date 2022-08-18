@@ -128,11 +128,11 @@ public class JDBCDriver {
 
     public int saveSurvey(Survey survey) {
         int result = 0;
-        String query = "INSERT INTO todo(title, due_date, type, startdate) values (?, ?, ?, ?)";
+        String query = "INSERT INTO todo(title, due_date, type, start_date) values (?, ?, ?, ?)";
         try {
             Boolean isExist = this.getSurvey(survey.getTitle());
             if (isExist) {
-                query = "UPDATE todo SET title = ?,due_date = ?, type = ?, startdate = ? WHERE title = ?";
+                query = "UPDATE todo SET title = ?,due_date = ?, type = ?, start_date = ? WHERE title = ?";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, survey.getTitle());

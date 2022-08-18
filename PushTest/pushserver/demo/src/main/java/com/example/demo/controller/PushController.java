@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.RequestDTO;
-import com.example.demo.service.FirebaseCloudMessageService;
 
 import io.github.jav.exposerversdk.ExpoPushMessage;
 import io.github.jav.exposerversdk.ExpoPushMessageTicketPair;
@@ -26,8 +25,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class PushController {
-
-  private final FirebaseCloudMessageService firebaseCloudMessageService;
 
   @PostMapping("/api/fcm")
   public ResponseEntity pushMessage(@RequestBody RequestDTO requestDTO)

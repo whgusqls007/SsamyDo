@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface PlanService {
 
-    List<WeeklyPlanDto> findWeeklyPlanByDate (String date);
-    List<WeeklyPlanDto> findWeeklyPlanByStartDate (String startDate);
-    List<WeeklyPlanDto> findWeeklyPlanByDateBetween (String startDate, String endDate);
+    List<WeeklyPlanDto> findWeeklyPlanByDate(String date);
+
+    List<WeeklyPlanDto> findWeeklyPlanByStartDate(String startDate);
+
+    List<WeeklyPlanDto> findWeeklyPlanByDateBetween(String startDate, String endDate);
 
 }
