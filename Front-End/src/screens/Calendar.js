@@ -125,11 +125,7 @@ export default function Calendar({ navigation }) {
               <View style={CalendarStyles.btnContent}>
                 <Ionicons name="ellipse-sharp" size={10} color="#ffe34f" />
                 {showBtn ? (
-                  <TextInput
-                    maxLength={5}
-                    value={typeOne}
-                    style={CalendarStyles.inputBox}
-                  />
+                  <TextInput maxLength={5} value={typeOne} />
                 ) : (
                   <Text> {type[1]}</Text>
                 )}
@@ -197,6 +193,7 @@ const CalendarStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "baseline",
     marginTop: "3%",
+    marginHorizontal: "3%",
     paddingHorizontal: "4%",
   },
   categoryBtnContainer: {
