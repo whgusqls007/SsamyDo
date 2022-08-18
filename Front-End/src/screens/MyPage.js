@@ -27,8 +27,6 @@ export default function MyPage({ navigation }) {
         <Setting />
       </View>
       
-
-
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.button}
@@ -40,10 +38,9 @@ export default function MyPage({ navigation }) {
           <Text style={styles.buttontext}>회원 탈퇴</Text>
         </TouchableOpacity>        
       </View>
-
     </View>
   );
-}
+}; 
 
 const styles = StyleSheet.create({
   mypagecontainer:{
@@ -91,5 +88,11 @@ const styles = StyleSheet.create({
   },
   buttontext:{
     textAlign: "center"
-  }
+  },
+
+  deleteText: {
+    fontSize: 15,
+    textDecorationLine: "underline",
+    color: "#A8D1FF",
+  },
 });

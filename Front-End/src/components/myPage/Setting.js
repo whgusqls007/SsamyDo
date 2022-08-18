@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
+  Modal,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Foundation } from "@expo/vector-icons";
@@ -12,8 +13,10 @@ import styles from "../../../app.module.css";
 import { useState } from "react";
 import drf from "../../api/drf";
 import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
+import CustomCalendar from "../calendar/CustomCalendar";
 
-export default function Alarm() {
+export default function Setting({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => {
     return state.Account[2];
@@ -42,7 +45,7 @@ export default function Alarm() {
   const [showTrackBtn, setShowTrackBtn] = useState(false);
 
   return (
-    <View style={SettingStyle.back}>
+    <View style={SettingStyle.back} behavior="padding">
       <View style={SettingStyle.lineContainer}>
         <Text>트랙변경</Text>
         {/* 변경버튼과 완료버튼 */}
@@ -62,7 +65,7 @@ export default function Alarm() {
                     setShowTrackBtn(false);
                   })
                   .catch((err) => {
-                    console.log(err);
+                    navigation.navigate("Verification");
                   });
               }}
             >
@@ -98,7 +101,7 @@ export default function Alarm() {
               <TouchableOpacity
                 key={`track-${idx}`}
                 style={[
-                  SettingStyle.button,
+                  SettingStyle.buttonTrack,
                   idx === track ? { backgroundColor: "#A8D1FF" } : {},
                 ]}
                 onPress={() => {
@@ -115,62 +118,90 @@ export default function Alarm() {
         <Text>
           스케쥴 타입명: {typeList[0]} / {typeList[1]} / {typeList[2]}{" "}
         </Text>
-        {/* 변경버튼과 완료버튼 */}
-        {showBtn ? (
-          <View style={SettingStyle.buttonContainer}>
-            <TouchableOpacity style={SettingStyle.button}>
-              <Text>변경</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setShowBtn(!showBtn);
-                setTypeOne(typeList[1]);
-                setTypeTwo(typeList[2]);
-              }}
-              style={SettingStyle.button}
-            >
-              <Text>취소</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Foundation
-            name="clipboard-pencil"
-            onPress={() => {
-              setShowBtn(!showBtn);
-              setShowTrackBtn(false);
-            }}
-            size={24}
-            color="#A8D1FF"
-          />
-        )}
+        {/* 변경버튼(모달) */}
+        <Foundation
+          name="clipboard-pencil"
+          onPress={() => {
+            setShowBtn(!showBtn);
+            setShowTrackBtn(false);
+          }}
+          size={24}
+          color="#A8D1FF"
+        />
       </View>
-      {showBtn && (
-        <View
-          style={[SettingStyle.lineContainer, { justifyContent: "flex-start" }]}
-        >
-          <Text style={[SettingStyle.input, { borderWidth: 0 }]}>
-            {typeList[0]}
-          </Text>
-          <TextInput
-            maxLength={8}
-            autoCapitalize="none"
-            value={typeOne}
-            onChangeText={(text) => {
-              setTypeOne(text);
-            }}
-            style={SettingStyle.input}
-          />
-          <TextInput
-            maxLength={8}
-            autoCapitalize="none"
-            value={typeTwo}
-            onChangeText={(text) => {
-              setTypeTwo(text);
-            }}
-            style={SettingStyle.input}
-          />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showBtn}
+        onRequestClose={() => {
+          setShowBtn(!showBtn);
+        }}
+      >
+        <View style={SettingStyle.centeredView}>
+          <View style={SettingStyle.modalView}>
+            <View
+              style={[
+                SettingStyle.lineContainer,
+                { justifyContent: "flex-start" },
+              ]}
+            >
+              <Text style={[SettingStyle.input, { borderWidth: 0 }]}>
+                {typeList[0]}
+              </Text>
+              <TextInput
+                maxLength={8}
+                autoCapitalize="none"
+                value={typeOne}
+                onChangeText={(text) => {
+                  setTypeOne(text);
+                }}
+                style={SettingStyle.input}
+              />
+              <TextInput
+                maxLength={8}
+                autoCapitalize="none"
+                value={typeTwo}
+                onChangeText={(text) => {
+                  setTypeTwo(text);
+                }}
+                style={SettingStyle.input}
+              />
+            </View>
+            <CustomCalendar />
+            <View style={SettingStyle.buttonContainer}>
+              <TouchableOpacity
+                style={SettingStyle.button}
+                onPress={() => {
+                  dispatch({
+                    type: "Account/changeType",
+                    payload: [typeList[0], typeOne, typeTwo],
+                  });
+                  dispatch({ type: "Account/saveType" });
+                  setShowBtn(false);
+                }}
+              >
+                <Text>변경</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowBtn(!showBtn);
+                  setTypeOne(typeList[1]);
+                  setTypeTwo(typeList[2]);
+                }}
+                style={SettingStyle.button}
+              >
+                <Text>취소</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      )}
+      </Modal>
+      <View
+        style={[SettingStyle.lineContainer, { justifyContent: "flex-start" }]}
+      >
+        <Entypo name="email" size={20} color="#A8D1FF" />
+        <Text>{"  "}관련 문의: ssafy@ssafy.com </Text>
+      </View>
     </View>
   );
 }
@@ -183,6 +214,7 @@ const SettingStyle = StyleSheet.create({
     // marginBottom: "5%",
     backgroundColor: "#EDEDED",
     borderRadius: 5,
+    marginBottom: "5%",
   },
   lineContainer: {
     flexDirection: "row",
@@ -191,11 +223,21 @@ const SettingStyle = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#A8D1FF",
     margin: "2%",
-    height: "25%",
+    height: "20%",
   },
   buttonContainer: { flexDirection: "row", justifyContent: "flex-end" },
 
   button: {
+    alignItems: "center",
+    backgroundColor: "#EDEDED",
+    padding: "5%",
+    margin: "1%",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#A8D1FF",
+    justifyContent: "center",
+  },
+  buttonTrack: {
     alignItems: "center",
     backgroundColor: "#EDEDED",
     padding: "1%",
@@ -214,5 +256,27 @@ const SettingStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#A8D1FF",
     justifyContent: "center",
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

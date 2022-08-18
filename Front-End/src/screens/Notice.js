@@ -10,14 +10,20 @@ import {
 import NoticeList from "../components/notice/NoticeList";
 // import styles from "../../app.module.css";
 // import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState, useEffect } from "react";
 import SearchBar from "react-native-platform-searchbar";
 import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
+import drf from "../api/drf";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 export default function Notice({ navigation }) {
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   const dispatch = useDispatch();
 
   const [showNotice, setShowNotice] = useState("All");
@@ -31,9 +37,17 @@ export default function Notice({ navigation }) {
 
   useEffect(() => {
     async function fetchNotice() {
-      const response = await axios.get(
-        "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
-      );
+      console.log(drf.notice.noticePage(1));
+      const response = await axios({
+        method: "get",
+        url: drf.notice.noticePage(1),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+      // .get(
+      //   "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
+      // );
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
