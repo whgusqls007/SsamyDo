@@ -1,7 +1,5 @@
 package com.ssljjong.ssachedule.dto;
 
-import java.util.*;
-
 import lombok.Data;
 
 @Data

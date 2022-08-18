@@ -334,7 +334,7 @@ export default function TimeLine({ navigation }) {
       >
         <Image
           source={{
-            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/c90cea420d8a3cb833a0418a7c1e7c69/lunch.png",
+            uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/79d8029df4cff51d6f96b8fa7917a814/lunch2.png",
           }}
           style={timelineStyles.lunchBtnImg}
         />
@@ -349,6 +349,7 @@ const timelineStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: "2%",
     paddingBottom: "4%",
   },
   dayButton: {
@@ -362,6 +363,7 @@ const timelineStyles = StyleSheet.create({
   },
   dayText: {
     textAlign: "center",
+    color: "#111111",
   },
   timelineContainer: {
     flex: 4,
@@ -372,10 +374,10 @@ const timelineStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17,
     marginBottom: "2%",
+    color: "#111111",
   },
   lunchShowBtn: {
     position: "absolute",
-    backgroundColor: "#fff",
     borderRadius: 50,
     padding: "5%",
     width: "12%",
@@ -383,7 +385,12 @@ const timelineStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     right: "4%",
-    bottom: "5%",
+    bottom: "3%",
+    shadowColor: "#888888",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 2,
   },
   lunchBtnImg: {
     resizeMode: "contain",

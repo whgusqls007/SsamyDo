@@ -48,7 +48,7 @@ LocaleConfig.locales["ssamydo"] = {
     "금요일",
     "토요일",
   ],
-  dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+  dayNamesShort: ["SUN ", "MON", "TUE ", "WED", " THU", " FRI", " SAT"],
   today: "Today",
 };
 LocaleConfig.defaultLocale = "ssamydo";
@@ -60,7 +60,11 @@ export default function CustomCalendar() {
   const [key, setKey] = useState("첫");
   // 테마
   const theme = {
-    backgroundColor: "#E5F3F6",
+    dayTextColor: "#111111",
+    backgroundColor: "#ffffff",
+    todayTextColor: "#5BA8FF",
+    textSectionTitleColor: "#111111",
+    arrowColor: "#888888",
     "stylesheet.calendar.header": {
       dayTextAtIndex0: {
         color: "red",
@@ -108,7 +112,6 @@ export default function CustomCalendar() {
     <View>
       <Calendar
         onDayPress={(day) => {
-          console.log(check)
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행
@@ -148,6 +151,11 @@ export default function CustomCalendar() {
         markingType={"multi-dot"}
         markedDates={markDate}
         theme={{
+          dayTextColor: "#111111",
+          textSectionTitleColor: "#888888",
+          arrowColor: "#888888",
+          todayTextColor: "#5BA8FF",
+          backgroundColor: "#ffffff",
           "stylesheet.calendar.header": {
             dayTextAtIndex0: {
               color: "red",

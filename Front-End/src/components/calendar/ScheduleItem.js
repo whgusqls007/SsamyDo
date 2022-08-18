@@ -11,9 +11,9 @@ export default function ScheduleItem({ navigation, Schedule }) {
   // 일정 타입에 따른 아이콘 색 표시를 위한 장치
   var iconColor = "";
   if (Schedule.type === 1) {
-    iconColor = "red";
+    iconColor = "#ffe34f";
   } else if (Schedule.type === 2) {
-    iconColor = "green";
+    iconColor = "#ffc0cb";
   } else {
     iconColor = "#a8d1ff";
   }
@@ -50,7 +50,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
           onDismiss={() => setVisible(false)}
           anchor={
             <TouchableOpacity onPress={() => setVisible(true)}>
-              <Ionicons name="ellipsis-horizontal" size={25} color="#a8d1ff" />
+              <Ionicons name="ellipsis-horizontal" size={25} color="#888888" />
             </TouchableOpacity>
           }
         >

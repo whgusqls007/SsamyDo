@@ -41,7 +41,7 @@ export default function Notice({ navigation }) {
 
       const response = await axios({
         method: "get",
-        url: drf.notice.noticeOffset(0,20),
+        url: drf.notice.noticeOffset(0, 20),
         headers: token,
       }).catch(() => {
         navigation.navigate("Verification");
@@ -70,7 +70,10 @@ export default function Notice({ navigation }) {
   return (
     <View style={styles.noticecontainer}>
       <View style={styles.titlecontainer}>
-        <Image source={require('../images/notice_header.png')} style={styles.imageicon} />
+        <Image
+          source={require("../images/notice_header.png")}
+          style={styles.imageicon}
+        />
       </View>
 
       <KeyboardAvoidingView>
@@ -147,70 +150,46 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
   },
-
   noticecontainer: {
     backgroundColor: "#ffffff",
-    flex: 1,
+    flex: 12,
     flexDirection: "column",
   },
-
   titlecontainer: {
-    marginTop: 30,
-    marginBottom: 20,
+    marginTop: "5%",
+    marginBottom: "5%",
     flexDirection: "column",
-    // paddingBottom: 15,
-    // textAlign: 'left',
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    marginLeft: "7%"
-  },
-
-  titletext: {
-    fontSize: 30,
-    // paddingTop: 10,
-    paddingLeft: 20,
-    // paddingRight: 20,
-    fontWeight: "bold",
-    color: "#000000",
+    marginLeft: "7%",
   },
   imageicon: {
-    width:"60%",
+    width: "60%",
     resizeMode: "contain",
   },
-
   buttonbar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginVertical: 10,
-    marginHorizontal: 30,
+    marginVertical: "3%",
+    marginHorizontal: "3%",
   },
-
   button: {
     backgroundColor: "#ededed",
-    // borderRadius: 5,
-    // alignItems: "center",
-    // marginHorizontal: 5,
-    // paddingHorizontal: 10,
-    // width: "auto",
     borderRadius: 8,
-    padding: 12,
+    padding: "3%",
   },
-
   clickbutton: {
     backgroundColor: "#FFE34F",
     borderRadius: 8,
-    padding: 12,
+    padding: "3%",
   },
-
   buttontext: {
     textAlign: "center",
     fontSize: 15,
   },
-
   searchbar: {
-    // marginTop: 10,
-    marginBottom: 5,
-    marginHorizontal: 30,
+    marginBottom: "2%",
+    marginHorizontal: "5%",
   },
 });
