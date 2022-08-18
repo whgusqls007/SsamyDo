@@ -1,10 +1,8 @@
 package com.ssljjong.ssachedule.dto;
 
-import com.ssljjong.ssachedule.entity.Track;
-import lombok.Data;
-
 import java.sql.Timestamp;
-import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class MMNoticeDto {

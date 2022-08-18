@@ -1,10 +1,12 @@
 package com.ssljjong.ssachedule.service;
 
+import org.springframework.stereotype.Service;
+
 import com.ssljjong.ssachedule.dto.TrackDto;
 import com.ssljjong.ssachedule.entity.Track;
 import com.ssljjong.ssachedule.repository.TrackRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

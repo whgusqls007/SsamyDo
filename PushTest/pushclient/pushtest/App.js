@@ -1,10 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { Permissions } from "expo";
-import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-
-const registerForPushNotificicationAsync = async () => {};
 
 async function getTheToken() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
