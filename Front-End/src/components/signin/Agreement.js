@@ -132,11 +132,15 @@ export default function Agreement({ navigation }) {
         </TouchableOpacity>
       </View>
       {/* 다음(MM, EduSSAFY 인증 단계) 버튼 */}
-      {inputError && (
+      {inputError ? (
         <View style={{ flexDirection: "row", margin: 4 }}>
-          <Ionicons name="warning" size={19} color="red" />
-          <Text style={{ fontWeight: "bold", color: "red" }}>{inputError}</Text>
+          <Ionicons name="warning" size={19} color="#c1121f" />
+          <Text style={{ fontWeight: "bold", color: "#c1121f" }}>
+            {inputError}
+          </Text>
         </View>
+      ) : (
+        <View style={{ height: 29 }}></View>
       )}
       <TouchableOpacity
         style={AgreementStyles.submitBtn}

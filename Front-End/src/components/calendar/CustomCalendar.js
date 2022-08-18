@@ -7,6 +7,8 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../../store/store";
+import axios from "axios";
+import Account from "../../store/slice/mypage/Account";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
@@ -135,7 +137,7 @@ export default function CustomCalendar() {
                 color: "red",
               },
               dayTextAtIndex6: {
-                color: "blue",
+                color: "#A8D1FF",
               },
             },
           },
@@ -144,6 +146,16 @@ export default function CustomCalendar() {
         // 일정표시 기능
         markingType={"multi-dot"}
         markedDates={markDate}
+        theme={{
+          "stylesheet.calendar.header": {
+            dayTextAtIndex0: {
+              color: "red",
+            },
+            dayTextAtIndex6: {
+              color: "blue",
+            },
+          },
+        }}
       />
     </View>
   );
@@ -151,7 +163,8 @@ export default function CustomCalendar() {
 
 const CustomCalendarStyles = StyleSheet.create({
   style: {
-    margin: 5,
+    marginVertical: 5,
+    marginHorizontal: 10,
     width: 390,
     height: 320,
     borderRadius: 5,

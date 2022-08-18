@@ -11,7 +11,7 @@ const ScheduleList = createSlice({
   // 3: 화면의 Schedule 리스트, 4: 현재 분류타입
   initialState: [
     [],
-    0,
+    1,
     {},
     [],
     [

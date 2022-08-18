@@ -18,7 +18,7 @@ function Start({ navigation }) {
           // 타입변경으로 저장된것이 있는 경우
           if (result) {
             dispatch({
-              type: "Setting/import",
+              type: "Account/importType",
               payload: { typeName: JSON.parse(result).typeName },
             });
           }

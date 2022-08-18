@@ -1,20 +1,57 @@
-import { View, StyleSheet, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  BackHandler,
+  Alert,
+} from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTodo } from "../store/slice/main/MainTodo";
 import axios from "axios";
+import drf from "../api/drf";
 
 export default function Main({ navigation }) {
+  const user = useSelector((state) => {
+    return state.Account[0];
+  });
+
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
   // const todoList = useSelector(state => state.MainTodo)
+
   const onFetchTodo = (res) => {
     setTodoList(res);
-  }  
+  };
+
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("App 종료", "SSamyDo에서 떠나시겠습니까? 👩🏻‍💻", [
+        {
+          text: "취소",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "확인", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -34,42 +71,42 @@ export default function Main({ navigation }) {
     });
   }, []);
 
-  useEffect(()=> {
-    async function fetchTodo(){
-      const response = await axios.get(baseURL);
+  useEffect(() => {
+    async function fetchTodo() {
+      const response = await axios({
+        method: "get",
+        url: drf.todo(),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+
+      // get(baseURL);
       // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
-      return response.data
-
+      return response.data;
     }
-    fetchTodo().then((res) => {
-      // console.log(`넘어온 res ${res}`)
-      onFetchTodo(res.data)
-      dispatch({type: "MainTodo/import", payload: res.data});
-    }).catch((err) => {
-      console.log(err)
-    });
+    fetchTodo()
+      .then((res) => {
+        // console.log(`넘어온 res ${res}`)
+        onFetchTodo(res.data);
+        dispatch({ type: "MainTodo/import", payload: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  
 
   // console.log(`main todolist ---------------- ${todoList}`)
 
   return (
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
-        <Text style={mainStyles.helloText}>김싸피님, 안녕하세요! 🙋</Text>
+        <Text style={mainStyles.helloText}>
+          {user.name}님, 안녕하세요! 🦁💛
+        </Text>
       </View>
-      <TodoList navigation={navigation} todoList={todoList}/>
-      <TimeLine />
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          AsyncStorage.removeItem("Account");
-          AsyncStorage.removeItem("Setting");
-        }}
-      >
-        <Text>로컬 삭제</Text>
-      </TouchableOpacity> */}
+      <TodoList navigation={navigation} todoList={todoList} />
+      <TimeLine navigation={navigation} />
     </View>
   );
 }
