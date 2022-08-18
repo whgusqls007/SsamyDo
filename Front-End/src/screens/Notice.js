@@ -37,7 +37,7 @@ export default function Notice({ navigation }) {
 
   useEffect(() => {
     async function fetchNotice() {
-      console.log(drf.notice.noticePage(1));
+      // console.log(drf.notice.noticePage(1));
       const response = await axios({
         method: "get",
         url: drf.notice.noticePage(1),
