@@ -37,7 +37,6 @@ export default function Notice({ navigation }) {
 
   useEffect(() => {
     async function fetchNotice() {
-      console.log(drf.notice.noticePage(1));
       const response = await axios({
         method: "get",
         url: drf.notice.noticePage(1),
@@ -69,9 +68,10 @@ export default function Notice({ navigation }) {
   return (
     <View style={styles.noticecontainer}>
       <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>Ssamy Says
-            {/* <Image source={require('../images/ssamy.png')} style={styles.imageicon} /> */}
-          </Text>
+        <Text style={styles.titletext}>
+          Ssamy Says
+          {/* <Image source={require('../images/ssamy.png')} style={styles.imageicon} /> */}
+        </Text>
       </View>
 
       <KeyboardAvoidingView>
@@ -81,7 +81,12 @@ export default function Notice({ navigation }) {
             placeholder={"궁금한 공지를 찾아보세요!"}
             value={value}
             onChangeText={setValue}
-            onSubmitEditing={()=>navigation.navigate("NoticeSearch", { value: value, noticeList : noticeList })}
+            onSubmitEditing={() =>
+              navigation.navigate("NoticeSearch", {
+                value: value,
+                noticeList: noticeList,
+              })
+            }
           />
         </View>
       </KeyboardAvoidingView>
@@ -92,17 +97,16 @@ export default function Notice({ navigation }) {
             style={[styles.button, showNotice === "All" && styles.clickbutton]}
             onPress={() => setShowNotice("All")}
           >
-            <View >
+            <View>
               <Text style={styles.buttontext}>전체 🐬</Text>
             </View>
           </TouchableOpacity>
-
 
           <TouchableOpacity
             style={[styles.button, showNotice === "MM" && styles.clickbutton]}
             onPress={() => setShowNotice("MM")}
           >
-            <View >
+            <View>
               {/* <Image 
                 source={require('../images/mattermost.png')}
                 style={styles.imageicon}
@@ -111,12 +115,11 @@ export default function Notice({ navigation }) {
             </View>
           </TouchableOpacity>
 
-
           <TouchableOpacity
             style={[styles.button, showNotice === "Edu" && styles.clickbutton]}
             onPress={() => setShowNotice("Edu")}
           >
-            <View >
+            <View>
               {/* <Image 
                   source={require('../images/ssafy.png.png')}
                   style={styles.imageicon}
@@ -135,15 +138,14 @@ export default function Notice({ navigation }) {
         />
       </View>
     </View>
-      // <View>
-      //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
-      // </View>
+    // <View>
+    //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-
-  header:{
+  header: {
     flexDirection: "row",
   },
 
@@ -152,10 +154,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  titlecontainer : {
+  titlecontainer: {
     marginTop: 30,
     marginBottom: 20,
-    flexDirection: 'column',
+    flexDirection: "column",
     // paddingBottom: 15,
     // textAlign: 'left',
     alignItems: "flex-start",
@@ -163,13 +165,13 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
 
-  titletext:{
+  titletext: {
     fontSize: 30,
     // paddingTop: 10,
     paddingLeft: 20,
     // paddingRight: 20,
     fontWeight: "bold",
-    color: "#000000"
+    color: "#000000",
   },
   imageicon: {
     padding: 10,
@@ -198,7 +200,6 @@ const styles = StyleSheet.create({
     // width: "auto",
     borderRadius: 8,
     padding: 12,
-
   },
 
   clickbutton: {
@@ -218,4 +219,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
 });
-
