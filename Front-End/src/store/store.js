@@ -8,13 +8,9 @@ import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
 import ScheduleList from "./slice/calendar/ScheduleList";
 import { createSelector } from "@reduxjs/toolkit";
-import Setting from "./slice/mypage/Setting";
 import TodoStatus from "./slice/main/TodoStatus";
 import Notice from "./slice/notice/Notice";
 import Account from "./slice/mypage/Account";
-
-
-// const reducer = combineReducers({ MainTodo: MainTodo.reducer });
 
 const store = configureStore({
   reducer: {
@@ -22,11 +18,9 @@ const store = configureStore({
     Schedule: Schedule.reducer,
     ScheduleList: ScheduleList.reducer,
     MainTodo: combineReducers({ MainTodo: MainTodo.reducer }),
-    Setting: Setting.reducer,
     Account: Account.reducer,
-
-    TodoStatus : TodoStatus.reducer,
-    Notice: combineReducers({ Notice: Notice.reducer })
+    TodoStatus: TodoStatus.reducer,
+    Notice: Notice.reducer,
   },
   middleware: [...getDefaultMiddleware()],
 });
@@ -45,17 +39,15 @@ export const typeTwoSelector = createSelector(allSelector, (all) =>
   all.filter((Schedule) => Schedule.type === 2)
 );
 
-
-export const allNotice = (state) => state.Notice
+export const allNotice = (state) => state.Notice;
 
 export const mmSelector = createSelector(allNotice, (all) =>
-  all.filter((Notice) => Notice.route === 'MM')
+  all.filter((Notice) => Notice.route === "MM")
 );
 
 export const eduSelector = createSelector(allSelector, (all) =>
-  all.filter((Notice) => Notice.route === 'Edu')
+  all.filter((Notice) => Notice.route === "Edu")
 );
-
 
 // export const todoStatusNow = (state) => state.TodoStatus
 

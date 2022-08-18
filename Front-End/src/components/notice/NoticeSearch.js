@@ -1,98 +1,121 @@
-import { View, Text, ScrollView, TouchableOpacity,
-KeyboardAvoidingView, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Image,
+} from "react-native";
+import { useSelector } from "react-redux";
 // import styles from "../../../app.module.css";
 import NoticeItem from "./NoticeItem";
 
+// Notice data에서 찾기 ..
 
-// Notice data에서 찾기 .. 
+export default function NoticeSearch({ navigation, route }) {
+  const value = route.params.value;
+  const noticeList = useSelector((state) => {
+    return state.Notice[0];
+  });
+  const searchNotice = noticeList.filter((notice) =>
+    notice.title.includes(value)
+  );
 
-
-export default function NoticeSearch({ navigation, route }){
-  const value = route.params.value
-  const noticeList = route.params.noticeList
-  // console.log(value)
-  // console.log('필터링된애들')
-  const searchNotice = noticeList.filter(notice => notice.title.includes(value))
-  // console.log(searchNotice)
-
-  const search = String.fromCodePoint(0x1F50E)
+  const search = String.fromCodePoint(0x1f50e);
 
   if (searchNotice.length !== 0) {
     return (
-      <View style={styles.searchcontainer} >
+      <View style={styles.searchcontainer}>
         <View style={styles.titlecontainer}>
-          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
+          <Image
+            source={require("../../images/notice_header.png")}
+            style={styles.imageicon}
+          />
         </View>
-        
-        <Text style={styles.searchbox}>{search}  "{value}" 검색 결과입니다.</Text>
+
+        <Text style={styles.searchbox}>
+          {search} "{value}" 검색 결과입니다.
+        </Text>
 
         <View style={styles.resultcontainer}>
           <View style={styles.resultbox}>
             <ScrollView>
-              {searchNotice.map((notice)=>(
-                <NoticeItem key={notice.id} notice={notice} navigation={navigation} />
-              ))}        
+              {searchNotice.map((notice) => (
+                <NoticeItem
+                  key={notice.id}
+                  notice={notice}
+                  navigation={navigation}
+                />
+              ))}
             </ScrollView>
           </View>
 
           <View style={styles.buttonbar}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Notice")}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("Notice")}
+            >
               <Text>공지로 돌아가기</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-    </View>
-    );  
-  }
-  else {
+      </View>
+    );
+  } else {
     return (
       <View style={styles.searchcontainer}>
         <View style={styles.titlecontainer}>
-          <Image source={require('../../images/notice_header.png')} style={styles.imageicon} />
+          <Image
+            source={require("../../images/notice_header.png")}
+            style={styles.imageicon}
+          />
         </View>
 
         <View style={styles.failresult}>
-          <Text style={styles.searchbox}>{search}  "{value}" 검색 결과가 없습니다. </Text>
-          
+          <Text style={styles.searchbox}>
+            {search} "{value}" 검색 결과가 없습니다.{" "}
+          </Text>
+
           <View style={styles.buttonbar}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Notice")}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("Notice")}
+            >
               <Text>공지로 돌아가기</Text>
             </TouchableOpacity>
           </View>
-
         </View>
-
       </View>
-    )
+    );
   }
-};
+}
 
 const styles = StyleSheet.create({
-  searchcontainer : {
+  searchcontainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
 
-  titlecontainer : {
-    flexDirection: 'column',
+  titlecontainer: {
+    flexDirection: "column",
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    marginLeft: "7%"
+    marginLeft: "7%",
   },
   imageicon: {
-    width:"50%",
+    width: "50%",
     resizeMode: "contain",
   },
-  titletext:{
+  titletext: {
     fontSize: 30,
     // paddingTop: 10,
     paddingLeft: 20,
     // paddingRight: 20,
     fontWeight: "bold",
-    color: "#000000"
+    color: "#000000",
   },
-  searchbox : {
+  searchbox: {
     backgroundColor: "#ededed",
     margin: 20,
     textAlign: "center",
@@ -101,8 +124,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  resultcontainer : {
-    flexDirection: 'column',    
+  resultcontainer: {
+    flexDirection: "column",
     backgroundColor: "#A8D1FF",
     paddingTop: 30,
     paddingHorizontal: 20,
@@ -113,21 +136,20 @@ const styles = StyleSheet.create({
   },
 
   resultbox: {
-    marginBottom: 20
+    marginBottom: 20,
   },
 
-  button : {
+  button: {
     backgroundColor: "#ffe34f",
     borderRadius: 8,
     padding: 12,
   },
-  
+
   buttonbar: {
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     marginVertical: 10,
     marginHorizontal: 20,
   },
-
-})
+});
