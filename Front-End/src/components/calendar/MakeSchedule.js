@@ -263,36 +263,26 @@ export default function MakeSchedule({ navigation }) {
             />
           </View>
           {/* 일정 시각 선택(TimePicker) */}
-          <View style={MakeScheduleStyles.timeBox}>
-            <TouchableOpacity
-              onPress={() => {
-                setShow(true);
-              }}
-            >
-              <Text style={MakeScheduleStyles.timeText}>
-                {Schedule.time[0].toString().padStart(2, "0")} :{" "}
-                {Schedule.time[1].toString().padStart(2, "0")}
-              </Text>
-            </TouchableOpacity>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="time"
-                is24Hour={true}
-                onChange={onChange}
-              />
-            )}
-          </View>
-          <View style={MakeScheduleStyles.errorContainer}>
-            {/* 에러 메시지 */}
-            {errorMSG && (
-              <View style={MakeScheduleStyles.errorBox}>
-                <Ionicons name="warning" size={19} color="#C22D37" />
-                <Text style={MakeScheduleStyles.errText}>{errorMSG}</Text>
-              </View>
-            )}
-          </View>
+          <TouchableOpacity
+            style={MakeScheduleStyles.timeBox}
+            onPress={() => {
+              setShow(true);
+            }}
+          >
+            <Text style={MakeScheduleStyles.timeText}>
+              {Schedule.time[0].toString().padStart(2, "0")} :{" "}
+              {Schedule.time[1].toString().padStart(2, "0")}
+            </Text>
+          </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="time"
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
           {/* 등록 버튼 */}
           <View style={MakeScheduleStyles.submitContainer}>
             <TouchableOpacity
