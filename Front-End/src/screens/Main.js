@@ -87,7 +87,7 @@ export default function Main({ navigation }) {
     }
     fetchTodo()
       .then((res) => {
-        // console.log(`넘어온 res ${res}`)
+        // console.log(`넘어온 res ${JSON.stringify(res)}`)
         onFetchTodo(res.data);
         dispatch({ type: "MainTodo/import", payload: res.data });
       })
@@ -113,8 +113,8 @@ export default function Main({ navigation }) {
 
 const mainStyles = StyleSheet.create({
   helloContainer: {
-    paddingTop: 30,
-    paddingLeft: 20,
+    paddingTop: "12%",
+    paddingLeft: "8%",
   },
   helloText: {
     fontSize: 20,

@@ -28,9 +28,14 @@ export default function NoticeDetail({ navigation, route }) {
   // noticeList라고 가정.. 
 
   const id = route.params.id
-  const noticelist = route.params.noticeList
-  // console.log(`noticedetail ------------------- ${noticelist}`)
-  const item = noticelist.filter(item => item.id === id).map(item => item)
+  const notice = 
+      route.params.notice !== undefined 
+      ? route.params.notice 
+      : noticelist.filter(item => item.id === id).map(item => item)
+  
+  const noticelist = useSelector(state => state.Notice)
+  console.log(`noticelist ------------------- ${noticelist}`)
+  // const item = noticelist.filter(item => item.id === id).map(item => item)
   // console.log(item[0].source)
   // console.log(item)
   // console.log(item[0].date)
@@ -63,13 +68,13 @@ export default function NoticeDetail({ navigation, route }) {
       <View style={styles.detailbox}>
 
         <View style={styles.titlebox}>
-          <Text style={styles.detailtitle}>{item[0].title}</Text>
+          <Text style={styles.detailtitle}>{notice.title}</Text>
         </View>
         
         <View style={styles.desbox}>
-          {item[0].source !== 'E' ? (
+          {notice.source !== 'E' ? (
                     <ScrollView>
-                      <Markdown style={styles.detaildescription}>{item[0].description}</Markdown>
+                      <Markdown style={styles.detaildescription}>{notice.description}</Markdown>
                       {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
                     </ScrollView>
           ) : (
