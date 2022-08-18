@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-
-
   titlecontainer : {
     marginTop: 30,
     marginBottom: 20,
@@ -152,13 +150,6 @@ const styles = StyleSheet.create({
   },
 
   titletext:{
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingBottom: 15,
-    textAlign: "left",
-    backgroundColor: "#5ba8ff",
-    marginBottom: 10,
-
     fontSize: 30,
     // paddingTop: 10,
     paddingLeft: 20,
@@ -166,7 +157,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000000"
   },
-
   imageicon: {
     padding: 10,
     margin: 5,
@@ -182,7 +172,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 30,
   },
 
   button: {
@@ -211,7 +201,7 @@ const styles = StyleSheet.create({
   searchbar: {
     marginTop: 10,
     marginBottom: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 30,
   },
 });
 

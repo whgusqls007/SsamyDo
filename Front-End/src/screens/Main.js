@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,9 @@ import { getTodo } from "../store/slice/main/MainTodo";
 import axios from "axios";
 
 export default function Main({ navigation }) {
+
+
+  
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
@@ -19,6 +22,27 @@ export default function Main({ navigation }) {
     return state.Account[2];
   });
   
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("앱 종료", "앱을 종료하시겠습니까?", [
+        {
+          text: "취소",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "확인", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
 
 
   useEffect(() => {
@@ -72,13 +96,13 @@ export default function Main({ navigation }) {
       </View>
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine />
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={() => {
           AsyncStorage.clear();
         }}
       >
         <Text>로컬 삭제</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 }

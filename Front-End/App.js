@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet, BackHandler } from "react-native";
 import MyStack from "./src/router/StackNavigater";
 // import styles from "./app.module.css";
 import { Provider } from "react-redux";
@@ -19,6 +19,13 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress",()=>{
+  //     BackHandler.exitApp();
+  //   });
+  // }, []);
+
   return (
     <SafeAreaView style={styles.appcontainer}>
       <Provider store={store}>
