@@ -255,9 +255,6 @@ export default function Verification({ navigation }) {
                       idx === track ? { backgroundColor: "#a8d1ff" } : {},
                     ]}
                     onPress={() => {
-                      if (idx === 4) {
-                        navigation.navigate("TabNav");
-                      }
                       setTrack(idx);
                     }}
                   >
