@@ -51,119 +51,91 @@ export default function Calendar({ navigation }) {
   return (
     <View style={CalendarStyles.back}>
       <View>
-        {/*  상위 버튼 모음  */}
-        <View style={CalendarStyles.topContainer}>
-          {/* Type 선택 버튼 */}
-          <KeyboardAvoidingView
-            behavior="padding"
-            style={CalendarStyles.container}
-          >
-            <TouchableOpacity
-              style={[
-                CalendarStyles.btn,
-                check === "all" ? { backgroundColor: "#A8D1FF" } : {},
-                showBtn && CalendarStyles.cancleBtn,
-              ]}
-              onPress={() => {
-                if (showBtn) {
-                  setShowBtn(!setShowBtn);
-                  setTypeOne(type[1]);
-                  setTypeTwo(type[2]);
-                } else {
-                  dispatch({
-                    type: "ScheduleList/mark",
-                    select: "all",
-                  });
-                  dispatch({
-                    type: "ScheduleList/filter",
-                  });
-                }
-              }}
-            >
-              <Text>{showBtn ? "취소" : "전체"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CalendarStyles.btn,
-                check === 0 ? { backgroundColor: "#A8D1FF" } : {},
-              ]}
-              disabled={showBtn}
-              onPress={() => {
-                dispatch({
-                  type: "ScheduleList/mark",
-                  select: 0,
-                  payload: typeList[0],
-                });
-                dispatch({
-                  type: "ScheduleList/filter",
-                  payload: typeList[0],
-                });
-              }}
-            >
-              <View style={CalendarStyles.container}>
-                <Ionicons name="ellipse-sharp" size={10} color="blue" />
-                <Text>{type[0]}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CalendarStyles.btn,
-                check === 1 ? { backgroundColor: "#A8D1FF" } : {},
-              ]}
-              disabled={showBtn}
-              onPress={() => {
-                dispatch({
-                  type: "ScheduleList/mark",
-                  select: 1,
-                  payload: typeList[1],
-                });
-                dispatch({
-                  type: "ScheduleList/filter",
-                  payload: typeList[1],
-                });
-              }}
-            >
-              <View style={CalendarStyles.container}>
-                <Ionicons name="ellipse-sharp" size={10} color="red" />
-                {showBtn ? (
-                  <TextInput maxLength={5} value={typeOne} />
-                ) : (
-                  <Text>{type[1]}</Text>
-                )}
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CalendarStyles.btn,
-                check === 2 ? { backgroundColor: "#A8D1FF" } : {},
-              ]}
-              disabled={showBtn}
-              onPress={() => {
-                dispatch({
-                  type: "ScheduleList/mark",
-                  select: 2,
-                  payload: typeList[2],
-                });
-                dispatch({
-                  type: "ScheduleList/filter",
-                  payload: typeList[2],
-                });
-              }}
-            >
-              <View style={CalendarStyles.container}>
-                <Ionicons name="ellipse-sharp" size={10} color="green" />
-                <Text>{type[2]}</Text>
-              </View>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
-          {/* Type 이름 변경 버튼 */}
+        {/* Type 선택 버튼 */}
+        <View style={CalendarStyles.container}>
           <TouchableOpacity
-            style={CalendarStyles.changeBtn}
+            style={[
+              CalendarStyles.btn,
+              check === "all" ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
             onPress={() => {
-              setShowBtn(!showBtn);
+              dispatch({
+                type: "ScheduleList/mark",
+                select: "all",
+              });
+              dispatch({
+                type: "ScheduleList/filter",
+              });
             }}
           >
-            <Text>{showBtn ? "수정" : "타입명 변경"}</Text>
+            <Text>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              CalendarStyles.btn,
+              check === 0 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
+            disabled={showBtn}
+            onPress={() => {
+              dispatch({
+                type: "ScheduleList/mark",
+                select: 0,
+                payload: typeList[0],
+              });
+              dispatch({
+                type: "ScheduleList/filter",
+                payload: typeList[0],
+              });
+            }}
+          >
+            <View style={CalendarStyles.container}>
+              <Ionicons name="ellipse-sharp" size={10} color="blue" />
+              <Text>{type[0]}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              CalendarStyles.btn,
+              check === 1 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
+            onPress={() => {
+              dispatch({
+                type: "ScheduleList/mark",
+                select: 1,
+                payload: typeList[1],
+              });
+              dispatch({
+                type: "ScheduleList/filter",
+                payload: typeList[1],
+              });
+            }}
+          >
+            <View style={CalendarStyles.container}>
+              <Ionicons name="ellipse-sharp" size={10} color="red" />
+              <Text>{type[1]}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              CalendarStyles.btn,
+              check === 2 ? { backgroundColor: "#A8D1FF" } : {},
+            ]}
+            onPress={() => {
+              dispatch({
+                type: "ScheduleList/mark",
+                select: 2,
+                payload: typeList[2],
+              });
+              dispatch({
+                type: "ScheduleList/filter",
+                payload: typeList[2],
+              });
+            }}
+          >
+            <View style={CalendarStyles.container}>
+              <Ionicons name="ellipse-sharp" size={10} color="green" />
+              <Text>{type[2]}</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <CustomCalendar />
@@ -180,6 +152,15 @@ export default function Calendar({ navigation }) {
         }}
       >
         <AntDesign name="pluscircle" size={40} color="#A8D1FF" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={CalendarStyles.btn}
+        onPress={() => {
+          setShowBtn(!showBtn);
+        }}
+      >
+        {/* Type 이름 변경 버튼 */}
+        <Text>타입명 변경</Text>
       </TouchableOpacity>
     </View>
   );
@@ -215,27 +196,7 @@ const CalendarStyles = StyleSheet.create({
     bottom: "-7%",
   },
 
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: "1%",
-  },
-
   container: {
     flexDirection: "row",
-  },
-
-  changeBtn: {
-    margin: "1%",
-    padding: "1%",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 5,
-    justifyContent: "center",
-  },
-
-  cancleBtn: {
-    borderColor: "red",
-    borderWidth: 1,
-    backgroundColor: "red",
   },
 });
