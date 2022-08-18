@@ -19,6 +19,7 @@ export default function NoticeItem({ navigation, notice }) {
     <View style={[styles.noticeitembox]}>
       <Text style={styles.itememoji}>🍀</Text>
       <View style={styles.itemtitlebox}>
+
         <TouchableOpacity
           onFocus={styles.itemfocus}
           onPress={() =>

@@ -105,12 +105,13 @@ export default function Main({ navigation }) {
     }
     fetchNotice()
       .then((res) => {
+        console.log(`notice yes`)
         dispatch({ type: "Notice/import", payload: res });
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  },[]);
 
   return (
     <View style={mainStyles.mainContainer}>
