@@ -21,14 +21,10 @@ public class App {
         jdbcDriver.connect();
         ExecutorService service = Executors.newFixedThreadPool(1);
 
-        // Boolean thread1 = false;
+        Boolean thread1 = false;
         Boolean thread2 = false;
         Boolean thread3 = false;
         Boolean thread4 = false;
-
-        // service.execute(new GetWeekScheduleTask(jdbcDriver));
-        // service.execute(new GetSurveyTask(jdbcDriver));
-        // service.execute(new GetNotificationTask(jdbcDriver));
 
         while (true) {
 
@@ -40,12 +36,21 @@ public class App {
             int minute = localTime.getMinute();
             int second = localTime.getSecond();
 
-            System.out.println(day + " -- " + hour + " : " + minute + " : " + second);
+            if (day == 1 && hour == 1 && minute == 0 && (0 < second && second < 60) &&
+                    !thread1) {
+                System.out.println("주간일정");
+                service.execute(new GetWeekScheduleTask(jdbcDriver, day));
+                thread1 = true;
+            } else if (day == 1 && hour == 1 && minute == 0 && (0 < second && second < 60) && thread1) {
+                // do nothing
+            } else {
+                thread1 = false;
+            }
 
-            if (day == 2 && hour == 19 && minute == 0 && (0 < second && second < 60) &&
+            if (day == 2 && hour == 1 && minute == 0 && (0 < second && second < 60) &&
                     !thread2) {
                 System.out.println("주간일정");
-                service.execute(new GetWeekScheduleTask(jdbcDriver));
+                service.execute(new GetWeekScheduleTask(jdbcDriver, day));
                 thread2 = true;
             } else if (day == 2 && hour == 1 && minute == 0 && (0 < second && second < 60) && thread2) {
                 // do nothing

@@ -113,12 +113,15 @@ export default function Main({ navigation }) {
 
 const mainStyles = StyleSheet.create({
   helloContainer: {
-    paddingTop: "12%",
-    paddingLeft: "8%",
+    // paddingTop: "12%",
+    // paddingLeft: "8%",
+    paddingTop: "10%",
+    paddingLeft: "5%",
   },
   helloText: {
     fontSize: 20,
     color: "#ffffff",
+    fontWeight: "bold",
   },
   mainContainer: {
     flex: 1,

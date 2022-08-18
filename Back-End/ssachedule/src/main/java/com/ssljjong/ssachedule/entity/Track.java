@@ -1,22 +1,30 @@
 package com.ssljjong.ssachedule.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "name", "gi"})
+@ToString(of = { "id", "name", "gi" })
 @Table(name = "track")
 public class Track {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "track_id")
     private Integer id;
 

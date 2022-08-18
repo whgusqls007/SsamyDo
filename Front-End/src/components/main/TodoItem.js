@@ -154,7 +154,6 @@ export default function TodoItem({ navigation, item }) {
                   {itemTitle}
                 </Text>
               </TouchableOpacity>
-            {/* )} */}
           </View>
 
           <View style={styles.itemdatebox} disabled={nowStatus}>

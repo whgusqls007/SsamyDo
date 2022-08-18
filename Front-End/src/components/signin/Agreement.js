@@ -134,8 +134,8 @@ export default function Agreement({ navigation }) {
       {/* 다음(MM, EduSSAFY 인증 단계) 버튼 */}
       {inputError ? (
         <View style={{ flexDirection: "row", margin: 4 }}>
-          <Ionicons name="warning" size={19} color="#c1121f" />
-          <Text style={{ fontWeight: "bold", color: "#c1121f" }}>
+          <Ionicons name="warning" size={19} color="#C22D37" />
+          <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
             {inputError}
           </Text>
         </View>
