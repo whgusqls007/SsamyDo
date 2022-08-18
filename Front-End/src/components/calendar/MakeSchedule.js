@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import styles from "../../../app.module.css";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -79,7 +78,7 @@ export default function MakeSchedule({ navigation }) {
       setBtnName("수정");
       // 선택일 표시
       setMarkedDate({
-        [Schedule.day]: { selected: true, selectedColor: "#94CBD9" },
+        [Schedule.day]: { selected: true, selectedColor: "#f8d1ff" },
       });
       // 현재 value값 선택된 시각으로 변경
       const [year, month, day] = Schedule.day.split("-");
