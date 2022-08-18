@@ -11,16 +11,13 @@ import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTodo } from "../store/slice/main/MainTodo";
 import axios from "axios";
 import drf from "../api/drf";
 
 export default function Main({ navigation }) {
-
   const user = useSelector((state) => {
     return state.Account[0];
   });
-
 
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
@@ -55,8 +52,6 @@ export default function Main({ navigation }) {
 
     return () => backHandler.remove();
   }, []);
-
-  // };
 
   useEffect(() => {
     // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
@@ -106,7 +101,9 @@ export default function Main({ navigation }) {
   return (
     <View style={mainStyles.mainContainer}>
       <View style={mainStyles.helloContainer}>
-        <Text style={mainStyles.helloText}>{user.name}님, 안녕하세요! 🙋</Text>
+        <Text style={mainStyles.helloText}>
+          {user.name}님, 안녕하세요! 🦁💛
+        </Text>
       </View>
       <TodoList navigation={navigation} todoList={todoList} />
       <TimeLine navigation={navigation} />

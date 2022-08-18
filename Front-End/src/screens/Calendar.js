@@ -169,7 +169,7 @@ export default function Calendar({ navigation }) {
 const CalendarStyles = StyleSheet.create({
   // 전체 화면 스타일
   back: {
-    backgroundColor: "#EDEDED",
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -188,7 +188,7 @@ const CalendarStyles = StyleSheet.create({
 
   addBtn: {
     position: "absolute",
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
