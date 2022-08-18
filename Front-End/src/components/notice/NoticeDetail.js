@@ -31,8 +31,10 @@ export default function NoticeDetail({ navigation, route }) {
   const noticelist = route.params.noticeList
   // console.log(`noticedetail ------------------- ${noticelist}`)
   const item = noticelist.filter(item => item.id === id).map(item => item)
+  // console.log(item[0].source)
   // console.log(item)
   // console.log(item[0].date)
+  // console.log(item)
 
   const goEdussafy = useCallback(async () => {
     const destinationURL = 'https://edu.ssafy.com/edu/board/notice/list.do' 
@@ -59,11 +61,27 @@ export default function NoticeDetail({ navigation, route }) {
       </View>
 
       <View style={styles.detailbox}>
-        <Text style={styles.detailtitle}>{item[0].title}</Text>
-        <ScrollView>
-          <Markdown style={styles.detaildescription}>{item[0].description}</Markdown>
-          {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
-        </ScrollView>
+
+        <View style={styles.titlebox}>
+          <Text style={styles.detailtitle}>{item[0].title}</Text>
+        </View>
+        
+        <View style={styles.desbox}>
+          {item[0].source !== 'E' ? (
+                    <ScrollView>
+                      <Markdown style={styles.detaildescription}>{item[0].description}</Markdown>
+                      {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
+                    </ScrollView>
+          ) : (
+            <View style={styles.ebox}>
+              <Text style={styles.edussafydescription}>에듀싸피로 이동해서 공지를 확인하세요!</Text>
+            </View>
+            
+          )}          
+        </View>
+
+        
+
       </View> 
 
       <View style={styles.detailfooter}>
@@ -102,12 +120,20 @@ const styles = StyleSheet.create({
   },
   detailbox : {
     // margin: 20,
+    flexDirection: "column",
     marginHorizontal: "5%",
     marginBottom : "5%",
     flex: 0.9,
     backgroundColor: "#ededed",
     borderRadius: 20,
     padding: 20,
+    justifyContent: "space-between"
+  },
+  titlebox:{
+    flex: 0.2,
+  },
+  desbox:{
+    flex: 0.8
   },
   detailtitle : {
     fontSize: 17,
@@ -119,6 +145,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     // textAlign: "center",
     margin: 15,
+  },
+  ebox :{
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  edussafydescription : {
+    marginTop: "50%",
+    fontSize: 15,
+    textAlign: "center",
+    // justifyContent: "center"
   },
 
   detailfooter : {
