@@ -79,7 +79,7 @@
 .todoarea {
   flex: 2;
   background-color: sandybrown;
-  color: #fff;
+  color: #ffffff;
 }
 
 .timelinearea {
@@ -145,3 +145,15 @@
   border-top-right-radius: 30;
   padding-top: 15;
 }
+
+/* .todayScheduleContainer {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #5ba8ff;
+  border-top-left-radius: 30;
+  border-top-right-radius: 30;
+  padding-left: 5%;
+  padding-right: 5%;
+} */
