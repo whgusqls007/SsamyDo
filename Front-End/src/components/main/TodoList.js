@@ -149,15 +149,13 @@ const styles = StyleSheet.create({
   todoContainer: {
     flex: 1,
     flexDirection: "column",
-    marginBottom: 20,
+    marginBottom: "3%",
   },
   todobox: {
     flexDirection: "row",
-    paddingTop: 30,
-    paddingHorizontal: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    marginTop: 10,
+    marginTop: "1%",
+    paddingTop: "4%",
+    paddingHorizontal: "5%",
     height: "100%",
   },
 });

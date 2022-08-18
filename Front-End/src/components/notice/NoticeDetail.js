@@ -18,10 +18,6 @@ const handlePressBack = () => {
 };
 
 export default function NoticeDetail({ navigation, route }) {
-  // route.id 있으면 noticelist에서 id === 같은거 찾아서 사용
-
-  // noticeList라고 가정..
-
   const id = route.params.id;
   const item = route.params.notice;
 
@@ -34,6 +30,7 @@ export default function NoticeDetail({ navigation, route }) {
     if (await Linking.canOpenURL(destinationURL))
       await Linking.openURL(destinationURL);
   }, []);
+
   return (
     <View style={styles.detailcontainer}>
       {/* <View>
@@ -61,12 +58,14 @@ export default function NoticeDetail({ navigation, route }) {
         </View>
 
         <View style={styles.desbox}>
-          {item.file_ids !== "[]" && (
+          {/* 이게 이미입니다. 그리고 이미지는 null값이 아니라 '[]' 빈값이
+          문자형으로 와서 if르 저렇게 처리했습니다. */}
+          {/* {item.file_ids !== "[]" && (
             <Image
               style={{ width: "100%", height: "100%" }}
               source={{ uri: imgURI(item.file_ids) }}
             />
-          )}
+          )} */}
           {item.source !== "E" ? (
             <ScrollView>
               <Markdown style={styles.detaildescription}>
@@ -96,7 +95,7 @@ export default function NoticeDetail({ navigation, route }) {
 const styles = StyleSheet.create({
   detailcontainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
   },
   titlecontainer: {
     flexDirection: "row",

@@ -127,12 +127,13 @@ export default function Main({ navigation }) {
 
 const mainStyles = StyleSheet.create({
   helloContainer: {
-    paddingTop: 30,
-    paddingLeft: 20,
+    paddingTop: "10%",
+    paddingLeft: "5%",
   },
   helloText: {
     fontSize: 20,
     color: "#ffffff",
+    fontWeight: "bold",
   },
   mainContainer: {
     flex: 1,

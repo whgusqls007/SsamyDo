@@ -39,8 +39,8 @@ export default Account = createSlice({
     },
 
     changeType(state, action) {
-      state[3][1] = action.typeOne;
-      state[3][2] = action.typeTwo;
+      state[3][1] = action.payload[0];
+      state[3][2] = action.payload[1];
     },
     // 로컬에 저장
     saveType(state) {

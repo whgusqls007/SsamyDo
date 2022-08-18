@@ -52,7 +52,7 @@ export default function LunchBoard({ navigation }) {
                   <Text style={lunchStyles.storeText}>{item.store}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Text style={lunchStyles.menuName}>
+                  <Text style={lunchStyles.menuText}>
                     {item.main.replace("&", "\n& ")}
                   </Text>
                 </TouchableOpacity>
@@ -68,6 +68,7 @@ export default function LunchBoard({ navigation }) {
 }
 
 const lunchStyles = StyleSheet.create({
+  // 각 메뉴별 컨테이너
   menuContainer: {
     flex: 1,
     padding: 10,
@@ -82,6 +83,7 @@ const lunchStyles = StyleSheet.create({
     elevation: 2,
     backgroundColor: "#ffffff",
   },
+  // 메뉴 헤더: 이미지 + 식당명 + 메뉴명
   menuHeader: {
     flex: 1,
     flexDirection: "row",
@@ -100,7 +102,7 @@ const lunchStyles = StyleSheet.create({
     alignItems: "center",
     height: 100,
   },
-  menuName: {
+  menuText: {
     padding: "2%",
     margin: "5%",
     textAlign: "center",

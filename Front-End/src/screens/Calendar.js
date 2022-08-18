@@ -183,8 +183,7 @@ export default function Calendar({ navigation }) {
                 if (showBtn) {
                   dispatch({
                     type: "Account/changeType",
-                    typeOne: typeOne,
-                    typeTwo: typeTwo,
+                    payload: [typeOne, typeTwo],
                   });
                   dispatch({ type: "Account/saveType" });
                 }
@@ -221,6 +220,7 @@ const CalendarStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "baseline",
     marginTop: "3%",
+    marginHorizontal: "3%",
     paddingHorizontal: "4%",
   },
   categoryBtnContainer: {

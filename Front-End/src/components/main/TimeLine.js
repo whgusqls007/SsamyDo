@@ -363,6 +363,7 @@ const timelineStyles = StyleSheet.create({
   },
   dayText: {
     textAlign: "center",
+    color: "#111111",
   },
   timelineContainer: {
     flex: 4,
@@ -373,6 +374,7 @@ const timelineStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17,
     marginBottom: "2%",
+    color: "#111111",
   },
   lunchShowBtn: {
     position: "absolute",

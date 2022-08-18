@@ -17,7 +17,6 @@ import SearchBar from "react-native-platform-searchbar";
 import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
 import drf from "../api/drf";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 export default function Notice({ navigation }) {
   // 토큰
@@ -32,31 +31,6 @@ export default function Notice({ navigation }) {
   const noticeList = useSelector((state) => {
     return state.Notice[0];
   });
-  // const todoList = useSelector(state => state.MainTodo)
-  // const onFetchNotice = (res) => {
-  //   setNoticeList(res);
-  // };
-
-  // useEffect(() => {
-  //   async function fetchNotice() {
-  //     const response = await axios({
-  //       method: "get",
-  //       url: drf.notice.noticeOffset(0, 20),
-  //       headers: token,
-  //     }).catch(() => {
-  //       navigation.navigate("Verification");
-  //     });
-  //     return response.data;
-  //   }
-  //   fetchNotice()
-  //     .then((res) => {
-  //       onFetchNotice(res);
-  //       dispatch({ type: "Notice/import", payload: res });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   return (
     <View style={styles.noticecontainer}>
@@ -129,16 +103,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
   },
-
   noticecontainer: {
     backgroundColor: "#ffffff",
-    flex: 1,
+    flex: 12,
     flexDirection: "column",
   },
-
   titlecontainer: {
-    marginTop: 30,
-    marginBottom: 20,
+    marginTop: "5%",
+    marginBottom: "5%",
     flexDirection: "column",
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
@@ -155,34 +127,29 @@ const styles = StyleSheet.create({
     width: "60%",
     resizeMode: "contain",
   },
-
   buttonbar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginVertical: 10,
-    marginHorizontal: 30,
+    marginVertical: "3%",
+    marginHorizontal: "3%",
   },
-
   button: {
     backgroundColor: "#ededed",
     borderRadius: 8,
-    padding: 12,
+    padding: "3%",
   },
-
   clickbutton: {
     backgroundColor: "#FFE34F",
     borderRadius: 8,
-    padding: 12,
+    padding: "3%",
   },
-
   buttontext: {
     textAlign: "center",
     fontSize: 15,
   },
-
   searchbar: {
-    marginBottom: 5,
-    marginHorizontal: 30,
+    marginBottom: "2%",
+    marginHorizontal: "5%",
   },
 });
