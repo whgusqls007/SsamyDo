@@ -40,6 +40,12 @@ export default function NoticeDetail({ navigation, route }) {
 
   return (
     <View style={styles.detailcontainer}>
+      <View>
+        <TouchableOpacity style={styles.buttonback} onPress={() => navigation.pop()}>
+            <Text style={styles.buttonbacktext}>⬅</Text>
+          </TouchableOpacity>
+      </View>
+
       <View style={styles.titlecontainer}>
           <Text style={styles.titletext}>Ssamy Says</Text>
         </View>
@@ -53,13 +59,8 @@ export default function NoticeDetail({ navigation, route }) {
       </View> 
 
       <View style={styles.detailfooter}>
-
         <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
-          <Text >에듀싸피로 이동</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonnotice} onPress={() => navigation.pop()}>
-          <Text>돌아가기 ⬅ </Text>
+          <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -71,8 +72,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-    titlecontainer : {
-    marginTop: 30,
+  titlecontainer : {
+    // marginTop: 30,
+    paddingLeft: 20,
     marginBottom: 20,
     flexDirection: 'column',
     // paddingBottom: 15,
@@ -112,18 +114,25 @@ const styles = StyleSheet.create({
   detailfooter : {
     flex: 0.1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     // marginBottom: 30,
     // marginHorizontal: 30,
   },
   
   buttonedussafy : {
+    width: "90%",
     padding: 10,
     backgroundColor: "#5ba8ff",
     borderRadius: 15,
     marginBottom: 20,
-    marginHorizontal: 30,
-    textAlign: "center"
+    // marginHorizontal: 30,
+    // textAlign: "center"
+  },
+
+  buttonedussafytext : {
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 15,
   },
 
   buttonnotice : {
@@ -133,5 +142,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 30,
     textAlign: "center"
+  },
+  buttonback: {
+    margin: 15,
+  },
+  buttonbacktext : {
+    fontSize : 20,
   }
 });
