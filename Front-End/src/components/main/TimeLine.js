@@ -11,9 +11,14 @@ import {
 import styles from "../../../app.module.css";
 import Timeline from "react-native-timeline-flatlist";
 import axios from "axios";
-import LunchMenu from "./LunchMenu";
-
-export default function TimeLine() {
+import LunchBoard from "./LunchBoard";
+import drf from "../../api/drf";
+import { useSelector } from "react-redux";
+export default function TimeLine({ navigation }) {
+  // 토큰
+  const token = useSelector((state) => {
+    return state.Account[2];
+  });
   // 수업일과 주말을 구분하는 변수
   let weekdays = "true";
 
@@ -145,7 +150,13 @@ export default function TimeLine() {
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`${baseURL}${ymdFormat(findMonday())}`);
+      const response = await axios({
+        method: "get",
+        url: drf.plan.weekly(ymdFormat(findMonday())),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
       return response.data;
     }
     fetchData().then((res) => {
@@ -305,9 +316,9 @@ export default function TimeLine() {
       >
         <View style={timelineStyles.centeredView}>
           <View style={timelineStyles.modalView}>
-            <LunchMenu />
+            <LunchBoard navigation={navigation} />
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[timelineStyles.closeBtn]}
               onPress={() => setShowLunch(!showLunch)}
             >
               <Text style={styles.textStyle}>닫기</Text>
@@ -317,14 +328,14 @@ export default function TimeLine() {
       </Modal>
       <TouchableOpacity
         activeOpacity={0.7}
-        style={timelineStyles.touchableOpacityStyle}
+        style={timelineStyles.lunchShowBtn}
         onPress={() => setShowLunch(true)}
       >
         <Image
           source={{
             uri: "https://lab.ssafy.com/s07-webmobile2-sub2/S07P12E204/uploads/c90cea420d8a3cb833a0418a7c1e7c69/lunch.png",
           }}
-          style={timelineStyles.floatingButtonStyle}
+          style={timelineStyles.lunchBtnImg}
         />
       </TouchableOpacity>
     </View>
@@ -333,17 +344,17 @@ export default function TimeLine() {
 
 const timelineStyles = StyleSheet.create({
   dayContainer: {
-    height: "20%",
+    height: "22%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 4,
+    paddingBottom: "4%",
   },
   dayButton: {
-    marginHorizontal: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    borderRadius: 5,
+    marginHorizontal: "1.2%",
+    paddingHorizontal: "5%",
+    paddingVertical: "1%",
+    borderRadius: 7,
     height: "auto",
     flexDirection: "row",
     alignItems: "center",
@@ -353,37 +364,37 @@ const timelineStyles = StyleSheet.create({
   },
   timelineContainer: {
     flex: 4,
-    marginTop: 20,
-    paddingHorizontal: 15,
+    marginTop: "5%",
+    paddingHorizontal: "4%",
   },
-  touchableOpacityStyle: {
+  lunchShowBtn: {
     position: "absolute",
     backgroundColor: "#fff",
     borderRadius: 50,
-    padding: 5,
-    width: 50,
-    height: 50,
+    padding: "5%",
+    width: "12%",
+    height: "15%",
     alignItems: "center",
     justifyContent: "center",
-    right: 20,
-    bottom: 20,
+    right: "4%",
+    bottom: "5%",
   },
-  floatingButtonStyle: {
+  lunchBtnImg: {
     resizeMode: "contain",
-    width: 55,
-    height: 55,
+    width: "120%",
+    height: "120%",
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    margin: "5%",
   },
   modalView: {
-    margin: 20,
+    margin: "1%",
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: "7%",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -393,5 +404,12 @@ const timelineStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  closeBtn: {
+    paddingHorizontal: "5%",
+    paddingVertical: "2%",
+    marginTop: "3%",
+    borderRadius: 3,
+    backgroundColor: "#a8d1ff",
   },
 });

@@ -1,5 +1,8 @@
 package com.ssljjong.ssachedule.jwt;
 
+import com.ssljjong.ssachedule.dto.LoginDto;
+import com.ssljjong.ssachedule.entity.Authority;
+import com.ssljjong.ssachedule.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,9 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,13 +30,14 @@ public class TokenProvider implements InitializingBean {
 
     private final String secret;
     private final long tokenValidityInMilliseconds;
-
+    private final UserRepository userRepository;
     private Key key;
 
 
     public TokenProvider(@Value("${jwt.secret}")
-                         String secret){
+                         String secret, UserRepository userRepository){
         this.secret = secret;
+        this.userRepository = userRepository;
         this.tokenValidityInMilliseconds = 315360000;
     }
 
@@ -61,6 +63,7 @@ public class TokenProvider implements InitializingBean {
                 .setExpiration(validity)
                 .compact();
     }
+
 
     // 토큰 => 유저 정보
     public Authentication getAuthentication(String token) {

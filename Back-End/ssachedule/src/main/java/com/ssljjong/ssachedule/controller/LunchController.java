@@ -22,13 +22,13 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/v1/lunch")
+@RequestMapping("/api/lunch")
 @RequiredArgsConstructor
 public class LunchController {
 
     private final LunchService lunchService;
 
-    @GetMapping("/lunch/today")
+    @GetMapping("/today")
     @ApiOperation(value = "오늘 점심 메뉴 조회")
 //    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForToday() {
@@ -40,7 +40,7 @@ public class LunchController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/lunch/date/{date}")
+    @GetMapping("/date/{date}")
     @ApiOperation(value = "특정 날짜 점심 메뉴 조회")
 //    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForDate(@PathVariable String date) {
@@ -53,7 +53,7 @@ public class LunchController {
 
     }
 
-    @GetMapping("/lunch/period/{startDate}/{endDate}")
+    @GetMapping("/period/{startDate}/{endDate}")
     @ApiOperation(value = "특정 기간 점심 메뉴 조회")
 //    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Map<String, Object>> getLunchForPeriod(@PathVariable String startDate, @PathVariable String endDate) {
