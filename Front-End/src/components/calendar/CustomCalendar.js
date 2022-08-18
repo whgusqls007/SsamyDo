@@ -108,6 +108,7 @@ export default function CustomCalendar() {
     <View>
       <Calendar
         onDayPress={(day) => {
+          console.log(check)
           // 전체보기에는 해당 일자(문자형식 YYYY-MM-DD 만 인자로 보냄)
           if (type === "all") {
             // 우선 캘린더에 점을 표시하기 위해 mark 실행
@@ -137,7 +138,7 @@ export default function CustomCalendar() {
                 color: "red",
               },
               dayTextAtIndex6: {
-                color: "blue",
+                color: "#A8D1FF",
               },
             },
           },
