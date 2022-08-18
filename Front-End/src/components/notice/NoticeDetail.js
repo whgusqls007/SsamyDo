@@ -20,6 +20,7 @@ const handlePressBack = () => {
 export default function NoticeDetail({ navigation, route }) {
   const id = route.params.id;
   const item = route.params.notice;
+  // console.log(item)
 
   function imgURI(path) {
     return "http://i7e204.p.ssafy.io:8082/api/image/" + path;
@@ -61,10 +62,12 @@ export default function NoticeDetail({ navigation, route }) {
           {/* 이게 이미입니다. 그리고 이미지는 null값이 아니라 '[]' 빈값이
           문자형으로 와서 if르 저렇게 처리했습니다. */}
           {item.file_ids !== "[]" && item.file_ids !== null && (
+            <View>
+            <Text>이미지잇음</Text>
             <Image
               style={{ width: "100%", height: "100%" }}
               source={{ uri: imgURI(item.file_ids) }}
-            />
+            /></View>
           )}
           
           {item.source !== "E" ? (
@@ -86,9 +89,14 @@ export default function NoticeDetail({ navigation, route }) {
       </View>
 
       <View style={styles.detailfooter}>
-        <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
-          <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
-        </TouchableOpacity>
+        {item.source === "E" ? (
+          
+          <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
+            <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
+          </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
       </View>
     </View>
   );
@@ -176,7 +184,13 @@ const styles = StyleSheet.create({
     // marginHorizontal: 30,
     // textAlign: "center"
   },
-
+  buttonmm:{
+    width: "90%",
+    padding: 10,
+    backgroundColor: "#5ba8ff",
+    borderRadius: 15,
+    marginBottom: 20,
+  },
   buttonedussafytext: {
     textAlign: "center",
     textAlignVertical: "center",
