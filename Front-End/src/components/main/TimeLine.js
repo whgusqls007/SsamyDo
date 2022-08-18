@@ -316,6 +316,7 @@ export default function TimeLine({ navigation }) {
       >
         <View style={timelineStyles.centeredView}>
           <View style={timelineStyles.modalView}>
+            <Text style={timelineStyles.lunchTitle}>💛 오늘의 식단 💛</Text>
             <LunchBoard navigation={navigation} />
             <Pressable
               style={[timelineStyles.closeBtn]}
@@ -366,6 +367,11 @@ const timelineStyles = StyleSheet.create({
     flex: 4,
     marginTop: "5%",
     paddingHorizontal: "4%",
+  },
+  lunchTitle: {
+    fontWeight: "bold",
+    fontSize: 17,
+    marginBottom: "2%",
   },
   lunchShowBtn: {
     position: "absolute",

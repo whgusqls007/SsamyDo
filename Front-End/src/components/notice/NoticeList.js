@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     marginTop: 10,
     marginBottom: 20,
-    height: "100%",
+    height: "75%",
   },
   noticebox:{
   }
