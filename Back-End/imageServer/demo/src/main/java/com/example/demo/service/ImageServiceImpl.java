@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service("ImageService")
 public class ImageServiceImpl implements ImageService {
 
-    final String path = "./src/main/resources/static/image/";
+    final String path = "./images/";
     final String[] extension = { ".jpg", ".jpeg", ".png" };
     String currentExtension = "";
 

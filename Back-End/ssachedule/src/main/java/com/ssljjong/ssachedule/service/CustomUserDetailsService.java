@@ -1,7 +1,8 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.entity.User;
-import com.ssljjong.ssachedule.repository.UserRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.ssljjong.ssachedule.entity.User;
+import com.ssljjong.ssachedule.repository.UserRepository;
 
 @Component("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
