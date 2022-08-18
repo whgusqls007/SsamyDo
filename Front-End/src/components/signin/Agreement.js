@@ -162,6 +162,7 @@ export default function Agreement({ navigation }) {
 const AgreementStyles = StyleSheet.create({
   // 전체 화면 스타일
   back: {
+    height: "100%",
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
