@@ -1,14 +1,15 @@
 package com.ssljjong.ssachedule.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ssljjong.ssachedule.entity.Track;
-import com.ssljjong.ssachedule.entity.User;
-import lombok.Builder;
-import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssljjong.ssachedule.entity.User;
+
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
