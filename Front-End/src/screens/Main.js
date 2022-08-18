@@ -1,4 +1,11 @@
-import { View, StyleSheet, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  BackHandler,
+  Alert,
+} from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +21,7 @@ export default function Main({ navigation }) {
     return state.Account[0];
   });
 
+
   const dispatch = useDispatch();
   const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
@@ -21,21 +29,21 @@ export default function Main({ navigation }) {
 
   const onFetchTodo = (res) => {
     setTodoList(res);
-  }
+  };
 
   const token = useSelector((state) => {
     return state.Account[2];
   });
-  
+
   useEffect(() => {
     const backAction = () => {
       Alert.alert("App 종료", "SSamyDo에서 떠나시겠습니까? 👩🏻‍💻", [
         {
           text: "취소",
           onPress: () => null,
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "확인", onPress: () => BackHandler.exitApp() }
+        { text: "확인", onPress: () => BackHandler.exitApp() },
       ]);
       return true;
     };
