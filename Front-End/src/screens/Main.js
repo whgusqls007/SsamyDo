@@ -96,7 +96,7 @@ export default function Main({ navigation }) {
     async function fetchNotice() {
       const response = await axios({
         method: "get",
-        url: drf.notice.noticeOffset(0, 20),
+        url: drf.notice.noticeOffset(0, 30),
         headers: token,
       }).catch(() => {
         navigation.navigate("Verification");
