@@ -1,6 +1,5 @@
 package com.ssljjong.ssachedule.dto;
 
-import com.ssljjong.ssachedule.entity.Track;
 import lombok.Data;
 
 @Data
