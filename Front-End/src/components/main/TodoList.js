@@ -38,6 +38,8 @@ export default function TodoList({ navigation, todoList }) {
   //   setTodoList(JSON.stringify(res));
   // }
 
+  // console.log(todoList)
+
   // console.log(`todolist state에 저장한거 ----------------------- ${todoList}`)
 
   const todostatus = useSelector((state) => {
@@ -46,6 +48,7 @@ export default function TodoList({ navigation, todoList }) {
 
   function checkDate(item) {
     const itemDuedate =
+      // console.log(item)
       item.dueDate.length === 12
         ? item.dueDate.slice(0, 8)
         : item.dueDate.slice(0, 7);
@@ -55,6 +58,7 @@ export default function TodoList({ navigation, todoList }) {
         : itemDuedate - ymdFormat2();
     return dDay;
   }
+
 
   function checkStatus(item) {
     const thisStatus = todostatus.includes(item.id) ? true : false;
@@ -157,11 +161,11 @@ const styles = StyleSheet.create({
   todoContainer: {
     flex: 1,
     flexDirection: "column",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   todobox: {
     flexDirection: "row",
-    paddingTop: 30,
+    paddingTop: 15,
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

@@ -19,7 +19,7 @@ export default function NoticeItem({ navigation, notice, noticeList }) {
       <View style={styles.itemtitlebox}>
       <TouchableOpacity
         onFocus={styles.itemfocus}
-        onPress={() => navigation.navigate("NoticeDetail", {id: notice.id, noticeList: noticeList})} >
+        onPress={() => navigation.navigate("NoticeDetail", {id: notice.id, notice: notice})} >
           <Text numberOfLines={1} ellipsizeMode={"tail"} style={styles.itemtext}> {notice.title}</Text>
       </TouchableOpacity>
       <Text>{notice.duedate}</Text>
