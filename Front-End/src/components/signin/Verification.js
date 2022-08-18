@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/native";
 
 async function getTheToken() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -41,10 +42,8 @@ export default function Verification({ navigation }) {
   const dispatch = useDispatch();
   // 비밀번호 변경 등으로 다시 온 경우가 있으므로 유저 정보들 받기
   useEffect(() => {
-    if (btnName !== "인증") {
-      setMMPassword("");
-      setEduPassword("");
-    }
+    setMMPassword("");
+    setEduPassword("");
     getTheToken()
       .then((e) => setFcmToken(e))
       .catch((err) => {
@@ -107,6 +106,9 @@ export default function Verification({ navigation }) {
         });
         // 저장 내용들 로컬에 저장
         dispatch({ type: "Account/save" });
+        // 비밀번호들 초기화
+        setMMPassword("");
+        setEduPassword("");
         // 메인화면으로 이동
         navigation.navigate("TabNav");
         // 재인증 모드로 변경
@@ -129,7 +131,15 @@ export default function Verification({ navigation }) {
         {/* 뒤로 가기 */}
         <TouchableOpacity
           style={VerificationStyles.headerBack}
-          onPress={() => navigation.pop()}
+          onPress={() => {
+            // 인증(새로가입 하는 경우는 뒤로가기 = Aggrements)
+            if (btnName === "인증") {
+              navigation.goBack();
+              // 재인증 or 탈퇴의 경우(메인 화면으로 이동)
+            } else {
+              navigation.navigate("TabNav");
+            }
+          }}
         >
           <Ionicons name="arrow-back" size={24} color="white" margin="0" />
         </TouchableOpacity>
@@ -137,7 +147,6 @@ export default function Verification({ navigation }) {
       </View>
       <View style={VerificationStyles.verifiContainer}>
         <View style={VerificationStyles.inputBox}>
-          {/* <Text style={VerificationStyles.inputLabel}>학번</Text> */}
           {/* 학번 입력 */}
           {btnName === "인증" ? (
             <TextInput
@@ -162,8 +171,7 @@ export default function Verification({ navigation }) {
           )}
         </View>
         <View style={VerificationStyles.inputBox}>
-          {/* <Text style={VerificationStyles.inputLabel}>이름 </Text> */}
-          {/* 이름 이름 */}
+          {/* 이름 */}
           {btnName === "인증" ? (
             <TextInput
               style={{ width: "100%" }}
@@ -181,9 +189,6 @@ export default function Verification({ navigation }) {
         </View>
         {/* 이메일 입력 */}
         <View style={VerificationStyles.inputBox}>
-          {/* <Text style={VerificationStyles.inputLabel}>
-              EduSSAFY{"\n"}이메일
-            </Text> */}
           {btnName === "인증" ? (
             <TextInput
               style={{ width: "100%" }}
@@ -202,9 +207,6 @@ export default function Verification({ navigation }) {
         </View>
         {/* edussafy 비밀번호 입력 */}
         <View style={VerificationStyles.inputBox}>
-          {/* <Text style={VerificationStyles.inputLabel}>
-              EduSSAFY {"\n"}비밀번호
-            </Text> */}
           <TextInput
             style={{ width: "100%" }}
             secureTextEntry={true}
@@ -220,9 +222,6 @@ export default function Verification({ navigation }) {
         </View>
         {/* MatterMost 비밀번호 */}
         <View style={VerificationStyles.inputBox}>
-          {/* <Text style={VerificationStyles.inputLabel}>
-              MatterMost{"\n"}비밀번호
-            </Text> */}
           <TextInput
             style={{ width: "100%" }}
             secureTextEntry={true}
@@ -310,7 +309,18 @@ export default function Verification({ navigation }) {
                     headers: token,
                   })
                     .then((res) => {
+                      // 로컬 삭제
                       AsyncStorage.clear();
+                      // 계정정보 Redux 제거
+                      setStudentNo("");
+                      dispatch({ type: "Account/reset" });
+                      // 화면 시작화면에서 시작
+                      navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [{ name: "Start" }],
+                        })
+                      );
                       BackHandler.exitApp();
                     })
                     .catch((err) => {
@@ -383,7 +393,7 @@ export default function Verification({ navigation }) {
                 { backgroundColor: "#5ba8ff", height: "20%" },
               ]}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate("TabNav", { screen: "MyPage" });
                 dispatch({ type: "Account/mode", mode: "재인증" });
               }}
             >

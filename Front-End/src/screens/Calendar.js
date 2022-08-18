@@ -64,10 +64,12 @@ export default function Calendar({ navigation }) {
                 showBtn && CalendarStyles.cancleBtn,
               ]}
               onPress={() => {
+                // 취소상태일때
                 if (showBtn) {
                   setShowBtn(!setShowBtn);
                   setTypeOne(type[1]);
                   setTypeTwo(type[2]);
+                  // 타입변경상태(전체)
                 } else {
                   dispatch({
                     type: "ScheduleList/mark",
@@ -84,7 +86,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 0 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 0 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -107,7 +109,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 1 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 1 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -125,7 +127,14 @@ export default function Calendar({ navigation }) {
               <View style={CalendarStyles.btnContent}>
                 <Ionicons name="ellipse-sharp" size={10} color="#ffe34f" />
                 {showBtn ? (
-                  <TextInput maxLength={5} value={typeOne} />
+                  <TextInput
+                    maxLength={5}
+                    onChangeText={(text) => {
+                      setTypeOne(text);
+                    }}
+                    value={typeOne}
+                    style={CalendarStyles.inputBox}
+                  />
                 ) : (
                   <Text> {type[1]}</Text>
                 )}
@@ -134,7 +143,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 2 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 2 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -151,7 +160,18 @@ export default function Calendar({ navigation }) {
             >
               <View style={CalendarStyles.btnContent}>
                 <Ionicons name="ellipse-sharp" size={10} color="#ffc0cb" />
-                <Text> {type[2]}</Text>
+                {showBtn ? (
+                  <TextInput
+                    maxLength={5}
+                    value={typeTwo}
+                    onChangeText={(text) => {
+                      setTypeTwo(text);
+                    }}
+                    style={CalendarStyles.inputBox}
+                  />
+                ) : (
+                  <Text> {type[2]}</Text>
+                )}
               </View>
             </TouchableOpacity>
           </View>
@@ -160,6 +180,13 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={CalendarStyles.changeBtn}
               onPress={() => {
+                if (showBtn) {
+                  dispatch({
+                    type: "Account/changeType",
+                    payload: [typeOne, typeTwo],
+                  });
+                  dispatch({ type: "Account/saveType" });
+                }
                 setShowBtn(!showBtn);
               }}
             >
@@ -228,7 +255,8 @@ const CalendarStyles = StyleSheet.create({
     borderRadius: 5,
   },
   cancleBtn: {
-    backgroundColor: "c1121f",
+    borderColor: "#c1121f",
+    backgroundColor: "#ffffff",
   },
   cancleText: { color: "#ffffff" },
 });

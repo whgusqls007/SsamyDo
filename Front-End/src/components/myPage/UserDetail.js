@@ -6,6 +6,8 @@ import {
   FontAwesome5,
   Ionicons,
 } from "@expo/vector-icons";
+import axios from "axios";
+import drf from "../../api/drf";
 
 export default function UserDetail() {
   //기본 정보
@@ -52,11 +54,13 @@ export default function UserDetail() {
               <Text style={styles.detailText}>{user.studentNo}</Text>
             </View>
             {/* 이메일 */}
+
             <View style={styles.detailBox}>
               <Fontisto style={styles.detailText} name="email" size={16} />
               <Text style={styles.detailText}>{user.email}</Text>
             </View>
             {/* 기수 */}
+
             <View style={styles.detailBox}>
               <FontAwesome style={styles.detailText} name="flag" size={16} />
               <Text style={styles.detailText}>
@@ -75,6 +79,7 @@ export default function UserDetail() {
               </Text>
             </View>
             {/* 트랙 선택 */}
+
             <View style={styles.detailBox}>
               <FontAwesome5 style={styles.detailText} name="road" size={16} />
               <Text style={styles.detailText}>{trackName[user.track]}</Text>
