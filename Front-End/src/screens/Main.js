@@ -29,7 +29,7 @@ export default function Main({ navigation }) {
   
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("앱 종료", "앱을 종료하시겠습니까?", [
+      Alert.alert("App 종료", "SSamyDo에서 떠나시겠습니까? 👩🏻‍💻", [
         {
           text: "취소",
           onPress: () => null,
