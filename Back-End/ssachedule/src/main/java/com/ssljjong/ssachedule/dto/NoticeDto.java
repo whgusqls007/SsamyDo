@@ -10,7 +10,6 @@ public class NoticeDto {
     private String title;
     private String description;
     private String date;
-
     private String source;
 
 
@@ -27,4 +26,6 @@ public class NoticeDto {
         this.description = description;
         this.date = date;
     }
+
+
 }
