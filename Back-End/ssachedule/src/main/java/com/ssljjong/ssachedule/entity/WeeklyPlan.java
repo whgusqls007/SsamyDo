@@ -1,12 +1,15 @@
 package com.ssljjong.ssachedule.entity;
 
-import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.persistence.*;
 
 @Entity
 @Getter

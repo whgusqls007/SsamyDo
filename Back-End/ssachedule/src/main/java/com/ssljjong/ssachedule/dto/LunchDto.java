@@ -2,8 +2,6 @@ package com.ssljjong.ssachedule.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
 public class LunchDto {
 

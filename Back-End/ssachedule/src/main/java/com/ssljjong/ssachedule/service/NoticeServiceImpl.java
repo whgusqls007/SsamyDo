@@ -1,22 +1,23 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.dto.NoticeDto;
-import com.ssljjong.ssachedule.entity.Notice;
-import com.ssljjong.ssachedule.repository.NoticeRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.ssljjong.ssachedule.dto.NoticeDto;
+import com.ssljjong.ssachedule.entity.Notice;
+import com.ssljjong.ssachedule.repository.NoticeRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
 

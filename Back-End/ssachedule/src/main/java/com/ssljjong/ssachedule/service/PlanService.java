@@ -1,8 +1,8 @@
 package com.ssljjong.ssachedule.service;
 
-import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
-
 import java.util.List;
+
+import com.ssljjong.ssachedule.dto.WeeklyPlanDto;
 
 public interface PlanService {
 
