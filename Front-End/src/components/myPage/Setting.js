@@ -111,7 +111,7 @@ export default function Setting({ navigation }) {
       {!showTrackBtn && (
         <View style={settingStyles.contact}>
           <Entypo name="email" size={15} color="#888888" />
-          <Text>{"  "}기타 문의 ssafy@ssafy.com</Text>
+          <Text>{"  "}오류관련 문의 soshot22@gmail.com</Text>
         </View>
       )}
     </View>
