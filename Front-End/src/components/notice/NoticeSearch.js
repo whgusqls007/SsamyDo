@@ -7,20 +7,20 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-// import styles from "../../../app.module.css";
+import { useSelector } from "react-redux";
 import NoticeItem from "./NoticeItem";
 
 // Notice data에서 찾기 ..
 
 export default function NoticeSearch({ navigation, route }) {
   const value = route.params.value;
-  const noticeList = route.params.noticeList;
-  // console.log(value)
-  // console.log('필터링된애들')
+
+  const noticeList = useSelector((state) => {
+    return state.Notice[0];
+  });
   const searchNotice = noticeList.filter((notice) =>
     notice.title.includes(value)
   );
-  // console.log(searchNotice)
 
   const search = String.fromCodePoint(0x1f50e);
 

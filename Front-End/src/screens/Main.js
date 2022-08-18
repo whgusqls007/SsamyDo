@@ -54,10 +54,8 @@ export default function Main({ navigation }) {
   }, []);
 
   useEffect(() => {
-    // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
-        console.log(`main schedule get`);
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
@@ -82,12 +80,10 @@ export default function Main({ navigation }) {
       });
 
       // get(baseURL);
-      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
     fetchTodo()
       .then((res) => {
-        // console.log(`넘어온 res ${JSON.stringify(res)}`)
         onFetchTodo(res.data);
         dispatch({ type: "MainTodo/import", payload: res.data });
       })
@@ -96,7 +92,26 @@ export default function Main({ navigation }) {
       });
   }, []);
 
-  // console.log(`main todolist ---------------- ${todoList}`)
+  useEffect(() => {
+    async function fetchNotice() {
+      const response = await axios({
+        method: "get",
+        url: drf.notice.noticeOffset(0, 20),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+      return response.data.data;
+    }
+    fetchNotice()
+      .then((res) => {
+        console.log(`notice yes`)
+        dispatch({ type: "Notice/import", payload: res });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[]);
 
   return (
     <View style={mainStyles.mainContainer}>
@@ -113,8 +128,6 @@ export default function Main({ navigation }) {
 
 const mainStyles = StyleSheet.create({
   helloContainer: {
-    // paddingTop: "12%",
-    // paddingLeft: "8%",
     paddingTop: "10%",
     paddingLeft: "5%",
   },

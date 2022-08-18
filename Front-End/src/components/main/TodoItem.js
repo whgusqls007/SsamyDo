@@ -16,15 +16,12 @@ import id from "faker/lib/locales/id_ID";
 // - 내가 완료하지 않은 할일 (isCompleted) / item에서 체크한 후 보여주기
 
 export default function TodoItem({ navigation, item }) {
-  // console.log(item)
   const dispatch = useDispatch();
   const itemId = item.id;
   const itemTitle = item.title.includes("건강")
     ? item.title.slice(4)
     : item.title;
-  // console.log(`item notice ------ ${item.notice}`)
 
-  // console.log(typeof(item))
   // const itemDate = item.dueDate.slice(0,8)
 
   const itemDuedate =
@@ -45,22 +42,20 @@ export default function TodoItem({ navigation, item }) {
     item.dueDate.length === 12
       ? item.dueDate.slice(10, 12)
       : item.dueDate.slice(9, 11);
-  // console.log(dDay)
-  // console.log(itemDuedate)
-  // console.log(itemDate)
-  // const [completedTodo, setCompletedTodo] = useState('');
-
-  // const year = item.dueDate.slice(2,4)
-  // const month = item.dueDate.slice(4,6)
-  // const day = item.dueDate.slice(6,8)
-  // const hour = item.dueDate.slice(8,10)
-  // const min = item.dueDate.slice(10,12)
 
   const goEdussafy = useCallback(async () => {
-    const destinationURL = "https://edu.ssafy.com/edu/board/notice/list.do";
+    const destinationURL =
+      "https://edu.ssafy.com/edu/lectureroom/survey/surveyList.do";
     if (await Linking.canOpenURL(destinationURL))
       await Linking.openURL(destinationURL);
   }, []);
+
+  function goNotice(id, notice) {
+    navigation.navigate("NoticeDetail", {
+      id: id,
+      notice: notice,
+    });
+  }
 
   const saveCompletedTodo = () => {
     dispatch({ type: "TodoStatus/addstatus", payload: itemId });
@@ -86,8 +81,6 @@ export default function TodoItem({ navigation, item }) {
     return result;
   }
 
-  // console.log(ymdFormat1());
-
   // 오늘날짜 22817
   function ymdFormat2(oriDate = new Date()) {
     // let utc = oriDate.getTime() + oriDate.getTimezoneOffset() * 60 * 1000;
@@ -101,10 +94,6 @@ export default function TodoItem({ navigation, item }) {
       oriDate.getDate().toString().padStart(2, "0");
     return result;
   }
-
-  const todostatus = useSelector((state) => {
-    return state.TodoStatus[0];
-  });
 
   const nowStatus = useSelector((state) => {
     return state.TodoStatus[0].includes(itemId);
@@ -144,16 +133,36 @@ export default function TodoItem({ navigation, item }) {
 
         <View style={styles.textbox}>
           <View style={styles.itemtitlebox}>
+            <TouchableOpacity
+              onPress={() => {
+                item.notice
+                  ? goNotice(item.notice.id, item.notice)
+                  : goEdussafy;
+              }}
+            >
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={"tail"}
+                style={[styles.itemtitle, nowStatus && styles.disabledtext]}
+              >
+                {itemTitle}
+              </Text>
+            </TouchableOpacity>
+
+            {/* <TouchableOpacity onPress={goEdussafy}>
+                <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
+              </TouchableOpacity> */}
+            {/* <Text style={[styles.itemdate, nowStatus&& styles.disabledtext]}>{year}/{month}/{day} {hour}:{min}</Text> */}
             {/* {item.notice === null ? ( */}
-              <TouchableOpacity onPress={goEdussafy}>
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode={"tail"}
-                  style={[styles.itemtitle, nowStatus && styles.disabledtext]}
-                >
-                  {itemTitle}
-                </Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={goEdussafy}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={"tail"}
+                style={[styles.itemtitle, nowStatus && styles.disabledtext]}
+              >
+                {itemTitle}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.itemdatebox} disabled={nowStatus}>

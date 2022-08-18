@@ -17,7 +17,6 @@ import SearchBar from "react-native-platform-searchbar";
 import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
 import drf from "../api/drf";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 export default function Notice({ navigation }) {
   // 토큰
@@ -29,43 +28,9 @@ export default function Notice({ navigation }) {
   const [showNotice, setShowNotice] = useState("All");
   const [value, setValue] = useState("");
 
-  const [noticeList, setNoticeList] = useState([]);
-  // const todoList = useSelector(state => state.MainTodo)
-  const onFetchNotice = (res) => {
-    setNoticeList(res);
-  };
-
-  useEffect(() => {
-    async function fetchNotice() {
-      // console.log(drf.notice.noticePage(1));
-
-      const response = await axios({
-        method: "get",
-        url: drf.notice.noticeOffset(0, 20),
-        headers: token,
-      }).catch(() => {
-        navigation.navigate("Verification");
-      });
-      // .get(
-      //   "http://i7e204.p.ssafy.io:8080/api/notice/page/1"
-      // );
-      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
-      return response.data;
-    }
-    fetchNotice()
-      .then((res) => {
-        // console.log(`넘어온 res ${res}`)
-        onFetchNotice(res.data);
-        dispatch({ type: "Notice/import", payload: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  // console.log(value)
-
-  // console.log(showNotice)
+  const noticeList = useSelector((state) => {
+    return state.Notice[0];
+  });
 
   return (
     <View style={styles.noticecontainer}>
@@ -86,7 +51,6 @@ export default function Notice({ navigation }) {
             onSubmitEditing={() =>
               navigation.navigate("NoticeSearch", {
                 value: value,
-                noticeList: noticeList,
               })
             }
           />
@@ -109,10 +73,6 @@ export default function Notice({ navigation }) {
             onPress={() => setShowNotice("MM")}
           >
             <View>
-              {/* <Image 
-                source={require('../images/mattermost.png')}
-                style={styles.imageicon}
-              /> */}
               <Text style={styles.buttontext}>MatterMost</Text>
             </View>
           </TouchableOpacity>
@@ -133,16 +93,9 @@ export default function Notice({ navigation }) {
       </View>
 
       <View>
-        <NoticeList
-          navigation={navigation}
-          select={showNotice}
-          noticeList={noticeList}
-        />
+        <NoticeList navigation={navigation} select={showNotice} />
       </View>
     </View>
-    // <View>
-    //   <NoticeList navigation={navigation} select={showNotice} noticeList={noticeList} />
-    // </View>
   );
 }
 
@@ -162,6 +115,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
     marginLeft: "7%",
+  },
+
+  titletext: {
+    fontSize: 30,
+    paddingLeft: 20,
+    fontWeight: "bold",
+    color: "#000000",
   },
   imageicon: {
     width: "60%",

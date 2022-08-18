@@ -38,17 +38,12 @@ export default function TodoList({ navigation, todoList }) {
   //   setTodoList(JSON.stringify(res));
   // }
 
-  // console.log(todoList)
-
-  // console.log(`todolist state에 저장한거 ----------------------- ${todoList}`)
-
   const todostatus = useSelector((state) => {
     return state.TodoStatus[0];
   });
 
   function checkDate(item) {
     const itemDuedate =
-      // console.log(item)
       item.dueDate.length === 12
         ? item.dueDate.slice(0, 8)
         : item.dueDate.slice(0, 7);
@@ -58,7 +53,6 @@ export default function TodoList({ navigation, todoList }) {
         : itemDuedate - ymdFormat2();
     return dDay;
   }
-
 
   function checkStatus(item) {
     const thisStatus = todostatus.includes(item.id) ? true : false;
@@ -78,8 +72,6 @@ export default function TodoList({ navigation, todoList }) {
       oriDate.getDate().toString().padStart(2, "0");
     return result;
   }
-
-  // console.log(ymdFormat1());
 
   // 오늘날짜 22817
   function ymdFormat2(oriDate = new Date()) {
@@ -120,10 +112,6 @@ export default function TodoList({ navigation, todoList }) {
   //     dispatch({type: "MainTodo/import", payload: res.data});
   //   });
   // }, []);
-
-  // console.log(`아니 이게 뭐여 ${todoList}`)
-  // console.log("todolist-----------------------------------")
-  // console.log(todoList[0])
 
   // todoList.sort((a, b) => a.time[0] - b.time[0] || a.time[1] - b.time[1]);
 

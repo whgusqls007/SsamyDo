@@ -36,7 +36,6 @@ export default function LunchBoard({ navigation }) {
       setLunchData(res);
     });
     fetchData().catch((err) => {
-      // console.log(err.response);
       console.log("Lunch Axios 실패");
     });
   }, []);
