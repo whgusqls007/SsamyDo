@@ -1,8 +1,9 @@
 package com.ssljjong.ssachedule.entity;
 
-import lombok.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
-import javax.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Getter

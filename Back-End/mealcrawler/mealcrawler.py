@@ -18,14 +18,15 @@ class Driver:
 
     def initOptions(self):
         options = Options()
-        options.add_argument("--start-fullscreen")
+        options.add_argument("--window-size=1920, 1080")
         options.add_argument("headless")
         return options
 
     def open(self):
-        self.driver = webdriver.Chrome(
-            ChromeDriverManager().install(), options=self.options
-        )
+        # self.driver = webdriver.Chrome(
+        #     ChromeDriverManager().install(), options=self.options
+        # )
+        self.driver = webdriver.Chrome(executable_path="chromedriver")
         return
 
     def close(self):
@@ -70,10 +71,10 @@ class Driver:
 
 def insertIntoDataBase(main, detail, date, store, img):
     conn = pymysql.connect(
-        host="stg-yswa-kr-practice-db-master.mariadb.database.azure.com",
-        user="S07P12E204@stg-yswa-kr-practice-db-master",
-        password="F7MCkOqbj8",
-        db="S07P12E204",
+        host="localhost",
+        user="i7e204",
+        password="000000",
+        db="ssafy",
         charset="utf8",
         port=3306,
     )
@@ -107,11 +108,13 @@ if __name__ == "__main__":
         hour = datetime.now().hour
         minute = datetime.now().minute
         second = datetime.now().second
-
+        # print(hour, end=" : ")
+        # print(minute, end=" : ")
+        # print(second)
         if (
             (hour == 9 and minute == 0 and second == 0)
-            or (hour == 14 and second == 20)
-            or (hour == 14 and second == 50)
+            or (hour == 11 and minute == 24 and second == 0)
+            or (hour == 13 and minute == 0 and second == 0)
         ):
 
             flag = True
@@ -137,15 +140,24 @@ if __name__ == "__main__":
 
             driver.move("http://welplus.welstory.com/#/meal")
 
-            thumbs = driver.findAll(By.CLASS_NAME, "meal-item-type1")
+            time.sleep(1)
+
+            driver.find(
+                By.XPATH, "/html/body/div[1]/main/div[3]/div[3]/ul/li[3]/button"
+            ).click()
 
             time.sleep(1)
 
-            menu_names = driver.findAll(By.CLASS_NAME, "tit")
-            menu_details = driver.findAll(By.CLASS_NAME, "txt-desc")
-
             parser = re.compile("http://\S*.jpg|http://\S*.png")
             for i in range(1, 5):
+                menu_names = driver.find(
+                    By.XPATH,
+                    f"/html/body/div[1]/main/div[4]/ul/li[{i}]/div/div[2]/a/strong",
+                )
+                menu_details = driver.find(
+                    By.XPATH,
+                    f"/html/body/div[1]/main/div[4]/ul/li[{i}]/div/div[2]/a/p[2]",
+                )
                 img = driver.find(
                     By.XPATH, f"/html/body/div[1]/main/div[4]/ul/li[{i}]/div/div[1]/a"
                 )
@@ -154,16 +166,17 @@ if __name__ == "__main__":
                     By.XPATH,
                     f'//*[@id="contents"]/div[4]/ul/li[{i}]/div/div[2]/a/div/span[1]/img',
                 )
+
                 insertIntoDataBase(
-                    menu_names[i].text,
-                    menu_details[i].text,
+                    menu_names.text,
+                    menu_details.text,
                     datetime.now().strftime("%Y%m%d"),
                     store.get_attribute("alt"),
                     parser.findall(style)[0],
                 )
                 print(
-                    menu_names[i].text,
-                    menu_details[i].text,
+                    menu_names.text,
+                    menu_details.text,
                     datetime.now().strftime("%Y%m%d"),
                     store.get_attribute("alt"),
                     parser.findall(style)[0],

@@ -1,17 +1,27 @@
 package com.ssljjong.ssachedule.entity;
 
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "title", "description", "type", "dueDate"})
+@ToString(of = { "id", "title", "description", "type", "dueDate" })
 public class Todo {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "todo_id")
     private Integer id;
 
@@ -33,8 +43,8 @@ public class Todo {
 
     // 생성 메서드
 
-
-    public Todo(Integer id, Notice notice, String title, String description, TodoType type, String startDate, String dueDate) {
+    public Todo(Integer id, Notice notice, String title, String description, TodoType type, String startDate,
+            String dueDate) {
         this.id = id;
         this.notice = notice;
         this.title = title;
