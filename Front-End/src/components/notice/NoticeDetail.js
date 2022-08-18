@@ -84,7 +84,12 @@ export default function NoticeDetail({ navigation, route }) {
       </View>
 
       <View style={styles.detailfooter}>
-        <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
+        <TouchableOpacity
+          style={styles.buttonedussafy}
+          onPress={() => {
+            goEdussafy();
+          }}
+        >
           <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
         </TouchableOpacity>
       </View>
