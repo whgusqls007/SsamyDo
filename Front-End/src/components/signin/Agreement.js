@@ -5,13 +5,9 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import styles from "../../../app.module.css";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
-// import { back } from "react-native/Libraries/Animated/Easing";
-import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
+import { useState } from "react";
 
 export default function Agreement({ navigation }) {
   // 약관 동의 및 다음 버튼 활성화 변수
@@ -134,8 +130,8 @@ export default function Agreement({ navigation }) {
       {/* 다음(MM, EduSSAFY 인증 단계) 버튼 */}
       {inputError ? (
         <View style={{ flexDirection: "row", margin: 4 }}>
-          <Ionicons name="warning" size={19} color="#c1121f" />
-          <Text style={{ fontWeight: "bold", color: "#c1121f" }}>
+          <Ionicons name="warning" size={19} color="#C22D37" />
+          <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
             {inputError}
           </Text>
         </View>
@@ -162,6 +158,7 @@ export default function Agreement({ navigation }) {
 const AgreementStyles = StyleSheet.create({
   // 전체 화면 스타일
   back: {
+    height: "100%",
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",

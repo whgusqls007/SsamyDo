@@ -108,9 +108,6 @@ if __name__ == "__main__":
         hour = datetime.now().hour
         minute = datetime.now().minute
         second = datetime.now().second
-        # print(hour, end=" : ")
-        # print(minute, end=" : ")
-        # print(second)
         if (
             (hour == 9 and minute == 0 and second == 0)
             or (hour == 11 and minute == 24 and second == 0)

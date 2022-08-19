@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  BackHandler,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Text, BackHandler, Alert } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,14 +8,13 @@ import axios from "axios";
 import drf from "../api/drf";
 
 export default function Main({ navigation }) {
+  // 유저관련 정보
   const user = useSelector((state) => {
     return state.Account[0];
   });
 
   const dispatch = useDispatch();
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
-  // const todoList = useSelector(state => state.MainTodo)
 
   const onFetchTodo = (res) => {
     setTodoList(res);
@@ -32,6 +24,7 @@ export default function Main({ navigation }) {
     return state.Account[2];
   });
 
+  // 뒤로가기는 종료
   useEffect(() => {
     const backAction = () => {
       Alert.alert("App 종료", "SSamyDo에서 떠나시겠습니까? 👩🏻‍💻", [
@@ -53,11 +46,10 @@ export default function Main({ navigation }) {
     return () => backHandler.remove();
   }, []);
 
+  // 로컬에서 ScheduleList 불러오기
   useEffect(() => {
-    // 실제 연결 후 getAllKeys로 통합할 수 있는 지 확인
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
-        console.log(`main schedule get`);
         dispatch({
           type: "ScheduleList/import",
           payload: JSON.parse(result),
@@ -71,6 +63,7 @@ export default function Main({ navigation }) {
     });
   }, []);
 
+  // axios를 통해 서버에서 Todo 리스트를 요청
   useEffect(() => {
     async function fetchTodo() {
       const response = await axios({
@@ -82,12 +75,10 @@ export default function Main({ navigation }) {
       });
 
       // get(baseURL);
-      // console.log(`젼님 코드 보고 바뀐거 ${response.data}`)
       return response.data;
     }
     fetchTodo()
       .then((res) => {
-        // console.log(`넘어온 res ${res}`)
         onFetchTodo(res.data);
         dispatch({ type: "MainTodo/import", payload: res.data });
       })
@@ -96,7 +87,26 @@ export default function Main({ navigation }) {
       });
   }, []);
 
-  // console.log(`main todolist ---------------- ${todoList}`)
+  // axios를 통해 서버에서 Notice 정보를 요청
+  useEffect(() => {
+    async function fetchNotice() {
+      const response = await axios({
+        method: "get",
+        url: drf.notice.noticeOffset(0, 30),
+        headers: token,
+      }).catch(() => {
+        navigation.navigate("Verification");
+      });
+      return response.data.data;
+    }
+    fetchNotice()
+      .then((res) => {
+        dispatch({ type: "Notice/import", payload: res });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <View style={mainStyles.mainContainer}>
@@ -113,12 +123,13 @@ export default function Main({ navigation }) {
 
 const mainStyles = StyleSheet.create({
   helloContainer: {
-    paddingTop: 30,
-    paddingLeft: 20,
+    paddingTop: "10%",
+    paddingLeft: "5%",
   },
   helloText: {
     fontSize: 20,
     color: "#ffffff",
+    fontWeight: "bold",
   },
   mainContainer: {
     flex: 1,

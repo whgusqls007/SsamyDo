@@ -4,16 +4,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from "react-native";
-import styles from "../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCalendar from "../components/calendar/CustomCalendar";
 import ScheduleList from "../components/calendar/ScheduleList";
-import { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AntDesign } from "@expo/vector-icons";
 import {
   ssafySelector,
   typeOneSelector,
@@ -31,9 +27,6 @@ export default function Calendar({ navigation }) {
     useSelector(typeTwoSelector),
   ];
 
-  useEffect(() => {
-    // dispatch(type:"")
-  });
   // 현재 선택한 타입
   const check = useSelector((state) => {
     return state.ScheduleList[4][0];
@@ -64,10 +57,12 @@ export default function Calendar({ navigation }) {
                 showBtn && CalendarStyles.cancleBtn,
               ]}
               onPress={() => {
+                // 취소상태일때
                 if (showBtn) {
                   setShowBtn(!setShowBtn);
                   setTypeOne(type[1]);
                   setTypeTwo(type[2]);
+                  // 타입변경상태(전체)
                 } else {
                   dispatch({
                     type: "ScheduleList/mark",
@@ -84,7 +79,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 0 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 0 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -107,7 +102,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 1 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 1 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -127,6 +122,9 @@ export default function Calendar({ navigation }) {
                 {showBtn ? (
                   <TextInput
                     maxLength={5}
+                    onChangeText={(text) => {
+                      setTypeOne(text);
+                    }}
                     value={typeOne}
                     style={CalendarStyles.inputBox}
                   />
@@ -138,7 +136,7 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={[
                 CalendarStyles.categoryBtn,
-                check === 2 ? { backgroundColor: "#A8D1FF" } : {},
+                !showBtn && check === 2 ? { backgroundColor: "#A8D1FF" } : {},
               ]}
               disabled={showBtn}
               onPress={() => {
@@ -155,7 +153,18 @@ export default function Calendar({ navigation }) {
             >
               <View style={CalendarStyles.btnContent}>
                 <Ionicons name="ellipse-sharp" size={10} color="#ffc0cb" />
-                <Text> {type[2]}</Text>
+                {showBtn ? (
+                  <TextInput
+                    maxLength={5}
+                    value={typeTwo}
+                    onChangeText={(text) => {
+                      setTypeTwo(text);
+                    }}
+                    style={CalendarStyles.inputBox}
+                  />
+                ) : (
+                  <Text> {type[2]}</Text>
+                )}
               </View>
             </TouchableOpacity>
           </View>
@@ -164,6 +173,13 @@ export default function Calendar({ navigation }) {
             <TouchableOpacity
               style={CalendarStyles.changeBtn}
               onPress={() => {
+                if (showBtn) {
+                  dispatch({
+                    type: "Account/changeType",
+                    payload: [typeOne, typeTwo],
+                  });
+                  dispatch({ type: "Account/saveType" });
+                }
                 setShowBtn(!showBtn);
               }}
             >
@@ -197,6 +213,7 @@ const CalendarStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "baseline",
     marginTop: "3%",
+    marginHorizontal: "3%",
     paddingHorizontal: "4%",
   },
   categoryBtnContainer: {
@@ -231,7 +248,8 @@ const CalendarStyles = StyleSheet.create({
     borderRadius: 5,
   },
   cancleBtn: {
-    backgroundColor: "c1121f",
+    borderColor: "#c1121f",
+    backgroundColor: "#ffffff",
   },
   cancleText: { color: "#ffffff" },
 });

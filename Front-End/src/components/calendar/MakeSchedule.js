@@ -6,18 +6,11 @@ import {
   Platform,
   KeyboardAvoidingView,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
-import {
-  ssafySelector,
-  typeOneSelector,
-  typeTwoSelector,
-} from "../../store/store";
 import { Ionicons } from "@expo/vector-icons";
 
 // 캘린더를 위한 설정
@@ -167,12 +160,6 @@ export default function MakeSchedule({ navigation }) {
           >
             <Ionicons name="arrow-back" size={24} color="#ffffff" margin="0" />
           </TouchableOpacity>
-          {errorMSG && (
-            <View style={MakeScheduleStyles.err}>
-              <Ionicons name="warning" size={19} color="#c1121f" />
-              <Text style={MakeScheduleStyles.errText}>{errorMSG}</Text>
-            </View>
-          )}
         </View>
         <View style={MakeScheduleStyles.calendarContainer}>
           {/* 캘린더 */}
@@ -180,7 +167,10 @@ export default function MakeSchedule({ navigation }) {
             theme={{
               calendarBackground: "#5BA8FF",
               monthTextColor: "#ffffff",
-
+              todayTextColor: "#FFE34F",
+              dayTextColor: "#ffffff",
+              textSectionTitleColor: "#111111",
+              arrowColor: "#ffffff",
               "stylesheet.calendar.header": {
                 dayTextAtIndex0: { color: "red" },
                 dayTextAtIndex6: { color: "#A8D1FF" },
@@ -254,7 +244,7 @@ export default function MakeSchedule({ navigation }) {
             <TextInput
               style={{ flexShrink: 1 }}
               maxLength={17}
-              placeholder="일정을 입력해 주세요"
+              placeholder="일정을 입력해주세요"
               placeholderTextColor="#888888"
               value={Schedule.title}
               onChangeText={(text) =>
@@ -266,83 +256,93 @@ export default function MakeSchedule({ navigation }) {
             />
           </View>
           {/* 일정 시각 선택(TimePicker) */}
-          <View style={MakeScheduleStyles.timeBox}>
-            <TouchableOpacity
-              onPress={() => {
-                setShow(true);
-              }}
-            >
-              <Text style={MakeScheduleStyles.timeText}>
-                {Schedule.time[0].toString().padStart(2, "0")} :{" "}
-                {Schedule.time[1].toString().padStart(2, "0")}
-              </Text>
-            </TouchableOpacity>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="time"
-                is24Hour={true}
-                onChange={onChange}
-              />
-            )}
-          </View>
-          {/* 등록 버튼 */}
           <TouchableOpacity
-            style={MakeScheduleStyles.submitBtn}
+            style={MakeScheduleStyles.timeBox}
             onPress={() => {
-              if (Schedule.type === 3) {
-                setErrorMSG("일정의 분류를 선택해주세요");
-              } else if (Schedule.title === "") {
-                setErrorMSG("일정 이름을 입력해주세요");
-              } else if (Schedule.day === "") {
-                setErrorMSG("일정일을 선택해 주세요");
-              } else {
-                // id가 있으면 수정
-                if (Schedule.id) {
-                  dispatch({
-                    type: "ScheduleList/update",
-                    payload: {
-                      id: Schedule.id,
-                      type: Schedule.type,
-                      title: Schedule.title,
-                      content: Schedule.content,
-                      day: Schedule.day,
-                      time: Schedule.time,
-                    },
-                  });
-                  // 생성으로 보내는 것
-                } else {
-                  dispatch({
-                    type: "ScheduleList/add",
-                    payload: {
-                      id: id,
-                      type: Schedule.type,
-                      title: Schedule.title,
-                      content: Schedule.content,
-                      day: Schedule.day,
-                      time: Schedule.time,
-                    },
-                  });
-                }
-                // MakeSchedule 내용 정리
-                dispatch({ type: "Schedule/clear" });
-                // 저장하기
-                dispatch({ type: "ScheduleList/save" });
-                // 마크 다시 처리하기(일정 추가한 날로 옮김)
-                dispatch({ type: "ScheduleList/mark", day: Schedule.day });
-                // 마크 전체보기로 처리
-                dispatch({ type: "ScheduleList/mark", select: "all" });
-                // 스케쥴 리스트 다시 보이기
-                dispatch({
-                  type: "ScheduleList/filter",
-                });
-                navigation.navigate("Calendar");
-              }
+              setShow(true);
             }}
           >
-            <Text style={MakeScheduleStyles.submitBtnText}>{btnName}</Text>
+            <Text style={MakeScheduleStyles.timeText}>
+              {Schedule.time[0].toString().padStart(2, "0")} :{" "}
+              {Schedule.time[1].toString().padStart(2, "0")}
+            </Text>
           </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="time"
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
+          {/* 에러메세지 */}
+          {errorMSG ? (
+            <View style={{ flexDirection: "row", margin: 4 }}>
+              <Ionicons name="warning" size={19} color="#C22D37" />
+              <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
+                {errorMSG}
+              </Text>
+            </View>
+          ) : (
+            <View style={{ height: "5%", width: "100%" }}></View>
+          )}
+          {/* 등록 버튼 */}
+          <View style={MakeScheduleStyles.submitContainer}>
+            <TouchableOpacity
+              style={MakeScheduleStyles.submitBtn}
+              onPress={() => {
+                if (Schedule.type === 3) {
+                  setErrorMSG("일정의 분류를 선택해주세요");
+                } else if (Schedule.title === "") {
+                  setErrorMSG("일정 이름을 입력해주세요");
+                } else if (Schedule.day === "") {
+                  setErrorMSG("일정일을 선택해주세요");
+                } else {
+                  // id가 있으면 수정
+                  if (Schedule.id) {
+                    dispatch({
+                      type: "ScheduleList/update",
+                      payload: {
+                        id: Schedule.id,
+                        type: Schedule.type,
+                        title: Schedule.title,
+                        day: Schedule.day,
+                        time: Schedule.time,
+                      },
+                    });
+                    // 생성으로 보내는 것
+                  } else {
+                    dispatch({
+                      type: "ScheduleList/add",
+                      payload: {
+                        id: id,
+                        type: Schedule.type,
+                        title: Schedule.title,
+                        day: Schedule.day,
+                        time: Schedule.time,
+                      },
+                    });
+                  }
+                  // MakeSchedule 내용 정리
+                  dispatch({ type: "Schedule/clear" });
+                  // 저장하기
+                  dispatch({ type: "ScheduleList/save" });
+                  // 마크 다시 처리하기(일정 추가한 날로 옮김)
+                  dispatch({ type: "ScheduleList/mark", day: Schedule.day });
+                  // 마크 전체보기로 처리
+                  dispatch({ type: "ScheduleList/mark", select: "all" });
+                  // 스케쥴 리스트 다시 보이기
+                  dispatch({
+                    type: "ScheduleList/filter",
+                  });
+                  navigation.navigate("Calendar");
+                }
+              }}
+            >
+              <Text style={MakeScheduleStyles.submitBtnText}>{btnName}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -360,7 +360,7 @@ const MakeScheduleStyles = StyleSheet.create({
     backgroundColor: "#5ba8ff",
   },
   headerBack: {
-    marginBottom: "5%",
+    marginTop: "5%",
   },
   // 하단 컨테이너: 분류 + 일정 제목 + 시간 + 등록 버튼
   bottomContainer: {
@@ -414,17 +414,28 @@ const MakeScheduleStyles = StyleSheet.create({
     fontSize: 15,
     color: "#111111",
   },
+  submitContainer: {
+    height: "20%",
+  },
   submitBtn: {
-    marginVertical: "10%",
     padding: "4%",
     borderRadius: 10,
     backgroundColor: "#5ba8ff",
   },
   submitBtnText: { color: "#ffffff", fontSize: 18, textAlign: "center" },
-  err: {
+  // 에러메시지 관련
+  errorContainer: {
+    height: "15%",
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorBox: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-start",
     padding: 7,
     margin: 7,
   },
-  errText: { fontWeight: "bold", color: "#c1121f" },
+  errText: { fontWeight: "bold", color: "#C22D37", textAlign: "center" },
 });

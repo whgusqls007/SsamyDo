@@ -7,8 +7,6 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../../store/store";
-import axios from "axios";
-import Account from "../../store/slice/mypage/Account";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
@@ -48,7 +46,7 @@ LocaleConfig.locales["ssamydo"] = {
     "금요일",
     "토요일",
   ],
-  dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+  dayNamesShort: ["SUN ", "MON", "TUE ", "WED", " THU", " FRI", " SAT"],
   today: "Today",
 };
 LocaleConfig.defaultLocale = "ssamydo";
@@ -56,20 +54,7 @@ LocaleConfig.defaultLocale = "ssamydo";
 export default function CustomCalendar() {
   const dispatch = useDispatch();
   // 시작시 해당 일자로 리스트 나오는 설정
-  // 테마설정을 위한 키
-  const [key, setKey] = useState("첫");
-  // 테마
-  const theme = {
-    backgroundColor: "#E5F3F6",
-    "stylesheet.calendar.header": {
-      dayTextAtIndex0: {
-        color: "red",
-      },
-      dayTextAtIndex6: {
-        color: "blue",
-      },
-    },
-  };
+
   useEffect(() => {
     const date = new Date();
     dispatch({
@@ -100,10 +85,6 @@ export default function CustomCalendar() {
     return state.ScheduleList[4][0];
   });
 
-  const check = useSelector((state) => {
-    return state.Account;
-  });
-
   return (
     <View>
       <Calendar
@@ -129,24 +110,17 @@ export default function CustomCalendar() {
             });
           }
         }}
-        style={[
-          CustomCalendarStyles.style,
-          {
-            "stylesheet.calendar.header": {
-              dayTextAtIndex0: {
-                color: "red",
-              },
-              dayTextAtIndex6: {
-                color: "#A8D1FF",
-              },
-            },
-          },
-        ]}
+        style={CustomCalendarStyles.style}
         hideExtraDays={true}
         // 일정표시 기능
         markingType={"multi-dot"}
         markedDates={markDate}
         theme={{
+          dayTextColor: "#111111",
+          textSectionTitleColor: "#888888",
+          arrowColor: "#888888",
+          todayTextColor: "#5BA8FF",
+          backgroundColor: "#ffffff",
           "stylesheet.calendar.header": {
             dayTextAtIndex0: {
               color: "red",
