@@ -7,9 +7,7 @@ import {
   Image,
 } from "react-native";
 import ScheduleItem from "./ScheduleItem";
-import styles from "../../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { AntDesign } from "@expo/vector-icons";
 
 export default function ScheduleList({ navigation }) {
   const dispatch = useDispatch();
@@ -59,7 +57,6 @@ export default function ScheduleList({ navigation }) {
           }}
           style={ScheduleListStyles.createBtnImg}
         />
-        {/* <AntDesign name="pluscircle" color="#A8D1FF" /> */}
       </TouchableOpacity>
     </View>
   );
