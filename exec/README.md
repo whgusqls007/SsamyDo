@@ -1,5 +1,11 @@
 ### 시작하기
 
+#### environment
+- Ubuntu 20.04 LTS
+- Expo SDK 45
+- openjdk 1.8.0_342
+- Django 3.2.12
+
 #### Database
 
 * MySQL 
@@ -98,6 +104,8 @@ $ nohup python3 mealcrawler.py &
 * OpenJDK 1.8.0_342
 * gradle 
 ```bash
+
+# before user attendence push server, you should join firebase console first
 
 # install open-jdk 1.8 if not exist
 $ sudo apt update
