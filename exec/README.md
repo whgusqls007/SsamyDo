@@ -105,7 +105,7 @@ $ nohup python3 mealcrawler.py &
 * gradle 
 ```bash
 
-# before user attendence push server, you should join firebase first
+# before user attendence push server, you should join firebase console first
 
 # install open-jdk 1.8 if not exist
 $ sudo apt update
