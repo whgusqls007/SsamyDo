@@ -6,18 +6,11 @@ import {
   Platform,
   KeyboardAvoidingView,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
-import {
-  ssafySelector,
-  typeOneSelector,
-  typeTwoSelector,
-} from "../../store/store";
 import { Ionicons } from "@expo/vector-icons";
 
 // 캘린더를 위한 설정
@@ -283,6 +276,17 @@ export default function MakeSchedule({ navigation }) {
               onChange={onChange}
             />
           )}
+          {/* 에러메세지 */}
+          {errorMSG ? (
+            <View style={{ flexDirection: "row", margin: 4 }}>
+              <Ionicons name="warning" size={19} color="#C22D37" />
+              <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
+                {errorMSG}
+              </Text>
+            </View>
+          ) : (
+            <View style={{ height: "5%", width: "100%" }}></View>
+          )}
           {/* 등록 버튼 */}
           <View style={MakeScheduleStyles.submitContainer}>
             <TouchableOpacity
@@ -303,7 +307,6 @@ export default function MakeSchedule({ navigation }) {
                         id: Schedule.id,
                         type: Schedule.type,
                         title: Schedule.title,
-                        content: Schedule.content,
                         day: Schedule.day,
                         time: Schedule.time,
                       },
@@ -316,7 +319,6 @@ export default function MakeSchedule({ navigation }) {
                         id: id,
                         type: Schedule.type,
                         title: Schedule.title,
-                        content: Schedule.content,
                         day: Schedule.day,
                         time: Schedule.time,
                       },
