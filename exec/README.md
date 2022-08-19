@@ -1,5 +1,8 @@
 ### 시작하기
 
+#### Ubuntu 20.04 LTS
+#### expo SDK 45
+
 #### Database
 
 * MySQL 
