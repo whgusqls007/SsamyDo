@@ -45,7 +45,7 @@ export default function NoticeDetail({ navigation, route }) {
           {item.file_ids !== "[]" && item.file_ids !== null && (
             <View>
               <Image
-                style={{ width: "50%", height: "100%" }}
+                style={{ width: "100%", height: "100%" }}
                 source={{ uri: imgURI(item.file_ids) }}
               />
             </View>
