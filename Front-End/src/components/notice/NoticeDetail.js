@@ -1,26 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-// import styles from "../../../app.module.css";
 import { Linking } from "react-native";
 import { useCallback } from "react";
-import { BackHandler } from "react-native";
-// notice id로 해당 notice만 뽑아오기
 import { ScrollView } from "react-native";
-import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import Markdown from "react-native-markdown-display";
-
-const handlePressBack = () => {
-  if (navigation?.canGoBack()) {
-    navigation.goBack();
-    return true;
-  }
-  return false;
-};
 
 export default function NoticeDetail({ navigation, route }) {
   const id = route.params.id;
   const item = route.params.notice;
-  // console.log(item)
 
   function imgURI(path) {
     return "http://i7e204.p.ssafy.io:8082/api/image/" + path;
@@ -34,12 +21,6 @@ export default function NoticeDetail({ navigation, route }) {
 
   return (
     <View style={styles.detailcontainer}>
-      {/* <View>
-        <TouchableOpacity style={styles.buttonback} onPress={() => navigation.pop()}>
-          <Text style={styles.buttonbacktext}>⬅</Text>
-        </TouchableOpacity>
-      </View> */}
-
       <View style={styles.titlecontainer}>
         <TouchableOpacity
           style={styles.buttonback}
@@ -59,25 +40,23 @@ export default function NoticeDetail({ navigation, route }) {
         </View>
 
         <View style={styles.desbox}>
-          {/* 이게 이미입니다. 그리고 이미지는 null값이 아니라 '[]' 빈값이
-          문자형으로 와서 if르 저렇게 처리했습니다. */}
+          {/* 이미지는 null값 외에도 '[]' 빈값이
+          문자형으로도 와서 if르 저렇게 처리했습니다. */}
           {item.file_ids !== "[]" && item.file_ids !== null && (
             <View>
-            <Text>이미지잇음</Text>
-            <Image
-              style={{ width: "100%", height: "100%" }}
-              source={{ uri: imgURI(item.file_ids) }}
-            /></View>
+              <Image
+                style={{ width: "50%", height: "100%" }}
+                source={{ uri: imgURI(item.file_ids) }}
+              />
+            </View>
           )}
-          
+
           {item.source !== "E" ? (
             <ScrollView>
               <Markdown style={styles.detaildescription}>
                 {item.description}
               </Markdown>
-              {/* <Text style={styles.detaildescription}>{item[0].description}</Text> */}
             </ScrollView>
-
           ) : (
             <View style={styles.ebox}>
               <Text style={styles.edussafydescription}>
@@ -87,16 +66,14 @@ export default function NoticeDetail({ navigation, route }) {
           )}
         </View>
       </View>
-
       <View style={styles.detailfooter}>
         {item.source === "E" ? (
-          
           <TouchableOpacity style={styles.buttonedussafy} onPress={goEdussafy}>
             <Text style={styles.buttonedussafytext}>에듀싸피로 이동</Text>
           </TouchableOpacity>
-          ) : (
-            <View></View>
-          )}
+        ) : (
+          <View></View>
+        )}
       </View>
     </View>
   );
@@ -111,7 +88,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     backgroundColor: "#ffffff",
-    // marginLeft: "7%"
   },
   imageicon: {
     marginTop: "5%",
@@ -121,14 +97,11 @@ const styles = StyleSheet.create({
 
   titletext: {
     fontSize: 30,
-    // paddingTop: 10,
     paddingLeft: 20,
-    // paddingRight: 20,
     fontWeight: "bold",
     color: "#000000",
   },
   detailbox: {
-    // margin: 20,
     flexDirection: "column",
     marginHorizontal: "3%",
     marginBottom: "3%",
@@ -152,7 +125,6 @@ const styles = StyleSheet.create({
   },
   detaildescription: {
     fontSize: 15,
-    // textAlign: "center",
     margin: 15,
   },
   ebox: {
@@ -163,7 +135,6 @@ const styles = StyleSheet.create({
     marginTop: "50%",
     fontSize: 15,
     textAlign: "center",
-    // justifyContent: "center"
   },
 
   detailfooter: {
@@ -171,8 +142,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginHorizontal: "1%",
-    // marginBottom: 30,
-    // marginHorizontal: 30,
   },
 
   buttonedussafy: {
@@ -181,10 +150,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#5ba8ff",
     borderRadius: 15,
     marginBottom: 20,
-    // marginHorizontal: 30,
-    // textAlign: "center"
   },
-  buttonmm:{
+  buttonmm: {
     width: "90%",
     padding: 10,
     backgroundColor: "#5ba8ff",

@@ -7,9 +7,7 @@ import {
   Image,
 } from "react-native";
 import ScheduleItem from "./ScheduleItem";
-import styles from "../../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { AntDesign } from "@expo/vector-icons";
 
 export default function ScheduleList({ navigation }) {
   const dispatch = useDispatch();
