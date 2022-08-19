@@ -40,7 +40,8 @@ public class App {
             int minute = localTime.getMinute();
             int second = localTime.getSecond();
 
-            if ((day == 2 || day == 3 || day == 5) && hour == 11 && minute == 50 && second == 0) {
+            if ((day == 2 || day == 3 || day == 5) && hour == 11 && minute == 50 &&
+                    second == 0) {
                 List<JSONObject> list = httpUtil.apiGet();
 
                 for (int i = 0; i < list.size(); i++) {
@@ -68,8 +69,8 @@ public class App {
 
                     if (!text.contains("정상 출석")) {
                         String recipient = (String) list.get(i).get("fcmToken");
-                        String title = "출석";
-                        String message = "하세요";
+                        String title = "입실 체크!";
+                        String message = "입실 체크가 안돼있는거 같아요!";
 
                         if (!PushClient.isExponentPushToken(recipient))
                             throw new Error("Token:" + recipient + " is not a valid token.");
@@ -124,8 +125,6 @@ public class App {
                         String recipient = (String) list.get(i).get("fcmToken");
                         String title = "퇴첵";
                         String message = "하세요";
-
-                        // System.out.println(recipient + title + message);
 
                         if (!PushClient.isExponentPushToken(recipient))
                             throw new Error("Token:" + recipient + " is not a valid token.");
