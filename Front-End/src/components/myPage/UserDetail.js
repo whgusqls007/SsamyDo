@@ -6,8 +6,6 @@ import {
   FontAwesome5,
   Ionicons,
 } from "@expo/vector-icons";
-import axios from "axios";
-import drf from "../../api/drf";
 
 export default function UserDetail() {
   //기본 정보

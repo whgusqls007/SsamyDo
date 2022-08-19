@@ -1,15 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import NoticeItem from "./NoticeItem";
 // import styles from "../../../app.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function NoticeList({ navigation, select }) {
   const noticeList = useSelector((state) => {

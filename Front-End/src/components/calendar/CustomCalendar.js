@@ -7,8 +7,6 @@ import {
   typeOneSelector,
   typeTwoSelector,
 } from "../../store/store";
-import axios from "axios";
-import Account from "../../store/slice/mypage/Account";
 
 LocaleConfig.locales["ssamydo"] = {
   monthNames: [
@@ -87,10 +85,6 @@ export default function CustomCalendar() {
     return state.ScheduleList[4][0];
   });
 
-  const check = useSelector((state) => {
-    return state.Account;
-  });
-
   return (
     <View>
       <Calendar
@@ -116,19 +110,7 @@ export default function CustomCalendar() {
             });
           }
         }}
-        style={[
-          CustomCalendarStyles.style,
-          {
-            "stylesheet.calendar.header": {
-              dayTextAtIndex0: {
-                color: "red",
-              },
-              dayTextAtIndex6: {
-                color: "#A8D1FF",
-              },
-            },
-          },
-        ]}
+        style={CustomCalendarStyles.style}
         hideExtraDays={true}
         // 일정표시 기능
         markingType={"multi-dot"}

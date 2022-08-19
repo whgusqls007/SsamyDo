@@ -14,6 +14,7 @@ import axios from "axios";
 import LunchBoard from "./LunchBoard";
 import drf from "../../api/drf";
 import { useSelector } from "react-redux";
+
 export default function TimeLine({ navigation }) {
   // 토큰
   const token = useSelector((state) => {
@@ -147,7 +148,6 @@ export default function TimeLine({ navigation }) {
   const thisWeek = formattingWeek(thisMonday);
 
   // axios를 통해서 이번 주 스케쥴 받아오기
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/plan/weekly/period/";
   useEffect(() => {
     async function fetchData() {
       const response = await axios({
