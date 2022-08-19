@@ -4,16 +4,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from "react-native";
-import styles from "../../app.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCalendar from "../components/calendar/CustomCalendar";
 import ScheduleList from "../components/calendar/ScheduleList";
-import { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AntDesign } from "@expo/vector-icons";
 import {
   ssafySelector,
   typeOneSelector,
@@ -31,9 +27,6 @@ export default function Calendar({ navigation }) {
     useSelector(typeTwoSelector),
   ];
 
-  useEffect(() => {
-    // dispatch(type:"")
-  });
   // 현재 선택한 타입
   const check = useSelector((state) => {
     return state.ScheduleList[4][0];
