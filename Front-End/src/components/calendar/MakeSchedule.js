@@ -410,7 +410,7 @@ const MakeScheduleStyles = StyleSheet.create({
   },
   timeText: {
     fontSize: 15,
-    color: "#111111",
+    color: "#111111"
   },
   submitContainer: {
     height: "20%",
