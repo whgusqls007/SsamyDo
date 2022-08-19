@@ -56,24 +56,7 @@ LocaleConfig.defaultLocale = "ssamydo";
 export default function CustomCalendar() {
   const dispatch = useDispatch();
   // 시작시 해당 일자로 리스트 나오는 설정
-  // 테마설정을 위한 키
-  const [key, setKey] = useState("첫");
-  // 테마
-  const theme = {
-    dayTextColor: "#111111",
-    backgroundColor: "#ffffff",
-    todayTextColor: "#5BA8FF",
-    textSectionTitleColor: "#111111",
-    arrowColor: "#888888",
-    "stylesheet.calendar.header": {
-      dayTextAtIndex0: {
-        color: "red",
-      },
-      dayTextAtIndex6: {
-        color: "blue",
-      },
-    },
-  };
+
   useEffect(() => {
     const date = new Date();
     dispatch({
