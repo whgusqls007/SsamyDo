@@ -1,20 +1,52 @@
 package com.ssljjong.ssachedule.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssljjong.ssachedule.entity.User;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class UserDto {
-    private String userEmail;
-    private int trackId;
-    private String userPw;
-    private String eduEmail;
+
+    @NotNull
+    private String username;
+
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String eduPw;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String trackName;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Integer gi;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String fcmToken;
+
+    private Set<AuthorityDto> authorityDtoSet;
+
+    public static UserDto from(User user) {
+        if (user == null)
+            return null;
+
+        return UserDto.builder()
+                .username(user.getUsername())
+                .eduPw(user.getEduPw())
+                .authorityDtoSet(user.getAuthorities().stream()
+                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
 }
