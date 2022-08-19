@@ -1,21 +1,7 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TouchableHighlight,
-} from "react-native";
-// import styles from "../../../app.module.css";
-import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function NoticeItem({ navigation, notice }) {
-  const blacksquare = String.fromCodePoint(0x25aa);
-  const bell = String.fromCodePoint(0x1f514);
-
   return (
-    // touchablehighlight 사용해서 hover 효과 주려다가 실패함
-
     <View style={[styles.noticeitembox]}>
       <Text style={styles.itememoji}>🍀</Text>
       <View style={styles.itemtitlebox}>
@@ -52,14 +38,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     flexWrap: "wrap",
-    // height: 20
   },
   itemtitlebox: {
     flexDirection: "row",
     alignItems: "flex-end",
     width: "85%",
-    // flexShrink: 1,
-    // flexGrow: 1,
     flexWrap: "wrap",
   },
   itememoji: {

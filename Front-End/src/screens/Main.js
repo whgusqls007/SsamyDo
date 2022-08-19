@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  BackHandler,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Text, BackHandler, Alert } from "react-native";
 import TimeLine from "../components/main/TimeLine";
 import TodoList from "../components/main/TodoList";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,14 +8,13 @@ import axios from "axios";
 import drf from "../api/drf";
 
 export default function Main({ navigation }) {
+  // 유저관련 정보
   const user = useSelector((state) => {
     return state.Account[0];
   });
 
   const dispatch = useDispatch();
-  const baseURL = "http://i7e204.p.ssafy.io:8080/api/todo/todolist/";
   const [todoList, setTodoList] = useState([]);
-  // const todoList = useSelector(state => state.MainTodo)
 
   const onFetchTodo = (res) => {
     setTodoList(res);
@@ -32,6 +24,7 @@ export default function Main({ navigation }) {
     return state.Account[2];
   });
 
+  // 뒤로가기는 종료
   useEffect(() => {
     const backAction = () => {
       Alert.alert("App 종료", "SSamyDo에서 떠나시겠습니까? 👩🏻‍💻", [
@@ -53,6 +46,7 @@ export default function Main({ navigation }) {
     return () => backHandler.remove();
   }, []);
 
+  // 로컬에서 ScheduleList 불러오기
   useEffect(() => {
     AsyncStorage.getItem("ScheduleList", (err, result) => {
       if (result) {
@@ -69,6 +63,7 @@ export default function Main({ navigation }) {
     });
   }, []);
 
+  // axios를 통해 서버에서 Todo 리스트를 요청
   useEffect(() => {
     async function fetchTodo() {
       const response = await axios({
@@ -92,11 +87,12 @@ export default function Main({ navigation }) {
       });
   }, []);
 
+  // axios를 통해 서버에서 Notice 정보를 요청
   useEffect(() => {
     async function fetchNotice() {
       const response = await axios({
         method: "get",
-        url: drf.notice.noticeOffset(0, 20),
+        url: drf.notice.noticeOffset(0, 30),
         headers: token,
       }).catch(() => {
         navigation.navigate("Verification");
