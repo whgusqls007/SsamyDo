@@ -3,7 +3,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  KeyboardAvoidingView,
   StyleSheet,
   Image,
 } from "react-native";
@@ -11,7 +10,6 @@ import { useSelector } from "react-redux";
 import NoticeItem from "./NoticeItem";
 
 // Notice data에서 찾기 ..
-
 export default function NoticeSearch({ navigation, route }) {
   const value = route.params.value;
 
@@ -109,9 +107,7 @@ const styles = StyleSheet.create({
   },
   titletext: {
     fontSize: 30,
-    // paddingTop: 10,
     paddingLeft: 20,
-    // paddingRight: 20,
     fontWeight: "bold",
     color: "#000000",
   },

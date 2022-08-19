@@ -5,8 +5,6 @@ import drf from "../../api/drf";
 import axios from "axios";
 import { Entypo, Feather } from "@expo/vector-icons";
 
-// import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
-
 export default function Setting({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => {
@@ -15,12 +13,6 @@ export default function Setting({ navigation }) {
   const user = useSelector((state) => {
     return state.Account[0];
   });
-  const typeList = useSelector((state) => {
-    return state.Account[3];
-  });
-  const [showBtn, setShowBtn] = useState(false);
-  const [typeOne, setTypeOne] = useState(typeList[1]);
-  const [typeTwo, setTypeTwo] = useState(typeList[2]);
 
   // 표시할 트랙명들
   const trackName = [
@@ -80,7 +72,6 @@ export default function Setting({ navigation }) {
             name="edit"
             onPress={() => {
               setShowTrackBtn(!showTrackBtn);
-              setShowBtn(false);
             }}
             size={20}
             color="#111111"

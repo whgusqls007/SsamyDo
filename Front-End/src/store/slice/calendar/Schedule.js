@@ -7,7 +7,6 @@ const Schedule = createSlice({
     {
       type: 3,
       title: "",
-      content: "",
       day: "",
       time: [new Date().getHours(), new Date().getMinutes()],
     },
@@ -18,7 +17,7 @@ const Schedule = createSlice({
     update(state, action) {
       state[0] = { ...state[0], ...action.payload };
     },
-    clear(state, action) {
+    clear(state) {
       state[0] = {
         type: 3,
         title: "",
