@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
+import { View, BackHandler, Alert } from "react-native";
 import Agreement from "../components/signin/Agreement";
-import styles from "../../app.module.css";
 import { useEffect } from "react";
 
 export default function SignIn({ navigation }) {

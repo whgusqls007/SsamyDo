@@ -3,7 +3,6 @@ import {
   combineReducers,
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
-import example from "./example/examSlice";
 import MainTodo from "./slice/main/MainTodo";
 import Schedule from "./slice/calendar/Schedule";
 import ScheduleList from "./slice/calendar/ScheduleList";
@@ -14,7 +13,6 @@ import Account from "./slice/mypage/Account";
 
 const store = configureStore({
   reducer: {
-    example: example.reducer,
     Schedule: Schedule.reducer,
     ScheduleList: ScheduleList.reducer,
     MainTodo: combineReducers({ MainTodo: MainTodo.reducer }),
@@ -48,7 +46,5 @@ export const mmSelector = createSelector(allNotice, (all) =>
 export const eduSelector = createSelector(allSelector, (all) =>
   all.filter((Notice) => Notice.route === "Edu")
 );
-
-// export const todoStatusNow = (state) => state.TodoStatus
 
 export default store;

@@ -1,10 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
-import styles from "../../../app.module.css";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Menu } from "react-native-paper";
 import { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
 
 export default function ScheduleItem({ navigation, Schedule }) {
   const dispatch = useDispatch();
@@ -19,16 +17,7 @@ export default function ScheduleItem({ navigation, Schedule }) {
   }
   // 드랍 메뉴의 보이는 여부를 결정할 변수(우측 ... 아이콘)
   const [visible, setVisible] = useState(false);
-  // 본문을 보여줄 변수
-  const [dropContent, setDropContent] = useState(false);
-  const [dropIcon, setDropIcon] = useState("triangle-down");
-  // // 현재 제목의 길이
-  // const titleLen = Schedule.title.length;
 
-  // 현재의 타입과 선택일을 가져올 변수(삭제 후 함께 보내야 mark와 filter에 표시가 가능)
-  const type = useSelector((state) => {
-    return state.ScheduleList[4];
-  });
   return (
     <View style={ScheduleItemStyle.scheduleContainer}>
       <TouchableOpacity
