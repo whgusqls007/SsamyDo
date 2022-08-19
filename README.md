@@ -19,10 +19,10 @@
 5. 개발 환경 및 사용 기술
 
 6. ERD
-
+   
    ![image-20220722163333710](README.assets/image-20220722163333710.png)
 
-​		링크 > https://www.erdcloud.com/d/LyNuWixQvXC7drnZA
+​        링크 > https://www.erdcloud.com/d/LyNuWixQvXC7drnZA
 
 7. 
 
@@ -425,3 +425,21 @@
 ### 설문조사 분석
 
 <img src="assets/c9410f78dc8d6d49e727923ea3be30e7f4957840.jpg" title="" alt="be82a5b10e653646.jpg" width="750">
+
+---
+
+#### FrontEnd Code Reference
+
+- react native examples
+  - custom scroll bar
+  - splash screen and app icon
+  - form
+  - ****Getting Started with Expo and React Native with Hooks & Redux (Hooks!)****
+
+[GitHub - amandeepmittal/react-native-examples: 📱 A repo that contains React Native examples most related to articles &amp; tutorials I publish](https://github.com/amandeepmittal/react-native-examples)
+
+
+
+- expo template
+
+[expo-template · GitHub Topics · GitHub](https://github.com/topics/expo-template)
