@@ -278,14 +278,14 @@ export default function MakeSchedule({ navigation }) {
           )}
           {/* 에러메세지 */}
           {errorMSG ? (
-            <View style={{ flexDirection: "row", margin: 4 }}>
+            <View style={MakeScheduleStyles.errorContainer}>
               <Ionicons name="warning" size={19} color="#C22D37" />
               <Text style={{ fontWeight: "bold", color: "#C22D37" }}>
                 {errorMSG}
               </Text>
             </View>
           ) : (
-            <View style={{ height: "5%", width: "100%" }}></View>
+            <View style={MakeScheduleStyles.errorContainer}></View>
           )}
           {/* 등록 버튼 */}
           <View style={MakeScheduleStyles.submitContainer}>
