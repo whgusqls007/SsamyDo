@@ -26,7 +26,7 @@ public class NoticeServiceImpl implements NoticeService {
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "date"));
         List<Notice> notices = noticeRepository.findAll(pageRequest).getContent();
         List<NoticeDto> result = notices.stream()
-                .map(n -> new NoticeDto(n.getId(), n.getTitle(), n.getDescription(), n.getDate(), n.getSource()))
+                .map(n -> new NoticeDto(n.getId(), n.getTitle(), n.getDescription(), n.getDate(), n.getSource(), n.getFile_ids()))
                 .collect(Collectors.toList());
         return result;
     }
@@ -35,7 +35,7 @@ public class NoticeServiceImpl implements NoticeService {
         PageRequest pageRequest = PageRequest.of(offset, size, Sort.by(Sort.Direction.DESC, "date"));
         List<Notice> notices = noticeRepository.findAll(pageRequest).getContent();
         List<NoticeDto> result = notices.stream()
-                .map(n -> new NoticeDto(n.getId(), n.getTitle(), n.getDescription(), n.getDate(), n.getSource()))
+                .map(n -> new NoticeDto(n.getId(), n.getTitle(), n.getDescription(), n.getDate(), n.getSource(), n.getFile_ids()))
                 .collect(Collectors.toList());
         return result;
     }

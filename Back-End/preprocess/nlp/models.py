@@ -24,7 +24,7 @@ class Notice(models.Model):
     
 
 class Todo(models.Model):
-    notice = models.ForeignKey(Notice, on_delete=models.CASCADE, related_name='todos')
+    notice_id = models.IntegerField()
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=1023)
     file_ids = models.CharField(max_length=255)
