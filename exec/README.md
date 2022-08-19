@@ -1,7 +1,10 @@
 ### 시작하기
 
-#### Ubuntu 20.04 LTS
-#### expo SDK 45
+#### environment
+- Ubuntu 20.04 LTS
+- Expo SDK 45
+- openjdk 1.8.0_342
+- Django 3.2.12
 
 #### Database
 
