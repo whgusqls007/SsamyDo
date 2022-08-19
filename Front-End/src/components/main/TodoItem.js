@@ -1,15 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-// import styles from "../../../app.module.css";
-import { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { todoStatusNow } from "../../store/store";
-import Notice from "../../store/slice/notice/Notice";
 import { Linking } from "react-native";
-import id from "faker/lib/locales/id_ID";
 
 // TodoItem에서 보여지는 데이터
 // - 현재 activate 된 설문 / List에서 필터 걸어서 내려옴
@@ -21,8 +14,6 @@ export default function TodoItem({ navigation, item }) {
   const itemTitle = item.title.includes("건강")
     ? item.title.slice(4)
     : item.title;
-
-  // const itemDate = item.dueDate.slice(0,8)
 
   const itemDuedate =
     item.dueDate.length === 12
@@ -67,13 +58,8 @@ export default function TodoItem({ navigation, item }) {
     dispatch({ type: "TodoStatus/savestatus" });
   };
 
-  // 오늘날짜 220817
+  // 오늘날짜
   function ymdFormat1(oriDate = new Date()) {
-    // let utc = oriDate.getTime() + oriDate.getTimezoneOffset() * 60 * 1000;
-
-    // let timeDiff = 34 * 60 * 60 * 1000;
-    // let kst = new Date(utc + timeDiff);
-
     let result =
       oriDate.getFullYear().toString() +
       (oriDate.getMonth() + 1).toString().padStart(2, "0") +
@@ -81,10 +67,10 @@ export default function TodoItem({ navigation, item }) {
     return result;
   }
 
-  // 오늘날짜 22817
+  // 오늘날짜
   function ymdFormat2(oriDate = new Date()) {
+    // 에뮬레이터 날짜를 한국시로 변경하는 경우
     // let utc = oriDate.getTime() + oriDate.getTimezoneOffset() * 60 * 1000;
-
     // let timeDiff = 34 * 60 * 60 * 1000;
     // let kst = new Date(utc + timeDiff);
 
@@ -148,21 +134,6 @@ export default function TodoItem({ navigation, item }) {
                 {itemTitle}
               </Text>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity onPress={goEdussafy}>
-                <Text numberOfLines={1} ellipsizeMode={"tail"} style={[styles.itemtitle, nowStatus&& styles.disabledtext]}>{item.title}</Text>
-              </TouchableOpacity> */}
-            {/* <Text style={[styles.itemdate, nowStatus&& styles.disabledtext]}>{year}/{month}/{day} {hour}:{min}</Text> */}
-            {/* {item.notice === null ? ( */}
-            <TouchableOpacity onPress={goEdussafy}>
-              <Text
-                numberOfLines={1}
-                ellipsizeMode={"tail"}
-                style={[styles.itemtitle, nowStatus && styles.disabledtext]}
-              >
-                {itemTitle}
-              </Text>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.itemdatebox} disabled={nowStatus}>
@@ -182,15 +153,6 @@ export default function TodoItem({ navigation, item }) {
             ) : null}
           </View>
         </View>
-
-        {/* notice id 있는 애들만 상세 정보 보여주게 넘김  */}
-        {/* <TouchableOpacity onPress={() => { item.notice !== null 
-                                              ? navigation.navigate("NoticeDetail", { id: item.notice })
-                                              : {goEdussafy}}
-          }>
-            {item.notice !== null && <Text>  🔔</Text>}
-            {item.notice === null && <Text>  ⛵</Text>}
-          </TouchableOpacity> */}
       </View>
     </View>
   );
@@ -209,7 +171,6 @@ const styles = StyleSheet.create({
   // 마감일 오늘인 것 배경색 변경
   todaycontainer: {
     flexDirection: "row",
-    // justifyContent: "space-around",
     backgroundColor: "#ffe34f",
     margin: 10,
     padding: 10,
@@ -219,7 +180,6 @@ const styles = StyleSheet.create({
   todoitembox: {
     flexDirection: "row",
     flexGrow: 1,
-    // flexShrink: 1,
     flexWrap: "wrap",
     alignItems: "center",
   },
@@ -228,16 +188,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     width: "70%",
-    // flexShrink: 1,
-    // flexGrow: 1,
     flexWrap: "wrap",
   },
 
   itemtitle: {
-    // marginHorizontal: 20,
     color: "#111111",
     fontSize: 15,
-    // whiteSpace: "pre-wrap",
   },
 
   itemdate: {
@@ -254,8 +210,6 @@ const styles = StyleSheet.create({
   itemdatebox: {
     flexDirection: "row",
     alignItems: "flex-end",
-    // flexShrink: 1,
-    // flexGrow: 1,
     flexWrap: "wrap",
     marginRight: 20,
   },

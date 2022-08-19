@@ -3,34 +3,22 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
   KeyboardAvoidingView,
   StyleSheet,
 } from "react-native";
 import NoticeList from "../components/notice/NoticeList";
-// import styles from "../../app.module.css";
-// import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import SearchBar from "react-native-platform-searchbar";
-import { Entypo } from "@expo/vector-icons";
-import axios from "axios";
-import drf from "../api/drf";
 
 export default function Notice({ navigation }) {
   // 토큰
   const token = useSelector((state) => {
     return state.Account[2];
   });
-  const dispatch = useDispatch();
 
   const [showNotice, setShowNotice] = useState("All");
   const [value, setValue] = useState("");
-
-  const noticeList = useSelector((state) => {
-    return state.Notice[0];
-  });
 
   return (
     <View style={styles.noticecontainer}>
@@ -82,10 +70,6 @@ export default function Notice({ navigation }) {
             onPress={() => setShowNotice("Edu")}
           >
             <View>
-              {/* <Image 
-                  source={require('../images/ssafy.png.png')}
-                  style={styles.imageicon}
-                /> */}
               <Text style={styles.buttontext}>EduSSAFY</Text>
             </View>
           </TouchableOpacity>

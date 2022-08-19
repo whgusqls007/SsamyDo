@@ -49,6 +49,4 @@ export const eduSelector = createSelector(allSelector, (all) =>
   all.filter((Notice) => Notice.route === "Edu")
 );
 
-// export const todoStatusNow = (state) => state.TodoStatus
-
 export default store;
