@@ -123,7 +123,7 @@ export default function TodoItem({ navigation, item }) {
               onPress={() => {
                 item.notice
                   ? goNotice(item.notice.id, item.notice)
-                  : goEdussafy;
+                  : goEdussafy();
               }}
             >
               <Text
